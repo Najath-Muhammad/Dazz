@@ -2,11 +2,24 @@ import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
+import mongoSanitize from 'express-mongo-sanitize';
 
 dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 5000;
+
+// Security Middleware
+app.use(helmet());
+app.use(mongoSanitize());
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  message: { message: 'Too many requests, please try again later.' }
+});
+app.use('/api', limiter);
 
 app.use(cors());
 app.use(express.json());
