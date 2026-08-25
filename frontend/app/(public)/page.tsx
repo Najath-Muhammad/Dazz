@@ -33,8 +33,8 @@ export default function HomePage() {
   return (
     <>
       <HeroSection 
-        title="Building the Future of Industry"
-        subtitle="Dazz Tradelink delivers comprehensive solutions across construction, food trading, logistics, and hospitality."
+        title="DAZZ TRADLINK INTERNATIONAL"
+        subtitle="Empowering Industrial Excellence. Designed to meet the operational needs of industrial environments."
         backgroundImage="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg"
       >
         <Link href="/about-us">
@@ -48,9 +48,9 @@ export default function HomePage() {
       <section className="py-24 bg-white">
         <Container>
           <div className="max-w-3xl">
-            <SectionTitle title="A Legacy of Excellence" subtitle="About Us" />
+            <SectionTitle title="Proudly Operating Across The Kingdom" subtitle="We Are In Saudi Arabia" />
             <p className="text-lg text-slate-600 mb-8 leading-relaxed">
-              Dazz Tradelink is a leading multifaceted corporation dedicated to driving industrial growth and creating sustainable value. With decades of expertise, we seamlessly integrate our diverse divisions to deliver turnkey solutions for global clients.
+              Proudly operating across the Kingdom, delivering trusted solutions and building stronger communities. With a nationwide presence and local expertise meeting global standards, we are committed to Saudi Vision 2030 and building long-term partnerships.
             </p>
             <Link href="/about-us">
               <Button variant="outline">Learn More About Us</Button>
@@ -119,7 +119,7 @@ export default function HomePage() {
       </section>
 
       <CTASection 
-        title="Ready to Start Your Next Project?" 
+        title="Building Today For A Better Tomorrow" 
         description="Contact our team of experts today to discuss how Dazz Tradelink can deliver value to your business."
       >
         <Link href="/careers-contact">
