@@ -12,6 +12,22 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+import authRoutes from './routes/authRoutes';
+import pageRoutes from './routes/pageRoutes';
+import projectRoutes from './routes/projectRoutes';
+import blogRoutes from './routes/blogRoutes';
+import jobRoutes from './routes/jobRoutes';
+import contactMessageRoutes from './routes/contactMessageRoutes';
+import siteSettingsRoutes from './routes/siteSettingsRoutes';
+
+app.use('/api/auth', authRoutes);
+app.use('/api/content', pageRoutes);
+app.use('/api/projects', projectRoutes);
+app.use('/api/blogs', blogRoutes);
+app.use('/api/jobs', jobRoutes);
+app.use('/api/contact', contactMessageRoutes);
+app.use('/api/settings', siteSettingsRoutes);
+
 app.get('/health', (req: Request, res: Response) => {
   res.status(200).json({ status: 'ok', message: 'Backend is running' });
 });
