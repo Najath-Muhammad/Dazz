@@ -4,7 +4,7 @@
 A modern corporate website for Dazz Tradelink, featuring comprehensive company information, division details (Construction, Food Trading, Logistics, Hospitality), project galleries, news/blogs, and a contact system. It includes a bespoke Admin Content Management System (CMS) to manage all website content seamlessly.
 
 ## Tech Stack
-**Frontend:** React, TypeScript, Vite, React Router, Tailwind CSS, Axios, React Hook Form, Zod
+**Frontend:** Next.js (App Router), TypeScript, Tailwind CSS, Axios, React Hook Form, Zod
 **Backend:** Node.js, Express, TypeScript, MongoDB, Mongoose, JWT, bcrypt, Zod
 **Storage:** Cloudinary
 
