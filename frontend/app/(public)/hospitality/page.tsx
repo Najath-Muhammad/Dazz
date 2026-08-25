@@ -8,10 +8,25 @@ import { Button } from '@/components/Button';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Hospitality Division | Dazz Tradelink',
+  title: 'Hospitality',
   description: 'Creating luxurious experiences and managing world-class facilities globally.',
+  alternates: {
+    canonical: '/hospitality',
+  },
+  openGraph: {
+    title: 'Hospitality | Dazz Tradelink',
+    description: 'Creating luxurious experiences and managing world-class facilities globally.',
+    url: '/hospitality',
+    images: [
+      {
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Hospitality | Dazz Tradelink',
+      }
+    ],
+  },
 };
-
 export default function HospitalityPage() {
   return (
     <>

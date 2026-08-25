@@ -28,7 +28,13 @@ export async function generateMetadata({ params }: NewsPageProps): Promise<Metad
   return {
     title: `${article.title} | Dazz Tradelink News`,
     description: article.excerpt,
+    alternates: {
+      canonical: `/news/${slug}`,
+    },
     openGraph: {
+      title: `${article.title} | Dazz Tradelink News`,
+      description: article.excerpt,
+      url: `/news/${slug}`,
       images: [article.imageUrl],
     },
   };

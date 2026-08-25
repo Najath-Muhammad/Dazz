@@ -29,7 +29,13 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
   return {
     title: `${project.title} | Dazz Tradelink Projects`,
     description: project.description.substring(0, 160),
+    alternates: {
+      canonical: `/projects/${slug}`,
+    },
     openGraph: {
+      title: `${project.title} | Dazz Tradelink Projects`,
+      description: project.description.substring(0, 160),
+      url: `/projects/${slug}`,
       images: [project.imageUrl],
     },
   };

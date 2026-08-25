@@ -10,10 +10,25 @@ import { ServiceCard } from '@/components/ServiceCard';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Dazz Tradelink | Excellence in Trading & Contracting',
+  title: 'Home',
   description: 'Dazz Tradelink delivers excellence across construction, food trading, logistics, and hospitality with industrial precision and corporate integrity.',
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    title: 'Home | Dazz Tradelink',
+    description: 'Dazz Tradelink delivers excellence across construction, food trading, logistics, and hospitality with industrial precision and corporate integrity.',
+    url: '/',
+    images: [
+      {
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Home | Dazz Tradelink',
+      }
+    ],
+  },
 };
-
 export default function HomePage() {
   return (
     <>

@@ -8,10 +8,25 @@ import { Button } from '@/components/Button';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Logistics Division | Dazz Tradelink',
+  title: 'Logistics',
   description: 'End-to-end supply chain solutions, freight forwarding, and modern warehousing.',
+  alternates: {
+    canonical: '/logistics',
+  },
+  openGraph: {
+    title: 'Logistics | Dazz Tradelink',
+    description: 'End-to-end supply chain solutions, freight forwarding, and modern warehousing.',
+    url: '/logistics',
+    images: [
+      {
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Logistics | Dazz Tradelink',
+      }
+    ],
+  },
 };
-
 export default function LogisticsPage() {
   return (
     <>

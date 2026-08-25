@@ -9,10 +9,25 @@ import { Button } from '@/components/Button';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Construction Division | Dazz Tradelink',
+  title: 'Construction',
   description: 'Building state-of-the-art infrastructure, commercial complexes, and industrial facilities with precision engineering.',
+  alternates: {
+    canonical: '/construction',
+  },
+  openGraph: {
+    title: 'Construction | Dazz Tradelink',
+    description: 'Building state-of-the-art infrastructure, commercial complexes, and industrial facilities with precision engineering.',
+    url: '/construction',
+    images: [
+      {
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Construction | Dazz Tradelink',
+      }
+    ],
+  },
 };
-
 export default function ConstructionPage() {
   return (
     <>

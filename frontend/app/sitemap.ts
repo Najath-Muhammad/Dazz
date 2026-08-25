@@ -1,10 +1,25 @@
-import type { MetadataRoute } from 'next'
- 
+import { MetadataRoute } from 'next';
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [
-    {
-      url: 'https://dazztradelink.com',
-      lastModified: new Date(),
-    }
-  ]
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+
+  const staticPages = [
+    '',
+    '/about-us',
+    '/divisions-services',
+    '/construction',
+    '/food-trading',
+    '/logistics',
+    '/hospitality',
+    '/projects',
+    '/news',
+    '/careers-contact',
+  ];
+
+  return staticPages.map((route) => ({
+    url: `${baseUrl}${route}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly',
+    priority: route === '' ? 1 : 0.8,
+  }));
 }

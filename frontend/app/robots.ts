@@ -1,12 +1,12 @@
-import type { MetadataRoute } from 'next'
- 
+import { MetadataRoute } from 'next';
+
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: '/admin/',
+      disallow: ['/admin/', '/api/'],
     },
-    sitemap: 'https://dazztradelink.com/sitemap.xml',
-  }
+    sitemap: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/sitemap.xml`,
+  };
 }

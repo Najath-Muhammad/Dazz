@@ -5,10 +5,25 @@ import { SectionTitle } from '@/components/SectionTitle';
 import { Button } from '@/components/Button';
 
 export const metadata: Metadata = {
-  title: 'Careers & Contact Us | Dazz Tradelink',
+  title: 'Careers & Contact',
   description: 'Join our team of global professionals or get in touch with our corporate headquarters for business inquiries.',
+  alternates: {
+    canonical: '/careers-contact',
+  },
+  openGraph: {
+    title: 'Careers & Contact | Dazz Tradelink',
+    description: 'Join our team of global professionals or get in touch with our corporate headquarters for business inquiries.',
+    url: '/careers-contact',
+    images: [
+      {
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Careers & Contact | Dazz Tradelink',
+      }
+    ],
+  },
 };
-
 export default function CareersContactPage() {
   return (
     <>

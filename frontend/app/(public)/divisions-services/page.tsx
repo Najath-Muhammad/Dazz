@@ -8,10 +8,25 @@ import { Button } from '@/components/Button';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Divisions & Services | Dazz Tradelink',
+  title: 'Divisions & Services',
   description: 'Explore our specialized divisions: Construction, Food Trading, Logistics, and Hospitality.',
+  alternates: {
+    canonical: '/divisions-services',
+  },
+  openGraph: {
+    title: 'Divisions & Services | Dazz Tradelink',
+    description: 'Explore our specialized divisions: Construction, Food Trading, Logistics, and Hospitality.',
+    url: '/divisions-services',
+    images: [
+      {
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Divisions & Services | Dazz Tradelink',
+      }
+    ],
+  },
 };
-
 export default function DivisionsPage() {
   return (
     <>

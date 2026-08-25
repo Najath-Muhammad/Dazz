@@ -8,10 +8,25 @@ import { Button } from '@/components/Button';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Food Trading Division | Dazz Tradelink',
+  title: 'Food Trading',
   description: 'Global sourcing, processing, and distribution of premium food commodities.',
+  alternates: {
+    canonical: '/food-trading',
+  },
+  openGraph: {
+    title: 'Food Trading | Dazz Tradelink',
+    description: 'Global sourcing, processing, and distribution of premium food commodities.',
+    url: '/food-trading',
+    images: [
+      {
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Food Trading | Dazz Tradelink',
+      }
+    ],
+  },
 };
-
 export default function FoodTradingPage() {
   return (
     <>

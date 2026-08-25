@@ -7,10 +7,25 @@ import { Button } from '@/components/Button';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'About Us | Dazz Tradelink',
+  title: 'About Us',
   description: 'Learn about Dazz Tradelink, our mission, vision, and core values that drive our excellence across multiple industries.',
+  alternates: {
+    canonical: '/about-us',
+  },
+  openGraph: {
+    title: 'About Us | Dazz Tradelink',
+    description: 'Learn about Dazz Tradelink, our mission, vision, and core values that drive our excellence across multiple industries.',
+    url: '/about-us',
+    images: [
+      {
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'About Us | Dazz Tradelink',
+      }
+    ],
+  },
 };
-
 export default function AboutPage() {
   return (
     <>
