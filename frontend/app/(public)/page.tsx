@@ -1,69 +1,116 @@
-import Image from "next/image";
+import { Metadata } from 'next';
+import { HeroSection } from '@/components/HeroSection';
+import { SectionTitle } from '@/components/SectionTitle';
+import { Container } from '@/components/Container';
+import { Button } from '@/components/Button';
+import { CTASection } from '@/components/CTASection';
+import { ProjectCard } from '@/components/ProjectCard';
+import { BlogCard } from '@/components/BlogCard';
+import { ServiceCard } from '@/components/ServiceCard';
+import Link from 'next/link';
 
-export default function Home() {
+export const metadata: Metadata = {
+  title: 'Dazz Tradelink | Excellence in Trading & Contracting',
+  description: 'Dazz Tradelink delivers excellence across construction, food trading, logistics, and hospitality with industrial precision and corporate integrity.',
+};
+
+export default function HomePage() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
+    <>
+      <HeroSection 
+        title="Building the Future of Industry"
+        subtitle="Dazz Tradelink delivers comprehensive solutions across construction, food trading, logistics, and hospitality."
+        backgroundImage="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg"
+      >
+        <Link href="/about-us">
+          <Button variant="primary">Discover Our Legacy</Button>
+        </Link>
+        <Link href="/projects">
+          <Button variant="outline" className="text-white border-white hover:text-slate-900">View Projects</Button>
+        </Link>
+      </HeroSection>
+
+      <section className="py-24 bg-white">
+        <Container>
+          <div className="max-w-3xl">
+            <SectionTitle title="A Legacy of Excellence" subtitle="About Us" />
+            <p className="text-lg text-slate-600 mb-8 leading-relaxed">
+              Dazz Tradelink is a leading multifaceted corporation dedicated to driving industrial growth and creating sustainable value. With decades of expertise, we seamlessly integrate our diverse divisions to deliver turnkey solutions for global clients.
+            </p>
+            <Link href="/about-us">
+              <Button variant="outline">Learn More About Us</Button>
+            </Link>
+          </div>
+        </Container>
+      </section>
+
+      <section className="py-24 bg-slate-50">
+        <Container>
+          <SectionTitle title="Our Divisions" subtitle="Capabilities" alignment="center" />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
+            <ServiceCard 
+              title="Construction" 
+              description="Engineering and building state-of-the-art infrastructure."
+              imageUrl="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg"
+              href="/construction"
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+            <ServiceCard 
+              title="Food Trading" 
+              description="Global sourcing and distribution of premium commodities."
+              imageUrl="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg"
+              href="/food-trading"
+            />
+            <ServiceCard 
+              title="Logistics" 
+              description="End-to-end supply chain and freight forwarding."
+              imageUrl="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg"
+              href="/logistics"
+            />
+            <ServiceCard 
+              title="Hospitality" 
+              description="Delivering world-class experiences and facility management."
+              imageUrl="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg"
+              href="/hospitality"
+            />
+          </div>
+        </Container>
+      </section>
+
+      <section className="py-24 bg-white">
+        <Container>
+          <div className="flex justify-between items-end mb-12">
+            <SectionTitle title="Featured Projects" subtitle="Portfolio" className="mb-0" />
+            <Link href="/projects" className="hidden md:block">
+              <Button variant="ghost">View All Projects</Button>
+            </Link>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <ProjectCard title="Downtown Skyscraper" category="Construction" imageUrl="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg" slug="downtown-skyscraper" />
+            <ProjectCard title="Global Supply Hub" category="Logistics" imageUrl="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg" slug="global-supply-hub" />
+            <ProjectCard title="Luxury Resort Complex" category="Hospitality" imageUrl="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg" slug="luxury-resort-complex" />
+          </div>
+        </Container>
+      </section>
+
+      <section className="py-24 bg-slate-50">
+        <Container>
+          <SectionTitle title="Latest Insights" subtitle="News & Blog" alignment="center" />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+            <BlogCard title="Innovations in Modern Construction" excerpt="Exploring new sustainable materials in high-rise buildings." date="2026-08-20T00:00:00Z" imageUrl="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg" slug="innovations-construction" />
+            <BlogCard title="Global Food Supply Chain Resiliency" excerpt="How we ensure continuous distribution during global shortages." date="2026-08-15T00:00:00Z" imageUrl="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg" slug="food-supply-chain" />
+            <BlogCard title="The Future of Luxury Hospitality" excerpt="Adapting to the new standards of international tourism." date="2026-08-10T00:00:00Z" imageUrl="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg" slug="future-luxury-hospitality" />
+          </div>
+        </Container>
+      </section>
+
+      <CTASection 
+        title="Ready to Start Your Next Project?" 
+        description="Contact our team of experts today to discuss how Dazz Tradelink can deliver value to your business."
+      >
+        <Link href="/careers-contact">
+          <Button variant="secondary">Contact Us Now</Button>
+        </Link>
+      </CTASection>
+    </>
   );
 }
