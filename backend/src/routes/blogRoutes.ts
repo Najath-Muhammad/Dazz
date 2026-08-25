@@ -1,9 +1,10 @@
 import { Router } from 'express';
-import { getBlogs, getBlogById, createBlog, updateBlog, deleteBlog } from '../controllers/blogController';
+import { getBlogs, getBlogById, getBlogBySlug, createBlog, updateBlog, deleteBlog } from '../controllers/blogController';
 
 const router = Router();
 
 router.get('/', getBlogs);
+router.get('/slug/:slug', getBlogBySlug);
 router.get('/:id', getBlogById);
 router.post('/', createBlog);
 router.put('/:id', updateBlog);

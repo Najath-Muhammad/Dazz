@@ -8,7 +8,19 @@ export const metadata: Metadata = {
   description: 'Latest insights, company news, and industry updates from Dazz Tradelink.',
 };
 
-export default function NewsPage() {
+async function getBlogs() {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/blogs`, { cache: 'no-store' });
+    if (!res.ok) return [];
+    return res.json();
+  } catch (error) {
+    return [];
+  }
+}
+
+export default async function NewsPage() {
+  const blogs = await getBlogs();
+
   return (
     <>
       <HeroSection 
@@ -20,12 +32,20 @@ export default function NewsPage() {
       <section className="py-24 bg-slate-50">
         <Container>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <BlogCard title="Innovations in Modern Construction" excerpt="Exploring new sustainable materials in high-rise buildings." date="2026-08-20T00:00:00Z" imageUrl="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg" slug="innovations-construction" />
-            <BlogCard title="Global Food Supply Chain Resiliency" excerpt="How we ensure continuous distribution during global shortages." date="2026-08-15T00:00:00Z" imageUrl="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg" slug="food-supply-chain" />
-            <BlogCard title="The Future of Luxury Hospitality" excerpt="Adapting to the new standards of international tourism." date="2026-08-10T00:00:00Z" imageUrl="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg" slug="future-luxury-hospitality" />
-            <BlogCard title="Expanding our Logistics Network" excerpt="New distribution centers opening in key Asian markets." date="2026-08-05T00:00:00Z" imageUrl="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg" slug="expanding-logistics-network" />
-            <BlogCard title="Corporate Sustainability Goals 2030" excerpt="Our commitment to reducing carbon footprint across all divisions." date="2026-08-01T00:00:00Z" imageUrl="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg" slug="sustainability-goals-2030" />
-            <BlogCard title="Award-winning Infrastructure Design" excerpt="Recognized for excellence in our latest civil engineering project." date="2026-07-25T00:00:00Z" imageUrl="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg" slug="award-winning-infrastructure" />
+            {blogs.length === 0 ? (
+              <p className="text-slate-500">No articles available.</p>
+            ) : (
+              blogs.map((b: any) => (
+                <BlogCard 
+                  key={b._id}
+                  title={b.title} 
+                  excerpt={b.excerpt} 
+                  date={b.publishedAt} 
+                  imageUrl={b.imageUrl} 
+                  slug={b.slug} 
+                />
+              ))
+            )}
           </div>
         </Container>
       </section>

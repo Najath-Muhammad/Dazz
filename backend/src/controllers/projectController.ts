@@ -20,6 +20,16 @@ export const getProjectById = async (req: Request, res: Response) => {
   }
 };
 
+export const getProjectBySlug = async (req: Request, res: Response) => {
+  try {
+    const item = await Project.findOne({ slug: req.params.slug });
+    if (!item) return res.status(404).json({ message: 'Not Found' });
+    res.json(item);
+  } catch (error) {
+    res.status(500).json({ message: 'Server Error' });
+  }
+};
+
 export const createProject = async (req: Request, res: Response) => {
   try {
     const newItem = new Project(req.body);

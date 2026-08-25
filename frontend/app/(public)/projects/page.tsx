@@ -11,7 +11,19 @@ export const metadata: Metadata = {
   description: 'Explore our portfolio of global projects across construction, logistics, and hospitality.',
 };
 
-export default function ProjectsPage() {
+async function getProjects() {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/projects`, { cache: 'no-store' });
+    if (!res.ok) return [];
+    return res.json();
+  } catch (error) {
+    return [];
+  }
+}
+
+export default async function ProjectsPage() {
+  const projects = await getProjects();
+
   return (
     <>
       <HeroSection 
@@ -30,12 +42,19 @@ export default function ProjectsPage() {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <ProjectCard title="Downtown Skyscraper" category="Construction" imageUrl="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg" slug="downtown-skyscraper" />
-            <ProjectCard title="Global Supply Hub" category="Logistics" imageUrl="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg" slug="global-supply-hub" />
-            <ProjectCard title="Luxury Resort Complex" category="Hospitality" imageUrl="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg" slug="luxury-resort-complex" />
-            <ProjectCard title="National Highway Extension" category="Construction" imageUrl="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg" slug="highway-extension" />
-            <ProjectCard title="Automated Warehouse" category="Logistics" imageUrl="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg" slug="automated-warehouse" />
-            <ProjectCard title="Boutique Urban Hotel" category="Hospitality" imageUrl="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg" slug="boutique-urban-hotel" />
+            {projects.length === 0 ? (
+              <p className="text-slate-500">No projects available at the moment.</p>
+            ) : (
+              projects.map((p: any) => (
+                <ProjectCard 
+                  key={p._id}
+                  title={p.title} 
+                  category={p.category} 
+                  imageUrl={p.imageUrl} 
+                  slug={p.slug} 
+                />
+              ))
+            )}
           </div>
         </Container>
       </section>

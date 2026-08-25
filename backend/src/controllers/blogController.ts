@@ -20,6 +20,16 @@ export const getBlogById = async (req: Request, res: Response) => {
   }
 };
 
+export const getBlogBySlug = async (req: Request, res: Response) => {
+  try {
+    const item = await Blog.findOne({ slug: req.params.slug });
+    if (!item) return res.status(404).json({ message: 'Not Found' });
+    res.json(item);
+  } catch (error) {
+    res.status(500).json({ message: 'Server Error' });
+  }
+};
+
 export const createBlog = async (req: Request, res: Response) => {
   try {
     const newItem = new Blog(req.body);
