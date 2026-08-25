@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 // Create an Axios instance with base configuration
 export const apiClient = axios.create({
@@ -8,14 +9,13 @@ export const apiClient = axios.create({
   },
 });
 
-// Add interceptors if needed (e.g., for attaching JWT tokens)
+// Add interceptors to attach JWT token
 apiClient.interceptors.request.use(
   (config) => {
-    // We can add token from localStorage here when building the admin dashboard
-    // const token = localStorage.getItem('token');
-    // if (token) {
-    //   config.headers.Authorization = `Bearer ${token}`;
-    // }
+    const token = Cookies.get('admin_token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
     return config;
   },
   (error) => {

@@ -37,10 +37,32 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   res.status(500).json({ error: 'Internal Server Error' });
 });
 
+import Admin from './models/Admin';
+import bcrypt from 'bcrypt';
+
+const seedAdmin = async () => {
+  try {
+    const adminCount = await Admin.countDocuments();
+    if (adminCount === 0) {
+      console.log('No admin found. Seeding default admin...');
+      const passwordHash = await bcrypt.hash('password123', 10);
+      await Admin.create({
+        email: 'admin@dazztradelink.com',
+        name: 'Super Admin',
+        passwordHash,
+      });
+      console.log('Default admin created: admin@dazztradelink.com / password123');
+    }
+  } catch (error) {
+    console.error('Error seeding admin:', error);
+  }
+};
+
 mongoose
   .connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/dazz')
-  .then(() => {
+  .then(async () => {
     console.log('Connected to MongoDB');
+    await seedAdmin();
     app.listen(port, () => {
       console.log(`Server running on port ${port}`);
     });
