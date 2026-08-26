@@ -8,6 +8,7 @@ import { ProjectCard } from '@/components/ProjectCard';
 import { BlogCard } from '@/components/BlogCard';
 import { ServiceCard } from '@/components/ServiceCard';
 import { ScrollReveal } from '@/components/ScrollReveal';
+import { PinnedServices } from '@/components/PinnedServices';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
@@ -69,22 +70,7 @@ export default function HomePage() {
       </section>
 
 
-      {/* Divisions Section */}
-      <section className="py-24 bg-slate-50 overflow-hidden">
-        <Container>
-          <div className="mb-16">
-            <ScrollReveal>
-              <SectionTitle title="Our Core Divisions" subtitle="What We Do" />
-            </ScrollReveal>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <ScrollReveal delay={0.1} direction="up"><ServiceCard title="Construction" description="Building the future with precision engineering and sustainable practices." imageUrl="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg" href="/construction" /></ScrollReveal>
-            <ScrollReveal delay={0.2} direction="up"><ServiceCard title="Food Trading" description="Global sourcing and distribution of premium quality food products." imageUrl="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg" href="/food-trading" /></ScrollReveal>
-            <ScrollReveal delay={0.3} direction="up"><ServiceCard title="Logistics" description="End-to-end supply chain solutions and fleet management." imageUrl="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg" href="/logistics" /></ScrollReveal>
-            <ScrollReveal delay={0.4} direction="up"><ServiceCard title="Hospitality" description="Delivering exceptional service and world-class guest experiences." imageUrl="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg" href="/hospitality" /></ScrollReveal>
-          </div>
-        </Container>
-      </section>
+      <PinnedServices />
 
       {/* Capabilities Section */}
       <section className="py-24 bg-dazz-navy text-white overflow-hidden">
