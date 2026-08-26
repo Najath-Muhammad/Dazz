@@ -33,13 +33,43 @@ export const metadata: Metadata = {
     ],
   },
 };
-export default function HomePage() {
+async function getSiteSettings() {
+  try {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+    const res = await fetch(`${apiUrl}/settings`, {
+      next: { revalidate: 60 }
+    });
+    if (!res.ok) return null;
+    const json = await res.json();
+    if (json.success && Array.isArray(json.data) && json.data.length > 0) {
+      return json.data[0];
+    }
+    return null;
+  } catch (error) {
+    console.error('Failed to fetch settings for homepage:', error);
+    return null;
+  }
+}
+
+export default async function HomePage() {
+  const settings = await getSiteSettings();
+  
+  const heroTitle = settings?.heroTitle || "DAZZ TRADELINK INTERNATIONAL";
+  const heroSubtitle = settings?.heroSubtitle || "Empowering Industrial Excellence. Designed to meet the operational needs of industrial environments.";
+  
+  let heroBg = "https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg";
+  if (settings?.heroBackgroundImage?.url) {
+    heroBg = settings.heroBackgroundImage.url;
+  } else if (typeof settings?.heroBackgroundImage === 'string' && settings.heroBackgroundImage !== '') {
+    heroBg = settings.heroBackgroundImage;
+  }
+
   return (
     <>
       <HeroSection 
-        title="DAZZ TRADELINK INTERNATIONAL"
-        subtitle="Empowering Industrial Excellence. Designed to meet the operational needs of industrial environments."
-        backgroundImage="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg"
+        title={heroTitle}
+        subtitle={heroSubtitle}
+        backgroundImage={heroBg}
       >
         <Link href="/about-us">
           <Button variant="primary">Discover Our Legacy</Button>
