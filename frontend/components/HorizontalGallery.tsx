@@ -25,7 +25,6 @@ export function HorizontalGallery() {
     const wrapper = wrapperRef.current;
     if (!wrapper) return;
 
-    // The distance to translate is the total width of the wrapper minus the viewport width
     const getScrollAmount = () => -(wrapper.scrollWidth - window.innerWidth);
 
     const tween = gsap.to(wrapper, {
@@ -38,25 +37,13 @@ export function HorizontalGallery() {
       start: 'top top',
       end: () => `+=${getScrollAmount() * -1}`,
       pin: true,
+      anticipatePin: 1,
       animation: tween,
       scrub: 1,
-      invalidateOnRefresh: true
+      invalidateOnRefresh: true,
     });
 
-    // Parallax effect on images within the horizontal scroll
-    const images = gsap.utils.toArray<HTMLElement>('.gallery-img-inner');
-    images.forEach((img) => {
-      gsap.to(img, {
-        xPercent: 15,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top top',
-          end: () => `+=${getScrollAmount() * -1}`,
-          scrub: 1
-        }
-      });
-    });
+    setTimeout(() => ScrollTrigger.refresh(), 200);
 
   }, { scope: sectionRef });
 

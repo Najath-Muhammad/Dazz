@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from "next/font/google";
 import { CustomCursor } from "@/components/CustomCursor";
+import { GSAPRefresher } from "@/components/GSAPRefresher";
 import './globals.css';
 
 const geistSans = Geist({
@@ -55,6 +56,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <CustomCursor />
+        <GSAPRefresher />
         {children}
       </body>
     </html>

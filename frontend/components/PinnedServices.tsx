@@ -53,50 +53,52 @@ export function PinnedServices() {
   useGSAP(() => {
     const panels = gsap.utils.toArray<HTMLElement>('.service-panel');
     const images = gsap.utils.toArray<HTMLElement>('.service-image');
-    
-    // Set all images except first to opacity 0 and scale up
-    gsap.set(images.slice(1), { opacity: 0, scale: 1.1, clipPath: 'inset(100% 0% 0% 0%)' });
-    gsap.set(images[0], { clipPath: 'inset(0% 0% 0% 0%)' });
+
+    if (!panels.length || !images.length) return;
+
+    // Set all images except first to hidden
+    gsap.set(images.slice(1), { opacity: 0, scale: 1.05 });
+    gsap.set(images[0], { opacity: 1, scale: 1 });
 
     // Create the master scroll timeline
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: containerRef.current,
         start: 'top top',
-        end: `+=${panels.length * 100}%`,
+        end: `+=${(panels.length - 1) * window.innerHeight}`,
         pin: true,
-        scrub: 1,
+        scrub: 1.5,
+        anticipatePin: 1,
+        onRefresh: () => ScrollTrigger.refresh(),
       }
     });
 
-    // For each panel (except the first one, which is already visible)
-    panels.forEach((panel: any, i) => {
+    panels.forEach((_panel: any, i) => {
       if (i === 0) return;
 
-      // Animate text moving up
       tl.to(leftColRef.current, {
         yPercent: -100 * i,
         ease: 'none',
         duration: 1
-      }, i * 1);
+      }, i - 1);
 
-      // Animate next image revealing
       tl.to(images[i], {
         opacity: 1,
-        clipPath: 'inset(0% 0% 0% 0%)',
         scale: 1,
-        duration: 1,
+        duration: 0.8,
         ease: 'power2.inOut'
-      }, i * 1 - 0.2);
+      }, i - 1);
 
-      // Scale down previous image
       tl.to(images[i - 1], {
-        scale: 0.9,
+        scale: 0.95,
         opacity: 0,
-        duration: 1,
+        duration: 0.8,
         ease: 'power2.inOut'
-      }, i * 1 - 0.2);
+      }, i - 1);
     });
+
+    // Force refresh after everything is set up
+    setTimeout(() => ScrollTrigger.refresh(), 100);
 
   }, { scope: containerRef });
 
