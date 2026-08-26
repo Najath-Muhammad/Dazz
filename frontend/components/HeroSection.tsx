@@ -53,26 +53,21 @@ export function HeroSection({ title, subtitle, backgroundImage, children }: Hero
       "-=0.6"
     );
 
-    // SCROLL-DRIVEN TRANSFORMATION
-    // Pin the hero section and transform it as the user scrolls
+    // SCROLL-DRIVEN PARALLAX (No Pinning for smoother experience)
     ScrollTrigger.create({
       trigger: containerRef.current,
       start: 'top top',
-      end: '+=100%', // Pin for 100vh
-      pin: true,
-      scrub: 1,
+      end: 'bottom top', // Animates while the hero is scrolling out of view
+      scrub: true,
       animation: gsap.timeline()
         .to(imageRef.current, { 
-          scale: 1.05, // Parallax zoom in instead of scaling down
-          y: '15vh', // Move down slightly
-          filter: 'blur(10px) brightness(0.6)', // Add blur and darken slightly
-          ease: 'power1.inOut' 
-        })
+          y: '30%', // Slower parallax scroll for the background
+          ease: 'none' 
+        }, 0)
         .to(textRef.current, { 
-          y: '-10vh', 
+          y: '40%', // Text scrolls slightly faster
           opacity: 0, 
-          filter: 'blur(10px)', // Blur the text as it fades
-          ease: 'power1.in' 
+          ease: 'none' 
         }, 0)
     });
 
