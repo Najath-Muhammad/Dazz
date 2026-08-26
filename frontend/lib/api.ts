@@ -38,12 +38,18 @@ export const api = {
     return res.data.data as T;
   },
   post: async <T>(url: string, data: any): Promise<T> => {
-    const res = await apiClient.post<ApiResponse<T>>(url, data);
+    const isFormData = data instanceof FormData;
+    const res = await apiClient.post<ApiResponse<T>>(url, data, {
+      headers: isFormData ? { 'Content-Type': 'multipart/form-data' } : undefined
+    });
     if (!res.data.success) throw new Error(res.data.message);
     return res.data.data as T;
   },
   put: async <T>(url: string, data: any): Promise<T> => {
-    const res = await apiClient.put<ApiResponse<T>>(url, data);
+    const isFormData = data instanceof FormData;
+    const res = await apiClient.put<ApiResponse<T>>(url, data, {
+      headers: isFormData ? { 'Content-Type': 'multipart/form-data' } : undefined
+    });
     if (!res.data.success) throw new Error(res.data.message);
     return res.data.data as T;
   },
