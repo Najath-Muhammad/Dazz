@@ -7,6 +7,10 @@ export interface ISiteSettings extends Document {
   phoneNumber: string;
   whatsappNumber?: string;
   websiteUrl?: string;
+  heroTitle?: string;
+  heroSubtitle?: string;
+  heroBackgroundImage?: mongoose.Schema.Types.Mixed;
+  aboutUsText?: string;
   address: LocalizedString;
   workingHours: LocalizedString;
   mapConfig: {
@@ -31,6 +35,10 @@ const SiteSettingsSchema: Schema = new Schema({
   phoneNumber: { type: String, required: true },
   whatsappNumber: { type: String },
   websiteUrl: { type: String },
+  heroTitle: { type: String },
+  heroSubtitle: { type: String },
+  heroBackgroundImage: { type: mongoose.Schema.Types.Mixed },
+  aboutUsText: { type: String },
   address: LocalizedStringSchema,
   workingHours: LocalizedStringSchema,
   mapConfig: {

@@ -5,10 +5,10 @@ import { api } from '@/lib/api';
 import { MediaUploader } from '@/components/admin/MediaUploader';
 
 export default function AdminSettingsPage() {
-  const [settings, setSettings] = useState({
-    siteName: 'DAZZ Tradelink',
+  const [settings, setSettings] = useState<any>({
+    companyName: { en: 'DAZZ Tradelink', ar: '' },
     contactEmail: '',
-    contactPhone: '',
+    phoneNumber: '',
     heroTitle: '',
     heroSubtitle: '',
     heroBackgroundImage: '',
@@ -22,11 +22,13 @@ export default function AdminSettingsPage() {
     const fetchSettings = async () => {
       try {
         const data = await api.get<any>('/settings');
-        if (data) {
+        if (data && Array.isArray(data) && data.length > 0) {
+          setSettings(data[0]);
+        } else if (data && !Array.isArray(data) && Object.keys(data).length > 0) {
           setSettings(data);
         }
       } catch (err) {
-        console.error('Failed to fetch settings');
+        console.error('Failed to fetch settings:', err);
       } finally {
         setLoading(false);
       }
@@ -43,7 +45,11 @@ export default function AdminSettingsPage() {
     setSaving(true);
     setMessage('');
     try {
-      await api.put('/settings', settings);
+      if (settings._id) {
+        await api.put(`/settings/${settings._id}`, settings);
+      } else {
+        await api.post('/settings', settings);
+      }
       setMessage('Settings updated successfully!');
     } catch (err: any) {
       setMessage(err.message || 'Failed to update settings');
@@ -70,17 +76,17 @@ export default function AdminSettingsPage() {
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-1">Hero Title</label>
-              <input type="text" name="heroTitle" value={settings.heroTitle} onChange={handleChange} className="w-full border border-slate-300 rounded-md px-4 py-2" />
+              <input type="text" name="heroTitle" value={settings.heroTitle || ''} onChange={handleChange} className="w-full border border-slate-300 rounded-md px-4 py-2" />
             </div>
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-1">Hero Subtitle</label>
-              <textarea name="heroSubtitle" rows={3} value={settings.heroSubtitle} onChange={handleChange} className="w-full border border-slate-300 rounded-md px-4 py-2"></textarea>
+              <textarea name="heroSubtitle" rows={3} value={settings.heroSubtitle || ''} onChange={handleChange} className="w-full border border-slate-300 rounded-md px-4 py-2"></textarea>
             </div>
             <div>
               <MediaUploader
                 label="Hero Background Image/Video URL"
                 folder="dazz/homepage"
-                value={settings.heroBackgroundImage}
+                value={settings.heroBackgroundImage || ''}
                 onChange={(media) => setSettings({ ...settings, heroBackgroundImage: media as any })}
               />
             </div>
@@ -92,11 +98,11 @@ export default function AdminSettingsPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-1">Contact Email</label>
-              <input type="email" name="contactEmail" value={settings.contactEmail} onChange={handleChange} className="w-full border border-slate-300 rounded-md px-4 py-2" />
+              <input type="email" name="contactEmail" value={settings.contactEmail || ''} onChange={handleChange} className="w-full border border-slate-300 rounded-md px-4 py-2" />
             </div>
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-1">Contact Phone</label>
-              <input type="text" name="contactPhone" value={settings.contactPhone} onChange={handleChange} className="w-full border border-slate-300 rounded-md px-4 py-2" />
+              <input type="text" name="phoneNumber" value={settings.phoneNumber || ''} onChange={handleChange} className="w-full border border-slate-300 rounded-md px-4 py-2" />
             </div>
           </div>
         </div>
