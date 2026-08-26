@@ -62,8 +62,18 @@ export function HeroSection({ title, subtitle, backgroundImage, children }: Hero
       pin: true,
       scrub: 1,
       animation: gsap.timeline()
-        .to(imageRef.current, { scale: 0.85, opacity: 0.3, y: '10vh', ease: 'none' })
-        .to(textRef.current, { y: '-15vh', opacity: 0, scale: 0.95, ease: 'none' }, 0)
+        .to(imageRef.current, { 
+          scale: 1.05, // Parallax zoom in instead of scaling down
+          y: '15vh', // Move down slightly
+          filter: 'blur(10px) brightness(0.6)', // Add blur and darken slightly
+          ease: 'power1.inOut' 
+        })
+        .to(textRef.current, { 
+          y: '-10vh', 
+          opacity: 0, 
+          filter: 'blur(10px)', // Blur the text as it fades
+          ease: 'power1.in' 
+        }, 0)
     });
 
   }, { scope: containerRef });
