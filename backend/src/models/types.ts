@@ -8,6 +8,11 @@ export const LocalizedStringSchema = {
   ar: { type: String, required: true }
 };
 
+export const OptionalLocalizedStringSchema = {
+  en: { type: String, default: '' },
+  ar: { type: String, default: '' }
+};
+
 export interface Media {
   url: string;
   publicId: string | null;

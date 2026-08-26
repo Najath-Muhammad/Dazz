@@ -1,26 +1,26 @@
 import mongoose, { Schema, Document } from 'mongoose';
-import { LocalizedString, LocalizedStringSchema } from './types';
+import { LocalizedString, OptionalLocalizedStringSchema } from './types';
 
 export interface ISiteSettings extends Document {
   companyName: LocalizedString;
-  contactEmail: string;
-  phoneNumber: string;
+  contactEmail?: string;
+  phoneNumber?: string;
   whatsappNumber?: string;
   websiteUrl?: string;
   heroTitle?: string;
   heroSubtitle?: string;
   heroBackgroundImage?: mongoose.Schema.Types.Mixed;
   aboutUsText?: string;
-  address: LocalizedString;
-  workingHours: LocalizedString;
-  mapConfig: {
+  address?: LocalizedString;
+  workingHours?: LocalizedString;
+  mapConfig?: {
     latitude: number;
     longitude: number;
     address: LocalizedString;
     markerTitle: LocalizedString;
     zoom: number;
   };
-  socialLinks: {
+  socialLinks?: {
     linkedin?: string;
     instagram?: string;
     facebook?: string;
@@ -30,22 +30,22 @@ export interface ISiteSettings extends Document {
 }
 
 const SiteSettingsSchema: Schema = new Schema({
-  companyName: LocalizedStringSchema,
-  contactEmail: { type: String, required: true },
-  phoneNumber: { type: String, required: true },
-  whatsappNumber: { type: String },
-  websiteUrl: { type: String },
-  heroTitle: { type: String },
-  heroSubtitle: { type: String },
+  companyName: OptionalLocalizedStringSchema,
+  contactEmail: { type: String, default: '' },
+  phoneNumber: { type: String, default: '' },
+  whatsappNumber: { type: String, default: '' },
+  websiteUrl: { type: String, default: '' },
+  heroTitle: { type: String, default: '' },
+  heroSubtitle: { type: String, default: '' },
   heroBackgroundImage: { type: mongoose.Schema.Types.Mixed },
-  aboutUsText: { type: String },
-  address: LocalizedStringSchema,
-  workingHours: LocalizedStringSchema,
+  aboutUsText: { type: String, default: '' },
+  address: OptionalLocalizedStringSchema,
+  workingHours: OptionalLocalizedStringSchema,
   mapConfig: {
     latitude: { type: Number, default: 24.7136 },
-    longitude: { type: Number, default: 46.6753 }, // Default Riyadh
-    address: LocalizedStringSchema,
-    markerTitle: LocalizedStringSchema,
+    longitude: { type: Number, default: 46.6753 },
+    address: OptionalLocalizedStringSchema,
+    markerTitle: OptionalLocalizedStringSchema,
     zoom: { type: Number, default: 12 }
   },
   socialLinks: {
