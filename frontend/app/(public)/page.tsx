@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import Image from 'next/image';
+import { MediaRenderer } from '@/components/MediaRenderer';
 import { HeroSection } from '@/components/HeroSection';
 import { SectionTitle } from '@/components/SectionTitle';
 import { Container } from '@/components/Container';
@@ -103,7 +103,7 @@ export default function HomePage() {
             </div>
             <ScrollReveal delay={0.3} direction="left">
               <div className="relative h-96 w-full rounded-lg overflow-hidden border border-slate-700 shadow-2xl">
-                <Image src="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg" alt="Industrial Operations" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover opacity-80 hover:opacity-100 transition-opacity duration-500" />
+                <MediaRenderer media="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg" altText="Industrial Operations" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover opacity-80 hover:opacity-100 transition-opacity duration-500" />
                 <div className="absolute inset-0 bg-dazz-navy/20 mix-blend-overlay"></div>
               </div>
             </ScrollReveal>

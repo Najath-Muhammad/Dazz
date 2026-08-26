@@ -16,6 +16,7 @@ export function ServiceCard({ title, description, imageUrl, href }: ServiceCardP
         <MediaRenderer
           media={imageUrl}
           fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           className="object-cover transition-transform duration-500 group-hover:scale-105"
         />
         <div className="absolute inset-0 bg-slate-900/10 group-hover:bg-transparent transition-colors duration-300" />

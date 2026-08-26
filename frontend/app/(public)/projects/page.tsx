@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 async function getProjects() {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/projects`, { cache: 'no-store' });
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/projects`, { next: { revalidate: 60 } });
     if (!res.ok) return [];
     return res.json();
   } catch (error) {

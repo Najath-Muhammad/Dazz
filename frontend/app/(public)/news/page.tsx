@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 async function getBlogs() {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/blogs`, { cache: 'no-store' });
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/blogs`, { next: { revalidate: 60 } });
     if (!res.ok) return [];
     return res.json();
   } catch (error) {

@@ -1,12 +1,12 @@
 import React from 'react';
-import Image from 'next/image';
 import { Container } from './Container';
+import { MediaRenderer } from './MediaRenderer';
 
 interface ImageTextSectionProps {
   title: string;
   subtitle?: string;
   content: React.ReactNode;
-  imageUrl: string;
+  imageUrl: any;
   imageAlt: string;
   imagePosition?: 'left' | 'right';
   className?: string;
@@ -41,10 +41,11 @@ export function ImageTextSection({
           </div>
           <div className="flex-1 w-full">
             <div className="relative aspect-square md:aspect-[4/3] lg:aspect-square w-full rounded-sm overflow-hidden shadow-2xl">
-              <Image
-                src={imageUrl}
-                alt={imageAlt}
+              <MediaRenderer
+                media={imageUrl}
+                altText={imageAlt}
                 fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-cover"
               />
               <div className="absolute inset-0 ring-1 ring-inset ring-black/10 rounded-sm" />

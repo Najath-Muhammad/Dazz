@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { HeroSection } from '@/components/HeroSection';
 import { Container } from '@/components/Container';
-import Image from 'next/image';
+import { MediaRenderer } from '@/components/MediaRenderer';
 import Link from 'next/link';
 
 interface ProjectPageProps {
@@ -10,7 +10,7 @@ interface ProjectPageProps {
 
 async function getProject(slug: string) {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/projects/slug/${slug}`, { cache: 'no-store' });
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/projects/slug/${slug}`, { next: { revalidate: 60 } });
     if (!res.ok) return null;
     return res.json();
   } catch (error) {
@@ -64,13 +64,15 @@ export default async function ProjectSinglePage({ params }: ProjectPageProps) {
               <p>{project.description}</p>
               
               <div className="mt-12">
-                <Image 
-                  src={project.imageUrl} 
-                  alt={project.title} 
-                  width={800} 
-                  height={500} 
-                  className="w-full h-auto rounded-sm"
-                />
+                <div className="relative w-full aspect-[16/9] rounded-sm overflow-hidden">
+                  <MediaRenderer 
+                    media={project.imageUrl} 
+                    altText={project.title} 
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 66vw"
+                    className="object-cover"
+                  />
+                </div>
               </div>
             </div>
             <div className="bg-slate-50 p-8 border border-slate-100 h-fit">
