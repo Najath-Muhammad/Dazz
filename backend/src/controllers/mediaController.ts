@@ -2,8 +2,8 @@ import { Request, Response } from 'express';
 import cloudinary from '../utils/cloudinary';
 import streamifier from 'streamifier';
 
-import { ApiResponse } from '../../utils/ApiResponse';
-import { HTTP_STATUS, RESPONSE_MESSAGES } from '../../utils/constants';
+import { ApiResponse } from '../utils/ApiResponse';
+import { HTTP_STATUS, RESPONSE_MESSAGES } from '../utils/constants';
 
 export const uploadMedia = async (req: Request, res: Response): Promise<void> => {
   try {
