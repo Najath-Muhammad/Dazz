@@ -23,12 +23,35 @@ apiClient.interceptors.request.use(
   }
 );
 
-// Generic API Service wrapper
+// Define the standard ApiResponse shape
+export interface ApiResponse<T = any> {
+  success: boolean;
+  message: string;
+  data?: T;
+}
+
+// Generic API Service wrapper that automatically unwraps the standard ApiResponse
 export const api = {
-  get: <T>(url: string, params?: any) => apiClient.get<T>(url, { params }).then(res => res.data),
-  post: <T>(url: string, data: any) => apiClient.post<T>(url, data).then(res => res.data),
-  put: <T>(url: string, data: any) => apiClient.put<T>(url, data).then(res => res.data),
-  delete: <T>(url: string) => apiClient.delete<T>(url).then(res => res.data),
+  get: async <T>(url: string, params?: any): Promise<T> => {
+    const res = await apiClient.get<ApiResponse<T>>(url, { params });
+    if (!res.data.success) throw new Error(res.data.message);
+    return res.data.data as T;
+  },
+  post: async <T>(url: string, data: any): Promise<T> => {
+    const res = await apiClient.post<ApiResponse<T>>(url, data);
+    if (!res.data.success) throw new Error(res.data.message);
+    return res.data.data as T;
+  },
+  put: async <T>(url: string, data: any): Promise<T> => {
+    const res = await apiClient.put<ApiResponse<T>>(url, data);
+    if (!res.data.success) throw new Error(res.data.message);
+    return res.data.data as T;
+  },
+  delete: async <T>(url: string): Promise<T> => {
+    const res = await apiClient.delete<ApiResponse<T>>(url);
+    if (!res.data.success) throw new Error(res.data.message);
+    return res.data.data as T;
+  },
 };
 
 export default api;

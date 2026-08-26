@@ -11,9 +11,16 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 5000;
 
+// Enable CORS before any security middleware that might block preflight
+app.use(cors({
+  origin: function (origin, callback) {
+    callback(null, true);
+  },
+  credentials: true
+}));
+
 // Security Middleware
 app.use(helmet());
-app.use(mongoSanitize());
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 100,
@@ -21,7 +28,6 @@ const limiter = rateLimit({
 });
 app.use('/api', limiter);
 
-app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

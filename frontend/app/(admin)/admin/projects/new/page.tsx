@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import api from '@/lib/api';
+import { projectService } from '@/services/projectService';
 import { Button } from '@/components/Button';
 
 export default function AdminNewProjectPage() {
@@ -36,10 +36,10 @@ export default function AdminNewProjectPage() {
     setError('');
 
     try {
-      await api.post('/projects', formData);
+      await projectService.createProject(formData);
       router.push('/admin/projects');
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Failed to create project');
+      setError(err.message || 'Failed to create project');
       setLoading(false);
     }
   };

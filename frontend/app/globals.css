@@ -10,6 +10,14 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  
+  /* DAZZ Tradelink Brand Colors */
+  --color-dazz-navy: #0B1E36;
+  --color-dazz-navy-light: #1A2F4C;
+  --color-dazz-navy-dark: #051020;
+  --color-dazz-gold: #C5A059;
+  --color-dazz-gold-light: #E2C787;
+  --color-dazz-gold-dark: #9E7D3F;
 }
 
 @media (prefers-color-scheme: dark) {

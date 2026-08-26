@@ -7,6 +7,7 @@ import { CTASection } from '@/components/CTASection';
 import { ProjectCard } from '@/components/ProjectCard';
 import { BlogCard } from '@/components/BlogCard';
 import { ServiceCard } from '@/components/ServiceCard';
+import { ScrollReveal } from '@/components/ScrollReveal';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
@@ -33,7 +34,7 @@ export default function HomePage() {
   return (
     <>
       <HeroSection 
-        title="DAZZ TRADLINK INTERNATIONAL"
+        title="DAZZ TRADELINK INTERNATIONAL"
         subtitle="Empowering Industrial Excellence. Designed to meet the operational needs of industrial environments."
         backgroundImage="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg"
       >
@@ -45,64 +46,100 @@ export default function HomePage() {
         </Link>
       </HeroSection>
 
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-white overflow-hidden">
         <Container>
           <div className="max-w-3xl">
-            <SectionTitle title="Proudly Operating Across The Kingdom" subtitle="We Are In Saudi Arabia" />
-            <p className="text-lg text-slate-600 mb-8 leading-relaxed">
-              Proudly operating across the Kingdom, delivering trusted solutions and building stronger communities. With a nationwide presence and local expertise meeting global standards, we are committed to Saudi Vision 2030 and building long-term partnerships.
-            </p>
-            <Link href="/about-us">
-              <Button variant="outline">Learn More About Us</Button>
-            </Link>
+            <ScrollReveal>
+              <SectionTitle title="Proudly Operating Across The Kingdom" subtitle="We Are In Saudi Arabia" />
+            </ScrollReveal>
+            
+            <ScrollReveal delay={0.2}>
+              <p className="text-lg text-slate-600 mb-8 leading-relaxed">
+                Proudly operating across the Kingdom, delivering trusted solutions and building stronger communities. With a nationwide presence and local expertise meeting global standards, we are committed to Saudi Vision 2030 and building long-term partnerships.
+              </p>
+            </ScrollReveal>
+            
+            <ScrollReveal delay={0.4}>
+              <Link href="/about-us">
+                <Button variant="outline">Learn More About Us</Button>
+              </Link>
+            </ScrollReveal>
           </div>
         </Container>
       </section>
 
-      <section className="py-24 bg-slate-50">
+
+      {/* Divisions Section */}
+      <section className="py-24 bg-slate-50 overflow-hidden">
         <Container>
-          <SectionTitle title="Our Divisions" subtitle="Capabilities" alignment="center" />
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
-            <ServiceCard 
-              title="Construction" 
-              description="Engineering and building state-of-the-art infrastructure."
-              imageUrl="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg"
-              href="/construction"
-            />
-            <ServiceCard 
-              title="Food Trading" 
-              description="Global sourcing and distribution of premium commodities."
-              imageUrl="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg"
-              href="/food-trading"
-            />
-            <ServiceCard 
-              title="Logistics" 
-              description="End-to-end supply chain and freight forwarding."
-              imageUrl="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg"
-              href="/logistics"
-            />
-            <ServiceCard 
-              title="Hospitality" 
-              description="Delivering world-class experiences and facility management."
-              imageUrl="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg"
-              href="/hospitality"
-            />
+          <div className="mb-16">
+            <ScrollReveal>
+              <SectionTitle title="Our Core Divisions" subtitle="What We Do" />
+            </ScrollReveal>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <ScrollReveal delay={0.1} direction="up"><ServiceCard title="Construction" description="Building the future with precision engineering and sustainable practices." imageUrl="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg" href="/construction" /></ScrollReveal>
+            <ScrollReveal delay={0.2} direction="up"><ServiceCard title="Food Trading" description="Global sourcing and distribution of premium quality food products." imageUrl="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg" href="/food-trading" /></ScrollReveal>
+            <ScrollReveal delay={0.3} direction="up"><ServiceCard title="Logistics" description="End-to-end supply chain solutions and fleet management." imageUrl="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg" href="/logistics" /></ScrollReveal>
+            <ScrollReveal delay={0.4} direction="up"><ServiceCard title="Hospitality" description="Delivering exceptional service and world-class guest experiences." imageUrl="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg" href="/hospitality" /></ScrollReveal>
           </div>
         </Container>
       </section>
 
-      <section className="py-24 bg-white">
+      {/* Capabilities Section */}
+      <section className="py-24 bg-dazz-navy text-white overflow-hidden">
         <Container>
-          <div className="flex justify-between items-end mb-12">
-            <SectionTitle title="Featured Projects" subtitle="Portfolio" className="mb-0" />
-            <Link href="/projects" className="hidden md:block">
-              <Button variant="ghost">View All Projects</Button>
-            </Link>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div>
+              <ScrollReveal direction="right">
+                <SectionTitle title="Innovative & Collaborative" subtitle="Our Approach" />
+              </ScrollReveal>
+              <ScrollReveal delay={0.2} direction="right">
+                <p className="text-lg text-slate-300 mb-6">
+                  DAZZ Tradelink is built on a foundation of innovation and collaboration. We continuously invest in modern technologies, advanced machinery, and sustainable methods to ensure our operations are future-proof.
+                </p>
+                <p className="text-lg text-slate-300 mb-8">
+                  Whether it is large-scale contracting or global trading, our teams work seamlessly to exceed expectations and deliver measurable success.
+                </p>
+              </ScrollReveal>
+              <ScrollReveal delay={0.4} direction="right">
+                <ul className="space-y-4 mb-8">
+                  <li className="flex items-center text-slate-300"><span className="text-dazz-gold mr-3">✓</span> ISO Certified Standards</li>
+                  <li className="flex items-center text-slate-300"><span className="text-dazz-gold mr-3">✓</span> 500+ Specialized Workforce</li>
+                  <li className="flex items-center text-slate-300"><span className="text-dazz-gold mr-3">✓</span> Advanced Heavy Equipment Fleet</li>
+                </ul>
+                <Link href="/contact">
+                  <Button variant="primary">Partner With Us</Button>
+                </Link>
+              </ScrollReveal>
+            </div>
+            <ScrollReveal delay={0.3} direction="left">
+              <div className="relative h-96 w-full rounded-lg overflow-hidden border border-slate-700 shadow-2xl">
+                <img src="https://images.unsplash.com/photo-1541888086925-0c770f4e7d17?auto=format&fit=crop&q=80" alt="Industrial Operations" className="object-cover w-full h-full opacity-80 hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute inset-0 bg-dazz-navy/20 mix-blend-overlay"></div>
+              </div>
+            </ScrollReveal>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <ProjectCard title="Downtown Skyscraper" category="Construction" imageUrl="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg" slug="downtown-skyscraper" />
-            <ProjectCard title="Global Supply Hub" category="Logistics" imageUrl="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg" slug="global-supply-hub" />
-            <ProjectCard title="Luxury Resort Complex" category="Hospitality" imageUrl="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg" slug="luxury-resort-complex" />
+        </Container>
+      </section>
+
+      {/* Featured Projects */}
+      <section className="py-24 bg-white overflow-hidden">
+        <Container>
+          <div className="flex justify-between items-end mb-16">
+            <ScrollReveal>
+              <SectionTitle title="Featured Projects" subtitle="Our Portfolio" />
+            </ScrollReveal>
+            <ScrollReveal delay={0.2}>
+              <Link href="/projects" className="text-dazz-navy hover:text-dazz-gold font-semibold hidden md:block transition-colors">
+                View All Projects &rarr;
+              </Link>
+            </ScrollReveal>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <ScrollReveal delay={0.1}><ProjectCard title="Riyadh Metro Extension" category="Construction" imageUrl="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg" slug="riyadh-metro" /></ScrollReveal>
+            <ScrollReveal delay={0.2}><ProjectCard title="Jeddah Port Logistics Hub" category="Logistics" imageUrl="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg" slug="jeddah-port" /></ScrollReveal>
+            <ScrollReveal delay={0.3}><ProjectCard title="NEOM Supply Chain" category="Trading" imageUrl="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg" slug="neom-supply" /></ScrollReveal>
           </div>
         </Container>
       </section>

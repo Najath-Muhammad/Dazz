@@ -1,0 +1,24 @@
+import { IBlogRepository } from '../interfaces/IBlogRepository';
+import Blog from '../../models/Blog';
+
+export class BlogRepository implements IBlogRepository {
+  async findAll(): Promise<any[]> {
+    return await Blog.find();
+  }
+  async findById(id: string): Promise<any | null> {
+    return await Blog.findById(id);
+  }
+  async findBySlug(slug: string): Promise<any | null> {
+    return await Blog.findOne({ slug });
+  }
+  async create(data: any): Promise<any> {
+    const newItem = new Blog(data);
+    return await newItem.save();
+  }
+  async update(id: string, data: any): Promise<any | null> {
+    return await Blog.findByIdAndUpdate(id, data, { new: true });
+  }
+  async delete(id: string): Promise<any | null> {
+    return await Blog.findByIdAndDelete(id);
+  }
+}

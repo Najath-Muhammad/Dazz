@@ -1,25 +1,41 @@
 import mongoose, { Schema, Document } from 'mongoose';
+import { LocalizedString, LocalizedStringSchema } from './types';
 
 export interface IProject extends Document {
-  title: string;
+  title: LocalizedString;
   slug: string;
-  category: string;
-  description: string;
-  imageUrl: string;
-  client?: string;
-  location?: string;
-  completionDate?: string;
+  category: LocalizedString;
+  description: LocalizedString;
+  coverImage: string;
+  galleryImages: string[];
+  location?: LocalizedString;
+  year?: string;
+  isPublished: boolean;
+  metaTitle?: LocalizedString;
+  metaDescription?: LocalizedString;
 }
 
 const ProjectSchema: Schema = new Schema({
-  title: { type: String, required: true },
+  title: LocalizedStringSchema,
   slug: { type: String, required: true, unique: true },
-  category: { type: String, required: true },
-  description: { type: String, required: true },
-  imageUrl: { type: String, required: true },
-  client: { type: String },
-  location: { type: String },
-  completionDate: { type: String },
+  category: LocalizedStringSchema,
+  description: LocalizedStringSchema,
+  coverImage: { type: String, required: true },
+  galleryImages: [{ type: String }],
+  location: {
+    en: { type: String },
+    ar: { type: String }
+  },
+  year: { type: String },
+  isPublished: { type: Boolean, default: true },
+  metaTitle: {
+    en: { type: String },
+    ar: { type: String }
+  },
+  metaDescription: {
+    en: { type: String },
+    ar: { type: String }
+  }
 }, { timestamps: true });
 
 export default mongoose.model<IProject>('Project', ProjectSchema);

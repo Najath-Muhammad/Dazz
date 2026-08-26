@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
-import api from '@/lib/api';
+import { authService } from '@/services/authService';
 
 export default function AdminLoginPage() {
   const router = useRouter();
@@ -17,7 +17,7 @@ export default function AdminLoginPage() {
     setLoading(true);
 
     try {
-      const data: any = await api.post('/auth/login', { email, password });
+      const data = await authService.login({ email, password });
       
       if (data.token) {
         // Set cookie for Next.js middleware and client usage

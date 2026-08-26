@@ -1,12 +1,20 @@
-import { Router } from 'express';
-import { getJobs, getJobById, createJob, updateJob, deleteJob } from '../controllers/jobController';
+import express from 'express';
+import { protect } from '../middlewares/authMiddleware';
+import { JobRepository } from '../repositories/implementations/JobRepository';
+import { JobService } from '../services/implementations/JobService';
+import { JobController } from '../controllers/implementations/JobController';
 
-const router = Router();
+const router = express.Router();
 
-router.get('/', getJobs);
-router.get('/:id', getJobById);
-router.post('/', createJob);
-router.put('/:id', updateJob);
-router.delete('/:id', deleteJob);
+const repository = new JobRepository();
+const service = new JobService(repository);
+const controller = new JobController(service);
+
+router.get('/', controller.getJobs);
+router.get('/:id', controller.getJobById);
+
+router.post('/', protect, controller.createJob);
+router.put('/:id', protect, controller.updateJob);
+router.delete('/:id', protect, controller.deleteJob);
 
 export default router;

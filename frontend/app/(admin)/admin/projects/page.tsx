@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import api from '@/lib/api';
+import { projectService } from '@/services/projectService';
 import { Button } from '@/components/Button';
 
 export default function AdminProjectsPage() {
@@ -11,7 +11,7 @@ export default function AdminProjectsPage() {
 
   const fetchProjects = async () => {
     try {
-      const data: any = await api.get('/projects');
+      const data = await projectService.getProjects();
       setProjects(data);
     } catch (err) {
       setError('Failed to fetch projects');
@@ -27,7 +27,7 @@ export default function AdminProjectsPage() {
   const handleDelete = async (id: string) => {
     if (window.confirm('Are you sure you want to delete this project?')) {
       try {
-        await api.delete(`/projects/${id}`);
+        await projectService.deleteProject(id);
         fetchProjects();
       } catch (err) {
         alert('Failed to delete project');
