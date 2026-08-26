@@ -69,7 +69,6 @@ export function PinnedServices() {
         pin: true,
         scrub: 1.5,
         anticipatePin: 1,
-        onRefresh: () => ScrollTrigger.refresh(),
       }
     });
 
