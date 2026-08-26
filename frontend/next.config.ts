@@ -1,11 +1,18 @@
 import type { NextConfig } from "next";
 
+import path from 'path';
+
 const nextConfig: NextConfig = {
+  outputFileTracingRoot: path.join(__dirname, '../../'),
   images: {
     remotePatterns: [
       {
         protocol: 'https',
         hostname: 'res.cloudinary.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
       },
     ],
   },
@@ -26,10 +33,11 @@ const nextConfig: NextConfig = {
             key: 'X-Frame-Options',
             value: 'SAMEORIGIN'
           },
-          {
-            key: 'X-Content-Type-Options',
-            value: 'nosniff'
-          },
+          // Removed X-Content-Type-Options because of Windows MIME type bugs with Next.js static chunks
+          // {
+          //   key: 'X-Content-Type-Options',
+          //   value: 'nosniff'
+          // },
           {
             key: 'Referrer-Policy',
             value: 'strict-origin-when-cross-origin'
