@@ -11,6 +11,7 @@ import { ServiceCard } from '@/components/ServiceCard';
 import { ScrollReveal } from '@/components/ScrollReveal';
 import { PinnedServices } from '@/components/PinnedServices';
 import { HorizontalGallery } from '@/components/HorizontalGallery';
+import { SaudiMapSection } from '@/components/SaudiMapSection';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
@@ -101,6 +102,8 @@ export default async function HomePage() {
         </Container>
       </section>
 
+
+      <SaudiMapSection />
 
       <PinnedServices />
 
