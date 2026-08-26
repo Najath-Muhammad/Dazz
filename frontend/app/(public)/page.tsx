@@ -9,6 +9,7 @@ import { BlogCard } from '@/components/BlogCard';
 import { ServiceCard } from '@/components/ServiceCard';
 import { ScrollReveal } from '@/components/ScrollReveal';
 import { PinnedServices } from '@/components/PinnedServices';
+import { HorizontalGallery } from '@/components/HorizontalGallery';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
@@ -109,26 +110,7 @@ export default function HomePage() {
         </Container>
       </section>
 
-      {/* Featured Projects */}
-      <section className="py-24 bg-white overflow-hidden">
-        <Container>
-          <div className="flex justify-between items-end mb-16">
-            <ScrollReveal>
-              <SectionTitle title="Featured Projects" subtitle="Our Portfolio" />
-            </ScrollReveal>
-            <ScrollReveal delay={0.2}>
-              <Link href="/projects" className="text-dazz-navy hover:text-dazz-gold font-semibold hidden md:block transition-colors">
-                View All Projects &rarr;
-              </Link>
-            </ScrollReveal>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <ScrollReveal delay={0.1}><ProjectCard title="Riyadh Metro Extension" category="Construction" imageUrl="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg" slug="riyadh-metro" /></ScrollReveal>
-            <ScrollReveal delay={0.2}><ProjectCard title="Jeddah Port Logistics Hub" category="Logistics" imageUrl="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg" slug="jeddah-port" /></ScrollReveal>
-            <ScrollReveal delay={0.3}><ProjectCard title="NEOM Supply Chain" category="Trading" imageUrl="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg" slug="neom-supply" /></ScrollReveal>
-          </div>
-        </Container>
-      </section>
+      <HorizontalGallery />
 
       <section className="py-24 bg-slate-50">
         <Container>
