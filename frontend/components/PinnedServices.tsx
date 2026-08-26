@@ -14,7 +14,7 @@ const servicesData = [
     id: '01',
     title: 'CONSTRUCTION',
     description: 'Building the future with precision engineering and sustainable practices. Delivering excellence across the Kingdom.',
-    image: 'https://images.unsplash.com/photo-1541888086925-0c770f4e7d17?auto=format&fit=crop&q=80',
+    image: 'https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg',
     link: '/construction',
     tagline: 'Building...'
   },
@@ -22,7 +22,7 @@ const servicesData = [
     id: '02',
     title: 'FOOD TRADING',
     description: 'Global sourcing and distribution of premium quality food products to ensure resilient supply chains.',
-    image: 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80',
+    image: 'https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg',
     link: '/food-trading',
     tagline: 'Connecting...'
   },
@@ -30,7 +30,7 @@ const servicesData = [
     id: '03',
     title: 'LOGISTICS',
     description: 'End-to-end supply chain solutions, advanced fleet management, and rapid distribution networks.',
-    image: 'https://images.unsplash.com/photo-1586528116311-ad8ed7c508c0?auto=format&fit=crop&q=80',
+    image: 'https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg',
     link: '/logistics',
     tagline: 'Moving...'
   },
@@ -38,7 +38,7 @@ const servicesData = [
     id: '04',
     title: 'HOSPITALITY',
     description: 'Delivering exceptional service and world-class guest experiences through premium property management.',
-    image: 'https://images.unsplash.com/photo-1551882547-ff40eb0d1b73?auto=format&fit=crop&q=80',
+    image: 'https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg',
     link: '/hospitality',
     tagline: 'Creating...'
   }
@@ -143,6 +143,7 @@ export function PinnedServices() {
                   src={service.image}
                   alt={service.title}
                   fill
+                  sizes="50vw"
                   className="object-cover"
                 />
                 <div className="absolute inset-0 bg-black/20" />

@@ -10,10 +10,10 @@ import { Container } from './Container';
 gsap.registerPlugin(ScrollTrigger);
 
 const sampleProjects = [
-  { id: '01', title: 'Riyadh Metro Extension', location: 'Riyadh', category: 'Construction', image: 'https://images.unsplash.com/photo-1541888086925-0c770f4e7d17?auto=format&fit=crop&q=80', slug: 'riyadh-metro' },
-  { id: '02', title: 'Jeddah Port Hub', location: 'Jeddah', category: 'Logistics', image: 'https://images.unsplash.com/photo-1586528116311-ad8ed7c508c0?auto=format&fit=crop&q=80', slug: 'jeddah-port' },
-  { id: '03', title: 'NEOM Supply Chain', location: 'NEOM', category: 'Trading', image: 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80', slug: 'neom-supply' },
-  { id: '04', title: 'Luxury Hotel Group', location: 'Riyadh', category: 'Hospitality', image: 'https://images.unsplash.com/photo-1551882547-ff40eb0d1b73?auto=format&fit=crop&q=80', slug: 'luxury-hotel' },
+  { id: '01', title: 'Riyadh Metro Extension', location: 'Riyadh', category: 'Construction', image: 'https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg', slug: 'riyadh-metro' },
+  { id: '02', title: 'Jeddah Port Hub', location: 'Jeddah', category: 'Logistics', image: 'https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg', slug: 'jeddah-port' },
+  { id: '03', title: 'NEOM Supply Chain', location: 'NEOM', category: 'Trading', image: 'https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg', slug: 'neom-supply' },
+  { id: '04', title: 'Luxury Hotel Group', location: 'Riyadh', category: 'Hospitality', image: 'https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg', slug: 'luxury-hotel' },
 ];
 
 export function HorizontalGallery() {
@@ -77,6 +77,7 @@ export function HorizontalGallery() {
                   src={project.image}
                   alt={project.title}
                   fill
+                  sizes="(max-width: 768px) 80vw, (max-width: 1024px) 50vw, 40vw"
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
               </div>

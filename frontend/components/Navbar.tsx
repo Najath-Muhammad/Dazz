@@ -7,14 +7,10 @@ import { useGSAP } from '@gsap/react';
 
 const navLinks = [
   { name: 'Home', href: '/' },
-  { name: 'About Us', href: '/about-us' },
-  { name: 'Construction', href: '/construction' },
-  { name: 'Food Trading', href: '/food-trading' },
-  { name: 'Logistics', href: '/logistics' },
-  { name: 'Hospitality', href: '/hospitality' },
-  { name: 'Project Gallery', href: '/projects' },
-  { name: 'News & Blog', href: '/news' },
-  { name: 'Contact', href: '/careers-contact' },
+  { name: 'Services', href: '/divisions-services' },
+  { name: 'Contact With Us', href: '/careers-contact' },
+  { name: 'Map', href: '/map' },
+  { name: 'Others', href: '/others' },
 ];
 
 export function Navbar() {
@@ -78,7 +74,7 @@ export function Navbar() {
             
             {/* Desktop Menu */}
             <div className="hidden lg:flex items-center space-x-8">
-              {navLinks.slice(0, 4).map((link) => (
+              {navLinks.slice(0, 5).map((link) => (
                 <Link
                   key={link.name}
                   href={link.href}

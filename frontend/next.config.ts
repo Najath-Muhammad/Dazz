@@ -4,6 +4,8 @@ import path from 'path';
 
 const nextConfig: NextConfig = {
   outputFileTracingRoot: path.join(__dirname, '../../'),
+  // @ts-ignore - this property might not be perfectly typed in some versions but Next.js requests it
+  allowedDevOrigins: ['172.23.224.1', 'localhost'],
   images: {
     remotePatterns: [
       {
