@@ -18,6 +18,15 @@
   --color-dazz-gold: #C5A059;
   --color-dazz-gold-light: #E2C787;
   --color-dazz-gold-dark: #9E7D3F;
+  
+  --animate-scroll-indicator: scroll-indicator 2s cubic-bezier(0.87, 0, 0.13, 1) infinite;
+  
+  @keyframes scroll-indicator {
+    0% { transform: scaleY(0); transform-origin: top; }
+    50% { transform: scaleY(1); transform-origin: top; }
+    51% { transform: scaleY(1); transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; }
+  }
 }
 
 @media (prefers-color-scheme: dark) {

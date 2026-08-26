@@ -1,8 +1,12 @@
 'use client';
-import React from 'react';
+import React, { useRef } from 'react';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
 import { Container } from './Container';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
+
+gsap.registerPlugin(ScrollTrigger);
 
 interface HeroSectionProps {
   title: string;
@@ -12,71 +16,106 @@ interface HeroSectionProps {
 }
 
 export function HeroSection({ title, subtitle, backgroundImage, children }: HeroSectionProps) {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: { 
-      opacity: 1,
-      transition: { staggerChildren: 0.2, delayChildren: 0.1 }
-    }
-  };
+  const containerRef = useRef<HTMLDivElement>(null);
+  const imageRef = useRef<HTMLDivElement>(null);
+  const textRef = useRef<HTMLDivElement>(null);
+  const titleLinesRef = useRef<HTMLHeadingElement>(null);
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
-      transition: { duration: 0.8, ease: [0.21, 0.47, 0.32, 0.98] as [number, number, number, number] } 
-    }
-  };
+  useGSAP(() => {
+    // Initial Load Cinematic Timeline
+    const tl = gsap.timeline();
+    
+    // 1. Image scale and opacity fade in
+    tl.fromTo(imageRef.current, 
+      { scale: 1.15, opacity: 0 },
+      { scale: 1, opacity: 1, duration: 1.8, ease: 'power3.out' }
+    );
+
+    // 2. Title mask reveal (split lines manually if possible, or just reveal as block)
+    tl.fromTo(titleLinesRef.current,
+      { y: 100, opacity: 0, clipPath: 'polygon(0 0, 100% 0, 100% 0, 0 0)' },
+      { y: 0, opacity: 1, clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)', duration: 1.2, ease: 'power4.out' },
+      "-=1.2"
+    );
+
+    // 3. Subtitle fade up
+    tl.fromTo('.hero-subtitle',
+      { y: 20, opacity: 0 },
+      { y: 0, opacity: 1, duration: 1, ease: 'power2.out' },
+      "-=0.8"
+    );
+
+    // 4. CTA button reveal
+    tl.fromTo('.hero-cta',
+      { y: 20, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.8, ease: 'power2.out' },
+      "-=0.6"
+    );
+
+    // SCROLL-DRIVEN TRANSFORMATION
+    // Pin the hero section and transform it as the user scrolls
+    ScrollTrigger.create({
+      trigger: containerRef.current,
+      start: 'top top',
+      end: '+=100%', // Pin for 100vh
+      pin: true,
+      scrub: 1,
+      animation: gsap.timeline()
+        .to(imageRef.current, { scale: 0.85, opacity: 0.3, y: '10vh', ease: 'none' })
+        .to(textRef.current, { y: '-15vh', opacity: 0, scale: 0.95, ease: 'none' }, 0)
+    });
+
+  }, { scope: containerRef });
 
   return (
-    <section className="relative bg-dazz-navy pt-32 pb-40 flex items-center min-h-[80vh] overflow-hidden">
-      {backgroundImage && (
-        <motion.div 
-          initial={{ scale: 1.1, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 1.5, ease: 'easeOut' }}
-          className="absolute inset-0 z-0"
-        >
+    <section ref={containerRef} className="relative bg-black h-screen overflow-hidden flex items-center justify-center">
+      
+      {/* Background Image Container */}
+      <div ref={imageRef} className="absolute inset-0 z-0 origin-center">
+        {backgroundImage && (
           <Image
             src={backgroundImage}
             alt="Hero Background"
             fill
-            className="object-cover opacity-20 mix-blend-overlay"
+            className="object-cover opacity-60 mix-blend-screen"
             priority
           />
-        </motion.div>
-      )}
-      <div className="absolute inset-0 bg-gradient-to-t from-dazz-navy-dark via-dazz-navy/80 to-transparent z-0" />
-      <Container className="relative z-10">
-        <motion.div 
-          className="max-w-3xl"
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          <motion.h1 
-            variants={itemVariants}
-            className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 leading-tight bg-clip-text text-transparent bg-gradient-to-r from-dazz-gold-light via-dazz-gold to-dazz-gold-dark"
-          >
-            {title}
-          </motion.h1>
-          <motion.p 
-            variants={itemVariants}
-            className="text-lg md:text-xl text-slate-300 mb-8 max-w-2xl leading-relaxed"
-          >
+        )}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/30 to-black/90 z-0" />
+      </div>
+
+      <Container className="relative z-10 w-full">
+        <div ref={textRef} className="max-w-4xl flex flex-col items-start justify-center">
+          
+          <div className="overflow-hidden mb-6">
+            <h1 
+              ref={titleLinesRef}
+              className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-[1.1] text-white"
+            >
+              {title}
+            </h1>
+          </div>
+          
+          <p className="hero-subtitle text-lg md:text-2xl text-slate-300 mb-8 max-w-2xl font-light tracking-wide leading-relaxed">
             {subtitle}
-          </motion.p>
+          </p>
+          
           {children && (
-            <motion.div variants={itemVariants} className="flex flex-wrap gap-4">
+            <div className="hero-cta flex flex-wrap gap-4 mt-4">
               {children}
-            </motion.div>
+            </div>
           )}
-        </motion.div>
+
+        </div>
       </Container>
       
-      {/* Decorative futuristic glow */}
-      <div className="absolute top-1/4 -right-64 w-96 h-96 bg-dazz-gold/20 blur-[120px] rounded-full pointer-events-none z-0" />
+      {/* Scroll Progress Indicator */}
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-20">
+        <span className="text-[10px] font-bold tracking-[0.3em] text-white/50 uppercase">Scroll</span>
+        <div className="w-[1px] h-12 bg-white/20 overflow-hidden relative">
+          <div className="absolute top-0 left-0 w-full h-full bg-white animate-scroll-indicator origin-top" />
+        </div>
+      </div>
     </section>
   );
 }
