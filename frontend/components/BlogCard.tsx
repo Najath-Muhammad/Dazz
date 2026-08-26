@@ -1,11 +1,11 @@
 import React from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
+import { MediaRenderer } from './MediaRenderer';
 
 interface BlogCardProps {
   title: string;
   excerpt: string;
-  imageUrl: string;
+  imageUrl: any;
   date: string;
   slug: string;
 }
@@ -14,9 +14,8 @@ export function BlogCard({ title, excerpt, imageUrl, date, slug }: BlogCardProps
   return (
     <article className="flex flex-col bg-white border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
       <Link href={`/news/${slug}`} className="relative h-56 w-full overflow-hidden block">
-        <Image
-          src={imageUrl}
-          alt={title}
+        <MediaRenderer
+          media={imageUrl}
           fill
           className="object-cover hover:scale-105 transition-transform duration-500"
         />

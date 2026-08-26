@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { projectService } from '@/services/projectService';
 import { Button } from '@/components/Button';
+import { MediaUploader } from '@/components/admin/MediaUploader';
 
 export default function AdminNewProjectPage() {
   const router = useRouter();
@@ -133,8 +134,12 @@ export default function AdminNewProjectPage() {
             <h3 className="text-lg font-bold text-slate-800 mb-4 border-b border-slate-200 pb-2">MEDIA & DETAILS</h3>
             <div className="grid grid-cols-1 gap-6">
               <div>
-                <label className="block text-xs font-bold text-slate-500 mb-2 tracking-widest uppercase">Cover Image URL (Cloudinary)</label>
-                <input required type="text" name="coverImage" value={formData.coverImage} onChange={handleStringChange} placeholder="https://res.cloudinary.com/..." className="w-full border border-slate-300 rounded-md px-4 py-2" />
+                <MediaUploader
+                  label="Cover Image / Video"
+                  folder="dazz/projects"
+                  value={formData.coverImage}
+                  onChange={(media) => setFormData({ ...formData, coverImage: media as any })}
+                />
               </div>
               <div>
                 <label className="block text-xs font-bold text-slate-500 mb-2 tracking-widest uppercase">Completion Year</label>

@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from '@/components/Button';
 import { api } from '@/lib/api';
+import { MediaUploader } from '@/components/admin/MediaUploader';
 
 export default function AdminNewServicePage() {
   const router = useRouter();
@@ -101,9 +102,15 @@ export default function AdminNewServicePage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Banner Image URL (Cloudinary)</label>
-            <input required type="text" name="bannerImageUrl" value={formData.content.bannerImageUrl} onChange={handleChange} placeholder="https://res.cloudinary.com/..." className="w-full border border-slate-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-dazz-navy focus:border-transparent outline-none" />
-            <p className="text-xs text-slate-500 mt-1">Upload your image to Cloudinary and paste the link here.</p>
+            <MediaUploader
+              label="Banner Image / Video URL (Cloudinary)"
+              folder="dazz/services"
+              value={formData.content.bannerImageUrl}
+              onChange={(media) => setFormData(prev => ({
+                ...prev,
+                content: { ...prev.content, bannerImageUrl: media as any }
+              }))}
+            />
           </div>
 
           <div>

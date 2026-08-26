@@ -1,11 +1,11 @@
 import React from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
+import { MediaRenderer } from './MediaRenderer';
 
 interface ServiceCardProps {
   title: string;
   description: string;
-  imageUrl: string;
+  imageUrl: any;
   href: string;
 }
 
@@ -13,9 +13,8 @@ export function ServiceCard({ title, description, imageUrl, href }: ServiceCardP
   return (
     <div className="group relative bg-white border border-slate-200 overflow-hidden hover:shadow-xl transition-all duration-300">
       <div className="relative h-64 w-full overflow-hidden">
-        <Image
-          src={imageUrl}
-          alt={title}
+        <MediaRenderer
+          media={imageUrl}
           fill
           className="object-cover transition-transform duration-500 group-hover:scale-105"
         />

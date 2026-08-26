@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/Button';
 import { api } from '@/lib/api';
+import { MediaUploader } from '@/components/admin/MediaUploader';
 
 export default function AdminSettingsPage() {
   const [settings, setSettings] = useState({
@@ -76,8 +77,12 @@ export default function AdminSettingsPage() {
               <textarea name="heroSubtitle" rows={3} value={settings.heroSubtitle} onChange={handleChange} className="w-full border border-slate-300 rounded-md px-4 py-2"></textarea>
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Hero Background Image/Video URL</label>
-              <input type="text" name="heroBackgroundImage" value={settings.heroBackgroundImage} onChange={handleChange} placeholder="https://..." className="w-full border border-slate-300 rounded-md px-4 py-2" />
+              <MediaUploader
+                label="Hero Background Image/Video URL"
+                folder="dazz/homepage"
+                value={settings.heroBackgroundImage}
+                onChange={(media) => setSettings({ ...settings, heroBackgroundImage: media as any })}
+              />
             </div>
           </div>
         </div>

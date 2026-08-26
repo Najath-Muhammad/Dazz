@@ -6,6 +6,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import { Container } from './Container';
+import { MediaRenderer } from './MediaRenderer';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -73,9 +74,8 @@ export function HorizontalGallery() {
           <div key={project.id} className="w-[80vw] md:w-[50vw] lg:w-[40vw] h-full flex flex-col justify-between flex-shrink-0 cursor-hover group">
             <div className="flex-1 w-full relative overflow-hidden rounded-md mb-6">
               <div className="gallery-img-inner absolute inset-0 w-[115%] h-full -left-[15%]">
-                <Image
-                  src={project.image}
-                  alt={project.title}
+                <MediaRenderer
+                  media={project.image}
                   fill
                   sizes="(max-width: 768px) 80vw, (max-width: 1024px) 50vw, 40vw"
                   className="object-cover transition-transform duration-700 group-hover:scale-105"

@@ -6,8 +6,8 @@ export interface IProject extends Document {
   slug: string;
   category: LocalizedString;
   description: LocalizedString;
-  coverImage: string;
-  galleryImages: string[];
+  coverImage: any;
+  galleryImages: any[];
   location?: LocalizedString;
   year?: string;
   isPublished: boolean;
@@ -20,8 +20,8 @@ const ProjectSchema: Schema = new Schema({
   slug: { type: String, required: true, unique: true },
   category: LocalizedStringSchema,
   description: LocalizedStringSchema,
-  coverImage: { type: String, required: true },
-  galleryImages: [{ type: String }],
+  coverImage: { type: Schema.Types.Mixed, required: true },
+  galleryImages: [{ type: Schema.Types.Mixed }],
   location: {
     en: { type: String },
     ar: { type: String }

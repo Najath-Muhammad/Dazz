@@ -6,7 +6,7 @@ export interface IBlog extends Document {
   slug: string;
   excerpt: LocalizedString;
   content: LocalizedString;
-  coverImage: string;
+  coverImage: any;
   author?: string;
   publishedAt?: Date;
   category?: LocalizedString;
@@ -20,7 +20,7 @@ const BlogSchema: Schema = new Schema({
   slug: { type: String, required: true, unique: true },
   excerpt: LocalizedStringSchema,
   content: LocalizedStringSchema,
-  coverImage: { type: String, required: true },
+  coverImage: { type: Schema.Types.Mixed, required: true },
   author: { type: String },
   publishedAt: { type: Date, default: Date.now },
   category: {

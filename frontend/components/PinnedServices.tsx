@@ -3,6 +3,7 @@ import React, { useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Container } from './Container';
+import { MediaRenderer } from './MediaRenderer';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
@@ -139,9 +140,8 @@ export function PinnedServices() {
           {servicesData.map((service, index) => (
             <div key={service.id} className="service-image absolute inset-0 w-full h-full p-10">
               <div className="w-full h-full relative overflow-hidden rounded-2xl">
-                <Image
-                  src={service.image}
-                  alt={service.title}
+                <MediaRenderer
+                  media={service.image}
                   fill
                   sizes="50vw"
                   className="object-cover"

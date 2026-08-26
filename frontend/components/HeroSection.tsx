@@ -5,13 +5,14 @@ import { Container } from './Container';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
+import { MediaRenderer } from './MediaRenderer';
 
 gsap.registerPlugin(ScrollTrigger);
 
 interface HeroSectionProps {
   title: string;
   subtitle: string;
-  backgroundImage?: string;
+  backgroundImage?: any;
   children?: React.ReactNode;
 }
 
@@ -73,14 +74,12 @@ export function HeroSection({ title, subtitle, backgroundImage, children }: Hero
       {/* Background Image Container */}
       <div ref={imageRef} className="absolute inset-0 z-0 origin-center">
         {backgroundImage && (
-          <Image
-            src={backgroundImage}
-            alt="Hero Background"
+          <MediaRenderer
+            media={backgroundImage}
             fill
             sizes="100vw"
             className="object-cover opacity-60 mix-blend-screen"
             priority
-            loading="eager"
           />
         )}
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/30 to-black/90 z-0" />

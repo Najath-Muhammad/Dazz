@@ -1,20 +1,19 @@
 import React from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
+import { MediaRenderer } from './MediaRenderer';
 
 interface ProjectCardProps {
   title: string;
   category: string;
-  imageUrl: string;
+  imageUrl: any;
   slug: string;
 }
 
 export function ProjectCard({ title, category, imageUrl, slug }: ProjectCardProps) {
   return (
     <Link href={`/projects/${slug}`} className="group block relative overflow-hidden bg-slate-900 aspect-[4/3]">
-      <Image
-        src={imageUrl}
-        alt={title}
+      <MediaRenderer
+        media={imageUrl}
         fill
         className="object-cover opacity-80 group-hover:opacity-100 transition-all duration-500 group-hover:scale-105"
       />
