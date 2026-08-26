@@ -2,10 +2,13 @@ import { Request, Response } from 'express';
 import cloudinary from '../utils/cloudinary';
 import streamifier from 'streamifier';
 
+import { ApiResponse } from '../../utils/ApiResponse';
+import { HTTP_STATUS, RESPONSE_MESSAGES } from '../../utils/constants';
+
 export const uploadMedia = async (req: Request, res: Response): Promise<void> => {
   try {
     if (!req.file) {
-      res.status(400).json({ error: 'No file provided' });
+      res.status(HTTP_STATUS.BAD_REQUEST).json(ApiResponse.error('No file provided'));
       return;
     }
 
@@ -23,7 +26,7 @@ export const uploadMedia = async (req: Request, res: Response): Promise<void> =>
       (error, result) => {
         if (error) {
           console.error('Cloudinary upload error:', error);
-          res.status(500).json({ error: 'Failed to upload media to Cloudinary' });
+          res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(ApiResponse.error('Failed to upload media to Cloudinary'));
           return;
         }
 
@@ -37,7 +40,7 @@ export const uploadMedia = async (req: Request, res: Response): Promise<void> =>
             height: result.height,
             duration: result.duration || null,
           };
-          res.status(200).json(mediaMetadata);
+          res.status(HTTP_STATUS.OK).json(ApiResponse.success(RESPONSE_MESSAGES.SUCCESS, mediaMetadata));
         }
       }
     );
@@ -45,7 +48,7 @@ export const uploadMedia = async (req: Request, res: Response): Promise<void> =>
     streamifier.createReadStream(req.file.buffer).pipe(uploadStream);
   } catch (error) {
     console.error('Media upload error:', error);
-    res.status(500).json({ error: 'Internal server error during media upload' });
+    res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(ApiResponse.error('Internal server error during media upload'));
   }
 };
 
@@ -54,14 +57,14 @@ export const validateUrl = async (req: Request, res: Response): Promise<void> =>
     const { url } = req.body;
     
     if (!url || typeof url !== 'string') {
-      res.status(400).json({ error: 'Invalid URL provided' });
+      res.status(HTTP_STATUS.BAD_REQUEST).json(ApiResponse.error('Invalid URL provided'));
       return;
     }
 
     // Basic validation to ensure it's a Cloudinary URL
     // Can also accept valid external URLs if needed, but per requirements, stick to Cloudinary
     if (!url.includes('cloudinary.com')) {
-      res.status(400).json({ error: 'Please enter a valid Cloudinary image or video URL.' });
+      res.status(HTTP_STATUS.BAD_REQUEST).json(ApiResponse.error('Please enter a valid Cloudinary image or video URL.'));
       return;
     }
 
@@ -79,9 +82,9 @@ export const validateUrl = async (req: Request, res: Response): Promise<void> =>
       duration: null,
     };
 
-    res.status(200).json(mediaMetadata);
+    res.status(HTTP_STATUS.OK).json(ApiResponse.success(RESPONSE_MESSAGES.SUCCESS, mediaMetadata));
   } catch (error) {
     console.error('URL validation error:', error);
-    res.status(500).json({ error: 'Internal server error during URL validation' });
+    res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(ApiResponse.error('Internal server error during URL validation'));
   }
 };
