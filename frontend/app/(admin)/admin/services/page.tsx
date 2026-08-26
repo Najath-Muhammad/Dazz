@@ -50,7 +50,7 @@ export default function AdminServicesPage() {
             ) : (
               pages.map((page) => (
                 <tr key={page._id} className="hover:bg-slate-50">
-                  <td className="px-6 py-4 whitespace-nowrap font-medium text-slate-900">{page.title}</td>
+                  <td className="px-6 py-4 whitespace-nowrap font-medium text-slate-900">{page.title?.en || page.title || 'Untitled'}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-slate-500">/{page.slug}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-slate-500">{new Date(page.updatedAt).toLocaleDateString()}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">

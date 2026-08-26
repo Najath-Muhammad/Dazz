@@ -48,8 +48,8 @@ export default function AdminBlogsPage() {
             ) : (
               blogs.map((blog) => (
                 <tr key={blog._id} className="hover:bg-slate-50">
-                  <td className="px-6 py-4 whitespace-nowrap font-medium text-slate-900">{blog.title}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-slate-500">{blog.author}</td>
+                  <td className="px-6 py-4 whitespace-nowrap font-medium text-slate-900">{blog.title?.en || blog.title || 'Untitled'}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-slate-500">{blog.author || 'Dazz Admin'}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-slate-500">{new Date(blog.createdAt).toLocaleDateString()}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <button className="text-dazz-navy hover:text-dazz-gold transition-colors mr-4">Edit</button>

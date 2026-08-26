@@ -67,10 +67,10 @@ export default function AdminProjectsPage() {
               projects.map((project) => (
                 <tr key={project._id} className="hover:bg-slate-50">
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">
-                    {project.title}
+                    {project.title?.en || project.title || 'Untitled'}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
-                    {project.category}
+                    {project.category?.en || project.category || 'Uncategorized'}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <button 
