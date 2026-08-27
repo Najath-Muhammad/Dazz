@@ -1,71 +1,90 @@
+import { handleError } from '../../utils/errorHandler';
+import { blogSchema } from '../../validations/entityValidations';
 import { Request, Response } from 'express';
 import { ApiResponse } from '../../utils/ApiResponse';
 import { HTTP_STATUS, RESPONSE_MESSAGES } from '../../utils/constants';
 import { IBlogController } from '../interfaces/IBlogController';
 import { IBlogService } from '../../services/interfaces/IBlogService';
 
+
 export class BlogController implements IBlogController {
-  private service: IBlogService;
+  private _service: IBlogService;
 
   constructor(service: IBlogService) {
-    this.service = service;
+    this._service = service;
   }
-
   getBlogs = async (req: Request, res: Response): Promise<void> => {
     try {
-      const items = await this.service.getAllBlogs();
-      res.status(HTTP_STATUS.OK).json(ApiResponse.success(RESPONSE_MESSAGES.SUCCESS, items));
+      const result = await this._service.getAllBlogs();
+      if (!result.success) {
+        res.status(HTTP_STATUS.BAD_REQUEST).json(result);
+        return;
+      }
+      res.status(HTTP_STATUS.OK).json(result);
     } catch (error) {
-      res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(ApiResponse.error(RESPONSE_MESSAGES.SERVER_ERROR));
+      handleError(res, error);
     }
   };
-
   getBlogById = async (req: Request, res: Response): Promise<void> => {
     try {
-      const item = await this.service.getBlogById(req.params.id as string);
-      if (!item) { res.status(HTTP_STATUS.NOT_FOUND).json(ApiResponse.error(RESPONSE_MESSAGES.NOT_FOUND)); return; }
-      res.status(HTTP_STATUS.OK).json(ApiResponse.success(RESPONSE_MESSAGES.SUCCESS, item));
+      const result = await this._service.getBlogById(req.params.id as string);
+      if (!result.success) {
+        res.status(HTTP_STATUS.BAD_REQUEST).json(result);
+        return;
+      }
+      res.status(HTTP_STATUS.OK).json(result);
     } catch (error) {
-      res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(ApiResponse.error(RESPONSE_MESSAGES.SERVER_ERROR));
+      handleError(res, error);
     }
   };
-
   getBlogBySlug = async (req: Request, res: Response): Promise<void> => {
     try {
-      const item = await this.service.getBlogBySlug(req.params.slug as string);
-      if (!item) { res.status(HTTP_STATUS.NOT_FOUND).json(ApiResponse.error(RESPONSE_MESSAGES.NOT_FOUND)); return; }
-      res.status(HTTP_STATUS.OK).json(ApiResponse.success(RESPONSE_MESSAGES.SUCCESS, item));
+      const result = await this._service.getBlogBySlug(req.params.slug as string);
+      if (!result.success) {
+        res.status(HTTP_STATUS.BAD_REQUEST).json(result);
+        return;
+      }
+      res.status(HTTP_STATUS.OK).json(result);
     } catch (error) {
-      res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(ApiResponse.error(RESPONSE_MESSAGES.SERVER_ERROR));
+      handleError(res, error);
     }
   };
-
   createBlog = async (req: Request, res: Response): Promise<void> => {
     try {
-      const newItem = await this.service.createBlog(req.body);
-      res.status(HTTP_STATUS.CREATED).json(ApiResponse.success(RESPONSE_MESSAGES.CREATED, newItem));
+      const validatedData = blogSchema.parse(req.body);
+      const result = await this._service.createBlog(validatedData);
+      if (!result.success) {
+        res.status(HTTP_STATUS.BAD_REQUEST).json(result);
+        return;
+      }
+      res.status(HTTP_STATUS.CREATED).json(result);
     } catch (error) {
-      res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(ApiResponse.error(RESPONSE_MESSAGES.SERVER_ERROR));
+      handleError(res, error);
     }
   };
-
   updateBlog = async (req: Request, res: Response): Promise<void> => {
     try {
-      const updatedItem = await this.service.updateBlog(req.params.id as string, req.body);
-      if (!updatedItem) { res.status(HTTP_STATUS.NOT_FOUND).json(ApiResponse.error(RESPONSE_MESSAGES.NOT_FOUND)); return; }
-      res.status(HTTP_STATUS.OK).json(ApiResponse.success(RESPONSE_MESSAGES.SUCCESS, updatedItem));
+      const validatedData = blogSchema.parse(req.body);
+      const result = await this._service.updateBlog(req.params.id as string, validatedData);
+      if (!result.success) {
+        res.status(HTTP_STATUS.BAD_REQUEST).json(result);
+        return;
+      }
+      res.status(HTTP_STATUS.OK).json(result);
     } catch (error) {
-      res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(ApiResponse.error(RESPONSE_MESSAGES.SERVER_ERROR));
+      handleError(res, error);
     }
   };
-
   deleteBlog = async (req: Request, res: Response): Promise<void> => {
     try {
-      const deletedItem = await this.service.deleteBlog(req.params.id as string);
-      if (!deletedItem) { res.status(HTTP_STATUS.NOT_FOUND).json(ApiResponse.error(RESPONSE_MESSAGES.NOT_FOUND)); return; }
-      res.status(HTTP_STATUS.OK).json(ApiResponse.success(RESPONSE_MESSAGES.DELETED));
+      const result = await this._service.deleteBlog(req.params.id as string);
+      if (!result.success) {
+        res.status(HTTP_STATUS.BAD_REQUEST).json(result);
+        return;
+      }
+      res.status(HTTP_STATUS.OK).json(result);
     } catch (error) {
-      res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(ApiResponse.error(RESPONSE_MESSAGES.SERVER_ERROR));
+      handleError(res, error);
     }
   };
 }

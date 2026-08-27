@@ -1,63 +1,78 @@
+import { handleError } from '../../utils/errorHandler';
+import { jobSchema } from '../../validations/entityValidations';
 import { Request, Response } from 'express';
 import { ApiResponse } from '../../utils/ApiResponse';
 import { HTTP_STATUS, RESPONSE_MESSAGES } from '../../utils/constants';
 import { IJobController } from '../interfaces/IJobController';
 import { IJobService } from '../../services/interfaces/IJobService';
 
+
 export class JobController implements IJobController {
-  private service: IJobService;
+  private _service: IJobService;
 
   constructor(service: IJobService) {
-    this.service = service;
+    this._service = service;
   }
-
   getJobs = async (req: Request, res: Response): Promise<void> => {
     try {
-      const items = await this.service.getAllJobs();
-      res.status(HTTP_STATUS.OK).json(ApiResponse.success(RESPONSE_MESSAGES.SUCCESS, items));
+      const result = await this._service.getAllJobs();
+      if (!result.success) {
+        res.status(HTTP_STATUS.BAD_REQUEST).json(result);
+        return;
+      }
+      res.status(HTTP_STATUS.OK).json(result);
     } catch (error) {
-      res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(ApiResponse.error(RESPONSE_MESSAGES.SERVER_ERROR));
+      handleError(res, error);
     }
   };
-
   getJobById = async (req: Request, res: Response): Promise<void> => {
     try {
-      const item = await this.service.getJobById(req.params.id as string);
-      if (!item) { res.status(HTTP_STATUS.NOT_FOUND).json(ApiResponse.error(RESPONSE_MESSAGES.NOT_FOUND)); return; }
-      res.status(HTTP_STATUS.OK).json(ApiResponse.success(RESPONSE_MESSAGES.SUCCESS, item));
+      const result = await this._service.getJobById(req.params.id as string);
+      if (!result.success) {
+        res.status(HTTP_STATUS.BAD_REQUEST).json(result);
+        return;
+      }
+      res.status(HTTP_STATUS.OK).json(result);
     } catch (error) {
-      res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(ApiResponse.error(RESPONSE_MESSAGES.SERVER_ERROR));
+      handleError(res, error);
     }
   };
-
-
-
   createJob = async (req: Request, res: Response): Promise<void> => {
     try {
-      const newItem = await this.service.createJob(req.body);
-      res.status(HTTP_STATUS.CREATED).json(ApiResponse.success(RESPONSE_MESSAGES.CREATED, newItem));
+      const validatedData = jobSchema.parse(req.body);
+      const result = await this._service.createJob(validatedData);
+      if (!result.success) {
+        res.status(HTTP_STATUS.BAD_REQUEST).json(result);
+        return;
+      }
+      res.status(HTTP_STATUS.CREATED).json(result);
     } catch (error) {
-      res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(ApiResponse.error(RESPONSE_MESSAGES.SERVER_ERROR));
+      handleError(res, error);
     }
   };
-
   updateJob = async (req: Request, res: Response): Promise<void> => {
     try {
-      const updatedItem = await this.service.updateJob(req.params.id as string, req.body);
-      if (!updatedItem) { res.status(HTTP_STATUS.NOT_FOUND).json(ApiResponse.error(RESPONSE_MESSAGES.NOT_FOUND)); return; }
-      res.status(HTTP_STATUS.OK).json(ApiResponse.success(RESPONSE_MESSAGES.SUCCESS, updatedItem));
+      const validatedData = jobSchema.parse(req.body);
+      const result = await this._service.updateJob(req.params.id as string, validatedData);
+      if (!result.success) {
+        res.status(HTTP_STATUS.BAD_REQUEST).json(result);
+        return;
+      }
+      res.status(HTTP_STATUS.OK).json(result);
     } catch (error) {
-      res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(ApiResponse.error(RESPONSE_MESSAGES.SERVER_ERROR));
+      handleError(res, error);
     }
   };
-
   deleteJob = async (req: Request, res: Response): Promise<void> => {
     try {
-      const deletedItem = await this.service.deleteJob(req.params.id as string);
-      if (!deletedItem) { res.status(HTTP_STATUS.NOT_FOUND).json(ApiResponse.error(RESPONSE_MESSAGES.NOT_FOUND)); return; }
-      res.status(HTTP_STATUS.OK).json(ApiResponse.success(RESPONSE_MESSAGES.DELETED));
+      const result = await this._service.deleteJob(req.params.id as string);
+      if (!result.success) {
+        res.status(HTTP_STATUS.BAD_REQUEST).json(result);
+        return;
+      }
+      res.status(HTTP_STATUS.OK).json(result);
     } catch (error) {
-      res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(ApiResponse.error(RESPONSE_MESSAGES.SERVER_ERROR));
+      handleError(res, error);
     }
   };
 }

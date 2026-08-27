@@ -23,7 +23,7 @@ export function useTranslation() {
 
     try {
       const res = await apiClient.post<{ success: boolean; data: { translation: string }; message: string }>(
-        '/api/admin/translate',
+        '/admin/translate',
         { text, sourceLanguage: 'en', targetLanguage: 'ar' }
       );
       if (!res.data.success) throw new Error(res.data.message);
@@ -53,7 +53,7 @@ export function useTranslation() {
 
     try {
       const res = await apiClient.post<{ success: boolean; data: { translations: Record<string, string> }; message: string }>(
-        '/api/admin/translate/batch',
+        '/admin/translate/batch',
         { fields: Object.fromEntries(nonEmpty), sourceLanguage: 'en', targetLanguage: 'ar' }
       );
       if (!res.data.success) throw new Error(res.data.message);

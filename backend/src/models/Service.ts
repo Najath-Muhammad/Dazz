@@ -167,6 +167,5 @@ const ServiceSchema: Schema = new Schema({
 
 // Index for public listing
 ServiceSchema.index({ status: 1, displayOrder: 1 });
-ServiceSchema.index({ slug: 1 });
 
 export default mongoose.model<IService>('Service', ServiceSchema);

@@ -1,8 +1,8 @@
 export interface IJobService {
-  getAllJobs(): Promise<any[]>;
-  getJobById(id: string): Promise<any | null>;
+  getAllJobs(): Promise<{ success: boolean; message: string; data?: any[] }>;
+  getJobById(id: string): Promise<{ success: boolean; message: string; data?: any }>;
 
-  createJob(data: any): Promise<any>;
-  updateJob(id: string, data: any): Promise<any | null>;
-  deleteJob(id: string): Promise<any | null>;
+  createJob(data: any): Promise<{ success: boolean; message: string; data?: any }>;
+  updateJob(id: string, data: any): Promise<{ success: boolean; message: string; data?: any }>;
+  deleteJob(id: string): Promise<{ success: boolean; message: string; data?: any }>;
 }

@@ -51,7 +51,7 @@ app.use('/api/contact', contactMessageRoutes);
 app.use('/api/settings', siteSettingsRoutes);
 app.use('/api/admin/media', mediaRoutes);
 app.use('/api/admin/translate', translationRoutes);
-app.use('/api/admin/services', serviceRoutes);
+app.use('/api/services', serviceRoutes);
 
 app.get('/health', (req: Request, res: Response) => {
   res.status(200).json({ status: 'ok', message: 'Backend is running' });

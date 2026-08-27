@@ -1,71 +1,90 @@
+import { handleError } from '../../utils/errorHandler';
+import { projectSchema } from '../../validations/entityValidations';
 import { Request, Response } from 'express';
 import { ApiResponse } from '../../utils/ApiResponse';
 import { HTTP_STATUS, RESPONSE_MESSAGES } from '../../utils/constants';
 import { IProjectController } from '../interfaces/IProjectController';
 import { IProjectService } from '../../services/interfaces/IProjectService';
 
+
 export class ProjectController implements IProjectController {
-  private service: IProjectService;
+  private _service: IProjectService;
 
   constructor(service: IProjectService) {
-    this.service = service;
+    this._service = service;
   }
-
   getProjects = async (req: Request, res: Response): Promise<void> => {
     try {
-      const items = await this.service.getAllProjects();
-      res.status(HTTP_STATUS.OK).json(ApiResponse.success(RESPONSE_MESSAGES.SUCCESS, items));
+      const result = await this._service.getAllProjects();
+      if (!result.success) {
+        res.status(HTTP_STATUS.BAD_REQUEST).json(result);
+        return;
+      }
+      res.status(HTTP_STATUS.OK).json(result);
     } catch (error) {
-      res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(ApiResponse.error(RESPONSE_MESSAGES.SERVER_ERROR));
+      handleError(res, error);
     }
   };
-
   getProjectById = async (req: Request, res: Response): Promise<void> => {
     try {
-      const item = await this.service.getProjectById(req.params.id as string);
-      if (!item) { res.status(HTTP_STATUS.NOT_FOUND).json(ApiResponse.error(RESPONSE_MESSAGES.NOT_FOUND)); return; }
-      res.status(HTTP_STATUS.OK).json(ApiResponse.success(RESPONSE_MESSAGES.SUCCESS, item));
+      const result = await this._service.getProjectById(req.params.id as string);
+      if (!result.success) {
+        res.status(HTTP_STATUS.BAD_REQUEST).json(result);
+        return;
+      }
+      res.status(HTTP_STATUS.OK).json(result);
     } catch (error) {
-      res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(ApiResponse.error(RESPONSE_MESSAGES.SERVER_ERROR));
+      handleError(res, error);
     }
   };
-
   getProjectBySlug = async (req: Request, res: Response): Promise<void> => {
     try {
-      const item = await this.service.getProjectBySlug(req.params.slug as string);
-      if (!item) { res.status(HTTP_STATUS.NOT_FOUND).json(ApiResponse.error(RESPONSE_MESSAGES.NOT_FOUND)); return; }
-      res.status(HTTP_STATUS.OK).json(ApiResponse.success(RESPONSE_MESSAGES.SUCCESS, item));
+      const result = await this._service.getProjectBySlug(req.params.slug as string);
+      if (!result.success) {
+        res.status(HTTP_STATUS.BAD_REQUEST).json(result);
+        return;
+      }
+      res.status(HTTP_STATUS.OK).json(result);
     } catch (error) {
-      res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(ApiResponse.error(RESPONSE_MESSAGES.SERVER_ERROR));
+      handleError(res, error);
     }
   };
-
   createProject = async (req: Request, res: Response): Promise<void> => {
     try {
-      const newItem = await this.service.createProject(req.body);
-      res.status(HTTP_STATUS.CREATED).json(ApiResponse.success(RESPONSE_MESSAGES.CREATED, newItem));
+      const validatedData = projectSchema.parse(req.body);
+      const result = await this._service.createProject(validatedData);
+      if (!result.success) {
+        res.status(HTTP_STATUS.BAD_REQUEST).json(result);
+        return;
+      }
+      res.status(HTTP_STATUS.CREATED).json(result);
     } catch (error) {
-      res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(ApiResponse.error(RESPONSE_MESSAGES.SERVER_ERROR));
+      handleError(res, error);
     }
   };
-
   updateProject = async (req: Request, res: Response): Promise<void> => {
     try {
-      const updatedItem = await this.service.updateProject(req.params.id as string, req.body);
-      if (!updatedItem) { res.status(HTTP_STATUS.NOT_FOUND).json(ApiResponse.error(RESPONSE_MESSAGES.NOT_FOUND)); return; }
-      res.status(HTTP_STATUS.OK).json(ApiResponse.success(RESPONSE_MESSAGES.SUCCESS, updatedItem));
+      const validatedData = projectSchema.parse(req.body);
+      const result = await this._service.updateProject(req.params.id as string, validatedData);
+      if (!result.success) {
+        res.status(HTTP_STATUS.BAD_REQUEST).json(result);
+        return;
+      }
+      res.status(HTTP_STATUS.OK).json(result);
     } catch (error) {
-      res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(ApiResponse.error(RESPONSE_MESSAGES.SERVER_ERROR));
+      handleError(res, error);
     }
   };
-
   deleteProject = async (req: Request, res: Response): Promise<void> => {
     try {
-      const deletedItem = await this.service.deleteProject(req.params.id as string);
-      if (!deletedItem) { res.status(HTTP_STATUS.NOT_FOUND).json(ApiResponse.error(RESPONSE_MESSAGES.NOT_FOUND)); return; }
-      res.status(HTTP_STATUS.OK).json(ApiResponse.success(RESPONSE_MESSAGES.DELETED));
+      const result = await this._service.deleteProject(req.params.id as string);
+      if (!result.success) {
+        res.status(HTTP_STATUS.BAD_REQUEST).json(result);
+        return;
+      }
+      res.status(HTTP_STATUS.OK).json(result);
     } catch (error) {
-      res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(ApiResponse.error(RESPONSE_MESSAGES.SERVER_ERROR));
+      handleError(res, error);
     }
   };
 }

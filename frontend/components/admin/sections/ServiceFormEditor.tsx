@@ -23,7 +23,7 @@ const CATEGORIES = [
   { value: 'other', label: 'Other' },
 ];
 
-const inputClass = 'w-full border border-slate-300 rounded-md px-4 py-2 text-sm focus:ring-2 focus:ring-dazz-navy outline-none';
+const inputClass = 'w-full border border-slate-300 bg-white text-slate-900 rounded-md px-4 py-2 text-sm focus:ring-2 focus:ring-dazz-navy outline-none';
 
 export function ServiceFormEditor({ form, setForm, onSave, saving, isEdit }: Props) {
   const [activeSection, setActiveSection] = useState<SectionKey | 'basic' | 'seo'>('basic');
@@ -55,12 +55,17 @@ export function ServiceFormEditor({ form, setForm, onSave, saving, isEdit }: Pro
   const renderSection = () => {
     if (activeSection === 'basic') return (
       <div className="space-y-6">
+        <div className="bg-blue-50 border border-blue-100 p-4 rounded-md mb-6">
+          <p className="text-sm text-blue-800">
+            <strong>Basic Info:</strong> This section defines the core identity of the service. It controls how the service appears in lists, its URL, and whether it is currently featured or visible.
+          </p>
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">Icon (Emoji)</label>
             <input type="text" value={form.icon}
               onChange={e => setForm(p => ({ ...p, icon: e.target.value }))}
-              className="w-20 border border-slate-300 rounded-md px-3 py-2 text-xl text-center" />
+              className="w-20 border border-slate-300 bg-white text-slate-900 rounded-md px-3 py-2 text-xl text-center" />
           </div>
           <div>
             <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">Category</label>
@@ -73,6 +78,7 @@ export function ServiceFormEditor({ form, setForm, onSave, saving, isEdit }: Pro
         </div>
 
         <BilingualField label="Service Name *" nameEn="name_en" nameAr="name_ar"
+          note="The main title of the service (e.g., Ready Mix Concrete)."
           valueEn={form.name.en} valueAr={form.name.ar}
           onChangeEn={v => { setForm(p => ({ ...p, name: { ...p.name, en: v }, slug: autoSlug(v) })); }}
           onChangeAr={v => setForm(p => ({ ...p, name: { ...p.name, ar: v } }))}
@@ -86,6 +92,7 @@ export function ServiceFormEditor({ form, setForm, onSave, saving, isEdit }: Pro
         </div>
 
         <BilingualField label="Short Description" nameEn="short_desc_en" nameAr="short_desc_ar"
+          note="A brief 1-2 sentence summary shown in the service listing cards."
           valueEn={form.shortDescription.en} valueAr={form.shortDescription.ar}
           onChangeEn={v => setForm(p => ({ ...p, shortDescription: { ...p.shortDescription, en: v } }))}
           onChangeAr={v => setForm(p => ({ ...p, shortDescription: { ...p.shortDescription, ar: v } }))}
@@ -108,7 +115,8 @@ export function ServiceFormEditor({ form, setForm, onSave, saving, isEdit }: Pro
 
         {/* Section Selector */}
         <div className="border-t border-slate-100 pt-6">
-          <p className="text-sm font-bold text-slate-700 mb-4">Content Sections</p>
+          <p className="text-sm font-bold text-slate-700 mb-1">Content Sections</p>
+          <p className="text-xs text-slate-500 mb-4">Toggle the sections you want to appear on the public page for this service.</p>
           <div className="grid grid-cols-2 gap-2">
             {ALL_SECTIONS.map(key => {
               const isAlways = ALWAYS_ENABLED.includes(key);
@@ -128,11 +136,18 @@ export function ServiceFormEditor({ form, setForm, onSave, saving, isEdit }: Pro
 
     if (activeSection === 'seo') return (
       <div className="space-y-6">
+        <div className="bg-blue-50 border border-blue-100 p-4 rounded-md mb-6">
+          <p className="text-sm text-blue-800">
+            <strong>SEO (Search Engine Optimization):</strong> These fields control how your service appears on Google and when shared on social media. If left blank, it will fall back to the basic info.
+          </p>
+        </div>
         <BilingualField label="SEO Title" nameEn="seo_title_en" nameAr="seo_title_ar"
+          note="Title tag for search engines. Keep it under 60 characters."
           valueEn={form.seo.title.en} valueAr={form.seo.title.ar}
           onChangeEn={v => setForm(p => ({ ...p, seo: { ...p.seo, title: { ...p.seo.title, en: v } } }))}
           onChangeAr={v => setForm(p => ({ ...p, seo: { ...p.seo, title: { ...p.seo.title, ar: v } } }))} />
         <BilingualField label="SEO Description" nameEn="seo_desc_en" nameAr="seo_desc_ar"
+          note="Meta description for search engines. Keep it under 160 characters."
           valueEn={form.seo.description.en} valueAr={form.seo.description.ar}
           onChangeEn={v => setForm(p => ({ ...p, seo: { ...p.seo, description: { ...p.seo.description, en: v } } }))}
           onChangeAr={v => setForm(p => ({ ...p, seo: { ...p.seo, description: { ...p.seo.description, ar: v } } }))}
@@ -142,43 +157,78 @@ export function ServiceFormEditor({ form, setForm, onSave, saving, isEdit }: Pro
       </div>
     );
 
-    if (activeSection === 'hero') return <HeroEditor form={form} setForm={setForm} />;
-    if (activeSection === 'introduction') return <IntroductionEditor form={form} setForm={setForm} />;
+    if (activeSection === 'hero') return (
+      <div className="space-y-4">
+        <p className="text-sm text-slate-500 mb-4 bg-slate-50 p-3 rounded-md">The <strong>Hero</strong> is the large banner at the very top of the page. It's the first thing visitors see.</p>
+        <HeroEditor form={form} setForm={setForm} />
+      </div>
+    );
+    if (activeSection === 'introduction') return (
+      <div className="space-y-4">
+        <p className="text-sm text-slate-500 mb-4 bg-slate-50 p-3 rounded-md">The <strong>Introduction</strong> appears right below the hero. Use it to give a detailed overview of the service.</p>
+        <IntroductionEditor form={form} setForm={setForm} />
+      </div>
+    );
 
     if (activeSection === 'capabilities') return (
-      <RepeatableItemEditor title="Capabilities" addLabel="+ Add Capability"
-        items={form.capabilities} setItems={setArr('capabilities')} />
+      <div className="space-y-4">
+        <p className="text-sm text-slate-500 mb-4 bg-slate-50 p-3 rounded-md"><strong>Capabilities:</strong> A simple grid of text boxes with icons. Great for listing core competencies (e.g., "Quality Control", "Fast Delivery").</p>
+        <RepeatableItemEditor title="Capabilities" addLabel="+ Add Capability"
+          items={form.capabilities} setItems={setArr('capabilities')} />
+      </div>
     );
     if (activeSection === 'solutions') return (
-      <RepeatableItemEditor title="Solutions / Services" addLabel="+ Add Solution"
-        items={form.solutions} setItems={setArr('solutions')} hasImage hasCta imageFolder="dazz/services/solutions" />
+      <div className="space-y-4">
+        <p className="text-sm text-slate-500 mb-4 bg-slate-50 p-3 rounded-md"><strong>Solutions / Services:</strong> Use this to break down the specific solutions offered under this main service. Supports images and CTA buttons.</p>
+        <RepeatableItemEditor title="Solutions / Services" addLabel="+ Add Solution"
+          items={form.solutions} setItems={setArr('solutions')} hasImage hasCta imageFolder="dazz/services/solutions" />
+      </div>
     );
     if (activeSection === 'categories') return (
-      <RepeatableItemEditor title="Products / Categories" addLabel="+ Add Category"
-        items={form.categories} setItems={setArr('categories')} hasImage imageFolder="dazz/services/categories" />
+      <div className="space-y-4">
+        <p className="text-sm text-slate-500 mb-4 bg-slate-50 p-3 rounded-md"><strong>Categories:</strong> Groups your offerings (e.g., "Raw Materials", "Heavy Machinery").</p>
+        <RepeatableItemEditor title="Products / Categories" addLabel="+ Add Category"
+          items={form.categories} setItems={setArr('categories')} hasImage imageFolder="dazz/services/categories" />
+      </div>
     );
     if (activeSection === 'applications') return (
-      <RepeatableItemEditor title="Applications / Industries" addLabel="+ Add Application"
-        items={form.applications} setItems={setArr('applications')} hasImage imageFolder="dazz/services/applications" />
+      <div className="space-y-4">
+        <p className="text-sm text-slate-500 mb-4 bg-slate-50 p-3 rounded-md"><strong>Applications:</strong> Shows which industries or use-cases this service applies to (e.g., "Residential", "Commercial").</p>
+        <RepeatableItemEditor title="Applications / Industries" addLabel="+ Add Application"
+          items={form.applications} setItems={setArr('applications')} hasImage imageFolder="dazz/services/applications" />
+      </div>
     );
     if (activeSection === 'process') return (
-      <RepeatableItemEditor title="Process Steps" addLabel="+ Add Step"
-        items={form.process} setItems={setArr('process')} hasImage hasStepNumber imageFolder="dazz/services/process" />
+      <div className="space-y-4">
+        <p className="text-sm text-slate-500 mb-4 bg-slate-50 p-3 rounded-md"><strong>Process Steps:</strong> A numbered list explaining how you work (e.g., Step 1: Consultation, Step 2: Execution).</p>
+        <RepeatableItemEditor title="Process Steps" addLabel="+ Add Step"
+          items={form.process} setItems={setArr('process')} hasImage hasStepNumber imageFolder="dazz/services/process" />
+      </div>
     );
     if (activeSection === 'equipment') return (
-      <RepeatableItemEditor title="Equipment" addLabel="+ Add Equipment"
-        items={form.equipment} setItems={setArr('equipment')} hasImage hasSpecification titleKey="name" imageFolder="dazz/services/equipment" />
+      <div className="space-y-4">
+        <p className="text-sm text-slate-500 mb-4 bg-slate-50 p-3 rounded-md"><strong>Equipment:</strong> Showcase the machinery or tools used in this service. You can include specifications.</p>
+        <RepeatableItemEditor title="Equipment" addLabel="+ Add Equipment"
+          items={form.equipment} setItems={setArr('equipment')} hasImage hasSpecification titleKey="name" imageFolder="dazz/services/equipment" />
+      </div>
     );
     if (activeSection === 'whyChooseUs') return (
-      <RepeatableItemEditor title="Why Choose Us" addLabel="+ Add Reason"
-        items={form.whyChooseUs} setItems={setArr('whyChooseUs')} />
+      <div className="space-y-4">
+        <p className="text-sm text-slate-500 mb-4 bg-slate-50 p-3 rounded-md"><strong>Why Choose Us:</strong> Highlight your unique selling points (e.g., "24/7 Support", "Certified Experts").</p>
+        <RepeatableItemEditor title="Why Choose Us" addLabel="+ Add Reason"
+          items={form.whyChooseUs} setItems={setArr('whyChooseUs')} />
+      </div>
     );
     if (activeSection === 'highlights') return (
-      <RepeatableItemEditor title="Key Highlights" addLabel="+ Add Highlight"
-        items={form.highlights} setItems={setArr('highlights')} subKey="sub" />
+      <div className="space-y-4">
+        <p className="text-sm text-slate-500 mb-4 bg-slate-50 p-3 rounded-md"><strong>Highlights / Stats:</strong> Display key metrics or standout facts (e.g., "500+ Projects Completed").</p>
+        <RepeatableItemEditor title="Key Highlights" addLabel="+ Add Highlight"
+          items={form.highlights} setItems={setArr('highlights')} subKey="sub" />
+      </div>
     );
     if (activeSection === 'gallery') return (
       <div className="space-y-4">
+        <p className="text-sm text-slate-500 mb-4 bg-slate-50 p-3 rounded-md"><strong>Gallery:</strong> A grid of images/videos showcasing past work or products related to this service.</p>
         <div className="flex items-center justify-between">
           <span className="text-sm font-bold text-slate-600">Gallery Items</span>
           <button type="button"
@@ -193,7 +243,7 @@ export function ServiceFormEditor({ form, setForm, onSave, saving, isEdit }: Pro
               <label className="block text-xs text-slate-400 mb-1">Media Type</label>
               <select value={item.mediaType}
                 onChange={e => { const g = [...form.gallery]; g[i] = { ...g[i], mediaType: e.target.value as 'image' | 'video' }; setForm(p => ({ ...p, gallery: g })); }}
-                className="border border-slate-300 rounded-md px-3 py-2 text-sm">
+                className="border border-slate-300 bg-white text-slate-900 rounded-md px-3 py-2 text-sm">
                 <option value="image">Image</option>
                 <option value="video">Video</option>
               </select>
@@ -210,16 +260,20 @@ export function ServiceFormEditor({ form, setForm, onSave, saving, isEdit }: Pro
     );
     if (activeSection === 'cta') return (
       <div className="space-y-6">
+        <p className="text-sm text-slate-500 mb-4 bg-slate-50 p-3 rounded-md"><strong>Call To Action (CTA):</strong> The final section at the bottom of the page prompting the user to contact you or take the next step.</p>
         <BilingualField label="CTA Title" nameEn="cta_title_en" nameAr="cta_title_ar"
+          note="The headline for the call to action block."
           valueEn={form.cta.title.en} valueAr={form.cta.title.ar}
           onChangeEn={v => setForm(p => ({ ...p, cta: { ...p.cta, title: { ...p.cta.title, en: v } } }))}
           onChangeAr={v => setForm(p => ({ ...p, cta: { ...p.cta, title: { ...p.cta.title, ar: v } } }))} />
         <BilingualField label="Description" nameEn="cta_desc_en" nameAr="cta_desc_ar"
+          note="A short paragraph encouraging the user to act."
           valueEn={form.cta.description.en} valueAr={form.cta.description.ar}
           onChangeEn={v => setForm(p => ({ ...p, cta: { ...p.cta, description: { ...p.cta.description, en: v } } }))}
           onChangeAr={v => setForm(p => ({ ...p, cta: { ...p.cta, description: { ...p.cta.description, ar: v } } }))}
           type="textarea" rows={2} />
         <BilingualField label="Button Text" nameEn="cta_btn_en" nameAr="cta_btn_ar"
+          note="What the button should say (e.g., 'Contact Us')."
           valueEn={form.cta.buttonText.en} valueAr={form.cta.buttonText.ar}
           onChangeEn={v => setForm(p => ({ ...p, cta: { ...p.cta, buttonText: { ...p.cta.buttonText, en: v } } }))}
           onChangeAr={v => setForm(p => ({ ...p, cta: { ...p.cta, buttonText: { ...p.cta.buttonText, ar: v } } }))} />

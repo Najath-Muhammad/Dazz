@@ -1,11 +1,13 @@
 import express from 'express';
 import { protect } from '../middlewares/authMiddleware';
-import { translateSingle, translateBatch } from '../controllers/translationController';
+import { TranslationController } from '../controllers/implementations/TranslationController';
+import { TranslationService } from '../services/implementations/TranslationService';
 
 const router = express.Router();
+const service = new TranslationService();
+const controller = new TranslationController(service);
 
-// All translation endpoints require admin authentication
-router.post('/', protect, translateSingle);
-router.post('/batch', protect, translateBatch);
+router.post('/', protect, controller.translateText);
+router.post('/batch', protect, controller.translateBatch);
 
 export default router;

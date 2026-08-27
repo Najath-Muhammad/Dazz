@@ -17,7 +17,7 @@ export default function AdminEditServicePage() {
   useEffect(() => {
     const fetchService = async () => {
       try {
-        const data = await api.get<any>(`/admin/services/${id}`);
+        const data = await api.get<any>(`/services/${id}`);
         // Merge with default form to handle any missing fields from old records
         setForm({ ...makeDefaultForm(), ...data });
       } catch {
@@ -34,7 +34,7 @@ export default function AdminEditServicePage() {
     setSaving(true);
     setError('');
     try {
-      await api.put(`/admin/services/${id}`, { ...form, status });
+      await api.put(`/services/${id}`, { ...form, status });
       router.push('/admin/services');
     } catch (e: any) {
       setError(e?.message || 'Failed to update service.');
@@ -49,7 +49,7 @@ export default function AdminEditServicePage() {
       <div className="flex items-center gap-4 mb-8">
         <Link href="/admin/services" className="text-slate-400 hover:text-slate-700 text-sm">← Services</Link>
         <h1 className="text-2xl font-bold text-slate-900">Edit: {form.name.en || 'Service'}</h1>
-        <a href={`/services/${form.slug}`} target="_blank" rel="noreferrer"
+        <a href={`/en/services/${form.slug}`} target="_blank" rel="noreferrer"
           className="ml-auto text-xs font-bold text-slate-400 hover:text-dazz-navy border border-slate-200 rounded px-3 py-1.5 transition-colors">
           Preview ↗
         </a>

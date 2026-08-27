@@ -1,0 +1,9 @@
+export interface IServiceService {
+  getAllServices(isAdmin: boolean): Promise<{ success: boolean; message: string; data?: any[] }>;
+  getServiceBySlug(slug: string): Promise<{ success: boolean; message: string; data?: any }>;
+  getServiceById(id: string): Promise<{ success: boolean; message: string; data?: any }>;
+  createService(data: any): Promise<{ success: boolean; message: string; data?: any }>;
+  updateService(id: string, data: any): Promise<{ success: boolean; message: string; data?: any }>;
+  deleteService(id: string): Promise<{ success: boolean; message: string }>;
+  duplicateService(id: string): Promise<{ success: boolean; message: string; data?: any }>;
+}

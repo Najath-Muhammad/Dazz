@@ -1,6 +1,7 @@
 import Service from '../../models/Service';
+import { IServiceRepository } from '../interfaces/IServiceRepository';
 
-export class ServiceRepository {
+export class ServiceRepository implements IServiceRepository {
   async findAll(filter: object = {}): Promise<any[]> {
     return await Service.find(filter).sort({ displayOrder: 1, createdAt: -1 });
   }

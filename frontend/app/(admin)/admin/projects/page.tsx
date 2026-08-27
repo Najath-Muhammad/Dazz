@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { projectService } from '@/services/projectService';
 import { Button } from '@/components/Button';
+import { ConfirmModal } from '@/components/admin/ConfirmModal';
 
 export default function AdminProjectsPage() {
   const [projects, setProjects] = useState<any[]>([]);
@@ -24,14 +25,20 @@ export default function AdminProjectsPage() {
     fetchProjects();
   }, []);
 
-  const handleDelete = async (id: string) => {
-    if (window.confirm('Are you sure you want to delete this project?')) {
-      try {
-        await projectService.deleteProject(id);
-        fetchProjects();
-      } catch (err) {
-        alert('Failed to delete project');
-      }
+  const [confirmModal, setConfirmModal] = useState<{isOpen: boolean; id: string | null}>({ isOpen: false, id: null });
+
+  const handleDeleteClick = (id: string) => {
+    setConfirmModal({ isOpen: true, id });
+  };
+
+  const confirmDelete = async () => {
+    if (!confirmModal.id) return;
+    setConfirmModal({ isOpen: false, id: null });
+    try {
+      await projectService.deleteProject(confirmModal.id);
+      fetchProjects();
+    } catch (err) {
+      alert('Failed to delete project');
     }
   };
 
@@ -74,7 +81,7 @@ export default function AdminProjectsPage() {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <button 
-                      onClick={() => handleDelete(project._id)}
+                      onClick={() => handleDeleteClick(project._id)}
                       className="text-red-600 hover:text-red-900 font-semibold"
                     >
                       Delete
@@ -86,6 +93,16 @@ export default function AdminProjectsPage() {
           </tbody>
         </table>
       </div>
+
+      <ConfirmModal
+        isOpen={confirmModal.isOpen}
+        title="Delete Project"
+        message="Are you sure you want to delete this project? This cannot be undone."
+        onConfirm={confirmDelete}
+        onCancel={() => setConfirmModal({ isOpen: false, id: null })}
+        isDestructive={true}
+        confirmText="Delete"
+      />
     </div>
   );
 }

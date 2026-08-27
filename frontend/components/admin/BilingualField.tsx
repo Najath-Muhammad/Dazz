@@ -1,6 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { useTranslation } from '@/hooks/useTranslation';
+import { ConfirmModal } from '@/components/admin/ConfirmModal';
 
 interface BilingualFieldProps {
   label: string;
@@ -15,6 +16,7 @@ interface BilingualFieldProps {
   required?: boolean;
   placeholder?: string;
   showGenerateAll?: false; // per-field only
+  note?: string;
 }
 
 export function BilingualField({
@@ -29,30 +31,19 @@ export function BilingualField({
   rows = 3,
   required = false,
   placeholder,
+  note,
 }: BilingualFieldProps) {
   const { translateOne, isTranslating, status, error } = useTranslation();
   const [localStatus, setLocalStatus] = useState<'idle' | 'done' | 'error'>('idle');
   const [localError, setLocalError] = useState('');
   const [isWorking, setIsWorking] = useState(false);
 
-  const inputClass = 'w-full border border-slate-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-dazz-navy focus:border-transparent outline-none text-sm';
+  const inputClass = 'w-full border border-slate-300 bg-white text-slate-900 rounded-md px-4 py-2 focus:ring-2 focus:ring-dazz-navy focus:border-transparent outline-none text-sm';
   const inputArClass = `${inputClass} font-arabic` ;
 
-  const handleGenerate = async () => {
-    if (!valueEn?.trim()) {
-      setLocalError('Enter the English content first.');
-      setLocalStatus('error');
-      return;
-    }
+  const [confirmModal, setConfirmModal] = useState({ isOpen: false });
 
-    // Warn if Arabic already exists
-    if (valueAr?.trim()) {
-      const confirmed = window.confirm(
-        'Arabic content already exists. Do you want to replace it?'
-      );
-      if (!confirmed) return;
-    }
-
+  const executeTranslation = async () => {
     setIsWorking(true);
     setLocalError('');
     setLocalStatus('idle');
@@ -70,6 +61,22 @@ export function BilingualField({
     setIsWorking(false);
   };
 
+  const handleGenerate = () => {
+    if (!valueEn?.trim()) {
+      setLocalError('Enter the English content first.');
+      setLocalStatus('error');
+      return;
+    }
+
+    // Warn if Arabic already exists
+    if (valueAr?.trim()) {
+      setConfirmModal({ isOpen: true });
+      return;
+    }
+
+    executeTranslation();
+  };
+
   const InputEl = type === 'textarea' ? 'textarea' : 'input';
 
   return (
@@ -82,6 +89,7 @@ export function BilingualField({
           </span>
         )}
       </div>
+      {note && <p className="text-xs text-slate-500 mt-0.5">{note}</p>}
 
       {/* English Field */}
       <div>
@@ -158,6 +166,19 @@ export function BilingualField({
           />
         )}
       </div>
+
+      <ConfirmModal
+        isOpen={confirmModal.isOpen}
+        title="Overwrite Arabic Translation"
+        message="Arabic content already exists for this field. Do you want to replace it with a newly generated translation?"
+        onConfirm={() => {
+          setConfirmModal({ isOpen: false });
+          executeTranslation();
+        }}
+        onCancel={() => setConfirmModal({ isOpen: false })}
+        confirmText="Yes, Replace"
+        cancelText="Cancel"
+      />
     </div>
   );
 }

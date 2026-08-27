@@ -1,63 +1,78 @@
+import { handleError } from '../../utils/errorHandler';
+import { contactMessageSchema } from '../../validations/entityValidations';
 import { Request, Response } from 'express';
 import { ApiResponse } from '../../utils/ApiResponse';
 import { HTTP_STATUS, RESPONSE_MESSAGES } from '../../utils/constants';
 import { IContactMessageController } from '../interfaces/IContactMessageController';
 import { IContactMessageService } from '../../services/interfaces/IContactMessageService';
 
+
 export class ContactMessageController implements IContactMessageController {
-  private service: IContactMessageService;
+  private _service: IContactMessageService;
 
   constructor(service: IContactMessageService) {
-    this.service = service;
+    this._service = service;
   }
-
   getContactMessages = async (req: Request, res: Response): Promise<void> => {
     try {
-      const items = await this.service.getAllContactMessages();
-      res.status(HTTP_STATUS.OK).json(ApiResponse.success(RESPONSE_MESSAGES.SUCCESS, items));
+      const result = await this._service.getAllContactMessages();
+      if (!result.success) {
+        res.status(HTTP_STATUS.BAD_REQUEST).json(result);
+        return;
+      }
+      res.status(HTTP_STATUS.OK).json(result);
     } catch (error) {
-      res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(ApiResponse.error(RESPONSE_MESSAGES.SERVER_ERROR));
+      handleError(res, error);
     }
   };
-
   getContactMessageById = async (req: Request, res: Response): Promise<void> => {
     try {
-      const item = await this.service.getContactMessageById(req.params.id as string);
-      if (!item) { res.status(HTTP_STATUS.NOT_FOUND).json(ApiResponse.error(RESPONSE_MESSAGES.NOT_FOUND)); return; }
-      res.status(HTTP_STATUS.OK).json(ApiResponse.success(RESPONSE_MESSAGES.SUCCESS, item));
+      const result = await this._service.getContactMessageById(req.params.id as string);
+      if (!result.success) {
+        res.status(HTTP_STATUS.BAD_REQUEST).json(result);
+        return;
+      }
+      res.status(HTTP_STATUS.OK).json(result);
     } catch (error) {
-      res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(ApiResponse.error(RESPONSE_MESSAGES.SERVER_ERROR));
+      handleError(res, error);
     }
   };
-
-
-
   createContactMessage = async (req: Request, res: Response): Promise<void> => {
     try {
-      const newItem = await this.service.createContactMessage(req.body);
-      res.status(HTTP_STATUS.CREATED).json(ApiResponse.success(RESPONSE_MESSAGES.CREATED, newItem));
+      const validatedData = contactMessageSchema.parse(req.body);
+      const result = await this._service.createContactMessage(validatedData);
+      if (!result.success) {
+        res.status(HTTP_STATUS.BAD_REQUEST).json(result);
+        return;
+      }
+      res.status(HTTP_STATUS.CREATED).json(result);
     } catch (error) {
-      res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(ApiResponse.error(RESPONSE_MESSAGES.SERVER_ERROR));
+      handleError(res, error);
     }
   };
-
   updateContactMessage = async (req: Request, res: Response): Promise<void> => {
     try {
-      const updatedItem = await this.service.updateContactMessage(req.params.id as string, req.body);
-      if (!updatedItem) { res.status(HTTP_STATUS.NOT_FOUND).json(ApiResponse.error(RESPONSE_MESSAGES.NOT_FOUND)); return; }
-      res.status(HTTP_STATUS.OK).json(ApiResponse.success(RESPONSE_MESSAGES.SUCCESS, updatedItem));
+      const validatedData = contactMessageSchema.parse(req.body);
+      const result = await this._service.updateContactMessage(req.params.id as string, validatedData);
+      if (!result.success) {
+        res.status(HTTP_STATUS.BAD_REQUEST).json(result);
+        return;
+      }
+      res.status(HTTP_STATUS.OK).json(result);
     } catch (error) {
-      res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(ApiResponse.error(RESPONSE_MESSAGES.SERVER_ERROR));
+      handleError(res, error);
     }
   };
-
   deleteContactMessage = async (req: Request, res: Response): Promise<void> => {
     try {
-      const deletedItem = await this.service.deleteContactMessage(req.params.id as string);
-      if (!deletedItem) { res.status(HTTP_STATUS.NOT_FOUND).json(ApiResponse.error(RESPONSE_MESSAGES.NOT_FOUND)); return; }
-      res.status(HTTP_STATUS.OK).json(ApiResponse.success(RESPONSE_MESSAGES.DELETED));
+      const result = await this._service.deleteContactMessage(req.params.id as string);
+      if (!result.success) {
+        res.status(HTTP_STATUS.BAD_REQUEST).json(result);
+        return;
+      }
+      res.status(HTTP_STATUS.OK).json(result);
     } catch (error) {
-      res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(ApiResponse.error(RESPONSE_MESSAGES.SERVER_ERROR));
+      handleError(res, error);
     }
   };
 }

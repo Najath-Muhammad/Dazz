@@ -1,63 +1,78 @@
+import { handleError } from '../../utils/errorHandler';
+import { pageSchema } from '../../validations/entityValidations';
 import { Request, Response } from 'express';
 import { ApiResponse } from '../../utils/ApiResponse';
 import { HTTP_STATUS, RESPONSE_MESSAGES } from '../../utils/constants';
 import { IPageController } from '../interfaces/IPageController';
 import { IPageService } from '../../services/interfaces/IPageService';
 
+
 export class PageController implements IPageController {
-  private service: IPageService;
+  private _service: IPageService;
 
   constructor(service: IPageService) {
-    this.service = service;
+    this._service = service;
   }
-
   getPages = async (req: Request, res: Response): Promise<void> => {
     try {
-      const items = await this.service.getAllPages();
-      res.status(HTTP_STATUS.OK).json(ApiResponse.success(RESPONSE_MESSAGES.SUCCESS, items));
+      const result = await this._service.getAllPages();
+      if (!result.success) {
+        res.status(HTTP_STATUS.BAD_REQUEST).json(result);
+        return;
+      }
+      res.status(HTTP_STATUS.OK).json(result);
     } catch (error) {
-      res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(ApiResponse.error(RESPONSE_MESSAGES.SERVER_ERROR));
+      handleError(res, error);
     }
   };
-
   getPageById = async (req: Request, res: Response): Promise<void> => {
     try {
-      const item = await this.service.getPageById(req.params.id as string);
-      if (!item) { res.status(HTTP_STATUS.NOT_FOUND).json(ApiResponse.error(RESPONSE_MESSAGES.NOT_FOUND)); return; }
-      res.status(HTTP_STATUS.OK).json(ApiResponse.success(RESPONSE_MESSAGES.SUCCESS, item));
+      const result = await this._service.getPageById(req.params.id as string);
+      if (!result.success) {
+        res.status(HTTP_STATUS.BAD_REQUEST).json(result);
+        return;
+      }
+      res.status(HTTP_STATUS.OK).json(result);
     } catch (error) {
-      res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(ApiResponse.error(RESPONSE_MESSAGES.SERVER_ERROR));
+      handleError(res, error);
     }
   };
-
-
-
   createPage = async (req: Request, res: Response): Promise<void> => {
     try {
-      const newItem = await this.service.createPage(req.body);
-      res.status(HTTP_STATUS.CREATED).json(ApiResponse.success(RESPONSE_MESSAGES.CREATED, newItem));
+      const validatedData = pageSchema.parse(req.body);
+      const result = await this._service.createPage(validatedData);
+      if (!result.success) {
+        res.status(HTTP_STATUS.BAD_REQUEST).json(result);
+        return;
+      }
+      res.status(HTTP_STATUS.CREATED).json(result);
     } catch (error) {
-      res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(ApiResponse.error(RESPONSE_MESSAGES.SERVER_ERROR));
+      handleError(res, error);
     }
   };
-
   updatePage = async (req: Request, res: Response): Promise<void> => {
     try {
-      const updatedItem = await this.service.updatePage(req.params.id as string, req.body);
-      if (!updatedItem) { res.status(HTTP_STATUS.NOT_FOUND).json(ApiResponse.error(RESPONSE_MESSAGES.NOT_FOUND)); return; }
-      res.status(HTTP_STATUS.OK).json(ApiResponse.success(RESPONSE_MESSAGES.SUCCESS, updatedItem));
+      const validatedData = pageSchema.parse(req.body);
+      const result = await this._service.updatePage(req.params.id as string, validatedData);
+      if (!result.success) {
+        res.status(HTTP_STATUS.BAD_REQUEST).json(result);
+        return;
+      }
+      res.status(HTTP_STATUS.OK).json(result);
     } catch (error) {
-      res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(ApiResponse.error(RESPONSE_MESSAGES.SERVER_ERROR));
+      handleError(res, error);
     }
   };
-
   deletePage = async (req: Request, res: Response): Promise<void> => {
     try {
-      const deletedItem = await this.service.deletePage(req.params.id as string);
-      if (!deletedItem) { res.status(HTTP_STATUS.NOT_FOUND).json(ApiResponse.error(RESPONSE_MESSAGES.NOT_FOUND)); return; }
-      res.status(HTTP_STATUS.OK).json(ApiResponse.success(RESPONSE_MESSAGES.DELETED));
+      const result = await this._service.deletePage(req.params.id as string);
+      if (!result.success) {
+        res.status(HTTP_STATUS.BAD_REQUEST).json(result);
+        return;
+      }
+      res.status(HTTP_STATUS.OK).json(result);
     } catch (error) {
-      res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(ApiResponse.error(RESPONSE_MESSAGES.SERVER_ERROR));
+      handleError(res, error);
     }
   };
 }

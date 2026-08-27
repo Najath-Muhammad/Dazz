@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { api, apiClient } from '@/lib/api';
+import { ConfirmModal } from '@/components/admin/ConfirmModal';
+import { MediaUploader } from '@/components/admin/MediaUploader';
 
 const CATEGORY_LABELS: Record<string, string> = {
   'construction': 'Construction',
@@ -11,6 +13,39 @@ const CATEGORY_LABELS: Record<string, string> = {
   'other': 'Other',
 };
 
+const ActionDropdown = ({ svc, onDelete }: { svc: any, onDelete: () => void }) => {
+  const [open, setOpen] = useState(false);
+  const ref = React.useRef<HTMLDivElement>(null);
+  
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClick);
+    return () => document.removeEventListener('mousedown', handleClick);
+  }, []);
+
+  return (
+    <div className="relative inline-block text-left" ref={ref}>
+      <button onClick={() => setOpen(!open)} className="text-slate-400 hover:text-dazz-navy p-1">
+        <span className="text-xl leading-none">⋮</span>
+      </button>
+      {open && (
+        <div className="origin-top-right absolute right-0 mt-2 w-32 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50 overflow-hidden text-left">
+          <div className="py-1">
+            <Link href={`/admin/services/${svc._id}`} className="block px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100">Details</Link>
+            <a href={`/en/services/${svc.slug}`} target="_blank" rel="noreferrer" className="block px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100">Preview (Live)</a>
+            <Link href={`/admin/services/${svc._id}/edit`} className="block px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100">Edit</Link>
+            <button onClick={() => { setOpen(false); onDelete(); }} className="block w-full text-left px-4 py-2 text-sm font-bold text-red-600 hover:bg-red-50">Delete</button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
 export default function AdminServicesPage() {
   const [services, setServices] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -18,7 +53,7 @@ export default function AdminServicesPage() {
 
   const fetchServices = async () => {
     try {
-      const data = await api.get<any[]>('/admin/services');
+      const data = await api.get<any[]>('/services');
       setServices(data);
     } catch {
       setError('Failed to load services.');
@@ -27,21 +62,49 @@ export default function AdminServicesPage() {
     }
   };
 
-  useEffect(() => { fetchServices(); }, []);
+  const [pageData, setPageData] = useState<any>(null);
+  const [isPageModalOpen, setIsPageModalOpen] = useState(false);
+  const [savingPage, setSavingPage] = useState(false);
 
-  const handleDelete = async (id: string, name: string) => {
-    if (!confirm(`Are you sure you want to delete "${name}"? This cannot be undone.`)) return;
+  const fetchPageData = async () => {
     try {
-      await api.delete(`/admin/services/${id}`);
-      setServices(prev => prev.filter(s => s._id !== id));
+      const data = await api.get<any>('/content/services');
+      setPageData(data);
     } catch {
-      alert('Failed to delete service.');
+      // If it doesn't exist, we will create it on save
     }
   };
 
+  useEffect(() => { 
+    fetchServices(); 
+    fetchPageData();
+  }, []);
+
+  const [confirmModal, setConfirmModal] = useState<{isOpen: boolean; title: string; message: string; onConfirm: () => void}>({
+    isOpen: false, title: '', message: '', onConfirm: () => {}
+  });
+
+  const handleDeleteClick = (id: string, name: string) => {
+    setConfirmModal({
+      isOpen: true,
+      title: 'Delete Service',
+      message: `Are you sure you want to delete "${name}"? This cannot be undone.`,
+      onConfirm: async () => {
+        setConfirmModal(prev => ({ ...prev, isOpen: false }));
+        try {
+          await api.delete(`/services/${id}`);
+          setServices(prev => prev.filter(s => s._id !== id));
+        } catch {
+          alert('Failed to delete service.');
+        }
+      }
+    });
+  };
+
+
   const handleDuplicate = async (id: string) => {
     try {
-      const copy = await api.post<any>(`/admin/services/${id}/duplicate`, {});
+      const copy = await api.post<any>(`/services/${id}/duplicate`, {});
       setServices(prev => [copy, ...prev]);
     } catch {
       alert('Failed to duplicate service.');
@@ -51,10 +114,30 @@ export default function AdminServicesPage() {
   const handleTogglePublish = async (id: string, current: string) => {
     const newStatus = current === 'published' ? 'draft' : 'published';
     try {
-      const updated = await api.put<any>(`/admin/services/${id}`, { status: newStatus });
+      const updated = await api.put<any>(`/services/${id}`, { status: newStatus });
       setServices(prev => prev.map(s => s._id === id ? { ...s, status: updated.status } : s));
     } catch {
       alert('Failed to update status.');
+    }
+  };
+
+  const handleSavePageData = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSavingPage(true);
+    try {
+      await api.put('/content/services', {
+        slug: 'services',
+        title: pageData?.title || { en: 'Our Services', ar: 'خدماتنا' },
+        content: {
+          heroSubtitle: pageData?.content?.heroSubtitle || { en: '', ar: '' },
+          heroImage: pageData?.content?.heroImage || ''
+        }
+      });
+      setIsPageModalOpen(false);
+    } catch (err) {
+      alert('Failed to save page settings');
+    } finally {
+      setSavingPage(false);
     }
   };
 
@@ -65,17 +148,25 @@ export default function AdminServicesPage() {
           <h1 className="text-3xl font-bold text-slate-900">Services</h1>
           <p className="text-slate-500 text-sm mt-1">Manage all service pages. Published services appear on the public website automatically.</p>
         </div>
-        <Link
-          href="/admin/services/new"
-          className="inline-flex items-center gap-2 px-5 py-2.5 bg-dazz-navy text-white text-sm font-bold rounded-md hover:bg-dazz-navy/80 transition-all"
-        >
-          + Add Service
-        </Link>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => setIsPageModalOpen(true)}
+            className="inline-flex items-center gap-2 px-4 py-2.5 bg-white border border-slate-300 text-slate-700 text-sm font-bold rounded-md hover:bg-slate-50 transition-all shadow-sm"
+          >
+            ⚙️ Edit Listing Page
+          </button>
+          <Link
+            href="/admin/services/new"
+            className="inline-flex items-center gap-2 px-5 py-2.5 bg-dazz-navy text-white text-sm font-bold rounded-md hover:bg-dazz-navy/80 transition-all shadow-sm"
+          >
+            + Add Service
+          </Link>
+        </div>
       </div>
 
       {error && <div className="mb-4 bg-red-50 text-red-600 p-4 rounded-md text-sm">{error}</div>}
 
-      <div className="bg-white shadow-sm border border-slate-200 rounded-lg overflow-hidden">
+      <div className="bg-white shadow-sm border border-slate-200 rounded-lg overflow-visible">
         <table className="min-w-full divide-y divide-slate-100">
           <thead className="bg-slate-50">
             <tr>
@@ -126,10 +217,7 @@ export default function AdminServicesPage() {
                 </td>
                 <td className="px-6 py-4 text-right">
                   <div className="flex items-center justify-end gap-3 text-sm font-medium">
-                    <a href={`/services/${svc.slug}`} target="_blank" rel="noreferrer" className="text-slate-400 hover:text-slate-700">Preview</a>
-                    <Link href={`/admin/services/${svc._id}/edit`} className="text-dazz-navy hover:text-dazz-gold transition-colors">Edit</Link>
-                    <button onClick={() => handleDuplicate(svc._id)} className="text-slate-400 hover:text-dazz-navy transition-colors">Duplicate</button>
-                    <button onClick={() => handleDelete(svc._id, svc.name?.en)} className="text-red-400 hover:text-red-600 transition-colors">Delete</button>
+                    <ActionDropdown svc={svc} onDelete={() => handleDeleteClick(svc._id, svc.name?.en || 'Untitled')} />
                   </div>
                 </td>
               </tr>
@@ -137,6 +225,94 @@ export default function AdminServicesPage() {
           </tbody>
         </table>
       </div>
+
+      <ConfirmModal
+        isOpen={confirmModal.isOpen}
+        title={confirmModal.title}
+        message={confirmModal.message}
+        onConfirm={confirmModal.onConfirm}
+        onCancel={() => setConfirmModal(prev => ({ ...prev, isOpen: false }))}
+        isDestructive={true}
+        confirmText="Delete"
+      />
+
+      {isPageModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4">
+          <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+            <div className="p-6 border-b border-slate-100 flex justify-between items-center sticky top-0 bg-white z-10">
+              <h2 className="text-xl font-bold text-slate-900">Edit Services Listing Page</h2>
+              <button onClick={() => setIsPageModalOpen(false)} className="text-slate-400 hover:text-slate-600 font-bold text-xl">&times;</button>
+            </div>
+            
+            <form onSubmit={handleSavePageData} className="p-6 space-y-8">
+              <div>
+                <h3 className="text-sm font-bold text-slate-900 uppercase tracking-widest mb-4">Hero Title</h3>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-500 mb-1">English</label>
+                    <input 
+                      type="text" 
+                      value={pageData?.title?.en || ''} 
+                      onChange={e => setPageData({ ...pageData, title: { ...pageData?.title, en: e.target.value } })}
+                      className="w-full px-3 py-2 border border-slate-300 rounded text-sm focus:ring-2 focus:ring-dazz-navy focus:border-dazz-navy"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-500 mb-1">Arabic</label>
+                    <input 
+                      type="text" 
+                      dir="rtl"
+                      value={pageData?.title?.ar || ''} 
+                      onChange={e => setPageData({ ...pageData, title: { ...pageData?.title, ar: e.target.value } })}
+                      className="w-full px-3 py-2 border border-slate-300 rounded text-sm focus:ring-2 focus:ring-dazz-navy focus:border-dazz-navy"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h3 className="text-sm font-bold text-slate-900 uppercase tracking-widest mb-4">Hero Subtitle</h3>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-500 mb-1">English</label>
+                    <textarea 
+                      rows={3}
+                      value={pageData?.content?.heroSubtitle?.en || ''} 
+                      onChange={e => setPageData({ ...pageData, content: { ...pageData?.content, heroSubtitle: { ...pageData?.content?.heroSubtitle, en: e.target.value } } })}
+                      className="w-full px-3 py-2 border border-slate-300 rounded text-sm focus:ring-2 focus:ring-dazz-navy focus:border-dazz-navy"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-500 mb-1">Arabic</label>
+                    <textarea 
+                      rows={3}
+                      dir="rtl"
+                      value={pageData?.content?.heroSubtitle?.ar || ''} 
+                      onChange={e => setPageData({ ...pageData, content: { ...pageData?.content, heroSubtitle: { ...pageData?.content?.heroSubtitle, ar: e.target.value } } })}
+                      className="w-full px-3 py-2 border border-slate-300 rounded text-sm focus:ring-2 focus:ring-dazz-navy focus:border-dazz-navy"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h3 className="text-sm font-bold text-slate-900 uppercase tracking-widest mb-4">Hero Background Image</h3>
+                <MediaUploader 
+                  value={pageData?.content?.heroImage || ''}
+                  onChange={(media) => setPageData({ ...pageData, content: { ...pageData?.content, heroImage: media.url } })}
+                />
+              </div>
+
+              <div className="pt-6 border-t border-slate-100 flex justify-end gap-3">
+                <button type="button" onClick={() => setIsPageModalOpen(false)} className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900">Cancel</button>
+                <button type="submit" disabled={savingPage} className="px-6 py-2 bg-dazz-navy text-white text-sm font-bold rounded-md hover:bg-dazz-navy/90 disabled:opacity-50">
+                  {savingPage ? 'Saving...' : 'Save Page'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

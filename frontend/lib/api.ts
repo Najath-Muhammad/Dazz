@@ -23,6 +23,15 @@ apiClient.interceptors.request.use(
   }
 );
 
+apiClient.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    // Extract the backend's error message if available
+    const message = error.response?.data?.message || error.message || 'An unexpected error occurred';
+    return Promise.reject(new Error(message));
+  }
+);
+
 // Define the standard ApiResponse shape
 export interface ApiResponse<T = any> {
   success: boolean;

@@ -1,8 +1,8 @@
 export interface IBlogService {
-  getAllBlogs(): Promise<any[]>;
-  getBlogById(id: string): Promise<any | null>;
-  getBlogBySlug(slug: string): Promise<any | null>;
-  createBlog(data: any): Promise<any>;
-  updateBlog(id: string, data: any): Promise<any | null>;
-  deleteBlog(id: string): Promise<any | null>;
+  getAllBlogs(): Promise<{ success: boolean; message: string; data?: any[] }>;
+  getBlogById(id: string): Promise<{ success: boolean; message: string; data?: any }>;
+  getBlogBySlug(slug: string): Promise<{ success: boolean; message: string; data?: any }>;
+  createBlog(data: any): Promise<{ success: boolean; message: string; data?: any }>;
+  updateBlog(id: string, data: any): Promise<{ success: boolean; message: string; data?: any }>;
+  deleteBlog(id: string): Promise<{ success: boolean; message: string; data?: any }>;
 }

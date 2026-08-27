@@ -24,13 +24,16 @@ export function IntroductionEditor({ form, setForm }: Props) {
   return (
     <div className="space-y-6">
       <BilingualField label="Section Label" nameEn="intro_label_en" nameAr="intro_label_ar"
+        note="Small colored label at the top of the section."
         valueEn={intro.sectionLabel.en} valueAr={intro.sectionLabel.ar}
         onChangeEn={v => setLoc('sectionLabel', 'en', v)} onChangeAr={v => setLoc('sectionLabel', 'ar', v)}
         placeholder="e.g., About Our Division" />
       <BilingualField label="Section Title" nameEn="intro_title_en" nameAr="intro_title_ar"
+        note="The main heading for the introduction."
         valueEn={intro.title.en} valueAr={intro.title.ar}
         onChangeEn={v => setLoc('title', 'en', v)} onChangeAr={v => setLoc('title', 'ar', v)} />
       <BilingualField label="Main Description" nameEn="intro_main_en" nameAr="intro_main_ar"
+        note="The primary descriptive paragraph."
         valueEn={intro.mainDescription.en} valueAr={intro.mainDescription.ar}
         onChangeEn={v => setLoc('mainDescription', 'en', v)} onChangeAr={v => setLoc('mainDescription', 'ar', v)}
         type="textarea" rows={4} />

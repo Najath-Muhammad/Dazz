@@ -18,7 +18,7 @@ export default function AdminNewServicePage() {
     setSaving(true);
     setError('');
     try {
-      await api.post('/admin/services', { ...form, status });
+      await api.post('/services', { ...form, status });
       router.push('/admin/services');
     } catch (e: any) {
       setError(e?.message || 'Failed to save service.');

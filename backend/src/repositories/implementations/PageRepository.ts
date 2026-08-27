@@ -1,12 +1,17 @@
 import { IPageRepository } from '../interfaces/IPageRepository';
 import Page from '../../models/Page';
 
+import mongoose from 'mongoose';
+
 export class PageRepository implements IPageRepository {
   async findAll(): Promise<any[]> {
     return await Page.find();
   }
   async findById(id: string): Promise<any | null> {
-    return await Page.findById(id);
+    if (mongoose.Types.ObjectId.isValid(id)) {
+      return await Page.findById(id);
+    }
+    return await Page.findOne({ slug: id });
   }
 
   async create(data: any): Promise<any> {
@@ -14,9 +19,15 @@ export class PageRepository implements IPageRepository {
     return await newItem.save();
   }
   async update(id: string, data: any): Promise<any | null> {
-    return await Page.findByIdAndUpdate(id, data, { new: true });
+    if (mongoose.Types.ObjectId.isValid(id)) {
+      return await Page.findByIdAndUpdate(id, data, { new: true });
+    }
+    return await Page.findOneAndUpdate({ slug: id }, data, { new: true, upsert: true });
   }
   async delete(id: string): Promise<any | null> {
-    return await Page.findByIdAndDelete(id);
+    if (mongoose.Types.ObjectId.isValid(id)) {
+      return await Page.findByIdAndDelete(id);
+    }
+    return await Page.findOneAndDelete({ slug: id });
   }
 }
