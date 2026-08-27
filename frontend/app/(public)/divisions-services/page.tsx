@@ -9,30 +9,31 @@ import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Divisions & Services',
-  description: 'Explore our specialized divisions: Construction, Food Trading, Logistics, and Hospitality.',
-  alternates: {
-    canonical: '/divisions-services',
-  },
-  openGraph: {
-    title: 'Divisions & Services | Dazz Tradelink',
-    description: 'Explore our specialized divisions: Construction, Food Trading, Logistics, and Hospitality.',
-    url: '/divisions-services',
-    images: [
-      {
-        url: '/og-image.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'Divisions & Services | Dazz Tradelink',
-      }
-    ],
-  },
+  description: 'Explore our specialized divisions and services.',
+  alternates: { canonical: '/divisions-services' },
 };
-export default function DivisionsPage() {
+
+async function getServices() {
+  try {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+    const res = await fetch(`${apiUrl}/services`, { next: { revalidate: 60 } });
+    if (!res.ok) return [];
+    const json = await res.json();
+    return json.data || [];
+  } catch (error) {
+    console.error('Failed to fetch services:', error);
+    return [];
+  }
+}
+
+export default async function DivisionsPage() {
+  const services = await getServices();
+
   return (
     <>
       <HeroSection 
         title="Our Divisions & Services"
-        subtitle="Four specialized sectors, one unified standard of excellence."
+        subtitle="Explore our comprehensive range of specialized services."
         backgroundImage="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg"
       />
 
@@ -41,36 +42,27 @@ export default function DivisionsPage() {
           <div className="max-w-3xl mx-auto text-center mb-16">
             <SectionTitle title="Comprehensive Solutions" subtitle="What We Do" alignment="center" />
             <p className="text-lg text-slate-600">
-              Dazz Tradelink operates across four primary business sectors. By maintaining dedicated divisions with specialized leadership, we ensure that every client receives expert, industry-specific service backed by the resources of a global conglomerate.
+              Dazz Tradelink operates across multiple specialized sectors, delivering expert, industry-specific services backed by the resources of a global conglomerate.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <ServiceCard 
-              title="Construction" 
-              description="Our construction division handles everything from commercial high-rises to civil infrastructure projects, utilizing advanced engineering methodologies and sustainable practices."
-              imageUrl="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg"
-              href="/construction"
-            />
-            <ServiceCard 
-              title="Food Trading" 
-              description="We source, process, and distribute premium food commodities globally, ensuring food security and quality from farm to table through our rigorous supply chain."
-              imageUrl="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg"
-              href="/food-trading"
-            />
-            <ServiceCard 
-              title="Logistics" 
-              description="Providing end-to-end freight forwarding, warehousing, and supply chain management solutions that keep global trade moving efficiently."
-              imageUrl="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg"
-              href="/logistics"
-            />
-            <ServiceCard 
-              title="Hospitality" 
-              description="Creating and managing exceptional spaces and services that redefine luxury and comfort in the global tourism and facility management sectors."
-              imageUrl="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg"
-              href="/hospitality"
-            />
-          </div>
+          {services.length === 0 ? (
+            <div className="text-center text-slate-500 py-12">
+              Services are currently being updated. Please check back later.
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {services.map((svc: any) => (
+                <ServiceCard 
+                  key={svc._id}
+                  title={svc.name?.en || 'Service'} 
+                  description={svc.shortDescription?.en || ''}
+                  imageUrl={svc.hero?.media || svc.icon || 'https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg'}
+                  href={`/en/services/${svc.slug}`}
+                />
+              ))}
+            </div>
+          )}
         </Container>
       </section>
 
