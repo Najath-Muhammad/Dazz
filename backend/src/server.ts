@@ -39,6 +39,7 @@ import jobRoutes from './routes/jobRoutes';
 import contactMessageRoutes from './routes/contactMessageRoutes';
 import siteSettingsRoutes from './routes/siteSettingsRoutes';
 import mediaRoutes from './routes/mediaRoutes';
+import translationRoutes from './routes/translationRoutes';
 
 app.use('/api/auth', authRoutes);
 app.use('/api/content', pageRoutes);
@@ -48,6 +49,7 @@ app.use('/api/jobs', jobRoutes);
 app.use('/api/contact', contactMessageRoutes);
 app.use('/api/settings', siteSettingsRoutes);
 app.use('/api/admin/media', mediaRoutes);
+app.use('/api/admin/translate', translationRoutes);
 
 app.get('/health', (req: Request, res: Response) => {
   res.status(200).json({ status: 'ok', message: 'Backend is running' });
