@@ -29,7 +29,7 @@ export function Footer() {
 
           {/* Brand Column */}
           <div className="md:col-span-5">
-            <Link href="/" aria-label="Dazz Tradelink — Home" className="inline-block mb-6 relative h-12 w-48 hover:scale-105 transition-transform duration-300">
+            <Link href="/" aria-label="Dazz Tradelink — Home" className="inline-block mb-6 relative h-16 w-56 md:h-20 md:w-64 hover:scale-105 transition-transform duration-300">
               <Image 
                 src="/images/logo-transparent.png" 
                 alt="DAZZ Tradelink" 

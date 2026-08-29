@@ -30,7 +30,7 @@ export default function AdminLayout({
       <aside className="w-full md:w-64 bg-dazz-navy text-white flex flex-col md:sticky md:top-0 md:h-screen overflow-y-auto scrollbar-none z-10 shadow-lg">
         <div className="p-6 border-b border-dazz-navy-dark">
           <Link href="/admin" className="flex flex-col justify-center">
-            <div className="relative h-8 w-32">
+            <div className="relative h-12 w-48">
               <Image 
                 src="/images/logo-transparent.png" 
                 alt="DAZZ Tradelink" 

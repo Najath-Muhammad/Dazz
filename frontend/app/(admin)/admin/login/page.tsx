@@ -37,7 +37,7 @@ export default function AdminLoginPage() {
     <div className="min-h-screen bg-slate-900 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
         <div className="flex justify-center mb-6">
-          <div className="relative h-12 w-48">
+          <div className="relative h-20 w-64">
             <Image 
               src="/images/logo-transparent.png" 
               alt="DAZZ Tradelink" 

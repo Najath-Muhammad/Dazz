@@ -122,7 +122,7 @@ export function Navbar() {
         <div className="max-w-[1400px] mx-auto px-6 flex justify-between items-center">
           {/* Logo */}
           <Link href="/" aria-label="Dazz Tradelink — Home">
-            <div className={`transition-transform duration-500 relative h-10 w-40 md:h-12 md:w-48 ${scrolled ? 'scale-90' : 'scale-100'}`}>
+            <div className={`transition-transform duration-500 relative h-16 w-56 md:h-20 md:w-64 ${scrolled ? 'scale-90' : 'scale-100'}`}>
               <Image 
                 src="/images/logo-transparent.png" 
                 alt="DAZZ Tradelink" 
