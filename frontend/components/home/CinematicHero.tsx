@@ -101,16 +101,19 @@ export function CinematicHero({ title, subtitle, backgroundImage, hideExtras = f
         </motion.div>
 
         {/* Title */}
-        <div className="overflow-hidden mb-8">
+        <div className="overflow-hidden mb-8 max-w-4xl">
           <motion.h1
             initial={{ y: '100%' }}
             animate={{ y: 0 }}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.4 }}
-            className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white uppercase tracking-tighter leading-[0.95]"
+            className="text-4xl md:text-5xl lg:text-7xl font-extrabold text-white uppercase tracking-tighter leading-tight"
           >
-            {(title.includes('\n') ? title.split('\n') : title.split(' ')).map((line, i) => (
-              <span key={i} className="block">{line}</span>
-            ))}
+            {title.includes('\n') ? title.split('\n').map((line, i, arr) => (
+              <React.Fragment key={i}>
+                {line}
+                {i !== arr.length - 1 && <br />}
+              </React.Fragment>
+            )) : title}
           </motion.h1>
         </div>
 
