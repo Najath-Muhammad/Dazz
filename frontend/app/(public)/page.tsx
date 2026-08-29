@@ -7,6 +7,8 @@ import { FeaturedProjectsSection } from '@/components/home/FeaturedProjectsSecti
 import { LatestBlogSection } from '@/components/home/LatestBlogSection';
 import { ContactCTASection } from '@/components/home/ContactCTASection';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'Dazz Tradlink International — Integrated Solutions, Trusted Partner',
   description: 'Dazz Tradlink delivers excellence across construction, food trading, logistics, and hospitality with industrial precision and corporate integrity across Saudi Arabia.',
@@ -59,8 +61,15 @@ export default async function HomePage() {
 
   const homeHeader = settings?.pageHeaders?.home;
 
-  const heroTitle = homeHeader?.title || settings?.heroTitle || 'DAZZ TRADLINK INTERNATIONAL';
-  const heroSubtitle = homeHeader?.subtitle || settings?.heroSubtitle || 'Empowering Industrial Excellence. Delivering trusted solutions across construction, food trading, logistics, and hospitality.';
+  const heroTitleObj = homeHeader?.title || settings?.heroTitle;
+  const heroTitle = typeof heroTitleObj === 'string' 
+    ? heroTitleObj 
+    : (heroTitleObj?.en || 'DAZZ TRADLINK INTERNATIONAL');
+
+  const heroSubtitleObj = homeHeader?.subtitle || settings?.heroSubtitle;
+  const heroSubtitle = typeof heroSubtitleObj === 'string'
+    ? heroSubtitleObj
+    : (heroSubtitleObj?.en || 'Empowering Industrial Excellence. Delivering trusted solutions across construction, food trading, logistics, and hospitality.');
 
   const rawBg = homeHeader?.media || settings?.heroBackgroundImage;
   let heroBg = 'https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg';
