@@ -28,8 +28,9 @@ async function getHeroSettings() {
   }
 }
 
-export default async function AboutUsPage({ params }: { params: { lang: string } }) {
-  const lang = params.lang || 'en';
+export default async function AboutUsPage({ params }: { params: Promise<{ lang: string }> }) {
+  const resolvedParams = await params;
+  const lang = resolvedParams.lang || 'en';
   const isAr = lang === 'ar';
   const dir = isAr ? 'rtl' : 'ltr';
 
