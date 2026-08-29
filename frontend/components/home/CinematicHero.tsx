@@ -87,19 +87,7 @@ export function CinematicHero({ title, subtitle, backgroundImage, hideExtras = f
 
       {/* Content */}
       <div className="relative z-10 max-w-[1400px] mx-auto px-6 w-full mt-auto">
-        {/* Label */}
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="flex items-center gap-4 mb-8"
-        >
-          <div className="w-12 h-[1px] bg-dazz-gold" />
-          <span className="text-dazz-gold font-mono text-[10px] tracking-[0.3em] uppercase">
-            Integrated Solutions
-          </span>
-        </motion.div>
-
+        {/* Removed Label */}
         {/* Title */}
         <div className="overflow-hidden mb-8 max-w-4xl">
           <motion.h1
