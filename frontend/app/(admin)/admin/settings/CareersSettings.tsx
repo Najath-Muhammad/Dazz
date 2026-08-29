@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { MediaUploader } from '@/components/admin/MediaUploader';
 import { BilingualField } from '@/components/admin/BilingualField';
-import { Plus, Trash2 } from 'lucide-react';
+import { Plus, Trash2, ChevronDown, ChevronUp } from 'lucide-react';
 
 interface CareersSettingsProps {
   settings: any;
@@ -9,6 +9,8 @@ interface CareersSettingsProps {
 }
 
 export default function CareersSettings({ settings, onChange }: CareersSettingsProps) {
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+
   const careers = settings.careers || {
     hero: { title: { en: '', ar: '' }, subtitle: { en: '', ar: '' }, media: null },
     whyWorkWithUs: { enabled: true, title: { en: '', ar: '' }, description: { en: '', ar: '' }, benefits: [] },
@@ -33,10 +35,12 @@ export default function CareersSettings({ settings, onChange }: CareersSettingsP
   };
 
   const addBenefit = () => {
-    updateSection('whyWorkWithUs', 'benefits', [
+    const newBenefits = [
       ...(careers.whyWorkWithUs.benefits || []),
       { title: { en: '', ar: '' }, description: { en: '', ar: '' } }
-    ]);
+    ];
+    updateSection('whyWorkWithUs', 'benefits', newBenefits);
+    setExpandedIndex(newBenefits.length - 1);
   };
 
   const updateBenefit = (index: number, field: 'title' | 'description', lang: 'en'|'ar', value: string) => {
@@ -57,10 +61,20 @@ export default function CareersSettings({ settings, onChange }: CareersSettingsP
     updateSection('whyWorkWithUs', 'benefits', newBenefits);
   };
 
-  const removeBenefit = (index: number) => {
+  const removeBenefit = (index: number, e: React.MouseEvent) => {
+    e.stopPropagation();
     const newBenefits = [...(careers.whyWorkWithUs.benefits || [])];
     newBenefits.splice(index, 1);
     updateSection('whyWorkWithUs', 'benefits', newBenefits);
+    if (expandedIndex === index) {
+      setExpandedIndex(null);
+    } else if (expandedIndex !== null && expandedIndex > index) {
+      setExpandedIndex(expandedIndex - 1);
+    }
+  };
+
+  const toggleBenefit = (index: number) => {
+    setExpandedIndex(expandedIndex === index ? null : index);
   };
 
   return (
@@ -147,43 +161,66 @@ export default function CareersSettings({ settings, onChange }: CareersSettingsP
               </div>
               
               <div className="space-y-4">
-                {(careers.whyWorkWithUs?.benefits || []).map((benefit: any, index: number) => (
-                  <div key={index} className="p-4 bg-slate-50 border border-slate-200 rounded-md relative">
-                    <button type="button" onClick={() => removeBenefit(index)} className="absolute top-4 right-4 text-slate-400 hover:text-red-500">
-                      <Trash2 size={18} />
-                    </button>
-                    
-                    <div className="space-y-4 mr-8">
-                      <BilingualField
-                        label={`Benefit ${index + 1} Title`}
-                        nameEn={`b_titleEn_${index}`}
-                        nameAr={`b_titleAr_${index}`}
-                        valueEn={benefit.title?.en || ''}
-                        valueAr={benefit.title?.ar || ''}
-                        onChangeEn={(v) => updateBenefit(index, 'title', 'en', v)}
-                        onChangeAr={(v) => updateBenefit(index, 'title', 'ar', v)}
-                      />
-                      <BilingualField
-                        label={`Benefit ${index + 1} Description`}
-                        nameEn={`b_descEn_${index}`}
-                        nameAr={`b_descAr_${index}`}
-                        valueEn={benefit.description?.en || ''}
-                        valueAr={benefit.description?.ar || ''}
-                        onChangeEn={(v) => updateBenefit(index, 'description', 'en', v)}
-                        onChangeAr={(v) => updateBenefit(index, 'description', 'ar', v)}
-                        type="textarea"
-                      />
-                      <div className="pt-2">
-                        <MediaUploader
-                          label="Optional Background Image"
-                          folder="dazz/careers/principles"
-                          value={benefit.image}
-                          onChange={(media) => updateBenefitImage(index, media)}
-                        />
+                {(careers.whyWorkWithUs?.benefits || []).map((benefit: any, index: number) => {
+                  const isExpanded = expandedIndex === index;
+                  return (
+                    <div key={index} className="border border-slate-200 rounded-md overflow-hidden bg-white shadow-sm transition-all">
+                      <div 
+                        className="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 transition-colors"
+                        onClick={() => toggleBenefit(index)}
+                      >
+                        <span className="font-semibold text-slate-700">
+                          {benefit.title?.en || `New Benefit ${index + 1}`}
+                        </span>
+                        <div className="flex items-center gap-3">
+                          <button 
+                            type="button" 
+                            onClick={(e) => removeBenefit(index, e)} 
+                            className="text-slate-400 hover:text-red-500 p-1 transition-colors rounded-md hover:bg-red-50"
+                            title="Remove Benefit"
+                          >
+                            <Trash2 size={18} />
+                          </button>
+                          <div className="text-slate-400 p-1">
+                            {isExpanded ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                          </div>
+                        </div>
                       </div>
+                      
+                      {isExpanded && (
+                        <div className="p-5 bg-slate-50 border-t border-slate-200 space-y-6">
+                          <BilingualField
+                            label="Benefit Title"
+                            nameEn={`b_titleEn_${index}`}
+                            nameAr={`b_titleAr_${index}`}
+                            valueEn={benefit.title?.en || ''}
+                            valueAr={benefit.title?.ar || ''}
+                            onChangeEn={(v) => updateBenefit(index, 'title', 'en', v)}
+                            onChangeAr={(v) => updateBenefit(index, 'title', 'ar', v)}
+                          />
+                          <BilingualField
+                            label="Benefit Description"
+                            nameEn={`b_descEn_${index}`}
+                            nameAr={`b_descAr_${index}`}
+                            valueEn={benefit.description?.en || ''}
+                            valueAr={benefit.description?.ar || ''}
+                            onChangeEn={(v) => updateBenefit(index, 'description', 'en', v)}
+                            onChangeAr={(v) => updateBenefit(index, 'description', 'ar', v)}
+                            type="textarea"
+                          />
+                          <div className="pt-2">
+                            <MediaUploader
+                              label="Optional Background Image"
+                              folder="dazz/careers/principles"
+                              value={benefit.image}
+                              onChange={(media) => updateBenefitImage(index, media)}
+                            />
+                          </div>
+                        </div>
+                      )}
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
                 {(careers.whyWorkWithUs?.benefits?.length || 0) === 0 && (
                   <p className="text-sm text-slate-400 italic">No benefits added yet.</p>
                 )}
