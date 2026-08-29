@@ -16,7 +16,7 @@ export function AboutDivisions({ isAr }: { isAr?: boolean }) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
-    <section className="py-24 md:py-40 bg-white" aria-label="Our Divisions">
+    <section className="py-24 md:py-32 bg-white scroll-mt-24" aria-label="Our Divisions" id="about-divisions">
       <div className="max-w-[1400px] mx-auto px-6">
         
         <div className="mb-16">
@@ -56,7 +56,7 @@ export function AboutDivisions({ isAr }: { isAr?: boolean }) {
                   <span className="text-xl md:text-2xl font-mono text-slate-300 group-hover:text-dazz-gold transition-colors duration-500">
                     {div.id}
                   </span>
-                  <h3 className="text-4xl md:text-6xl lg:text-[80px] font-extrabold uppercase tracking-tighter text-slate-900 group-hover:text-dazz-navy transition-colors duration-500">
+                  <h3 className="text-3xl md:text-5xl lg:text-6xl font-extrabold uppercase tracking-tighter text-slate-900 group-hover:text-dazz-navy transition-colors duration-500">
                     {isAr ? div.titleAr : div.title}
                   </h3>
                 </div>

@@ -60,7 +60,7 @@ export function MissionVision({ isAr, mission, vision }: MissionVisionProps) {
   };
 
   return (
-    <section className="relative bg-slate-950 text-slate-100 py-32 overflow-hidden border-t border-white/5">
+    <section className="relative bg-slate-950 text-slate-100 py-32 overflow-hidden border-t border-white/5 scroll-mt-24" id="mission-vision">
       {/* Background Grid Pattern for Industrial Feel */}
       <div 
         className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none"
@@ -105,7 +105,7 @@ export function MissionVision({ isAr, mission, vision }: MissionVisionProps) {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-white/10 to-transparent -translate-x-1/2"
+            className="hidden lg:block absolute left-1/2 top-10 bottom-0 w-px bg-gradient-to-b from-transparent via-white/10 to-transparent -translate-x-1/2"
           />
 
           {/* Mission Block */}
@@ -120,14 +120,14 @@ export function MissionVision({ isAr, mission, vision }: MissionVisionProps) {
             <div className={`flex items-end mb-8 gap-6 ${isAr ? 'flex-row-reverse' : 'flex-row'}`}>
               <motion.span 
                 variants={hoverAnim}
-                className="text-6xl md:text-8xl font-bold font-mono text-transparent"
+                className="text-6xl md:text-8xl font-bold font-mono text-transparent pb-2"
                 style={{ WebkitTextStroke: '1px rgba(255,255,255,0.4)' }}
               >
                 01
               </motion.span>
-              <div className="flex-1 pb-4">
+              <div className="flex-1 pb-6">
                 <motion.div 
-                  className={`h-px bg-dazz-gold origin-left transition-transform duration-500 ease-out scale-x-0 group-hover:scale-x-100 ${isAr ? 'origin-right' : 'origin-left'}`} 
+                  className={`h-[2px] bg-dazz-gold origin-left transition-transform duration-500 ease-out scale-x-50 group-hover:scale-x-100 ${isAr ? 'origin-right' : 'origin-left'}`} 
                 />
               </div>
             </div>
@@ -136,14 +136,14 @@ export function MissionVision({ isAr, mission, vision }: MissionVisionProps) {
               {mTitle}
             </motion.h3>
             
-            <motion.p variants={fadeUp} className={`text-lg md:text-xl text-slate-400 font-light leading-relaxed ${isAr ? 'text-right' : 'text-left'}`}>
+            <motion.p variants={fadeUp} className={`text-lg md:text-xl text-slate-200 font-light leading-relaxed ${isAr ? 'text-right' : 'text-left'}`}>
               {mDesc}
             </motion.p>
           </motion.div>
 
           {/* Vision Block */}
           <motion.div 
-            className="relative group cursor-default flex flex-col lg:pt-32"
+            className="relative group cursor-default flex flex-col lg:pt-24"
             variants={staggerContainer}
             initial="hidden"
             whileInView="visible"
@@ -153,14 +153,14 @@ export function MissionVision({ isAr, mission, vision }: MissionVisionProps) {
             <div className={`flex items-end mb-8 gap-6 ${isAr ? 'flex-row-reverse' : 'flex-row'}`}>
               <motion.span 
                 variants={hoverAnim}
-                className="text-6xl md:text-8xl font-bold font-mono text-transparent"
+                className="text-6xl md:text-8xl font-bold font-mono text-transparent pb-2"
                 style={{ WebkitTextStroke: '1px rgba(255,255,255,0.4)' }}
               >
                 02
               </motion.span>
-              <div className="flex-1 pb-4">
+              <div className="flex-1 pb-6">
                 <motion.div 
-                  className={`h-px bg-dazz-gold origin-left transition-transform duration-500 ease-out scale-x-0 group-hover:scale-x-100 ${isAr ? 'origin-right' : 'origin-left'}`} 
+                  className={`h-[2px] bg-dazz-gold origin-left transition-transform duration-500 ease-out scale-x-50 group-hover:scale-x-100 ${isAr ? 'origin-right' : 'origin-left'}`} 
                 />
               </div>
             </div>
@@ -169,7 +169,7 @@ export function MissionVision({ isAr, mission, vision }: MissionVisionProps) {
               {vTitle}
             </motion.h3>
             
-            <motion.p variants={fadeUp} className={`text-lg md:text-xl text-slate-400 font-light leading-relaxed ${isAr ? 'text-right' : 'text-left'}`}>
+            <motion.p variants={fadeUp} className={`text-lg md:text-xl text-slate-200 font-light leading-relaxed ${isAr ? 'text-right' : 'text-left'}`}>
               {vDesc}
             </motion.p>
           </motion.div>

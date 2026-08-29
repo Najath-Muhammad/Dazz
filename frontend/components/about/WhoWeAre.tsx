@@ -15,7 +15,7 @@ export function WhoWeAre({ isAr }: { isAr?: boolean }) {
   ];
 
   return (
-    <section className="py-24 md:py-40 bg-white" aria-label="Who We Are">
+    <section className="py-24 md:py-32 bg-white scroll-mt-24" aria-label="Who We Are" id="who-we-are">
       <div className="max-w-[1400px] mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-16 md:gap-24">
           
@@ -48,7 +48,7 @@ export function WhoWeAre({ isAr }: { isAr?: boolean }) {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: '-100px' }}
                   transition={{ duration: 0.8, delay: index * 0.15 }}
-                  className={`${index === 0 ? 'text-2xl md:text-3xl font-light text-slate-900 leading-snug' : 'text-lg text-slate-500 font-light leading-relaxed'}`}
+                  className={`${index === 0 ? 'text-xl md:text-2xl font-light text-slate-900 leading-snug' : 'text-lg text-slate-600 font-light leading-relaxed'}`}
                 >
                   {paragraph}
                 </motion.p>

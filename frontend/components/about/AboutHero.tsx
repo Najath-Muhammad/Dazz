@@ -66,7 +66,7 @@ export function AboutHero({ title, subtitle, media, isAr }: AboutHeroProps) {
             initial={{ y: '100%' }}
             animate={{ y: 0 }}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.4 }}
-            className="text-5xl md:text-7xl lg:text-[90px] font-extrabold text-white uppercase tracking-tighter leading-[0.95]"
+            className="text-4xl md:text-6xl lg:text-[5rem] font-extrabold text-white uppercase tracking-tighter leading-tight"
           >
             {title.split('\n').map((line, i) => (
               <span key={i} className="block">{line}</span>
@@ -90,7 +90,7 @@ export function AboutHero({ title, subtitle, media, isAr }: AboutHeroProps) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2, duration: 1 }}
-        className="absolute bottom-8 right-8 z-10 flex flex-col items-center gap-2"
+        className="absolute bottom-8 right-8 z-10 hidden md:flex flex-col items-center gap-2"
         aria-hidden="true"
       >
         <ChevronDown size={16} className="text-white/30 animate-bounce" />

@@ -12,8 +12,9 @@ export function OurApproach({ isAr }: { isAr?: boolean }) {
   return (
     <section 
       ref={containerRef}
-      className="py-32 md:py-48 bg-slate-50 relative overflow-hidden" 
+      className="py-32 md:py-40 bg-slate-50 relative overflow-hidden scroll-mt-24" 
       aria-label="Our Approach"
+      id="our-approach"
     >
       {/* Decorative vertical lines */}
       <div className="absolute inset-0 flex justify-evenly pointer-events-none opacity-[0.03]">
@@ -45,7 +46,7 @@ export function OurApproach({ isAr }: { isAr?: boolean }) {
                 <span className="text-xl md:text-2xl font-mono text-slate-300 group-hover:text-dazz-gold transition-colors duration-300">
                   0{i + 1}
                 </span>
-                <span className="text-5xl md:text-7xl lg:text-[100px] font-extrabold uppercase tracking-tighter text-slate-900 group-hover:text-dazz-navy transition-colors duration-300">
+                <span className="text-4xl md:text-6xl lg:text-7xl font-extrabold uppercase tracking-tighter text-slate-900 group-hover:text-dazz-navy transition-colors duration-300">
                   {word}
                 </span>
               </motion.div>
