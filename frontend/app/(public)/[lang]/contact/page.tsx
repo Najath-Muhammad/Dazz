@@ -39,6 +39,7 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
   const heroData = contactPageData.hero || {};
   const ctaData = contactPageData.cta || {};
 
+
   const heroTitle = settings?.pageHeaders?.contact?.title || (isAr ? 'اتصل بنا\nدعنا نتواصل' : 'CONTACT US\nLET\'S CONNECT');
   const heroSubtitle = settings?.pageHeaders?.contact?.subtitle || (isAr ? 'هل لديك مشروع، استفسار، أو فرصة؟ تواصل مع فريق داز.' : 'Have a project, enquiry, or opportunity?\nGet in touch with the Dazz team.');
   

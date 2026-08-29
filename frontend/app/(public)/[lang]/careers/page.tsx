@@ -57,7 +57,7 @@ export default async function CareersPage({ params }: { params: Promise<{ lang: 
   const heroSubtitle = heroData.subtitle?.[lang] || (isAr ? 'اكتشف فرصًا لا حصر لها.' : 'Discover endless opportunities with Dazz Tradelink.');
   
   const rawBg = heroData.media;
-  const heroImage = rawBg?.url || (typeof rawBg === 'string' && rawBg !== '' ? rawBg : '/images/about-hero.png');
+  const heroImage = rawBg?.url || (typeof rawBg === 'string' && rawBg !== '' ? rawBg : '/images/careers-hero.png');
 
   return (
     <main dir={dir} className="min-h-screen bg-white">
