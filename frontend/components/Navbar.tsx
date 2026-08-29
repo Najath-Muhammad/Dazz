@@ -44,6 +44,13 @@ export function Navbar() {
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const pathname = usePathname();
 
+  const isActive = useCallback((href: string | null | undefined) => {
+    if (!href) return pathname.includes('/services');
+    if (href === '/') return pathname === '/' || pathname === '/en' || pathname === '/ar';
+    if (href === '#divisions') return pathname.includes('/services');
+    return pathname.includes(href);
+  }, [pathname]);
+
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -147,11 +154,15 @@ export function Navbar() {
                     onKeyDown={handleDivisionsKey}
                     aria-haspopup="true"
                     aria-expanded={megaOpen}
-                    className="flex items-center gap-1.5 text-xs font-bold tracking-widest uppercase text-white/80 hover:text-dazz-gold transition-colors relative group cursor-pointer"
+                    className={`flex items-center gap-1.5 text-xs font-bold tracking-widest uppercase relative group cursor-pointer transition-colors ${
+                      isActive(link.href) ? 'text-dazz-gold' : 'text-white/80 hover:text-dazz-gold'
+                    }`}
                   >
                     {link.name}
                     <ChevronDown size={12} className={`transition-transform duration-300 ${megaOpen ? 'rotate-180 text-dazz-gold' : ''}`} />
-                    <span className="absolute -bottom-2 left-0 w-0 h-px bg-dazz-gold transition-all duration-300 group-hover:w-full" />
+                    <span className={`absolute -bottom-2 left-0 h-px bg-dazz-gold transition-all duration-300 ${
+                      isActive(link.href) ? 'w-full' : 'w-0 group-hover:w-full'
+                    }`} />
                   </button>
 
                   {/* Mega Menu — pt-3 bridges the gap so mouse doesn't leave the zone */}
@@ -204,10 +215,14 @@ export function Navbar() {
                 <Link
                   key={link.name}
                   href={link.href}
-                  className="text-xs font-bold tracking-widest uppercase text-white/80 hover:text-dazz-gold transition-colors relative group"
+                  className={`text-xs font-bold tracking-widest uppercase relative group transition-colors ${
+                    isActive(link.href) ? 'text-dazz-gold' : 'text-white/80 hover:text-dazz-gold'
+                  }`}
                 >
                   {link.name}
-                  <span className="absolute -bottom-2 left-0 w-0 h-px bg-dazz-gold transition-all duration-300 group-hover:w-full" />
+                  <span className={`absolute -bottom-2 left-0 h-px bg-dazz-gold transition-all duration-300 ${
+                    isActive(link.href) ? 'w-full' : 'w-0 group-hover:w-full'
+                  }`} />
                 </Link>
               )
             )}
@@ -251,9 +266,11 @@ export function Navbar() {
           {allMenuLinks.map((link, index) =>
             link.children ? (
               <div key={link.name} className="menu-link-item w-full">
-                <button
-                  onClick={() => setMobileDivisionsOpen(v => !v)}
-                  className="flex items-center gap-4 text-3xl md:text-4xl font-serif font-bold text-white/80 hover:text-dazz-gold transition-colors w-full text-left"
+                <button 
+                  onClick={() => setMobileDivisionsOpen(!mobileDivisionsOpen)}
+                  className={`flex items-center gap-4 text-3xl md:text-4xl font-serif font-bold transition-colors w-full text-left ${
+                    isActive(link.href!) ? 'text-dazz-gold' : 'text-white/80 hover:text-dazz-gold'
+                  }`}
                 >
                   <span className="text-sm font-mono text-dazz-gold/50 w-8 flex-shrink-0">0{index + 1}</span>
                   <span>{link.name}</span>
@@ -280,7 +297,9 @@ export function Navbar() {
                 <Link
                   href={link.href!}
                   onClick={toggleMenu}
-                  className="flex items-center gap-4 text-3xl md:text-4xl font-serif font-bold text-white/80 hover:text-dazz-gold transition-colors"
+                  className={`flex items-center gap-4 text-3xl md:text-4xl font-serif font-bold transition-colors ${
+                    isActive(link.href) ? 'text-dazz-gold' : 'text-white/80 hover:text-dazz-gold'
+                  }`}
                 >
                   <span className="text-sm font-mono text-dazz-gold/50 w-8 flex-shrink-0">0{index + 1}</span>
                   {link.name}
