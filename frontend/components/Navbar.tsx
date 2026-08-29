@@ -2,7 +2,8 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { Globe } from 'lucide-react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ChevronDown, ArrowUpRight } from 'lucide-react';
@@ -43,6 +44,20 @@ export function Navbar() {
   const megaRef = useRef<HTMLDivElement>(null);
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const pathname = usePathname();
+  const router = useRouter();
+
+  const isArabic = pathname.startsWith('/ar');
+
+  const toggleLanguage = useCallback(() => {
+    if (isArabic) {
+      const newPath = pathname.replace(/^\/ar/, '/en');
+      router.push(newPath === '/en' || newPath === '/en/' ? '/' : newPath);
+    } else if (pathname.startsWith('/en')) {
+      router.push(pathname.replace(/^\/en/, '/ar'));
+    } else {
+      router.push('/ar' + (pathname === '/' ? '' : pathname));
+    }
+  }, [pathname, isArabic, router]);
 
   const isActive = useCallback((href: string | null | undefined) => {
     if (!href) return pathname.includes('/services');
@@ -229,20 +244,33 @@ export function Navbar() {
             )}
           </nav>
 
-          {/* Mobile Toggle */}
-          <button
-            suppressHydrationWarning
-            onClick={toggleMenu}
-            className="lg:hidden text-white hover:text-dazz-gold flex items-center gap-2.5 text-xs tracking-widest font-bold uppercase"
-            aria-label="Toggle menu"
-            aria-expanded={isOpen}
-          >
-            <span>MENU</span>
-            <div className="w-6 flex flex-col gap-1.5 items-end">
-              <span className="w-full h-px bg-current block" />
-              <span className="w-2/3 h-px bg-current block" />
-            </div>
-          </button>
+          {/* Right Actions: Language + Mobile Toggle */}
+          <div className="flex items-center gap-6">
+            {/* Language Switcher */}
+            <button
+              onClick={toggleLanguage}
+              className="flex items-center gap-2 text-xs font-bold tracking-widest text-white/80 hover:text-dazz-gold transition-colors"
+              title={isArabic ? 'Switch to English' : 'Switch to Arabic'}
+            >
+              <Globe size={14} className="opacity-80" />
+              <span className="uppercase">{isArabic ? 'EN' : 'عربي'}</span>
+            </button>
+
+            {/* Mobile Toggle */}
+            <button
+              suppressHydrationWarning
+              onClick={toggleMenu}
+              className="lg:hidden text-white hover:text-dazz-gold flex items-center gap-2.5 text-xs tracking-widest font-bold uppercase"
+              aria-label="Toggle menu"
+              aria-expanded={isOpen}
+            >
+              <span>MENU</span>
+              <div className="w-6 flex flex-col gap-1.5 items-end">
+                <span className="w-full h-px bg-current block" />
+                <span className="w-2/3 h-px bg-current block" />
+              </div>
+            </button>
+          </div>
         </div>
       </header>
 
