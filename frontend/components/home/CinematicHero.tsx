@@ -106,17 +106,27 @@ export function CinematicHero({ title, subtitle, backgroundImage, hideExtras = f
         </div>
 
         {/* Subtitle & CTA row */}
-        <div className="flex flex-col md:flex-row md:items-end gap-8 md:gap-16">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-10 mt-8 mb-16 border-l-2 border-dazz-gold pl-6">
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.9 }}
-            className="text-lg md:text-xl text-slate-300 max-w-xl font-light leading-relaxed"
+            className="text-lg md:text-2xl text-slate-200 max-w-2xl font-light leading-relaxed"
           >
             {subtitle}
           </motion.p>
-
-
+          
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.1 }}
+            className="flex-shrink-0"
+          >
+            <Link href="/contact" className="group flex items-center justify-center gap-4 bg-dazz-gold text-slate-950 px-8 py-4 rounded-sm font-bold tracking-[0.2em] uppercase hover:bg-white transition-colors">
+              <span>Partner With Us</span>
+              <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </motion.div>
         </div>
 
         {/* Stats row */}
@@ -125,16 +135,16 @@ export function CinematicHero({ title, subtitle, backgroundImage, hideExtras = f
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 1.3 }}
-            className="mt-16 pt-8 border-t border-white/10 grid grid-cols-3 gap-8 max-w-lg"
+            className="pt-8 border-t border-white/10 grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-16 max-w-2xl"
           >
             {[
               { num: '500+', label: 'Specialists' },
               { num: '4', label: 'Divisions' },
               { num: '15+', label: 'Years Active' },
             ].map((stat) => (
-              <div key={stat.label}>
-                <p className="text-3xl font-extrabold text-white tracking-tighter">{stat.num}</p>
-                <p className="text-[10px] font-mono tracking-[0.2em] text-white/40 uppercase mt-1">{stat.label}</p>
+              <div key={stat.label} className="group">
+                <p className="text-4xl md:text-5xl font-extrabold text-white tracking-tighter group-hover:text-dazz-gold transition-colors">{stat.num}</p>
+                <p className="text-[10px] md:text-xs font-mono tracking-[0.2em] text-white/40 uppercase mt-2">{stat.label}</p>
               </div>
             ))}
           </motion.div>
