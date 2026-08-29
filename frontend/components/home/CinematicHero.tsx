@@ -96,7 +96,7 @@ export function CinematicHero({ title, subtitle, backgroundImage, hideExtras = f
         >
           <div className="w-12 h-[1px] bg-dazz-gold" />
           <span className="text-dazz-gold font-mono text-[10px] tracking-[0.3em] uppercase">
-            Saudi Arabia — Integrated Solutions
+            Integrated Solutions
           </span>
         </motion.div>
 
