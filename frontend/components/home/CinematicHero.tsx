@@ -42,7 +42,7 @@ export function CinematicHero({ title, subtitle, backgroundImage, hideExtras = f
   return (
     <section
       ref={containerRef}
-      className="relative h-screen min-h-[700px] flex items-end overflow-hidden bg-slate-950"
+      className="relative min-h-screen flex flex-col justify-end pt-32 pb-16 md:pb-24 overflow-hidden bg-slate-950"
       aria-label="Hero"
     >
       {/* Background */}
@@ -86,7 +86,7 @@ export function CinematicHero({ title, subtitle, backgroundImage, hideExtras = f
       />
 
       {/* Content */}
-      <div className="relative z-10 max-w-[1400px] mx-auto px-6 pb-24 md:pb-32 w-full">
+      <div className="relative z-10 max-w-[1400px] mx-auto px-6 w-full mt-auto">
         {/* Label */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
@@ -106,7 +106,7 @@ export function CinematicHero({ title, subtitle, backgroundImage, hideExtras = f
             initial={{ y: '100%' }}
             animate={{ y: 0 }}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.4 }}
-            className="text-6xl md:text-8xl lg:text-[7rem] font-extrabold text-white uppercase tracking-tighter leading-[0.9]"
+            className="text-5xl md:text-7xl lg:text-[6rem] font-extrabold text-white uppercase tracking-tighter leading-[0.95]"
           >
             {(title.includes('\n') ? title.split('\n') : title.split(' ')).map((line, i) => (
               <span key={i} className="block">{line}</span>
