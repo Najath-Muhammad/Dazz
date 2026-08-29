@@ -1,5 +1,9 @@
 import { ISiteSettingsService } from '../interfaces/ISiteSettingsService';
 import { ISiteSettingsRepository } from '../../repositories/interfaces/ISiteSettingsRepository';
+import { autoTranslate } from '../../utils/autoTranslate';
+import { TRANSLATABLE_FIELDS } from '../../utils/translatableFields';
+
+const SETTINGS_FIELDS = TRANSLATABLE_FIELDS.SiteSettings;
 
 export class SiteSettingsService implements ISiteSettingsService {
   private _repository: ISiteSettingsRepository;
@@ -28,9 +32,9 @@ export class SiteSettingsService implements ISiteSettingsService {
   }
   async createSiteSettings(data: any) {
     try {
-      // Check edge cases here if needed, like manually checking if slug exists, though mongo throws 11000
       const newItem = await this._repository.create(data);
-      return { success: true, message: 'SiteSettings created successfully', data: newItem };
+      this._translateAndUpdate(newItem._id.toString(), newItem.toObject ? newItem.toObject() : newItem, {});
+      return { success: true, message: 'SiteSettings created. Arabic translation in progress.', data: newItem };
     } catch (error: any) {
       console.error('Error in createSiteSettings:', error);
       if (error?.code === 11000) return { success: false, message: 'A SiteSettings with this unique identifier already exists.' };
@@ -41,9 +45,11 @@ export class SiteSettingsService implements ISiteSettingsService {
     try {
       const existing = await this._repository.findById(id);
       if (!existing) return { success: false, message: 'SiteSettings not found' };
-      
+
       const updatedItem = await this._repository.update(id, data);
-      return { success: true, message: 'SiteSettings updated successfully', data: updatedItem };
+      const existingMeta = (existing as any).translationMeta || {};
+      this._translateAndUpdate(id, updatedItem, existingMeta);
+      return { success: true, message: 'SiteSettings updated. Arabic translation in progress.', data: updatedItem };
     } catch (error: any) {
       console.error('Error in updateSiteSettings:', error);
       if (error?.code === 11000) return { success: false, message: 'A SiteSettings with this unique identifier already exists.' };
@@ -60,6 +66,21 @@ export class SiteSettingsService implements ISiteSettingsService {
     } catch (error: any) {
       console.error('Error in deleteSiteSettings:', error);
       return { success: false, message: 'Failed to delete SiteSettings' };
+    }
+  }
+
+  private async _translateAndUpdate(id: string, docData: any, existingMeta: Record<string, string>) {
+    try {
+      const { updatedData, translationMeta, status } = await autoTranslate(docData, SETTINGS_FIELDS, existingMeta);
+      await this._repository.update(id, {
+        ...updatedData,
+        translationStatus: { ar: status },
+        translationMeta,
+      });
+      console.log(`[SiteSettingsService] Translation ${status} for settings ${id}`);
+    } catch (err) {
+      console.error(`[SiteSettingsService] Background translation failed for settings ${id}:`, err);
+      await this._repository.update(id, { translationStatus: { ar: 'failed' } });
     }
   }
 }

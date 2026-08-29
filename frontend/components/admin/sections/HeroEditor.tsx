@@ -49,7 +49,7 @@ export function HeroEditor({ form, setForm }: Props) {
           <label className="block text-xs font-bold text-slate-500 tracking-widest uppercase mb-1">URL</label>
           <input type="text" value={form.hero.ctaPrimary.url}
             onChange={e => setForm(p => ({ ...p, hero: { ...p.hero, ctaPrimary: { ...p.hero.ctaPrimary, url: e.target.value } } }))}
-            className="w-full border border-slate-300 rounded-md px-4 py-2 text-sm" placeholder="/contact" />
+            className="w-full bg-white text-slate-900 border border-slate-300 rounded-md px-4 py-2 text-sm" placeholder="/contact" />
         </div>
       </div>
     </div>

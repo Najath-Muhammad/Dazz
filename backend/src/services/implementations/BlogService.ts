@@ -1,5 +1,9 @@
 import { IBlogService } from '../interfaces/IBlogService';
 import { IBlogRepository } from '../../repositories/interfaces/IBlogRepository';
+import { autoTranslate } from '../../utils/autoTranslate';
+import { TRANSLATABLE_FIELDS } from '../../utils/translatableFields';
+
+const BLOG_FIELDS = TRANSLATABLE_FIELDS.Blog;
 
 export class BlogService implements IBlogService {
   private _repository: IBlogRepository;
@@ -38,9 +42,10 @@ export class BlogService implements IBlogService {
   }
   async createBlog(data: any) {
     try {
-      // Check edge cases here if needed, like manually checking if slug exists, though mongo throws 11000
       const newItem = await this._repository.create(data);
-      return { success: true, message: 'Blog created successfully', data: newItem };
+      // Fire-and-forget background translation
+      this._translateAndUpdate(newItem._id.toString(), newItem.toObject ? newItem.toObject() : newItem, {});
+      return { success: true, message: 'Blog created. Arabic translation in progress.', data: newItem };
     } catch (error: any) {
       console.error('Error in createBlog:', error);
       if (error?.code === 11000) return { success: false, message: 'A Blog with this unique identifier already exists.' };
@@ -51,9 +56,12 @@ export class BlogService implements IBlogService {
     try {
       const existing = await this._repository.findById(id);
       if (!existing) return { success: false, message: 'Blog not found' };
-      
+
       const updatedItem = await this._repository.update(id, data);
-      return { success: true, message: 'Blog updated successfully', data: updatedItem };
+      // Fire-and-forget background translation
+      const existingMeta = (existing as any).translationMeta || {};
+      this._translateAndUpdate(id, updatedItem, existingMeta);
+      return { success: true, message: 'Blog updated. Arabic translation in progress.', data: updatedItem };
     } catch (error: any) {
       console.error('Error in updateBlog:', error);
       if (error?.code === 11000) return { success: false, message: 'A Blog with this unique identifier already exists.' };
@@ -70,6 +78,22 @@ export class BlogService implements IBlogService {
     } catch (error: any) {
       console.error('Error in deleteBlog:', error);
       return { success: false, message: 'Failed to delete Blog' };
+    }
+  }
+
+  /** Background: translate and silently update the document */
+  private async _translateAndUpdate(id: string, docData: any, existingMeta: Record<string, string>) {
+    try {
+      const { updatedData, translationMeta, status } = await autoTranslate(docData, BLOG_FIELDS, existingMeta);
+      await this._repository.update(id, {
+        ...updatedData,
+        translationStatus: { ar: status },
+        translationMeta,
+      });
+      console.log(`[BlogService] Translation ${status} for blog ${id}`);
+    } catch (err) {
+      console.error(`[BlogService] Background translation failed for blog ${id}:`, err);
+      await this._repository.update(id, { translationStatus: { ar: 'failed' } });
     }
   }
 }

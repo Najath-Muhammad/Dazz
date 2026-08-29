@@ -18,6 +18,8 @@ export interface IJob extends Document {
   deadline?: Date;
   status: 'DRAFT' | 'PUBLISHED' | 'CLOSED';
   publishedAt?: Date;
+  translationStatus?: { ar: string };
+  translationMeta?: Record<string, string>;
 }
 
 const JobSchema: Schema = new Schema({
@@ -42,7 +44,11 @@ const JobSchema: Schema = new Schema({
   benefits: { type: String },
   deadline: { type: Date },
   status: { type: String, enum: ['DRAFT', 'PUBLISHED', 'CLOSED'], default: 'DRAFT' },
-  publishedAt: { type: Date }
+  publishedAt: { type: Date },
+  translationStatus: {
+    ar: { type: String, enum: ['pending', 'completed', 'failed', 'none'], default: 'none' }
+  },
+  translationMeta: { type: mongoose.Schema.Types.Mixed, default: {} }
 }, { timestamps: true });
 
 export default mongoose.model<IJob>('Job', JobSchema);

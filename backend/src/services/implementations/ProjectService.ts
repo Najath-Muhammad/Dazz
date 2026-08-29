@@ -1,5 +1,9 @@
 import { IProjectService } from '../interfaces/IProjectService';
 import { IProjectRepository } from '../../repositories/interfaces/IProjectRepository';
+import { autoTranslate } from '../../utils/autoTranslate';
+import { TRANSLATABLE_FIELDS } from '../../utils/translatableFields';
+
+const PROJECT_FIELDS = TRANSLATABLE_FIELDS.Project;
 
 export class ProjectService implements IProjectService {
   private _repository: IProjectRepository;
@@ -38,9 +42,9 @@ export class ProjectService implements IProjectService {
   }
   async createProject(data: any) {
     try {
-      // Check edge cases here if needed, like manually checking if slug exists, though mongo throws 11000
       const newItem = await this._repository.create(data);
-      return { success: true, message: 'Project created successfully', data: newItem };
+      this._translateAndUpdate(newItem._id.toString(), newItem.toObject ? newItem.toObject() : newItem, {});
+      return { success: true, message: 'Project created. Arabic translation in progress.', data: newItem };
     } catch (error: any) {
       console.error('Error in createProject:', error);
       if (error?.code === 11000) return { success: false, message: 'A Project with this unique identifier already exists.' };
@@ -51,9 +55,11 @@ export class ProjectService implements IProjectService {
     try {
       const existing = await this._repository.findById(id);
       if (!existing) return { success: false, message: 'Project not found' };
-      
+
       const updatedItem = await this._repository.update(id, data);
-      return { success: true, message: 'Project updated successfully', data: updatedItem };
+      const existingMeta = (existing as any).translationMeta || {};
+      this._translateAndUpdate(id, updatedItem, existingMeta);
+      return { success: true, message: 'Project updated. Arabic translation in progress.', data: updatedItem };
     } catch (error: any) {
       console.error('Error in updateProject:', error);
       if (error?.code === 11000) return { success: false, message: 'A Project with this unique identifier already exists.' };
@@ -70,6 +76,21 @@ export class ProjectService implements IProjectService {
     } catch (error: any) {
       console.error('Error in deleteProject:', error);
       return { success: false, message: 'Failed to delete Project' };
+    }
+  }
+
+  private async _translateAndUpdate(id: string, docData: any, existingMeta: Record<string, string>) {
+    try {
+      const { updatedData, translationMeta, status } = await autoTranslate(docData, PROJECT_FIELDS, existingMeta);
+      await this._repository.update(id, {
+        ...updatedData,
+        translationStatus: { ar: status },
+        translationMeta,
+      });
+      console.log(`[ProjectService] Translation ${status} for project ${id}`);
+    } catch (err) {
+      console.error(`[ProjectService] Background translation failed for project ${id}:`, err);
+      await this._repository.update(id, { translationStatus: { ar: 'failed' } });
     }
   }
 }

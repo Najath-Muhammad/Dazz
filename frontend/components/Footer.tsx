@@ -34,6 +34,7 @@ export function Footer() {
                 src="/images/logo-transparent.png" 
                 alt="DAZZ Tradlink" 
                 fill
+                sizes="250px"
                 className="object-contain object-left"
               />
             </Link>

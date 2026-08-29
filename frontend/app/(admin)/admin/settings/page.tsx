@@ -161,11 +161,11 @@ export default function AdminSettingsPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-1">Contact Email</label>
-                    <input type="email" name="contactEmail" value={settings.contactEmail || ''} onChange={handleChange} className="w-full border border-slate-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-dazz-gold" />
+                    <input type="email" name="contactEmail" value={settings.contactEmail || ''} onChange={handleChange} className="w-full bg-white text-slate-900 border border-slate-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-dazz-gold" />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-1">Contact Phone</label>
-                    <input type="text" name="phoneNumber" value={settings.phoneNumber || ''} onChange={handleChange} className="w-full border border-slate-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-dazz-gold" />
+                    <input type="text" name="phoneNumber" value={settings.phoneNumber || ''} onChange={handleChange} className="w-full bg-white text-slate-900 border border-slate-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-dazz-gold" />
                   </div>
                 </div>
               </div>
@@ -200,7 +200,7 @@ export default function AdminSettingsPage() {
                   type="text" 
                   value={settings.pageHeaders?.[activeTab]?.title || ''} 
                   onChange={(e) => handleHeroChange(activeTab, 'title', e.target.value)} 
-                  className="w-full border border-slate-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-dazz-gold"
+                  className="w-full bg-white text-slate-900 border border-slate-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-dazz-gold"
                   placeholder="e.g. OUR DIVISIONS"
                 />
               </div>
@@ -211,7 +211,7 @@ export default function AdminSettingsPage() {
                   rows={3} 
                   value={settings.pageHeaders?.[activeTab]?.subtitle || ''} 
                   onChange={(e) => handleHeroChange(activeTab, 'subtitle', e.target.value)} 
-                  className="w-full border border-slate-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-dazz-gold"
+                  className="w-full bg-white text-slate-900 border border-slate-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-dazz-gold"
                   placeholder="A short description of this page..."
                 />
               </div>

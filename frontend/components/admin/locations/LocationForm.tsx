@@ -6,6 +6,30 @@ import { Button } from '@/components/Button';
 import { ArrowLeft, Save, MapPin } from 'lucide-react';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
+import { z } from 'zod';
+import { useZodValidation } from '@/hooks/useZodValidation';
+import { FormError } from '@/components/ui/FormError';
+
+const locationSchema = z.object({
+  name: z.object({
+    en: z.string().min(1, 'English name is required'),
+    ar: z.string().min(1, 'Arabic name is required')
+  }),
+  country: z.object({
+    en: z.string().min(1, 'English country is required'),
+    ar: z.string().min(1, 'Arabic country is required')
+  }),
+  city: z.object({
+    en: z.string().min(1, 'English city is required'),
+    ar: z.string().min(1, 'Arabic city is required')
+  }),
+  address: z.object({
+    en: z.string().min(1, 'English address is required'),
+    ar: z.string().min(1, 'Arabic address is required')
+  }),
+  latitude: z.number({ invalid_type_error: 'Latitude is required' } as any),
+  longitude: z.number({ invalid_type_error: 'Longitude is required' } as any)
+});
 
 const MapPreview = dynamic(() => import('./MapPreview'), { ssr: false, loading: () => <div className="w-full h-[400px] bg-slate-200 animate-pulse flex items-center justify-center">Loading Map...</div> });
 
@@ -19,6 +43,7 @@ export default function LocationForm({ initialData, isEdit = false }: LocationFo
   const [lang, setLang] = useState<'en' | 'ar'>('en');
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
+  const { errors, validate, clearErrors } = useZodValidation(locationSchema);
 
   const [formData, setFormData] = useState({
     name: { en: initialData?.name?.en || '', ar: initialData?.name?.ar || '' },
@@ -41,8 +66,11 @@ export default function LocationForm({ initialData, isEdit = false }: LocationFo
         ...prev,
         [field]: { ...(prev as any)[field], [lang]: value }
       }));
+      // Clear nested error if exists
+      if ((errors as any)[field]) clearErrors();
     } else {
       setFormData(prev => ({ ...prev, [field]: value }));
+      if ((errors as any)[field]) clearErrors();
     }
   };
 
@@ -52,6 +80,8 @@ export default function LocationForm({ initialData, isEdit = false }: LocationFo
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!validate(formData)) return;
+    
     setLoading(true);
     setMessage('');
     
@@ -89,7 +119,7 @@ export default function LocationForm({ initialData, isEdit = false }: LocationFo
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <form noValidate onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         
         {/* Main Content Column */}
         <div className="lg:col-span-8 space-y-6">
@@ -120,33 +150,37 @@ export default function LocationForm({ initialData, isEdit = false }: LocationFo
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">Location Name *</label>
-                  <input required type="text" value={formData.name[lang]} onChange={e => handleChange('name', e.target.value, true)} className="w-full border border-slate-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-dazz-gold" placeholder="e.g. DAZZ JEDDAH OFFICE" />
+                  <input type="text" value={formData.name[lang]} onChange={e => handleChange('name', e.target.value, true)} className={`w-full bg-white text-slate-900 border rounded-md px-4 py-2 focus:outline-none transition-colors ${errors.name ? 'border-red-500 focus:ring-2 focus:ring-red-500' : 'border-slate-300 focus:ring-2 focus:ring-dazz-gold'}`} placeholder="e.g. DAZZ JEDDAH OFFICE" />
+                  <FormError message={errors.name} />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">Location Type</label>
-                  <input type="text" value={formData.type[lang]} onChange={e => handleChange('type', e.target.value, true)} className="w-full border border-slate-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-dazz-gold" placeholder="e.g. Headquarters" />
+                  <input type="text" value={formData.type[lang]} onChange={e => handleChange('type', e.target.value, true)} className="w-full bg-white text-slate-900 border border-slate-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-dazz-gold" placeholder="e.g. Headquarters" />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">Country *</label>
-                  <input required type="text" value={formData.country[lang]} onChange={e => handleChange('country', e.target.value, true)} className="w-full border border-slate-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-dazz-gold" placeholder="e.g. Saudi Arabia" />
+                  <input type="text" value={formData.country[lang]} onChange={e => handleChange('country', e.target.value, true)} className={`w-full bg-white text-slate-900 border rounded-md px-4 py-2 focus:outline-none transition-colors ${errors.country ? 'border-red-500 focus:ring-2 focus:ring-red-500' : 'border-slate-300 focus:ring-2 focus:ring-dazz-gold'}`} placeholder="e.g. Saudi Arabia" />
+                  <FormError message={errors.country} />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">City *</label>
-                  <input required type="text" value={formData.city[lang]} onChange={e => handleChange('city', e.target.value, true)} className="w-full border border-slate-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-dazz-gold" placeholder="e.g. Jeddah" />
+                  <input type="text" value={formData.city[lang]} onChange={e => handleChange('city', e.target.value, true)} className={`w-full bg-white text-slate-900 border rounded-md px-4 py-2 focus:outline-none transition-colors ${errors.city ? 'border-red-500 focus:ring-2 focus:ring-red-500' : 'border-slate-300 focus:ring-2 focus:ring-dazz-gold'}`} placeholder="e.g. Jeddah" />
+                  <FormError message={errors.city} />
                 </div>
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">Full Address *</label>
-                <textarea required rows={3} value={formData.address[lang]} onChange={e => handleChange('address', e.target.value, true)} className="w-full border border-slate-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-dazz-gold" placeholder="Enter complete physical address..." />
+                <textarea rows={3} value={formData.address[lang]} onChange={e => handleChange('address', e.target.value, true)} className={`w-full bg-white text-slate-900 border rounded-md px-4 py-2 focus:outline-none transition-colors ${errors.address ? 'border-red-500 focus:ring-2 focus:ring-red-500' : 'border-slate-300 focus:ring-2 focus:ring-dazz-gold'}`} placeholder="Enter complete physical address..." />
+                <FormError message={errors.address} />
               </div>
               
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">Description (Optional)</label>
-                <textarea rows={2} value={formData.description[lang]} onChange={e => handleChange('description', e.target.value, true)} className="w-full border border-slate-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-dazz-gold" placeholder="Any additional location details..." />
+                <textarea rows={2} value={formData.description[lang]} onChange={e => handleChange('description', e.target.value, true)} className="w-full bg-white text-slate-900 border border-slate-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-dazz-gold" placeholder="Any additional location details..." />
               </div>
             </div>
           </div>
@@ -158,11 +192,13 @@ export default function LocationForm({ initialData, isEdit = false }: LocationFo
             <div className="grid grid-cols-2 gap-4 mb-6">
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">Latitude *</label>
-                <input required type="number" step="any" value={formData.latitude} onChange={e => handleChange('latitude', parseFloat(e.target.value))} className="w-full border border-slate-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-dazz-gold font-mono text-sm" />
+                <input type="number" step="any" value={formData.latitude} onChange={e => handleChange('latitude', parseFloat(e.target.value))} className={`w-full bg-white text-slate-900 border rounded-md px-4 py-2 focus:outline-none transition-colors font-mono text-sm ${errors.latitude ? 'border-red-500 focus:ring-2 focus:ring-red-500' : 'border-slate-300 focus:ring-2 focus:ring-dazz-gold'}`} />
+                <FormError message={errors.latitude} />
               </div>
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">Longitude *</label>
-                <input required type="number" step="any" value={formData.longitude} onChange={e => handleChange('longitude', parseFloat(e.target.value))} className="w-full border border-slate-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-dazz-gold font-mono text-sm" />
+                <input type="number" step="any" value={formData.longitude} onChange={e => handleChange('longitude', parseFloat(e.target.value))} className={`w-full bg-white text-slate-900 border rounded-md px-4 py-2 focus:outline-none transition-colors font-mono text-sm ${errors.longitude ? 'border-red-500 focus:ring-2 focus:ring-red-500' : 'border-slate-300 focus:ring-2 focus:ring-dazz-gold'}`} />
+                <FormError message={errors.longitude} />
               </div>
             </div>
 
@@ -208,15 +244,15 @@ export default function LocationForm({ initialData, isEdit = false }: LocationFo
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">Phone Number</label>
-                <input type="text" value={formData.phone} onChange={e => handleChange('phone', e.target.value)} className="w-full border border-slate-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-dazz-gold" placeholder="+966 5X XXX XXXX" />
+                <input type="text" value={formData.phone} onChange={e => handleChange('phone', e.target.value)} className="w-full bg-white text-slate-900 border border-slate-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-dazz-gold" placeholder="+966 5X XXX XXXX" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">Email Address</label>
-                <input type="email" value={formData.email} onChange={e => handleChange('email', e.target.value)} className="w-full border border-slate-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-dazz-gold" placeholder="branch@dazztradlink.com" />
+                <input type="email" value={formData.email} onChange={e => handleChange('email', e.target.value)} className="w-full bg-white text-slate-900 border border-slate-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-dazz-gold" placeholder="branch@dazztradlink.com" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">Website URL</label>
-                <input type="url" value={formData.website} onChange={e => handleChange('website', e.target.value)} className="w-full border border-slate-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-dazz-gold" placeholder="https://" />
+                <input type="url" value={formData.website} onChange={e => handleChange('website', e.target.value)} className="w-full bg-white text-slate-900 border border-slate-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-dazz-gold" placeholder="https://" />
               </div>
             </div>
           </div>

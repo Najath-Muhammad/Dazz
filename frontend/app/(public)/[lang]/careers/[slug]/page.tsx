@@ -53,11 +53,11 @@ export default async function JobDetailsPage({ params }: { params: Promise<{ slu
     return (
       <ul className="space-y-4 mt-6">
         {validItems.map((item, idx) => (
-          <li key={idx} className="flex items-start gap-4 text-slate-600 group">
-            <div className="w-6 h-6 flex items-center justify-center border border-dazz-gold/30 bg-dazz-gold/5 flex-shrink-0 mt-0.5 rounded-sm group-hover:bg-dazz-gold group-hover:border-dazz-gold transition-colors">
-              <ChevronRight size={14} className={`text-dazz-gold group-hover:text-dazz-navy transition-colors ${isAr ? 'rotate-180' : ''}`} />
+          <li key={idx} className="flex items-start gap-4 text-slate-700 group hover:bg-slate-50 p-3 rounded-lg transition-colors border border-transparent hover:border-slate-100">
+            <div className="w-6 h-6 flex items-center justify-center border border-dazz-gold/40 bg-dazz-gold/10 flex-shrink-0 mt-0.5 rounded-full shadow-sm group-hover:bg-dazz-gold group-hover:scale-110 transition-all duration-300">
+              <CheckCircle2 size={14} className="text-dazz-gold group-hover:text-white transition-colors" />
             </div>
-            <span className="leading-relaxed text-lg">{item[lang]}</span>
+            <span className="leading-relaxed text-base font-light">{item[lang]}</span>
           </li>
         ))}
       </ul>
@@ -67,18 +67,19 @@ export default async function JobDetailsPage({ params }: { params: Promise<{ slu
   return (
     <main dir={dir} className="min-h-screen bg-[#F8F9FA] pb-32">
       
-      {/* Editorial Dark Hero */}
-      <div className="bg-[#0A0F1A] text-white pt-40 pb-28 relative overflow-hidden">
-        {/* Architectural Grid Lines */}
-        <div className="absolute inset-0 pointer-events-none opacity-20">
-          <div className="absolute w-full h-px bg-slate-700 top-1/3"></div>
-          <div className="absolute w-full h-px bg-slate-700 top-2/3"></div>
-          <div className={`absolute h-full w-px bg-slate-700 ${isAr ? 'right-[20%]' : 'left-[20%]'}`}></div>
+      {/* Premium Editorial Dark Hero */}
+      <div className="bg-[#050B14] text-white pt-40 pb-32 relative overflow-hidden border-b border-slate-800">
+        {/* Subtle Architectural Grid */}
+        <div className="absolute inset-0 pointer-events-none opacity-[0.03]">
+          <div className="absolute w-full h-[1px] bg-white top-1/4"></div>
+          <div className="absolute w-full h-[1px] bg-white top-2/4"></div>
+          <div className="absolute w-full h-[1px] bg-white top-3/4"></div>
+          <div className={`absolute h-full w-[1px] bg-white ${isAr ? 'right-[25%]' : 'left-[25%]'}`}></div>
         </div>
         
-        {/* Glow & Texture */}
-        <div className="absolute top-0 right-0 w-1/2 h-full bg-dazz-navy-light/10 transform skew-x-12 origin-top-right mix-blend-screen"></div>
-        <div className="absolute bottom-[-20%] left-[-10%] w-[50%] h-[50%] bg-dazz-gold/10 blur-[100px] rounded-full"></div>
+        {/* Glowing Orbs */}
+        <div className="absolute top-[-10%] right-[-5%] w-[40%] h-[60%] bg-dazz-navy-light/20 blur-[120px] rounded-full pointer-events-none"></div>
+        <div className="absolute bottom-[-20%] left-[-10%] w-[30%] h-[50%] bg-dazz-gold/15 blur-[130px] rounded-full pointer-events-none"></div>
         
         <div className="max-w-6xl mx-auto px-6 relative z-10">
           <Link 
@@ -89,32 +90,32 @@ export default async function JobDetailsPage({ params }: { params: Promise<{ slu
             <span>{isAr ? 'العودة للوظائف' : 'Back to Careers'}</span>
           </Link>
           
-          <div className="max-w-4xl">
-            <h1 className="text-4xl md:text-5xl lg:text-7xl font-serif font-bold mb-8 text-white leading-tight">
+          <div className="max-w-4xl backdrop-blur-sm bg-[#0A0F1A]/40 p-8 rounded-2xl border border-white/5 shadow-2xl">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-8 text-white leading-tight">
               {job.title?.[lang]}
             </h1>
             
-            <div className="flex flex-wrap items-center gap-x-8 gap-y-4 text-slate-300 border-t border-slate-700/50 pt-8">
-              <div className="flex flex-col gap-1">
-                <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">{isAr ? 'القسم' : 'Department'}</span>
+            <div className="flex flex-wrap items-center gap-x-10 gap-y-6 text-slate-300 border-t border-white/10 pt-8">
+              <div className="flex flex-col gap-2">
+                <span className="text-[10px] font-mono text-slate-400 uppercase tracking-[0.2em]">{isAr ? 'القسم' : 'Department'}</span>
                 <div className="flex items-center gap-2">
                   <Briefcase size={16} className="text-dazz-gold" />
                   <span className="font-bold text-sm tracking-wide text-white">{job.department}</span>
                 </div>
               </div>
-              <div className="h-8 w-px bg-slate-700/50 hidden md:block"></div>
+              <div className="h-10 w-px bg-white/10 hidden md:block"></div>
               
-              <div className="flex flex-col gap-1">
-                <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">{isAr ? 'الموقع' : 'Location'}</span>
+              <div className="flex flex-col gap-2">
+                <span className="text-[10px] font-mono text-slate-400 uppercase tracking-[0.2em]">{isAr ? 'الموقع' : 'Location'}</span>
                 <div className="flex items-center gap-2">
                   <MapPin size={16} className="text-dazz-gold" />
                   <span className="font-bold text-sm tracking-wide text-white">{job.location}</span>
                 </div>
               </div>
-              <div className="h-8 w-px bg-slate-700/50 hidden md:block"></div>
+              <div className="h-10 w-px bg-white/10 hidden md:block"></div>
 
-              <div className="flex flex-col gap-1">
-                <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">{isAr ? 'نوع الوظيفة' : 'Type'}</span>
+              <div className="flex flex-col gap-2">
+                <span className="text-[10px] font-mono text-slate-400 uppercase tracking-[0.2em]">{isAr ? 'نوع الوظيفة' : 'Type'}</span>
                 <div className="flex items-center gap-2">
                   <Clock size={16} className="text-dazz-gold" />
                   <span className="font-bold text-sm tracking-wide text-white">{job.type}</span>
@@ -123,9 +124,9 @@ export default async function JobDetailsPage({ params }: { params: Promise<{ slu
 
               {job.publishedAt && (
                 <>
-                  <div className="h-8 w-px bg-slate-700/50 hidden md:block"></div>
-                  <div className="flex flex-col gap-1">
-                    <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">{isAr ? 'تاريخ النشر' : 'Published'}</span>
+                  <div className="h-10 w-px bg-white/10 hidden md:block"></div>
+                  <div className="flex flex-col gap-2">
+                    <span className="text-[10px] font-mono text-slate-400 uppercase tracking-[0.2em]">{isAr ? 'تاريخ النشر' : 'Published'}</span>
                     <div className="flex items-center gap-2">
                       <Calendar size={16} className="text-dazz-gold" />
                       <span className="font-bold text-sm tracking-wide text-white">{new Date(job.publishedAt).toLocaleDateString()}</span>
@@ -143,11 +144,11 @@ export default async function JobDetailsPage({ params }: { params: Promise<{ slu
           
           {/* Main Content */}
           <div className="lg:col-span-8">
-            <div className="bg-white p-8 md:p-14 border border-slate-200 shadow-sm relative">
+            <div className="bg-white p-8 md:p-14 border border-slate-200 shadow-xl shadow-slate-200/40 rounded-xl relative">
               {/* Top Accent */}
-              <div className="absolute top-0 left-0 w-full h-1 bg-dazz-gold"></div>
+              <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-dazz-navy to-dazz-gold rounded-t-xl"></div>
 
-              <div className="space-y-16">
+              <div className="space-y-16 mt-2">
                 <div>
                   <h2 className="text-sm font-mono text-dazz-gold tracking-widest uppercase mb-4">{isAr ? 'عن الوظيفة' : 'About the Role'}</h2>
                   <p className="text-slate-600 leading-relaxed whitespace-pre-wrap text-lg font-light">
@@ -186,15 +187,14 @@ export default async function JobDetailsPage({ params }: { params: Promise<{ slu
             </div>
           </div>
 
-          {/* Sticky Sidebar */}
           <div className="lg:col-span-4">
             <div className="sticky top-32 space-y-8">
               
-              <div className="bg-[#0A0F1A] text-white p-8 relative overflow-hidden border border-slate-800">
+              <div className="bg-white rounded-xl p-8 relative overflow-hidden border border-slate-200 shadow-xl shadow-slate-200/40">
                 {/* Abstract corner */}
                 <div className={`absolute -top-12 ${isAr ? '-left-12' : '-right-12'} w-24 h-24 bg-dazz-gold/10 rotate-45`}></div>
                 
-                <h3 className="text-xs font-mono text-dazz-gold tracking-widest uppercase mb-8 pb-4 border-b border-slate-800">
+                <h3 className="text-xs font-mono text-slate-500 tracking-[0.2em] uppercase mb-8 pb-4 border-b border-slate-100">
                   {isAr ? 'ملخص الوظيفة' : 'Job Overview'}
                 </h3>
                 
@@ -203,52 +203,63 @@ export default async function JobDetailsPage({ params }: { params: Promise<{ slu
                     <div className="flex flex-col gap-6">
                       {job.experience?.[lang] && (
                         <div>
-                          <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest block mb-1">{isAr ? 'الخبرة' : 'Experience'}</span>
-                          <p className="font-bold text-lg text-white">{job.experience[lang]}</p>
+                          <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block mb-1">{isAr ? 'الخبرة' : 'Experience'}</span>
+                          <p className="font-bold text-lg text-slate-900">{job.experience[lang]}</p>
                         </div>
                       )}
                       {job.salary && (
                         <div>
-                          <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest block mb-1">{isAr ? 'الراتب' : 'Salary'}</span>
-                          <p className="font-bold text-lg text-white">{job.salary}</p>
+                          <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block mb-1">{isAr ? 'الراتب' : 'Salary'}</span>
+                          <p className="font-bold text-lg text-slate-900">{job.salary}</p>
                         </div>
                       )}
                     </div>
                   )}
 
                   {job.benefits && (
-                    <div className="pt-6 border-t border-slate-800">
-                      <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest block mb-1">{isAr ? 'المزايا' : 'Benefits'}</span>
-                      <p className="font-bold text-white leading-relaxed">{job.benefits}</p>
+                    <div className="pt-6 border-t border-slate-100">
+                      <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block mb-1">{isAr ? 'المزايا' : 'Benefits'}</span>
+                      <p className="font-bold text-slate-900 leading-relaxed">{job.benefits}</p>
                     </div>
                   )}
                   
                   {job.deadline && (
-                    <div className="pt-6 border-t border-slate-800">
-                      <span className="text-[10px] font-mono text-red-400/80 uppercase tracking-widest block mb-1">{isAr ? 'الموعد النهائي' : 'Deadline'}</span>
-                      <p className="font-bold text-white">{new Date(job.deadline).toLocaleDateString()}</p>
+                    <div className="pt-6 border-t border-slate-100">
+                      <span className="text-[10px] font-mono text-red-500 uppercase tracking-widest block mb-1">{isAr ? 'الموعد النهائي' : 'Deadline'}</span>
+                      <p className="font-bold text-slate-900">{new Date(job.deadline).toLocaleDateString()}</p>
                     </div>
                   )}
                 </div>
+
+                <div className="mt-8 pt-8 border-t border-slate-100">
+                  <a 
+                    href="#apply"
+                    className="block w-full text-center px-6 py-4 bg-dazz-navy text-white font-bold rounded-lg hover:bg-dazz-gold transition-colors duration-300"
+                  >
+                    {isAr ? 'قدم الآن' : 'Apply Now'}
+                  </a>
+                </div>
               </div>
-
-              {/* Application Form anchor */}
-              <div id="apply" className="bg-white p-8 border border-slate-200 shadow-sm relative">
-                {/* Side Accent */}
-                <div className={`absolute top-0 ${isAr ? 'right-0' : 'left-0'} w-1 h-full bg-dazz-gold`}></div>
-
-                <h3 className="text-2xl font-serif font-bold text-slate-900 mb-3">
-                  {isAr ? 'قدم الآن' : 'Apply Now'}
-                </h3>
-                <p className="text-slate-500 text-sm mb-8 font-light leading-relaxed">
-                  {isAr ? 'أرسل تفاصيلك وسيرتك الذاتية لهذه الوظيفة. نتطلع إلى التعرف عليك.' : 'Submit your details and resume for this position. We look forward to reviewing your application.'}
-                </p>
-                <ApplicationForm lang={lang} isAr={isAr} jobId={job._id} />
-              </div>
-
             </div>
           </div>
+        </div>
 
+        {/* Spacious Application Form Section */}
+        <div id="apply" className="mt-32 max-w-4xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-serif font-bold text-slate-900 mb-4">
+              {isAr ? 'قدم على هذه الوظيفة' : 'Apply for this Role'}
+            </h2>
+            <p className="text-slate-500 text-lg">
+              {isAr ? 'أرسل تفاصيلك وسيرتك الذاتية. نتطلع إلى التعرف عليك.' : 'Submit your details and resume below. We look forward to reviewing your application.'}
+            </p>
+          </div>
+          
+          <div className="bg-white p-8 md:p-14 border border-slate-200 shadow-xl shadow-slate-200/40 rounded-xl relative">
+            {/* Side Accent */}
+            <div className={`absolute top-0 ${isAr ? 'right-0' : 'left-0'} w-2 h-full bg-gradient-to-b from-dazz-gold to-dazz-navy rounded-l-xl`}></div>
+            <ApplicationForm lang={lang} isAr={isAr} jobId={job._id} />
+          </div>
         </div>
       </div>
     </main>

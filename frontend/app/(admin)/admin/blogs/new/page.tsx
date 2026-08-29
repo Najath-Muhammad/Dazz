@@ -7,6 +7,27 @@ import { Button } from '@/components/Button';
 import { MediaUploader } from '@/components/admin/MediaUploader';
 import { BilingualField } from '@/components/admin/BilingualField';
 import { ContentBuilder } from '@/components/admin/ContentBuilder';
+import { z } from 'zod';
+import { useZodValidation } from '@/hooks/useZodValidation';
+import { FormError } from '@/components/ui/FormError';
+
+const blogSchema = z.object({
+  title: z.object({
+    en: z.string().min(1, 'English title is required'),
+    ar: z.string().min(1, 'Arabic title is required')
+  }),
+  slug: z.string().min(1, 'Slug is required'),
+  category: z.object({
+    en: z.string().min(1, 'English category is required'),
+    ar: z.string().min(1, 'Arabic category is required')
+  }),
+  excerpt: z.object({
+    en: z.string().min(1, 'English excerpt is required'),
+    ar: z.string().min(1, 'Arabic excerpt is required')
+  }),
+  author: z.string().optional(),
+  publishedAt: z.string().optional(),
+});
 
 export default function AdminNewBlogPage() {
   const router = useRouter();
@@ -24,6 +45,7 @@ export default function AdminNewBlogPage() {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const { errors, validate, clearErrors } = useZodValidation(blogSchema);
 
   const handleLocalizedChange = (field: 'title' | 'category' | 'excerpt' | 'content', lang: 'en' | 'ar', value: string) => {
     setFormData(prev => {
@@ -33,11 +55,13 @@ export default function AdminNewBlogPage() {
       }
       return next;
     });
+    if ((errors as any)[field]) clearErrors();
   };
 
   const handleStringChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const value = e.target.type === 'checkbox' ? (e.target as HTMLInputElement).checked : e.target.value;
     setFormData({ ...formData, [e.target.name]: value });
+    if ((errors as any)[e.target.name]) clearErrors();
   };
 
   const handleContentChange = (val: string) => {
@@ -52,6 +76,8 @@ export default function AdminNewBlogPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!validate(formData)) return;
+    
     setLoading(true);
     setError('');
 
@@ -79,7 +105,7 @@ export default function AdminNewBlogPage() {
       </div>
 
       <div className="bg-white shadow-sm border border-slate-200 rounded-lg p-8">
-        <form onSubmit={handleSubmit} className="space-y-8">
+        <form noValidate onSubmit={handleSubmit} className="space-y-8">
           {error && <div className="bg-red-50 border-l-4 border-red-500 text-red-700 p-4 rounded-sm">{error}</div>}
           
           {/* Title Section */}
@@ -95,12 +121,14 @@ export default function AdminNewBlogPage() {
                 valueAr={formData.title.ar}
                 onChangeEn={(v) => handleLocalizedChange('title', 'en', v)}
                 onChangeAr={(v) => handleLocalizedChange('title', 'ar', v)}
-                required
+                errorEn={(errors as any).title?.en || (errors.title === 'English title is required' ? errors.title : undefined)}
+                errorAr={(errors as any).title?.ar || (errors.title === 'Arabic title is required' ? errors.title : undefined)}
               />
 
               <div>
                 <label className="block text-xs font-bold text-slate-500 mb-1 tracking-widest uppercase">URL Slug (Auto-generated)</label>
-                <input required type="text" name="slug" value={formData.slug} onChange={handleStringChange} className="w-full border border-slate-300 rounded-md px-4 py-2 bg-white" />
+                <input type="text" name="slug" value={formData.slug} onChange={handleStringChange} className={`w-full bg-white text-slate-900 border rounded-md px-4 py-2 transition-colors focus:outline-none ${errors.slug ? 'border-red-500 focus:ring-1 focus:ring-red-500' : 'border-slate-300 focus:border-dazz-navy'}`} />
+                <FormError message={errors.slug} />
               </div>
 
               <BilingualField
@@ -111,8 +139,9 @@ export default function AdminNewBlogPage() {
                 valueAr={formData.category.ar}
                 onChangeEn={(v) => handleLocalizedChange('category', 'en', v)}
                 onChangeAr={(v) => handleLocalizedChange('category', 'ar', v)}
-                required
                 placeholder="e.g. COMPANY NEWS"
+                errorEn={(errors as any).category?.en || (errors.category === 'English category is required' ? errors.category : undefined)}
+                errorAr={(errors as any).category?.ar || (errors.category === 'Arabic category is required' ? errors.category : undefined)}
               />
 
               <BilingualField
@@ -126,6 +155,8 @@ export default function AdminNewBlogPage() {
                 type="textarea"
                 rows={2}
                 note="A brief summary shown on the blog cards."
+                errorEn={(errors as any).excerpt?.en || (errors.excerpt === 'English excerpt is required' ? errors.excerpt : undefined)}
+                errorAr={(errors as any).excerpt?.ar || (errors.excerpt === 'Arabic excerpt is required' ? errors.excerpt : undefined)}
               />
             </div>
           </div>

@@ -17,6 +17,8 @@ export interface ILocation extends Document {
   order: number;
   createdAt: Date;
   updatedAt: Date;
+  translationStatus?: { ar: string };
+  translationMeta?: Record<string, string>;
 }
 
 const LocationSchema: Schema = new Schema({
@@ -33,6 +35,10 @@ const LocationSchema: Schema = new Schema({
   longitude: { type: Number, required: true },
   isActive: { type: Boolean, default: true },
   order: { type: Number, default: 0 },
+  translationStatus: {
+    ar: { type: String, enum: ['pending', 'completed', 'failed', 'none'], default: 'none' }
+  },
+  translationMeta: { type: Schema.Types.Mixed, default: {} }
 }, { timestamps: true });
 
 export default mongoose.model<ILocation>('Location', LocationSchema);

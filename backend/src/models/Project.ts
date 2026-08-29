@@ -13,6 +13,8 @@ export interface IProject extends Document {
   isPublished: boolean;
   metaTitle?: LocalizedString;
   metaDescription?: LocalizedString;
+  translationStatus?: { ar: string };
+  translationMeta?: Record<string, string>;
 }
 
 const ProjectSchema: Schema = new Schema({
@@ -35,7 +37,11 @@ const ProjectSchema: Schema = new Schema({
   metaDescription: {
     en: { type: String },
     ar: { type: String }
-  }
+  },
+  translationStatus: {
+    ar: { type: String, enum: ['pending', 'completed', 'failed', 'none'], default: 'none' }
+  },
+  translationMeta: { type: Schema.Types.Mixed, default: {} }
 }, { timestamps: true });
 
 export default mongoose.model<IProject>('Project', ProjectSchema);

@@ -2,6 +2,19 @@
 import React, { useState } from 'react';
 import { api } from '@/lib/api';
 import { Upload, X, Loader2, CheckCircle2 } from 'lucide-react';
+import { z } from 'zod';
+import { useZodValidation } from '@/hooks/useZodValidation';
+import { FormError } from '@/components/ui/FormError';
+
+const applicationSchema = z.object({
+  candidateName: z.string().min(2, "Full Name is required"),
+  email: z.string().email("Invalid email address"),
+  phone: z.string().min(5, "Phone number is required"),
+  location: z.string().min(2, "Location is required"),
+  coverLetter: z.string().optional(),
+  linkedInProfile: z.string().url("Must be a valid URL").optional().or(z.literal('')),
+  portfolioUrl: z.string().url("Must be a valid URL").optional().or(z.literal(''))
+});
 
 interface ApplicationFormProps {
   lang: string;
@@ -24,6 +37,7 @@ export default function ApplicationForm({ lang, isAr, jobId }: ApplicationFormPr
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
+  const { errors, validate, clearErrors } = useZodValidation(applicationSchema);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -56,6 +70,8 @@ export default function ApplicationForm({ lang, isAr, jobId }: ApplicationFormPr
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!validate(formData, isAr)) return;
+    
     setError('');
     
     if (!file) {
@@ -117,7 +133,7 @@ export default function ApplicationForm({ lang, isAr, jobId }: ApplicationFormPr
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form noValidate onSubmit={handleSubmit} className="space-y-6">
       {error && (
         <div className="p-4 bg-red-50 text-red-600 rounded-lg text-sm border border-red-200">
           {error}
@@ -126,49 +142,61 @@ export default function ApplicationForm({ lang, isAr, jobId }: ApplicationFormPr
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         <div className="space-y-2">
-          <label className="block text-sm font-semibold text-slate-700">{isAr ? 'الاسم الكامل *' : 'Full Name *'}</label>
+          <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-widest">{isAr ? 'الاسم الكامل *' : 'Full Name *'}</label>
           <input 
             type="text" 
-            required 
             value={formData.candidateName}
-            onChange={e => setFormData({...formData, candidateName: e.target.value})}
-            className="w-full px-4 py-3 bg-white border border-slate-300 rounded-lg text-slate-900 outline-none focus:border-dazz-gold focus:ring-1 focus:ring-dazz-gold transition-colors"
+            onChange={e => {
+              setFormData({...formData, candidateName: e.target.value});
+              if(errors.candidateName) clearErrors();
+            }}
+            className={`w-full px-4 py-3 bg-white border rounded-lg text-slate-900 outline-none transition-colors ${errors.candidateName ? 'border-red-500 focus:ring-1 focus:ring-red-500' : 'border-slate-300 focus:border-dazz-gold focus:ring-1 focus:ring-dazz-gold'}`}
           />
+          <FormError message={errors.candidateName} isAr={isAr} />
         </div>
         <div className="space-y-2">
-          <label className="block text-sm font-semibold text-slate-700">{isAr ? 'البريد الإلكتروني *' : 'Email Address *'}</label>
+          <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-widest">{isAr ? 'البريد الإلكتروني *' : 'Email Address *'}</label>
           <input 
             type="email" 
-            required 
             value={formData.email}
-            onChange={e => setFormData({...formData, email: e.target.value})}
-            className="w-full px-4 py-3 bg-white border border-slate-300 rounded-lg text-slate-900 outline-none focus:border-dazz-gold focus:ring-1 focus:ring-dazz-gold transition-colors"
+            onChange={e => {
+              setFormData({...formData, email: e.target.value});
+              if(errors.email) clearErrors();
+            }}
+            className={`w-full px-4 py-3 bg-white border rounded-lg text-slate-900 outline-none transition-colors ${errors.email ? 'border-red-500 focus:ring-1 focus:ring-red-500' : 'border-slate-300 focus:border-dazz-gold focus:ring-1 focus:ring-dazz-gold'}`}
           />
+          <FormError message={errors.email} isAr={isAr} />
         </div>
         <div className="space-y-2">
-          <label className="block text-sm font-semibold text-slate-700">{isAr ? 'رقم الهاتف *' : 'Phone Number *'}</label>
+          <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-widest">{isAr ? 'رقم الهاتف *' : 'Phone Number *'}</label>
           <input 
             type="tel" 
-            required 
             value={formData.phone}
-            onChange={e => setFormData({...formData, phone: e.target.value})}
-            className="w-full px-4 py-3 bg-white border border-slate-300 rounded-lg text-slate-900 outline-none focus:border-dazz-gold focus:ring-1 focus:ring-dazz-gold transition-colors"
+            onChange={e => {
+              setFormData({...formData, phone: e.target.value});
+              if(errors.phone) clearErrors();
+            }}
+            className={`w-full px-4 py-3 bg-white border rounded-lg text-slate-900 outline-none transition-colors ${errors.phone ? 'border-red-500 focus:ring-1 focus:ring-red-500' : 'border-slate-300 focus:border-dazz-gold focus:ring-1 focus:ring-dazz-gold'}`}
           />
+          <FormError message={errors.phone} isAr={isAr} />
         </div>
         <div className="space-y-2">
-          <label className="block text-sm font-semibold text-slate-700">{isAr ? 'الموقع/المدينة *' : 'Location / City *'}</label>
+          <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-widest">{isAr ? 'الموقع/المدينة *' : 'Location / City *'}</label>
           <input 
             type="text" 
-            required 
             value={formData.location}
-            onChange={e => setFormData({...formData, location: e.target.value})}
-            className="w-full px-4 py-3 bg-white border border-slate-300 rounded-lg text-slate-900 outline-none focus:border-dazz-gold focus:ring-1 focus:ring-dazz-gold transition-colors"
+            onChange={e => {
+              setFormData({...formData, location: e.target.value});
+              if(errors.location) clearErrors();
+            }}
+            className={`w-full px-4 py-3 bg-white border rounded-lg text-slate-900 outline-none transition-colors ${errors.location ? 'border-red-500 focus:ring-1 focus:ring-red-500' : 'border-slate-300 focus:border-dazz-gold focus:ring-1 focus:ring-dazz-gold'}`}
           />
+          <FormError message={errors.location} isAr={isAr} />
         </div>
       </div>
 
       <div className="space-y-2">
-        <label className="block text-sm font-semibold text-slate-700">{isAr ? 'رسالة تعريفية (اختياري)' : 'Cover Letter (Optional)'}</label>
+        <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-widest">{isAr ? 'رسالة تعريفية (اختياري)' : 'Cover Letter (Optional)'}</label>
         <textarea 
           rows={4}
           value={formData.coverLetter}
@@ -179,32 +207,40 @@ export default function ApplicationForm({ lang, isAr, jobId }: ApplicationFormPr
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         <div className="space-y-2">
-          <label className="block text-sm font-semibold text-slate-700">{isAr ? 'رابط لينكد إن (اختياري)' : 'LinkedIn Profile (Optional)'}</label>
+          <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-widest">{isAr ? 'رابط لينكد إن (اختياري)' : 'LinkedIn Profile (Optional)'}</label>
           <input 
             type="url" 
             value={formData.linkedInProfile}
-            onChange={e => setFormData({...formData, linkedInProfile: e.target.value})}
+            onChange={e => {
+              setFormData({...formData, linkedInProfile: e.target.value});
+              if(errors.linkedInProfile) clearErrors();
+            }}
             placeholder="https://linkedin.com/in/..."
-            className="w-full px-4 py-3 bg-white border border-slate-300 rounded-lg text-slate-900 outline-none focus:border-dazz-gold focus:ring-1 focus:ring-dazz-gold transition-colors"
+            className={`w-full px-4 py-3 bg-white border rounded-lg text-slate-900 outline-none transition-colors ${errors.linkedInProfile ? 'border-red-500 focus:ring-1 focus:ring-red-500' : 'border-slate-300 focus:border-dazz-gold focus:ring-1 focus:ring-dazz-gold'}`}
           />
+          <FormError message={errors.linkedInProfile} isAr={isAr} />
         </div>
         <div className="space-y-2">
-          <label className="block text-sm font-semibold text-slate-700">{isAr ? 'رابط محفظة الأعمال (اختياري)' : 'Portfolio URL (Optional)'}</label>
+          <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-widest">{isAr ? 'رابط محفظة الأعمال (اختياري)' : 'Portfolio URL (Optional)'}</label>
           <input 
             type="url" 
             value={formData.portfolioUrl}
-            onChange={e => setFormData({...formData, portfolioUrl: e.target.value})}
+            onChange={e => {
+              setFormData({...formData, portfolioUrl: e.target.value});
+              if(errors.portfolioUrl) clearErrors();
+            }}
             placeholder="https://..."
-            className="w-full px-4 py-3 bg-white border border-slate-300 rounded-lg text-slate-900 outline-none focus:border-dazz-gold focus:ring-1 focus:ring-dazz-gold transition-colors"
+            className={`w-full px-4 py-3 bg-white border rounded-lg text-slate-900 outline-none transition-colors ${errors.portfolioUrl ? 'border-red-500 focus:ring-1 focus:ring-red-500' : 'border-slate-300 focus:border-dazz-gold focus:ring-1 focus:ring-dazz-gold'}`}
           />
+          <FormError message={errors.portfolioUrl} isAr={isAr} />
         </div>
       </div>
 
       <div className="space-y-2">
-        <label className="block text-sm font-semibold text-slate-700">{isAr ? 'السيرة الذاتية *' : 'Resume / CV *'}</label>
+        <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-widest">{isAr ? 'السيرة الذاتية *' : 'Resume / CV *'}</label>
         
         {!file ? (
-          <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-slate-300 border-dashed rounded-lg cursor-pointer bg-slate-50 hover:bg-slate-100 transition-colors">
+          <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-slate-200 border-dashed rounded-lg cursor-pointer bg-slate-50/50 hover:bg-slate-50 hover:border-dazz-gold/50 transition-all duration-300">
             <div className="flex flex-col items-center justify-center pt-5 pb-6">
               <Upload size={24} className="text-slate-400 mb-2" />
               <p className="text-sm text-slate-600"><span className="font-bold text-dazz-navy">{isAr ? 'اضغط للرفع' : 'Click to upload'}</span> {isAr ? 'أو اسحب الملف هنا' : 'or drag and drop'}</p>

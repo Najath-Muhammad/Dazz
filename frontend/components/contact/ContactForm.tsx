@@ -1,6 +1,18 @@
 'use client';
 import React, { useState } from 'react';
 import { ArrowRight, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
+import { z } from 'zod';
+import { useZodValidation } from '@/hooks/useZodValidation';
+import { FormError } from '@/components/ui/FormError';
+
+const contactSchema = z.object({
+  fullName: z.string().min(2, "Full Name is required"),
+  email: z.string().email("Invalid email address"),
+  phone: z.string().optional(),
+  company: z.string().optional(),
+  subject: z.string().min(2, "Subject is required"),
+  message: z.string().min(10, "Message must be at least 10 characters long")
+});
 
 interface ContactFormProps {
   isAr?: boolean;
@@ -18,13 +30,20 @@ export function ContactForm({ isAr = false }: ContactFormProps) {
   
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
+  const { errors, validate, clearErrors } = useZodValidation(contactSchema);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+    // Clear field error on change
+    if (errors[e.target.name as keyof typeof errors]) {
+      clearErrors();
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!validate(formData, isAr)) return;
+    
     setStatus('loading');
     setErrorMessage('');
 
@@ -77,7 +96,7 @@ export function ContactForm({ isAr = false }: ContactFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white p-8 md:p-10 rounded-lg shadow-xl shadow-dazz-navy/5 border border-slate-100">
+    <form noValidate onSubmit={handleSubmit} className="bg-white p-8 md:p-10 rounded-lg shadow-xl shadow-dazz-navy/5 border border-slate-100">
       <h3 className="text-2xl font-bold text-slate-900 mb-6 font-serif">
         {isAr ? 'أرسل لنا استفسارًا' : 'Send Us an Inquiry'}
       </h3>
@@ -98,12 +117,12 @@ export function ContactForm({ isAr = false }: ContactFormProps) {
             <input 
               type="text" 
               name="fullName"
-              required
               value={formData.fullName}
               onChange={handleChange}
-              className="w-full border-b border-slate-300 px-0 py-3 bg-transparent focus:border-dazz-navy focus:outline-none transition-colors"
+              className={`w-full border-b px-0 py-3 bg-transparent focus:outline-none transition-colors ${errors.fullName ? 'border-red-500 text-red-900 focus:border-red-500' : 'border-slate-300 focus:border-dazz-navy'}`}
               placeholder={isAr ? 'الاسم الكامل' : 'John Doe'}
             />
+            <FormError message={errors.fullName} isAr={isAr} />
           </div>
           <div className="space-y-2">
             <label className="block text-sm font-bold text-slate-700 uppercase tracking-wider text-xs">
@@ -112,12 +131,12 @@ export function ContactForm({ isAr = false }: ContactFormProps) {
             <input 
               type="email" 
               name="email"
-              required
               value={formData.email}
               onChange={handleChange}
-              className="w-full border-b border-slate-300 px-0 py-3 bg-transparent focus:border-dazz-navy focus:outline-none transition-colors"
+              className={`w-full border-b px-0 py-3 bg-transparent focus:outline-none transition-colors ${errors.email ? 'border-red-500 text-red-900 focus:border-red-500' : 'border-slate-300 focus:border-dazz-navy'}`}
               placeholder="john@example.com"
             />
+            <FormError message={errors.email} isAr={isAr} />
           </div>
         </div>
 
@@ -131,10 +150,11 @@ export function ContactForm({ isAr = false }: ContactFormProps) {
               name="phone"
               value={formData.phone}
               onChange={handleChange}
-              className="w-full border-b border-slate-300 px-0 py-3 bg-transparent focus:border-dazz-navy focus:outline-none transition-colors text-left"
+              className={`w-full border-b px-0 py-3 bg-transparent focus:outline-none transition-colors text-left ${errors.phone ? 'border-red-500 text-red-900 focus:border-red-500' : 'border-slate-300 focus:border-dazz-navy'}`}
               dir="ltr"
               placeholder="+966 5X XXX XXXX"
             />
+            <FormError message={errors.phone} isAr={isAr} />
           </div>
           <div className="space-y-2">
             <label className="block text-sm font-bold text-slate-700 uppercase tracking-wider text-xs">
@@ -145,9 +165,10 @@ export function ContactForm({ isAr = false }: ContactFormProps) {
               name="company"
               value={formData.company}
               onChange={handleChange}
-              className="w-full border-b border-slate-300 px-0 py-3 bg-transparent focus:border-dazz-navy focus:outline-none transition-colors"
+              className={`w-full border-b px-0 py-3 bg-transparent focus:outline-none transition-colors ${errors.company ? 'border-red-500 text-red-900 focus:border-red-500' : 'border-slate-300 focus:border-dazz-navy'}`}
               placeholder={isAr ? 'اسم شركتك' : 'Your Company Name'}
             />
+            <FormError message={errors.company} isAr={isAr} />
           </div>
         </div>
 
@@ -158,12 +179,12 @@ export function ContactForm({ isAr = false }: ContactFormProps) {
           <input 
             type="text" 
             name="subject"
-            required
             value={formData.subject}
             onChange={handleChange}
-            className="w-full border-b border-slate-300 px-0 py-3 bg-transparent focus:border-dazz-navy focus:outline-none transition-colors"
+            className={`w-full border-b px-0 py-3 bg-transparent focus:outline-none transition-colors ${errors.subject ? 'border-red-500 text-red-900 focus:border-red-500' : 'border-slate-300 focus:border-dazz-navy'}`}
             placeholder={isAr ? 'موضوع رسالتك' : 'How can we help you?'}
           />
+          <FormError message={errors.subject} isAr={isAr} />
         </div>
 
         <div className="space-y-2">
@@ -172,13 +193,13 @@ export function ContactForm({ isAr = false }: ContactFormProps) {
           </label>
           <textarea 
             name="message"
-            required
             rows={4}
             value={formData.message}
             onChange={handleChange}
-            className="w-full border-b border-slate-300 px-0 py-3 bg-transparent focus:border-dazz-navy focus:outline-none transition-colors resize-none"
+            className={`w-full border-b px-0 py-3 bg-transparent focus:outline-none transition-colors resize-none ${errors.message ? 'border-red-500 text-red-900 focus:border-red-500' : 'border-slate-300 focus:border-dazz-navy'}`}
             placeholder={isAr ? 'اكتب رسالتك هنا...' : 'Write your message here...'}
           ></textarea>
+          <FormError message={errors.message} isAr={isAr} />
         </div>
 
         <button 

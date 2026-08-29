@@ -103,20 +103,13 @@ export default async function CareersPage({ params }: { params: Promise<{ lang: 
                 {isAr ? 'اكتشف فرصك وابدأ رحلتك معنا.' : 'Explore your opportunities and start your journey with us.'}
               </p>
             </div>
-            <Link 
-              href={`/${lang}/careers/general-application`}
-              className="group flex items-center gap-3 px-8 py-4 bg-dazz-gold text-dazz-navy font-bold rounded-sm hover:bg-white transition-all shadow-[0_0_20px_rgba(212,175,55,0.3)]"
-            >
-              {isAr ? 'تقديم طلب عام' : 'Submit General Application'}
-              <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-            </Link>
           </div>
 
           <div className="space-y-4">
             {jobs.length === 0 ? (
               <div className="p-12 border border-slate-700/50 rounded-lg text-center bg-slate-800/20 backdrop-blur-sm">
                 <p className="text-xl text-slate-400 mb-6">
-                  {isAr ? 'لا توجد وظائف شاغرة حالياً. يرجى مراجعتنا لاحقاً أو تقديم طلب عام.' : 'There are no open positions at the moment. Please check back later or submit a general application.'}
+                  {isAr ? 'لا توجد وظائف شاغرة حالياً. يرجى مراجعتنا لاحقاً.' : 'There are no open positions at the moment. Please check back later.'}
                 </p>
               </div>
             ) : (

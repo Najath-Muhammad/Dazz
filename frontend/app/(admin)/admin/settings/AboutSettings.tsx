@@ -85,7 +85,7 @@ export default function AboutSettings({ settings, onChange }: AboutSettingsProps
                 type="text" 
                 value={settings.pageHeaders?.about?.title || ''} 
                 onChange={(e) => updateHero('title', e.target.value)} 
-                className="w-full border border-slate-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-dazz-gold"
+                className="w-full bg-white text-slate-900 border border-slate-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-dazz-gold"
                 placeholder="e.g. EMPOWERING INDUSTRIAL EXCELLENCE"
               />
             </div>
@@ -96,7 +96,7 @@ export default function AboutSettings({ settings, onChange }: AboutSettingsProps
                 rows={3} 
                 value={settings.pageHeaders?.about?.subtitle || ''} 
                 onChange={(e) => updateHero('subtitle', e.target.value)} 
-                className="w-full border border-slate-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-dazz-gold"
+                className="w-full bg-white text-slate-900 border border-slate-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-dazz-gold"
                 placeholder="A short description of this page..."
               />
             </div>

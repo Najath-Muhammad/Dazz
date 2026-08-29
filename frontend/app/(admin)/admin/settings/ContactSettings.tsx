@@ -131,7 +131,7 @@ export default function ContactSettings({ settings, onChange }: ContactSettingsP
               type="text" 
               value={settings.phoneNumber || ''} 
               onChange={(e) => updateRoot('phoneNumber', e.target.value)} 
-              className="w-full border border-slate-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-dazz-gold outline-none" 
+              className="w-full bg-white text-slate-900 border border-slate-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-dazz-gold outline-none" 
               placeholder="+966 59 222 8228"
             />
           </div>
@@ -141,7 +141,7 @@ export default function ContactSettings({ settings, onChange }: ContactSettingsP
               type="email" 
               value={settings.contactEmail || ''} 
               onChange={(e) => updateRoot('contactEmail', e.target.value)} 
-              className="w-full border border-slate-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-dazz-gold outline-none" 
+              className="w-full bg-white text-slate-900 border border-slate-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-dazz-gold outline-none" 
               placeholder="info@dazztradlink.com"
             />
           </div>
@@ -151,7 +151,7 @@ export default function ContactSettings({ settings, onChange }: ContactSettingsP
               type="url" 
               value={settings.websiteUrl || ''} 
               onChange={(e) => updateRoot('websiteUrl', e.target.value)} 
-              className="w-full border border-slate-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-dazz-gold outline-none" 
+              className="w-full bg-white text-slate-900 border border-slate-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-dazz-gold outline-none" 
               placeholder="www.dazztradlink.com"
             />
           </div>

@@ -36,6 +36,7 @@ export default function AdminLayout({
                 alt="DAZZ Tradlink" 
                 fill
                 priority
+                sizes="250px"
                 className="object-contain object-left"
               />
             </div>

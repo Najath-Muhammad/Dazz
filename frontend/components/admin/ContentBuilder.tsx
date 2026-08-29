@@ -114,10 +114,11 @@ export function ContentBuilder({ value, onChange }: ContentBuilderProps) {
             type="button"
             onClick={() => handleTranslate(block.id, block.en)}
             disabled={!block.en.trim() || isTranslating}
-            className="flex items-center gap-2 text-xs font-bold text-dazz-navy hover:text-dazz-gold transition-colors disabled:opacity-50"
+            title="Regenerate Arabic for this block"
+            className="flex items-center gap-1.5 text-[11px] font-bold tracking-widest uppercase px-3 py-1 rounded border border-slate-200 text-slate-400 hover:border-dazz-navy hover:text-dazz-navy transition-colors disabled:opacity-40"
           >
-            {isTranslating ? <RefreshCw size={14} className="animate-spin" /> : <RefreshCw size={14} />}
-            Translate to Arabic
+            {isTranslating ? <RefreshCw size={11} className="animate-spin" /> : <RefreshCw size={11} />}
+            Regenerate Arabic
           </button>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -129,7 +130,7 @@ export function ContentBuilder({ value, onChange }: ContentBuilderProps) {
                 onChange={(e) => updateBlock(block.id, 'en', e.target.value)}
                 placeholder={block.type === 'LIST' ? "Item 1\nItem 2\nItem 3" : `Enter ${block.type.toLowerCase()}...`}
                 rows={4}
-                className="w-full border border-slate-300 rounded-md px-3 py-2 text-sm focus:border-dazz-navy outline-none"
+                className="w-full bg-white text-slate-900 border border-slate-300 rounded-md px-3 py-2 text-sm focus:border-dazz-navy outline-none"
               />
             ) : (
               <input
@@ -137,7 +138,7 @@ export function ContentBuilder({ value, onChange }: ContentBuilderProps) {
                 value={block.en}
                 onChange={(e) => updateBlock(block.id, 'en', e.target.value)}
                 placeholder={`Enter ${block.type.toLowerCase()}...`}
-                className="w-full border border-slate-300 rounded-md px-3 py-2 text-sm focus:border-dazz-navy outline-none"
+                className="w-full bg-white text-slate-900 border border-slate-300 rounded-md px-3 py-2 text-sm focus:border-dazz-navy outline-none"
               />
             )}
           </div>
@@ -148,14 +149,14 @@ export function ContentBuilder({ value, onChange }: ContentBuilderProps) {
                 value={block.ar}
                 onChange={(e) => updateBlock(block.id, 'ar', e.target.value)}
                 rows={4}
-                className="w-full border border-slate-300 rounded-md px-3 py-2 text-sm focus:border-dazz-navy outline-none text-right font-arabic"
+                className="w-full bg-white text-slate-900 border border-slate-300 rounded-md px-3 py-2 text-sm focus:border-dazz-navy outline-none text-right font-arabic"
               />
             ) : (
               <input
                 type="text"
                 value={block.ar}
                 onChange={(e) => updateBlock(block.id, 'ar', e.target.value)}
-                className="w-full border border-slate-300 rounded-md px-3 py-2 text-sm focus:border-dazz-navy outline-none text-right font-arabic"
+                className="w-full bg-white text-slate-900 border border-slate-300 rounded-md px-3 py-2 text-sm focus:border-dazz-navy outline-none text-right font-arabic"
               />
             )}
           </div>

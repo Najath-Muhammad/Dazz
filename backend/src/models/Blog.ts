@@ -14,6 +14,8 @@ export interface IBlog extends Document {
   featured: boolean;
   metaTitle?: LocalizedString;
   metaDescription?: LocalizedString;
+  translationStatus?: { ar: string };
+  translationMeta?: Record<string, string>;
 }
 
 const BlogSchema: Schema = new Schema({
@@ -46,7 +48,11 @@ const BlogSchema: Schema = new Schema({
   metaDescription: {
     en: { type: String },
     ar: { type: String }
-  }
+  },
+  translationStatus: {
+    ar: { type: String, enum: ['pending', 'completed', 'failed', 'none'], default: 'none' }
+  },
+  translationMeta: { type: mongoose.Schema.Types.Mixed, default: {} }
 }, { timestamps: true });
 
 export default mongoose.model<IBlog>('Blog', BlogSchema);

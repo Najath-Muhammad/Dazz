@@ -88,6 +88,8 @@ export interface IService extends Document {
   gallery: IGalleryItem[];
   cta: ICTA;
   seo: { title: LocalizedString; description: LocalizedString; ogImage: any };
+  translationStatus?: { ar: string };
+  translationMeta?: Record<string, string>;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -163,6 +165,10 @@ const ServiceSchema: Schema = new Schema({
     description: loc,
     ogImage: MediaField,
   },
+  translationStatus: {
+    ar: { type: String, enum: ['pending', 'completed', 'failed', 'none'], default: 'none' }
+  },
+  translationMeta: { type: Schema.Types.Mixed, default: {} },
 }, { timestamps: true });
 
 // Index for public listing

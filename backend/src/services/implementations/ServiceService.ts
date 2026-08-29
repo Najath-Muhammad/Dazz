@@ -1,7 +1,9 @@
-
-
 import { IServiceService } from '../interfaces/IServiceService';
 import { IServiceRepository } from '../../repositories/interfaces/IServiceRepository';
+import { autoTranslate } from '../../utils/autoTranslate';
+import { TRANSLATABLE_FIELDS } from '../../utils/translatableFields';
+
+const SERVICE_FIELDS = TRANSLATABLE_FIELDS.Service;
 
 export class ServiceService implements IServiceService {
   private _repository: IServiceRepository;
@@ -40,9 +42,9 @@ export class ServiceService implements IServiceService {
   }
   async createService(data: any) {
     try {
-      // Check edge cases here if needed, like manually checking if slug exists, though mongo throws 11000
       const newItem = await this._repository.create(data);
-      return { success: true, message: 'Service created successfully', data: newItem };
+      this._translateAndUpdate(newItem._id.toString(), newItem.toObject ? newItem.toObject() : newItem, {});
+      return { success: true, message: 'Service created. Arabic translation in progress.', data: newItem };
     } catch (error: any) {
       console.error('Error in createService:', error);
       if (error?.code === 11000) return { success: false, message: 'A Service with this unique identifier already exists.' };
@@ -53,9 +55,11 @@ export class ServiceService implements IServiceService {
     try {
       const existing = await this._repository.findById(id);
       if (!existing) return { success: false, message: 'Service not found' };
-      
+
       const updatedItem = await this._repository.update(id, data);
-      return { success: true, message: 'Service updated successfully', data: updatedItem };
+      const existingMeta = (existing as any).translationMeta || {};
+      this._translateAndUpdate(id, updatedItem, existingMeta);
+      return { success: true, message: 'Service updated. Arabic translation in progress.', data: updatedItem };
     } catch (error: any) {
       console.error('Error in updateService:', error);
       if (error?.code === 11000) return { success: false, message: 'A Service with this unique identifier already exists.' };
@@ -85,6 +89,21 @@ export class ServiceService implements IServiceService {
       console.error('Error in duplicateService:', error);
       if (error?.code === 11000) return { success: false, message: 'A Service with this unique identifier already exists.' };
       return { success: false, message: 'Failed to duplicate Service' };
+    }
+  }
+
+  private async _translateAndUpdate(id: string, docData: any, existingMeta: Record<string, string>) {
+    try {
+      const { updatedData, translationMeta, status } = await autoTranslate(docData, SERVICE_FIELDS, existingMeta);
+      await this._repository.update(id, {
+        ...updatedData,
+        translationStatus: { ar: status },
+        translationMeta,
+      });
+      console.log(`[ServiceService] Translation ${status} for service ${id}`);
+    } catch (err) {
+      console.error(`[ServiceService] Background translation failed for service ${id}:`, err);
+      await this._repository.update(id, { translationStatus: { ar: 'failed' } });
     }
   }
 }

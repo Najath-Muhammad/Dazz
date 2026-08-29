@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import { useTranslation } from '@/hooks/useTranslation';
 import { ConfirmModal } from '@/components/admin/ConfirmModal';
+import { FormError } from '@/components/ui/FormError';
+import { RefreshCw, CheckCircle2, AlertCircle, Sparkles } from 'lucide-react';
 
 interface BilingualFieldProps {
   label: string;
@@ -15,8 +17,11 @@ interface BilingualFieldProps {
   rows?: number;
   required?: boolean;
   placeholder?: string;
-  showGenerateAll?: false; // per-field only
   note?: string;
+  errorEn?: string;
+  errorAr?: string;
+  /** Pass the saved translationStatus.ar from the document to show server-side status */
+  translationStatus?: 'pending' | 'completed' | 'failed' | 'none';
 }
 
 export function BilingualField({
@@ -32,21 +37,25 @@ export function BilingualField({
   required = false,
   placeholder,
   note,
+  errorEn,
+  errorAr,
+  translationStatus,
 }: BilingualFieldProps) {
-  const { translateOne, isTranslating, status, error } = useTranslation();
-  const [localStatus, setLocalStatus] = useState<'idle' | 'done' | 'error'>('idle');
+  const { translateOne } = useTranslation();
+  const [localStatus, setLocalStatus] = useState<'idle' | 'translating' | 'done' | 'error'>('idle');
   const [localError, setLocalError] = useState('');
   const [isWorking, setIsWorking] = useState(false);
-
-  const inputClass = 'w-full border border-slate-300 bg-white text-slate-900 rounded-md px-4 py-2 focus:ring-2 focus:ring-dazz-navy focus:border-transparent outline-none text-sm';
-  const inputArClass = `${inputClass} font-arabic` ;
-
   const [confirmModal, setConfirmModal] = useState({ isOpen: false });
+
+  const getBorderClass = (err?: string) =>
+    err ? 'border-red-500 focus:ring-red-500' : 'border-slate-300 focus:ring-dazz-navy focus:border-transparent';
+  const inputClassEn = `w-full border bg-white text-slate-900 rounded-md px-4 py-2 focus:ring-2 outline-none text-sm transition-colors ${getBorderClass(errorEn)}`;
+  const inputClassAr = `w-full border bg-white text-slate-900 rounded-md px-4 py-2 focus:ring-2 outline-none text-sm transition-colors font-arabic ${getBorderClass(errorAr)}`;
 
   const executeTranslation = async () => {
     setIsWorking(true);
     setLocalError('');
-    setLocalStatus('idle');
+    setLocalStatus('translating');
 
     const translated = await translateOne(valueEn);
 
@@ -61,14 +70,14 @@ export function BilingualField({
     setIsWorking(false);
   };
 
-  const handleGenerate = () => {
+  const handleRegenerate = () => {
     if (!valueEn?.trim()) {
       setLocalError('Enter the English content first.');
       setLocalStatus('error');
       return;
     }
 
-    // Warn if Arabic already exists
+    // Warn if Arabic already exists (manual override)
     if (valueAr?.trim()) {
       setConfirmModal({ isOpen: true });
       return;
@@ -77,17 +86,65 @@ export function BilingualField({
     executeTranslation();
   };
 
-  const InputEl = type === 'textarea' ? 'textarea' : 'input';
+  /** Determine which status badge to show */
+  const renderStatusBadge = () => {
+    // Local (in-progress) status takes priority
+    if (localStatus === 'translating') {
+      return (
+        <span className="inline-flex items-center gap-1 text-xs text-amber-600 font-medium">
+          <RefreshCw size={12} className="animate-spin" /> Translating...
+        </span>
+      );
+    }
+    if (localStatus === 'done') {
+      return (
+        <span className="inline-flex items-center gap-1 text-xs text-green-600 font-medium">
+          <CheckCircle2 size={12} /> Auto-translated
+        </span>
+      );
+    }
+    if (localStatus === 'error') {
+      return (
+        <span className="inline-flex items-center gap-1 text-xs text-red-500 font-medium">
+          <AlertCircle size={12} /> {localError}
+        </span>
+      );
+    }
+
+    // Fall back to server-side translation status
+    if (translationStatus === 'completed' && valueAr?.trim()) {
+      return (
+        <span className="inline-flex items-center gap-1 text-xs text-green-600 font-medium">
+          <CheckCircle2 size={12} /> Auto-translated
+        </span>
+      );
+    }
+    if (translationStatus === 'pending') {
+      return (
+        <span className="inline-flex items-center gap-1 text-xs text-amber-600 font-medium">
+          <RefreshCw size={12} className="animate-spin" /> Translating...
+        </span>
+      );
+    }
+    if (translationStatus === 'failed') {
+      return (
+        <span className="inline-flex items-center gap-1 text-xs text-red-500 font-medium">
+          <AlertCircle size={12} /> Translation failed
+        </span>
+      );
+    }
+
+    return null;
+  };
 
   return (
     <div className="space-y-3">
-      <div className="flex items-center justify-between">
-        <label className="block text-sm font-semibold text-slate-700">{label}</label>
-        {localStatus === 'done' && (
-          <span className="text-xs text-green-600 font-medium flex items-center gap-1">
-            ✓ Arabic generated
-          </span>
-        )}
+      <div className="flex items-center justify-between flex-wrap gap-2">
+        <label className="block text-sm font-semibold text-slate-700">
+          {label}
+          {required && <span className="text-red-500 ml-1">*</span>}
+        </label>
+        {renderStatusBadge()}
       </div>
       {note && <p className="text-xs text-slate-500 mt-0.5">{note}</p>}
 
@@ -100,9 +157,8 @@ export function BilingualField({
             value={valueEn}
             onChange={(e) => { onChangeEn(e.target.value); setLocalStatus('idle'); }}
             rows={rows}
-            required={required}
             placeholder={placeholder}
-            className={inputClass}
+            className={inputClassEn}
           />
         ) : (
           <input
@@ -110,40 +166,38 @@ export function BilingualField({
             name={nameEn}
             value={valueEn}
             onChange={(e) => { onChangeEn(e.target.value); setLocalStatus('idle'); }}
-            required={required}
             placeholder={placeholder}
-            className={inputClass}
+            className={inputClassEn}
           />
         )}
-      </div>
-
-      {/* Generate Arabic Button */}
-      <div className="flex items-center gap-2">
-        <button
-          type="button"
-          onClick={handleGenerate}
-          disabled={isWorking || !valueEn?.trim()}
-          className="inline-flex items-center gap-2 text-xs font-bold tracking-wider uppercase px-4 py-2 rounded-md bg-dazz-navy text-white hover:bg-dazz-navy/80 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
-        >
-          {isWorking ? (
-            <>
-              <span className="animate-spin">⏳</span> Translating...
-            </>
-          ) : (
-            <>✨ Generate Arabic</>
-          )}
-        </button>
-        {localStatus === 'error' && (
-          <span className="text-xs text-red-500">{localError}</span>
-        )}
+        <FormError message={errorEn} />
       </div>
 
       {/* Arabic Field */}
       <div>
-        <span className="block text-xs text-slate-400 mb-1 font-medium uppercase tracking-widest flex items-center gap-2">
-          Arabic
-          <span className="text-slate-300 normal-case tracking-normal">— editable</span>
-        </span>
+        <div className="flex items-center justify-between mb-1">
+          <span className="text-xs text-slate-400 font-medium uppercase tracking-widest flex items-center gap-2">
+            Arabic
+            <span className="text-slate-300 normal-case tracking-normal">— auto-translated, editable</span>
+          </span>
+
+          {/* Regenerate button — advanced/override only */}
+          <button
+            type="button"
+            onClick={handleRegenerate}
+            disabled={isWorking || !valueEn?.trim()}
+            title="Regenerate Arabic translation"
+            className="inline-flex items-center gap-1.5 text-[11px] font-bold tracking-widest uppercase px-3 py-1 rounded border border-slate-200 text-slate-500 hover:border-dazz-navy hover:text-dazz-navy disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+          >
+            {isWorking ? (
+              <RefreshCw size={11} className="animate-spin" />
+            ) : (
+              <Sparkles size={11} />
+            )}
+            {isWorking ? 'Translating...' : 'Regenerate'}
+          </button>
+        </div>
+
         {type === 'textarea' ? (
           <textarea
             name={nameAr}
@@ -151,8 +205,8 @@ export function BilingualField({
             onChange={(e) => onChangeAr(e.target.value)}
             rows={rows}
             dir="rtl"
-            className={`${inputArClass} text-right`}
-            placeholder="Arabic translation will appear here..."
+            className={`${inputClassAr} text-right`}
+            placeholder="Arabic translation is generated automatically on save..."
           />
         ) : (
           <input
@@ -161,22 +215,23 @@ export function BilingualField({
             value={valueAr}
             onChange={(e) => onChangeAr(e.target.value)}
             dir="rtl"
-            className={`${inputArClass} text-right`}
-            placeholder="Arabic translation will appear here..."
+            className={`${inputClassAr} text-right`}
+            placeholder="Arabic translation is generated automatically on save..."
           />
         )}
+        <FormError message={errorAr} isAr />
       </div>
 
       <ConfirmModal
         isOpen={confirmModal.isOpen}
-        title="Overwrite Arabic Translation"
-        message="Arabic content already exists for this field. Do you want to replace it with a newly generated translation?"
+        title="Regenerate Arabic Translation"
+        message="This will overwrite the current Arabic content with a freshly generated translation. Are you sure?"
         onConfirm={() => {
           setConfirmModal({ isOpen: false });
           executeTranslation();
         }}
         onCancel={() => setConfirmModal({ isOpen: false })}
-        confirmText="Yes, Replace"
+        confirmText="Yes, Regenerate"
         cancelText="Cancel"
       />
     </div>
