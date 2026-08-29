@@ -56,12 +56,8 @@ export default async function CareersPage({ params }: { params: Promise<{ lang: 
   const heroTitle = heroData.title?.[lang] || (isAr ? 'وظائف\nابنِ مستقبلك معنا' : 'CAREERS\nBUILD YOUR FUTURE');
   const heroSubtitle = heroData.subtitle?.[lang] || (isAr ? 'اكتشف فرصًا لا حصر لها.' : 'Discover endless opportunities with Dazz Tradelink.');
   
-  let heroImage = 'https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg';
-  if (heroData.media?.url) {
-    heroImage = heroData.media.url;
-  } else if (typeof heroData.media === 'string') {
-    heroImage = heroData.media;
-  }
+  const rawBg = heroData.media;
+  const heroImage = rawBg?.url || (typeof rawBg === 'string' && rawBg !== '' ? rawBg : '/images/about-hero.png');
 
   return (
     <main dir={dir} className="min-h-screen bg-white">

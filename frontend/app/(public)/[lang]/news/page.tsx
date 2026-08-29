@@ -50,12 +50,8 @@ export default async function NewsPage({ params }: { params: Promise<{ lang: str
   const heroTitle = newsHeader?.title || (isAr ? 'الأخبار\nوالرؤى' : 'NEWS &\nINSIGHTS');
   const heroSubtitle = newsHeader?.subtitle || (isAr ? 'أحدث الإنجازات وتحديثات الصناعة من شركة داز ترادلينك.' : 'Stay updated with our latest company milestones and industry perspectives.');
   
-  let heroImage = 'https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg';
-  if (newsHeader?.media?.url) {
-    heroImage = newsHeader.media.url;
-  } else if (typeof newsHeader?.media === 'string') {
-    heroImage = newsHeader.media;
-  }
+  const rawBg = newsHeader?.media;
+  const heroImage = rawBg?.url || (typeof rawBg === 'string' && rawBg !== '' ? rawBg : '/images/about-hero.png');
 
   return (
     <main dir={dir} className="min-h-screen bg-white">

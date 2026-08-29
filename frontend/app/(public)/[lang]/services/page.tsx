@@ -47,12 +47,7 @@ export default async function ServicesListingPage({ params }: { params: { lang: 
   const heroSubtitle = servicesHeader?.subtitle || (isAr ? 'استكشف مجموعتنا الشاملة من الخدمات المتخصصة.' : 'Explore our comprehensive range of specialized services.');
   
   const rawBg = servicesHeader?.media;
-  let heroImage = '/images/service-hero.png';
-  if (rawBg?.url) {
-    heroImage = rawBg.url;
-  } else if (typeof rawBg === 'string' && rawBg !== '') {
-    heroImage = rawBg;
-  }
+  const heroImage = rawBg?.url || (typeof rawBg === 'string' && rawBg !== '' ? rawBg : '/images/service-hero.png');
 
   return (
     <ServicesListingClient 

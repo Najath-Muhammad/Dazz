@@ -51,12 +51,7 @@ export default async function ProjectsPage({ params }: { params: Promise<{ lang:
   const heroSubtitle = projectsHeader?.subtitle?.[lang] || (isAr ? 'عرض لأهم مساعينا وأكثرها تأثيراً في جميع أنحاء المملكة.' : 'A showcase of our most prestigious and impactful endeavors across the Kingdom.');
   
   const rawBg = projectsHeader?.media;
-  let heroImage = '/images/project-hero.png';
-  if (rawBg?.url) {
-    heroImage = rawBg.url;
-  } else if (typeof rawBg === 'string' && rawBg !== '') {
-    heroImage = rawBg;
-  }
+  const heroImage = rawBg?.url || (typeof rawBg === 'string' && rawBg !== '' ? rawBg : '/images/project-hero.png');
 
   return (
     <main dir={dir} className="min-h-screen bg-slate-50 font-sans">

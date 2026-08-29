@@ -39,12 +39,7 @@ export default async function AboutUsPage({ params }: { params: { lang: string }
   const heroSubtitle = aboutHeader?.subtitle || (isAr ? 'مصمم لتلبية الاحتياجات التشغيلية للبيئات الصناعية.' : 'Designed to meet the operational needs of industrial environments.');
   
   const rawBg = aboutHeader?.media;
-  let heroImage = '/images/about-hero.png';
-  if (rawBg?.url) {
-    heroImage = rawBg.url;
-  } else if (typeof rawBg === 'string' && rawBg !== '') {
-    heroImage = rawBg;
-  }
+  const heroImage = rawBg?.url || (typeof rawBg === 'string' && rawBg !== '' ? rawBg : '/images/about-hero.png');
 
   return (
     <div dir={dir} className="bg-slate-950 font-sans">

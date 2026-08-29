@@ -43,12 +43,8 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
   const heroSubtitle = heroData.description?.[lang] || (isAr ? 'هل لديك مشروع، استفسار، أو فرصة؟ تواصل مع فريق داز.' : 'Have a project, enquiry, or opportunity?\nGet in touch with the Dazz team.');
   
   // Use Contact Hero image if it exists in legacy pageHeaders, otherwise use default
-  let heroImage = 'https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg';
-  if (settings?.pageHeaders?.contact?.media?.url) {
-    heroImage = settings.pageHeaders.contact.media.url;
-  } else if (typeof settings?.pageHeaders?.contact?.media === 'string') {
-    heroImage = settings.pageHeaders.contact.media;
-  }
+  const rawBg = settings?.pageHeaders?.contact?.media;
+  const heroImage = rawBg?.url || (typeof rawBg === 'string' && rawBg !== '' ? rawBg : '/images/contact-hero.png');
 
   const address = settings?.address?.[lang] || (isAr ? '٤٧٦٤، شارع الملك خالد،\nالشرفية، جدة ٢٢٢٣٤' : '4764, King Khalid St,\nAsh Sharafiyah, Jeddah 22234');
   const phone = settings?.phoneNumber || '+966 59 222 8228';
