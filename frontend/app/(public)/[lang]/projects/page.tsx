@@ -51,7 +51,7 @@ export default async function ProjectsPage({ params }: { params: Promise<{ lang:
   const heroSubtitle = projectsHeader?.subtitle?.[lang] || (isAr ? 'عرض لأهم مساعينا وأكثرها تأثيراً في جميع أنحاء المملكة.' : 'A showcase of our most prestigious and impactful endeavors across the Kingdom.');
   
   const rawBg = projectsHeader?.media;
-  let heroImage = 'https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg';
+  let heroImage = '/images/project-hero.png';
   if (rawBg?.url) {
     heroImage = rawBg.url;
   } else if (typeof rawBg === 'string' && rawBg !== '') {
