@@ -12,8 +12,9 @@ const TABS = [
   { id: 'about', label: 'About Us Hero' },
   { id: 'services', label: 'Services Hero' },
   { id: 'projects', label: 'Projects Hero' },
-  { id: 'contact', label: 'Contact Hero' },
   { id: 'news', label: 'News Hero' },
+  { id: 'contact', label: 'Contact Hero' },
+  { id: 'contact_page', label: 'Contact Page Details' },
   { id: 'careers', label: 'Careers Page' },
 ];
 
@@ -175,7 +176,7 @@ export default function AdminSettingsPage() {
               settings={settings} 
               onChange={(newSettings) => setSettings(newSettings)} 
             />
-          ) : activeTab === 'contact' ? (
+          ) : activeTab === 'contact_page' ? (
             <ContactSettings 
               settings={settings} 
               onChange={(newSettings) => setSettings(newSettings)} 
