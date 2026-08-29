@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const quickLinks = [
   { name: 'Home', href: '/' },
@@ -28,13 +29,13 @@ export function Footer() {
 
           {/* Brand Column */}
           <div className="md:col-span-5">
-            <Link href="/" aria-label="Dazz Tradelink — Home" className="inline-block mb-6">
-              <span className="block text-4xl font-serif font-extrabold tracking-widest bg-clip-text text-transparent bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 leading-none">
-                DAZZ
-              </span>
-              <span className="block text-[0.55rem] font-bold tracking-[0.22em] text-white/40 mt-[-2px]">
-                TRADELINK INTERNATIONAL
-              </span>
+            <Link href="/" aria-label="Dazz Tradelink — Home" className="inline-block mb-6 relative h-12 w-48 hover:scale-105 transition-transform duration-300">
+              <Image 
+                src="/images/logo-transparent.png" 
+                alt="DAZZ Tradelink" 
+                fill
+                className="object-contain object-left"
+              />
             </Link>
             <p className="text-sm leading-relaxed text-slate-400 max-w-xs font-light">
               Delivering excellence across construction, food trading, logistics, and hospitality — with industrial precision and corporate integrity across the Kingdom of Saudi Arabia.

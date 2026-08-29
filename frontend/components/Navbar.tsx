@@ -1,6 +1,7 @@
 'use client';
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
@@ -121,13 +122,14 @@ export function Navbar() {
         <div className="max-w-[1400px] mx-auto px-6 flex justify-between items-center">
           {/* Logo */}
           <Link href="/" aria-label="Dazz Tradelink — Home">
-            <div className={`transition-transform duration-500 ${scrolled ? 'scale-90' : 'scale-100'}`}>
-              <span className="block text-3xl font-serif font-extrabold tracking-widest bg-clip-text text-transparent bg-gradient-to-r from-dazz-gold-light via-dazz-gold to-dazz-gold-dark leading-none">
-                DAZZ
-              </span>
-              <span className="block text-[0.55rem] font-bold tracking-[0.22em] text-white/70 mt-[-2px]">
-                TRADELINK INTERNATIONAL
-              </span>
+            <div className={`transition-transform duration-500 relative h-10 w-40 md:h-12 md:w-48 ${scrolled ? 'scale-90' : 'scale-100'}`}>
+              <Image 
+                src="/images/logo-transparent.png" 
+                alt="DAZZ Tradelink" 
+                fill
+                priority
+                className="object-contain object-left"
+              />
             </div>
           </Link>
 

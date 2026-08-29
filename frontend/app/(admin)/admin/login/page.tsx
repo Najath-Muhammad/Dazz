@@ -1,6 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import Cookies from 'js-cookie';
 import { authService } from '@/services/authService';
 
@@ -35,9 +36,17 @@ export default function AdminLoginPage() {
   return (
     <div className="min-h-screen bg-slate-900 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
-        <h2 className="text-3xl font-bold tracking-tight text-white mb-2">
-          DAZZ<span className="text-amber-500">.</span> Admin
-        </h2>
+        <div className="flex justify-center mb-6">
+          <div className="relative h-12 w-48">
+            <Image 
+              src="/images/logo-transparent.png" 
+              alt="DAZZ Tradelink" 
+              fill
+              priority
+              className="object-contain"
+            />
+          </div>
+        </div>
         <p className="text-sm text-slate-400">Sign in to access the control panel</p>
       </div>
 

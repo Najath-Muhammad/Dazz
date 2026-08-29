@@ -3,6 +3,7 @@ import React from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Cookies from 'js-cookie';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function AdminLayout({
   children,
@@ -29,12 +30,15 @@ export default function AdminLayout({
       <aside className="w-full md:w-64 bg-dazz-navy text-white flex flex-col md:sticky md:top-0 md:h-screen overflow-y-auto scrollbar-none z-10 shadow-lg">
         <div className="p-6 border-b border-dazz-navy-dark">
           <Link href="/admin" className="flex flex-col justify-center">
-            <span className="text-2xl font-serif font-extrabold tracking-widest bg-clip-text text-transparent bg-gradient-to-r from-dazz-gold-light via-dazz-gold to-dazz-gold-dark">
-              DAZZ
-            </span>
-            <span className="text-[0.5rem] font-bold tracking-[0.2em] text-dazz-gold mt-[-2px]">
-              ADMINISTRATOR
-            </span>
+            <div className="relative h-8 w-32">
+              <Image 
+                src="/images/logo-transparent.png" 
+                alt="DAZZ Tradelink" 
+                fill
+                priority
+                className="object-contain object-left"
+              />
+            </div>
           </Link>
         </div>
         <nav className="flex-1 p-4 space-y-2">
