@@ -96,7 +96,7 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
               className="flex justify-start md:justify-end"
             >
               <p className="text-xs font-mono tracking-widest text-slate-500 uppercase">
-                DAZZ TRADELINK INTERNATIONAL<br/>{isAr ? 'قسم الخدمات' : 'SERVICE DIVISION'}
+                DAZZ TRADLINK INTERNATIONAL<br/>{isAr ? 'قسم الخدمات' : 'SERVICE DIVISION'}
               </p>
             </motion.div>
           </div>

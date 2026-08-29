@@ -3,7 +3,7 @@ import { ProjectsHero } from '@/components/projects/ProjectsHero';
 import { ProjectsClient } from '@/components/projects/ProjectsClient';
 
 export const metadata: Metadata = {
-  title: 'Project Gallery | Dazz Tradelink',
+  title: 'Project Gallery | Dazz Tradlink',
   description: 'Explore our portfolio of global projects across construction, logistics, and hospitality.',
   alternates: { canonical: '/en/projects' },
 };

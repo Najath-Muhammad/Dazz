@@ -9,7 +9,7 @@ import { IndustrialExcellence } from '@/components/about/IndustrialExcellence';
 import { AboutCTA } from '@/components/about/AboutCTA';
 
 export const metadata: Metadata = {
-  title: 'About Us | Dazz Tradelink',
+  title: 'About Us | Dazz Tradlink',
   description: 'DAZZ Contracting Company is a diversified Saudi-based company delivering integrated solutions across the construction, infrastructure, and industrial sectors.',
   alternates: { canonical: '/en/about-us' },
 };

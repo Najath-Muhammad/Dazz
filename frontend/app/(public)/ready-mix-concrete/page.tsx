@@ -9,13 +9,13 @@ import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Ready Mix Concrete',
-  description: 'Quality Concrete. Reliable Supply. Every Project. DAZZ Tradelink provides ready mix concrete solutions across Saudi Arabia.',
+  description: 'Quality Concrete. Reliable Supply. Every Project. DAZZ Tradlink provides ready mix concrete solutions across Saudi Arabia.',
   alternates: { canonical: '/ready-mix-concrete' },
   openGraph: {
-    title: 'Ready Mix Concrete | Dazz Tradelink',
+    title: 'Ready Mix Concrete | Dazz Tradlink',
     description: 'Quality Concrete. Reliable Supply. Every Project.',
     url: '/ready-mix-concrete',
-    images: [{ url: '/og-image.jpg', width: 1200, height: 630, alt: 'Ready Mix Concrete | Dazz Tradelink' }],
+    images: [{ url: '/og-image.jpg', width: 1200, height: 630, alt: 'Ready Mix Concrete | Dazz Tradlink' }],
   },
 };
 
@@ -67,7 +67,7 @@ export default function ReadyMixConcretePage() {
                 <SectionTitle title="Ready Mix Concrete Division" subtitle="DAZZ Tradlink International" />
                 <div className="space-y-4 text-slate-600 text-lg leading-relaxed mt-6">
                   <p>
-                    DAZZ Tradelink International provides reliable ready mix concrete solutions for a wide range of construction and infrastructure projects across the Kingdom of Saudi Arabia.
+                    DAZZ Tradlink International provides reliable ready mix concrete solutions for a wide range of construction and infrastructure projects across the Kingdom of Saudi Arabia.
                   </p>
                   <p>
                     Our ready mix concrete operations are focused on delivering consistent-quality concrete, dependable supply, and efficient delivery to meet the demanding requirements of modern construction projects.
@@ -92,7 +92,7 @@ export default function ReadyMixConcretePage() {
                   </div>
                 </div>
                 <div className="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-dazz-navy to-transparent">
-                  <span className="text-dazz-gold text-xs tracking-[0.2em] uppercase font-bold">DAZZ Tradelink International</span>
+                  <span className="text-dazz-gold text-xs tracking-[0.2em] uppercase font-bold">DAZZ Tradlink International</span>
                   <p className="text-white font-bold text-xl mt-1">Ready Mix Concrete</p>
                 </div>
               </div>

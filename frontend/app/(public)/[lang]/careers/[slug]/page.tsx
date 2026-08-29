@@ -24,11 +24,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const job = await getJob(resolvedParams.slug);
   
   if (!job) {
-    return { title: 'Job Not Found | Dazz Tradelink' };
+    return { title: 'Job Not Found | Dazz Tradlink' };
   }
   
   return {
-    title: `${job.title?.en || 'Career'} | Dazz Tradelink`,
+    title: `${job.title?.en || 'Career'} | Dazz Tradlink`,
     description: job.description?.en || 'Join our team.',
   };
 }

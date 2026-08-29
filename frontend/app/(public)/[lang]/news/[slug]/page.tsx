@@ -40,7 +40,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const isAr = lang === 'ar';
   
   return {
-    title: `${isAr ? (post.metaTitle?.ar || post.title?.ar || post.title?.en) : (post.metaTitle?.en || post.title?.en)} | Dazz Tradelink`,
+    title: `${isAr ? (post.metaTitle?.ar || post.title?.ar || post.title?.en) : (post.metaTitle?.en || post.title?.en)} | Dazz Tradlink`,
     description: isAr ? (post.metaDescription?.ar || post.excerpt?.ar || post.excerpt?.en) : (post.metaDescription?.en || post.excerpt?.en),
     openGraph: {
       title: isAr ? (post.title?.ar || post.title?.en) : post.title?.en,

@@ -33,7 +33,7 @@ export default function AdminLayout({
             <div className="relative h-12 w-48">
               <Image 
                 src="/images/logo-transparent.png" 
-                alt="DAZZ Tradelink" 
+                alt="DAZZ Tradlink" 
                 fill
                 priority
                 className="object-contain object-left"

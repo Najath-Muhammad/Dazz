@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     canonical: '/food-trading',
   },
   openGraph: {
-    title: 'Food Trading | Dazz Tradelink',
+    title: 'Food Trading | Dazz Tradlink',
     description: 'Global sourcing, processing, and distribution of premium food commodities.',
     url: '/food-trading',
     images: [
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Food Trading | Dazz Tradelink',
+        alt: 'Food Trading | Dazz Tradlink',
       }
     ],
   },

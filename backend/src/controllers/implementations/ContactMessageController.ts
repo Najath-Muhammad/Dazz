@@ -52,7 +52,7 @@ export class ContactMessageController implements IContactMessageController {
           const emailHtml = `
             <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
               <h2 style="color: #1e293b;">New Contact Enquiry</h2>
-              <p>You have received a new message from the Dazz Tradelink Contact Form:</p>
+              <p>You have received a new message from the Dazz Tradlink Contact Form:</p>
               <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
                 <tr><td style="padding: 10px; border: 1px solid #e2e8f0; font-weight: bold; width: 120px;">Name:</td><td style="padding: 10px; border: 1px solid #e2e8f0;">${validatedData.fullName}</td></tr>
                 <tr><td style="padding: 10px; border: 1px solid #e2e8f0; font-weight: bold;">Email:</td><td style="padding: 10px; border: 1px solid #e2e8f0;">${validatedData.email}</td></tr>
@@ -62,7 +62,7 @@ export class ContactMessageController implements IContactMessageController {
               </table>
               <h4 style="margin-top: 20px;">Message:</h4>
               <p style="background-color: #f8fafc; padding: 15px; border-radius: 5px; white-space: pre-wrap;">${validatedData.message}</p>
-              <p style="font-size: 12px; color: #64748b; margin-top: 30px;">This is an automated notification from the Dazz Tradelink platform.</p>
+              <p style="font-size: 12px; color: #64748b; margin-top: 30px;">This is an automated notification from the Dazz Tradlink platform.</p>
             </div>
           `;
           

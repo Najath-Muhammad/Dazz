@@ -1,7 +1,7 @@
-# Dazz Tradelink Corporate Website
+# Dazz Tradlink Corporate Website
 
 ## Project Description
-A modern corporate website for Dazz Tradelink, featuring comprehensive company information, division details (Construction, Food Trading, Logistics, Hospitality), project galleries, news/blogs, and a contact system. It includes a bespoke Admin Content Management System (CMS) to manage all website content seamlessly.
+A modern corporate website for Dazz Tradlink, featuring comprehensive company information, division details (Construction, Food Trading, Logistics, Hospitality), project galleries, news/blogs, and a contact system. It includes a bespoke Admin Content Management System (CMS) to manage all website content seamlessly.
 
 ## Tech Stack
 **Frontend:** Next.js (App Router), TypeScript, Tailwind CSS, Axios, React Hook Form, Zod

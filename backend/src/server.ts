@@ -76,11 +76,11 @@ const seedAdmin = async () => {
       console.log('No admin found. Seeding default admin...');
       const passwordHash = await bcrypt.hash('password123', 10);
       await Admin.create({
-        email: 'admin@dazztradelink.com',
+        email: 'admin@dazztradlink.com',
         name: 'Super Admin',
         passwordHash,
       });
-      console.log('Default admin created: admin@dazztradelink.com / password123');
+      console.log('Default admin created: admin@dazztradlink.com / password123');
     }
   } catch (error) {
     console.error('Error seeding admin:', error);

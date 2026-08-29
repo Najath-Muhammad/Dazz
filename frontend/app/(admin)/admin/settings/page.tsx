@@ -20,7 +20,7 @@ const TABS = [
 
 export default function AdminSettingsPage() {
   const [settings, setSettings] = useState<any>({
-    companyName: { en: 'DAZZ Tradelink', ar: '' },
+    companyName: { en: 'DAZZ Tradlink', ar: '' },
     contactEmail: '',
     phoneNumber: '',
     heroTitle: '',

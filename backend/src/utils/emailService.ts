@@ -23,7 +23,7 @@ export const sendAdminNotification = async (options: {
     });
 
     const info = await transporter.sendMail({
-      from: `"${process.env.FROM_NAME || 'Dazz Tradelink'}" <${process.env.FROM_EMAIL || process.env.SMTP_USER}>`,
+      from: `"${process.env.FROM_NAME || 'Dazz Tradlink'}" <${process.env.FROM_EMAIL || process.env.SMTP_USER}>`,
       to: options.to,
       subject: options.subject,
       html: options.html,

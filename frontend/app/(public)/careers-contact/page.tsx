@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     canonical: '/careers-contact',
   },
   openGraph: {
-    title: 'Careers & Contact | Dazz Tradelink',
+    title: 'Careers & Contact | Dazz Tradlink',
     description: 'Join our team of global professionals or get in touch with our corporate headquarters for business inquiries.',
     url: '/careers-contact',
     images: [
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Careers & Contact | Dazz Tradelink',
+        alt: 'Careers & Contact | Dazz Tradlink',
       }
     ],
   },
@@ -60,7 +60,7 @@ export default function CareersContactPage() {
                     <svg className="w-6 h-6 text-amber-500 mr-3 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
-                    <span>info@dazztradelink.com</span>
+                    <span>info@dazztradlink.com</span>
                   </li>
                 </ul>
               </div>

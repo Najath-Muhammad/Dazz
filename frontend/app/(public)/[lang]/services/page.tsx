@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import { ServicesListingClient } from '@/components/public/ServicesListingClient';
 
 export const metadata: Metadata = {
-  title: 'Our Services | Dazz Tradelink',
+  title: 'Our Services | Dazz Tradlink',
   description: 'Explore our specialized divisions and services.',
   alternates: { canonical: '/en/services' },
 };

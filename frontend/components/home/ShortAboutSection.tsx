@@ -31,7 +31,7 @@ export function ShortAboutSection({ image }: AboutProps) {
                 PROUDLY<br />OPERATING<br />ACROSS THE<br />KINGDOM
               </h2>
               <p className="text-slate-600 leading-relaxed text-base md:text-lg mb-8">
-                Dazz Tradelink International is a Saudi-rooted conglomerate operating across four integrated divisions. With a nationwide presence and a deeply skilled workforce, we are committed to Saudi Vision 2030 and building long-term partnerships that endure.
+                Dazz Tradlink International is a Saudi-rooted conglomerate operating across four integrated divisions. With a nationwide presence and a deeply skilled workforce, we are committed to Saudi Vision 2030 and building long-term partnerships that endure.
               </p>
               <Link
                 href="/about-us"

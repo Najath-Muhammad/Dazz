@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     canonical: '/logistics',
   },
   openGraph: {
-    title: 'Logistics | Dazz Tradelink',
+    title: 'Logistics | Dazz Tradlink',
     description: 'End-to-end supply chain solutions, freight forwarding, and modern warehousing.',
     url: '/logistics',
     images: [
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Logistics | Dazz Tradelink',
+        alt: 'Logistics | Dazz Tradlink',
       }
     ],
   },
@@ -44,7 +44,7 @@ export default function LogisticsPage() {
         content={
           <>
             <p>
-              Dazz Tradelink's Logistics Division provides comprehensive freight and supply chain management. Whether by sea, air, or land, we ensure that goods are transported safely and efficiently across borders.
+              Dazz Tradlink's Logistics Division provides comprehensive freight and supply chain management. Whether by sea, air, or land, we ensure that goods are transported safely and efficiently across borders.
             </p>
             <ul className="list-disc pl-5 mt-4 space-y-2">
               <li>International Freight Forwarding (Ocean & Air)</li>

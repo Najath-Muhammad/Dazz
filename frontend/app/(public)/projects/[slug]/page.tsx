@@ -23,17 +23,17 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
   const project = await getProject(slug);
   
   if (!project) {
-    return { title: 'Project Not Found | Dazz Tradelink' };
+    return { title: 'Project Not Found | Dazz Tradlink' };
   }
 
   return {
-    title: `${project.title} | Dazz Tradelink Projects`,
+    title: `${project.title} | Dazz Tradlink Projects`,
     description: project.description.substring(0, 160),
     alternates: {
       canonical: `/projects/${slug}`,
     },
     openGraph: {
-      title: `${project.title} | Dazz Tradelink Projects`,
+      title: `${project.title} | Dazz Tradlink Projects`,
       description: project.description.substring(0, 160),
       url: `/projects/${slug}`,
       images: [project.imageUrl],

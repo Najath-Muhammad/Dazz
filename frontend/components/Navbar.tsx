@@ -121,11 +121,11 @@ export function Navbar() {
       >
         <div className="max-w-[1400px] mx-auto px-6 flex justify-between items-center">
           {/* Logo */}
-          <Link href="/" aria-label="Dazz Tradelink — Home">
+          <Link href="/" aria-label="Dazz Tradlink — Home">
             <div className={`transition-transform duration-500 relative h-16 w-56 md:h-20 md:w-64 ${scrolled ? 'scale-90' : 'scale-100'}`}>
               <Image 
                 src="/images/logo-transparent.png" 
-                alt="DAZZ Tradelink" 
+                alt="DAZZ Tradlink" 
                 fill
                 priority
                 className="object-contain object-left"
@@ -292,7 +292,7 @@ export function Navbar() {
         {/* Bottom line */}
         <div className="absolute bottom-8 left-10 right-10 flex items-center justify-between opacity-30">
           <div className="h-px flex-1 bg-white/20" />
-          <span className="px-4 text-xs tracking-widest text-white/40 uppercase font-mono">DAZZ TRADELINK INTERNATIONAL</span>
+          <span className="px-4 text-xs tracking-widest text-white/40 uppercase font-mono">DAZZ TRADLINK INTERNATIONAL</span>
           <div className="h-px flex-1 bg-white/20" />
         </div>
       </div>

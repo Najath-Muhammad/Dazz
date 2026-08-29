@@ -57,7 +57,7 @@ export function ContactCTASection() {
           transition={{ duration: 0.7, delay: 0.3 }}
           className="text-lg md:text-xl text-white/50 max-w-2xl mx-auto font-light leading-relaxed mb-14"
         >
-          Contact our team of experts today to discuss how Dazz Tradelink can deliver measurable value to your business.
+          Contact our team of experts today to discuss how Dazz Tradlink can deliver measurable value to your business.
         </motion.p>
 
         <motion.div

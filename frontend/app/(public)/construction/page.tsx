@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     canonical: '/construction',
   },
   openGraph: {
-    title: 'Construction & Industrial Solutions | Dazz Tradelink',
+    title: 'Construction & Industrial Solutions | Dazz Tradlink',
     description: 'Delivering Quality Solutions Across Construction and Industry. Integrated Solutions... Trusted Partner.',
     url: '/construction',
     images: [
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Construction | Dazz Tradelink',
+        alt: 'Construction | Dazz Tradlink',
       }
     ],
   },
@@ -45,7 +45,7 @@ export default function ConstructionPage() {
         content={
           <>
             <p>
-              DAZZ Tradelink International provides reliable ready mix concrete solutions for a wide range of construction and infrastructure projects across the Kingdom of Saudi Arabia.
+              DAZZ Tradlink International provides reliable ready mix concrete solutions for a wide range of construction and infrastructure projects across the Kingdom of Saudi Arabia.
             </p>
             <p>
               Our ready mix concrete operations are focused on delivering consistent-quality concrete, dependable supply, and efficient delivery to meet the demanding requirements of modern construction projects.
@@ -106,7 +106,7 @@ export default function ConstructionPage() {
                 <span className="text-amber-500 font-semibold tracking-wider uppercase text-sm block mb-4">Our Commitment</span>
                 <h3 className="text-3xl font-bold mb-6">Sustainability & Responsible Business</h3>
                 <p className="text-slate-300 text-lg leading-relaxed mb-8">
-                  At DAZZ Tradelink International, sustainability is integrated into the way we work, plan and grow. We are committed to protecting the environment, using resources responsibly, and creating long-term value for our people, partners and communities.
+                  At DAZZ Tradlink International, sustainability is integrated into the way we work, plan and grow. We are committed to protecting the environment, using resources responsibly, and creating long-term value for our people, partners and communities.
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
@@ -152,7 +152,7 @@ export default function ConstructionPage() {
 
       <CTASection 
         title="Quality Is Our Promise. Excellence Is Our Standard." 
-        description="Partner with DAZZ Tradelink International for reliable solutions with quality you can trust."
+        description="Partner with DAZZ Tradlink International for reliable solutions with quality you can trust."
       >
         <Link href="/careers-contact">
           <Button variant="secondary">Request a Consultation</Button>

@@ -9,7 +9,7 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export const metadata: Metadata = {
-  title: 'Contact Us | Dazz Tradelink',
+  title: 'Contact Us | Dazz Tradlink',
   description: 'Get in touch with the Dazz team. We are here to help with your project, enquiry, or opportunity.',
 };
 

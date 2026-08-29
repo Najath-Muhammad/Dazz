@@ -3,7 +3,7 @@ import { SaudiMapSection } from '@/components/SaudiMapSection';
 
 export const metadata: Metadata = {
   title: 'Map',
-  description: 'Dazz Tradelink operates nationwide across Saudi Arabia — serving Riyadh, Jeddah, Dammam, Madinah, Makkah and more.',
+  description: 'Dazz Tradlink operates nationwide across Saudi Arabia — serving Riyadh, Jeddah, Dammam, Madinah, Makkah and more.',
 };
 
 export default function MapPage() {

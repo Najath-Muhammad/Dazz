@@ -3,8 +3,8 @@ import { CinematicHero } from '@/components/home/CinematicHero';
 import { NewsClient } from '@/components/news/NewsClient';
 
 export const metadata: Metadata = {
-  title: 'News & Insights | Dazz Tradelink',
-  description: 'Latest insights, company news, and industry updates from Dazz Tradelink.',
+  title: 'News & Insights | Dazz Tradlink',
+  description: 'Latest insights, company news, and industry updates from Dazz Tradlink.',
 };
 
 async function getSiteSettings() {

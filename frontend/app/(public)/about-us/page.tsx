@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     canonical: '/about-us',
   },
   openGraph: {
-    title: 'About Us | Dazz Tradelink',
+    title: 'About Us | Dazz Tradlink',
     description: 'DAZZ Contracting Company is a diversified Saudi-based company delivering integrated solutions across the construction, infrastructure, and industrial sectors.',
     url: '/about-us',
     images: [
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'About Us | Dazz Tradelink',
+        alt: 'About Us | Dazz Tradlink',
       }
     ],
   },
@@ -40,7 +40,7 @@ export default function AboutPage() {
         title="Who We Are"
         subtitle="Introduction"
         imageUrl="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg"
-        imageAlt="Dazz Tradelink Corporate Overview"
+        imageAlt="Dazz Tradlink Corporate Overview"
         content={
           <>
             <p>

@@ -29,10 +29,10 @@ export function Footer() {
 
           {/* Brand Column */}
           <div className="md:col-span-5">
-            <Link href="/" aria-label="Dazz Tradelink — Home" className="inline-block mb-6 relative h-16 w-56 md:h-20 md:w-64 hover:scale-105 transition-transform duration-300">
+            <Link href="/" aria-label="Dazz Tradlink — Home" className="inline-block mb-6 relative h-16 w-56 md:h-20 md:w-64 hover:scale-105 transition-transform duration-300">
               <Image 
                 src="/images/logo-transparent.png" 
-                alt="DAZZ Tradelink" 
+                alt="DAZZ Tradlink" 
                 fill
                 className="object-contain object-left"
               />
@@ -94,8 +94,8 @@ export function Footer() {
               <ul className="space-y-2 text-sm font-light">
                 <li className="text-slate-400">Kingdom of Saudi Arabia</li>
                 <li>
-                  <a href="mailto:info@dazztradelink.com" className="text-slate-400 hover:text-amber-400 transition-colors">
-                    info@dazztradelink.com
+                  <a href="mailto:info@dazztradlink.com" className="text-slate-400 hover:text-amber-400 transition-colors">
+                    info@dazztradlink.com
                   </a>
                 </li>
               </ul>
@@ -106,7 +106,7 @@ export function Footer() {
         {/* Copyright Bar */}
         <div className="border-t border-white/5 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-xs text-slate-600 font-light tracking-wide">
-            &copy; {new Date().getFullYear()} Dazz Tradelink International. All rights reserved.
+            &copy; {new Date().getFullYear()} Dazz Tradlink International. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
             <Link href="/contact" className="text-xs text-slate-600 hover:text-amber-400 transition-colors tracking-wide">Privacy Policy</Link>

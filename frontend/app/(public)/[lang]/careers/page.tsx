@@ -8,8 +8,8 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export const metadata: Metadata = {
-  title: 'Careers | Dazz Tradelink',
-  description: 'Join the team at Dazz Tradelink and build your future with us.',
+  title: 'Careers | Dazz Tradlink',
+  description: 'Join the team at Dazz Tradlink and build your future with us.',
 };
 
 async function getSiteSettings() {
@@ -54,7 +54,7 @@ export default async function CareersPage({ params }: { params: Promise<{ lang: 
   const cultureData = careersSettings.culture || { enabled: false };
 
   const heroTitle = heroData.title?.[lang] || (isAr ? 'وظائف\nابنِ مستقبلك معنا' : 'CAREERS\nBUILD YOUR FUTURE');
-  const heroSubtitle = heroData.subtitle?.[lang] || (isAr ? 'اكتشف فرصًا لا حصر لها.' : 'Discover endless opportunities with Dazz Tradelink.');
+  const heroSubtitle = heroData.subtitle?.[lang] || (isAr ? 'اكتشف فرصًا لا حصر لها.' : 'Discover endless opportunities with Dazz Tradlink.');
   
   const rawBg = heroData.media;
   const heroImage = rawBg?.url || (typeof rawBg === 'string' && rawBg !== '' ? rawBg : '/images/careers-hero.png');

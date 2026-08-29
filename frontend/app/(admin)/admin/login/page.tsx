@@ -40,7 +40,7 @@ export default function AdminLoginPage() {
           <div className="relative h-20 w-64">
             <Image 
               src="/images/logo-transparent.png" 
-              alt="DAZZ Tradelink" 
+              alt="DAZZ Tradlink" 
               fill
               priority
               className="object-contain"

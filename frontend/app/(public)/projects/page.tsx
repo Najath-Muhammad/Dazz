@@ -7,7 +7,7 @@ import { Button } from '@/components/Button';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Project Gallery | Dazz Tradelink',
+  title: 'Project Gallery | Dazz Tradlink',
   description: 'Explore our portfolio of global projects across construction, logistics, and hospitality.',
 };
 

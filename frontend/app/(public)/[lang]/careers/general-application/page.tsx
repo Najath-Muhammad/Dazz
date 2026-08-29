@@ -3,7 +3,7 @@ import { CinematicHero } from '@/components/home/CinematicHero';
 import ApplicationForm from '@/components/careers/ApplicationForm';
 
 export const metadata: Metadata = {
-  title: 'General Application | Dazz Tradelink',
+  title: 'General Application | Dazz Tradlink',
 };
 
 export default async function GeneralApplicationPage({ params }: { params: Promise<{ lang: string }> }) {

@@ -78,7 +78,7 @@ export function WhyDazzSection() {
               KEY<br />STRENGTHS
             </h2>
             <p className="text-sm text-white/50 font-light leading-relaxed max-w-xs">
-              Dazz Tradelink is built on a foundation of innovation, collaboration, and an unwavering commitment to the highest standards of quality.
+              Dazz Tradlink is built on a foundation of innovation, collaboration, and an unwavering commitment to the highest standards of quality.
             </p>
           </motion.div>
 

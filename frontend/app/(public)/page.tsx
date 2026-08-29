@@ -8,14 +8,14 @@ import { LatestBlogSection } from '@/components/home/LatestBlogSection';
 import { ContactCTASection } from '@/components/home/ContactCTASection';
 
 export const metadata: Metadata = {
-  title: 'Dazz Tradelink International — Integrated Solutions, Trusted Partner',
-  description: 'Dazz Tradelink delivers excellence across construction, food trading, logistics, and hospitality with industrial precision and corporate integrity across Saudi Arabia.',
+  title: 'Dazz Tradlink International — Integrated Solutions, Trusted Partner',
+  description: 'Dazz Tradlink delivers excellence across construction, food trading, logistics, and hospitality with industrial precision and corporate integrity across Saudi Arabia.',
   alternates: { canonical: '/' },
   openGraph: {
-    title: 'Dazz Tradelink International',
-    description: 'Dazz Tradelink delivers excellence across construction, food trading, logistics, and hospitality with industrial precision and corporate integrity.',
+    title: 'Dazz Tradlink International',
+    description: 'Dazz Tradlink delivers excellence across construction, food trading, logistics, and hospitality with industrial precision and corporate integrity.',
     url: '/',
-    images: [{ url: '/og-image.jpg', width: 1200, height: 630, alt: 'Dazz Tradelink International' }],
+    images: [{ url: '/og-image.jpg', width: 1200, height: 630, alt: 'Dazz Tradlink International' }],
   },
 };
 
@@ -59,7 +59,7 @@ export default async function HomePage() {
 
   const homeHeader = settings?.pageHeaders?.home;
 
-  const heroTitle = homeHeader?.title || settings?.heroTitle || 'DAZZ TRADELINK INTERNATIONAL';
+  const heroTitle = homeHeader?.title || settings?.heroTitle || 'DAZZ TRADLINK INTERNATIONAL';
   const heroSubtitle = homeHeader?.subtitle || settings?.heroSubtitle || 'Empowering Industrial Excellence. Delivering trusted solutions across construction, food trading, logistics, and hospitality.';
 
   const rawBg = homeHeader?.media || settings?.heroBackgroundImage;

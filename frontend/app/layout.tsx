@@ -12,21 +12,21 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
   title: {
-    template: '%s | Dazz Tradelink',
-    default: 'Dazz Tradelink | Empowering Industrial Excellence',
+    template: '%s | Dazz Tradlink',
+    default: 'Dazz Tradlink | Empowering Industrial Excellence',
   },
-  description: 'Dazz Tradelink specializes in Construction, Food Trading, Logistics, and Hospitality, delivering excellence globally.',
+  description: 'Dazz Tradlink specializes in Construction, Food Trading, Logistics, and Hospitality, delivering excellence globally.',
   openGraph: {
-    title: 'Dazz Tradelink',
+    title: 'Dazz Tradlink',
     description: 'Empowering Industrial Excellence globally across Construction, Logistics, Food Trading, and Hospitality.',
     url: '/',
-    siteName: 'Dazz Tradelink',
+    siteName: 'Dazz Tradlink',
     images: [
       {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Dazz Tradelink Open Graph Image',
+        alt: 'Dazz Tradlink Open Graph Image',
       },
     ],
     locale: 'en_US',
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Dazz Tradelink',
+    title: 'Dazz Tradlink',
     description: 'Empowering Industrial Excellence globally.',
   },
 };
