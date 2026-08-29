@@ -81,6 +81,7 @@ export function ProjectsClient({ projects, lang, isAr, dir }: ProjectsClientProp
                     location={p.location?.[lang] || p.location?.en}
                     index={index}
                     isLarge={isLarge}
+                    lang={lang}
                   />
                 );
               })

@@ -14,9 +14,10 @@ interface CinematicProjectCardProps {
   location?: string;
   index: number;
   isLarge?: boolean;
+  lang: string;
 }
 
-export function CinematicProjectCard({ title, category, imageUrl, slug, year, location, index, isLarge = false }: CinematicProjectCardProps) {
+export function CinematicProjectCard({ title, category, imageUrl, slug, year, location, index, isLarge = false, lang }: CinematicProjectCardProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 40 }}
@@ -25,7 +26,7 @@ export function CinematicProjectCard({ title, category, imageUrl, slug, year, lo
       transition={{ duration: 0.8, delay: (index % 3) * 0.1 }}
       className={`group block relative overflow-hidden bg-slate-900 ${isLarge ? 'md:col-span-2 aspect-[16/9]' : 'col-span-1 aspect-[4/5] md:aspect-[3/4]'}`}
     >
-      <Link href={`/projects/${slug}`} className="w-full h-full block relative">
+      <Link href={`/${lang}/projects/${slug}`} className="w-full h-full block relative">
         <MediaRenderer
           media={imageUrl}
           fill
