@@ -1,7 +1,10 @@
-import Link from 'next/link';
+'use client';
+import { useRouter } from 'next/navigation';
 import { Hexagon, ArrowLeft } from 'lucide-react';
 
 export default function NotFound() {
+  const router = useRouter();
+
   return (
     <div className="min-h-screen bg-slate-950 flex items-center justify-center relative overflow-hidden selection:bg-dazz-gold selection:text-slate-950">
       {/* Background Grid Pattern */}
@@ -35,13 +38,13 @@ export default function NotFound() {
           The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.
         </p>
 
-        <Link 
-          href="/" 
+        <button 
+          onClick={() => router.back()}
           className="group flex items-center gap-3 px-8 py-4 bg-white text-slate-950 font-bold uppercase tracking-widest text-sm hover:bg-dazz-gold transition-all duration-300"
         >
           <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform duration-300" />
-          <span>Return Home / العودة للرئيسية</span>
-        </Link>
+          <span>Go Back / الرجوع</span>
+        </button>
       </div>
     </div>
   );
