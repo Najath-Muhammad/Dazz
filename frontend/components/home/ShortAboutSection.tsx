@@ -30,7 +30,7 @@ export function ShortAboutSection({ image }: AboutProps) {
               <h2 id="about-heading" className="text-5xl md:text-6xl font-extrabold uppercase tracking-tighter text-slate-900 leading-[1] mb-8">
                 PROUDLY<br />OPERATING<br />ACROSS THE<br />KINGDOM
               </h2>
-              <p className="text-slate-500 font-light leading-relaxed text-base md:text-lg mb-8">
+              <p className="text-slate-600 leading-relaxed text-base md:text-lg mb-8">
                 Dazz Tradelink International is a Saudi-rooted conglomerate operating across four integrated divisions. With a nationwide presence and a deeply skilled workforce, we are committed to Saudi Vision 2030 and building long-term partnerships that endure.
               </p>
               <Link

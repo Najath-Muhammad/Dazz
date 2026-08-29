@@ -123,29 +123,7 @@ export function CinematicHero({ title, subtitle, backgroundImage, hideExtras = f
             {subtitle}
           </motion.p>
 
-          {!hideExtras && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.1 }}
-              className="flex items-center gap-6"
-            >
-              <Link
-                href="/about-us"
-                className="group flex items-center gap-3 px-8 py-4 bg-dazz-gold text-dazz-navy text-sm font-bold tracking-widest uppercase hover:bg-dazz-gold-light transition-all duration-300"
-              >
-                Discover Our Legacy
-                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-              </Link>
-              <Link
-                href="/projects"
-                className="group flex items-center gap-3 text-sm font-bold tracking-widest uppercase text-white/60 hover:text-white transition-colors"
-              >
-                View Projects
-                <span className="w-10 h-px bg-current group-hover:w-16 transition-all duration-300" />
-              </Link>
-            </motion.div>
-          )}
+
         </div>
 
         {/* Stats row */}

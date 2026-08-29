@@ -39,7 +39,7 @@ export default async function AboutUsPage({ params }: { params: { lang: string }
   const heroSubtitle = aboutHeader?.subtitle || (isAr ? 'مصمم لتلبية الاحتياجات التشغيلية للبيئات الصناعية.' : 'Designed to meet the operational needs of industrial environments.');
   
   const rawBg = aboutHeader?.media;
-  let heroImage = 'https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg';
+  let heroImage = '/images/about-hero.png';
   if (rawBg?.url) {
     heroImage = rawBg.url;
   } else if (typeof rawBg === 'string' && rawBg !== '') {

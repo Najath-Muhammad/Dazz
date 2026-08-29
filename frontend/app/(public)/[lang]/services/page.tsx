@@ -47,7 +47,7 @@ export default async function ServicesListingPage({ params }: { params: { lang: 
   const heroSubtitle = servicesHeader?.subtitle || (isAr ? 'استكشف مجموعتنا الشاملة من الخدمات المتخصصة.' : 'Explore our comprehensive range of specialized services.');
   
   const rawBg = servicesHeader?.media;
-  let heroImage = 'https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg';
+  let heroImage = '/images/service-hero.png';
   if (rawBg?.url) {
     heroImage = rawBg.url;
   } else if (typeof rawBg === 'string' && rawBg !== '') {
