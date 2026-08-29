@@ -48,15 +48,15 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
     if (!enabled('hero')) return null;
     const hero = service.hero;
     return (
-      <section className="relative w-full h-[90vh] min-h-[600px] flex items-end pb-24 overflow-hidden bg-dazz-navy">
+      <section className="relative w-full h-[90vh] min-h-[600px] flex items-end pb-24 md:pb-32 overflow-hidden bg-slate-950">
         <motion.div 
           className="absolute inset-0 z-0"
           initial={{ scale: 1.05, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 1.5, ease: 'easeOut' }}
         >
-          <MediaRenderer media={hero?.media || service.seo?.ogImage} fill className="object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-slate-900/20" />
+          <MediaRenderer media={hero?.media || service.seo?.ogImage} fill className="object-cover opacity-60 mix-blend-luminosity" />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-slate-950/20" />
         </motion.div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-6 w-full text-white" dir={dir}>
@@ -74,7 +74,7 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
             <p className="text-dazz-gold font-mono tracking-[0.2em] uppercase mb-4 text-xs md:text-sm">
               {service.category} / 01
             </p>
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-6 tracking-tight leading-[1.1] uppercase">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold mb-6 tracking-tighter leading-[1.1] uppercase">
               {t(hero?.title) || t(service.name)}
             </h1>
           </motion.div>
@@ -127,7 +127,7 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
                 </h2>
               </div>
               
-              <h3 className="text-3xl md:text-5xl font-light leading-tight mb-8">
+              <h3 className="text-3xl md:text-4xl lg:text-5xl font-light leading-tight mb-8">
                 {t(intro?.title)}
               </h3>
               
@@ -163,7 +163,7 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
   const renderCapabilities = () => {
     if (!enabled('capabilities') || !service.capabilities?.length) return null;
     return (
-      <section className="py-24 bg-slate-50 border-t border-slate-200">
+      <section className="py-24 md:py-32 bg-slate-50 border-t border-slate-200">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-col md:flex-row gap-16" dir={dir}>
             <div className="md:w-1/3">
@@ -214,7 +214,7 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
   const renderSolutions = () => {
     if (!enabled('solutions') || !service.solutions?.length) return null;
     return (
-      <section className="py-24 bg-dazz-navy text-white">
+      <section className="py-24 md:py-32 bg-slate-950 text-white">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex justify-between items-end mb-16" dir={dir}>
             <div>
@@ -223,7 +223,7 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
             </div>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-slate-800 border border-slate-800">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {service.solutions.filter((s: any) => t(s.title)).map((sol: any, i: number) => (
               <motion.div 
                 key={i} 
@@ -231,12 +231,12 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
-                className="bg-dazz-navy p-10 lg:p-16 group hover:bg-[#0f1f3a] transition-colors"
+                className="bg-slate-900 border border-white/5 p-10 lg:p-16 group hover:bg-slate-800 transition-colors"
                 dir={dir}
               >
                 <div className="mb-8">
                   {sol.image ? (
-                    <div className="w-20 h-20 relative overflow-hidden bg-slate-800">
+                    <div className="w-20 h-20 relative overflow-hidden bg-slate-950">
                       <MediaRenderer media={sol.image} fill className="object-cover mix-blend-luminosity opacity-80 group-hover:mix-blend-normal group-hover:opacity-100 transition-all duration-500" />
                     </div>
                   ) : null}
@@ -259,7 +259,7 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
   const renderApplications = () => {
     if (!enabled('applications') || !service.applications?.length) return null;
     return (
-      <section className="py-24 bg-slate-50">
+      <section className="py-24 md:py-32 bg-slate-50">
         <div className="max-w-7xl mx-auto px-6">
           <div className="mb-12" dir={dir}>
             <div className="flex items-center gap-3 mb-2">
@@ -312,8 +312,8 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
   const renderProcess = () => {
     if (!enabled('process') || !service.process?.length) return null;
     return (
-      <section className="py-24 bg-slate-900 text-white overflow-hidden relative">
-        <div className="absolute left-1/2 top-0 bottom-0 w-px bg-slate-800 hidden lg:block" />
+      <section className="py-24 md:py-32 bg-slate-950 text-white overflow-hidden relative">
+        <div className="absolute left-1/2 top-0 bottom-0 w-px bg-white/5 hidden lg:block" />
         
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="text-center mb-20" dir={dir}>
@@ -332,7 +332,7 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true }}
                       transition={{ duration: 0.8 }}
-                      className={`text-left ${isEven ? 'lg:text-right' : 'lg:text-left'} bg-slate-800/50 p-8 border border-slate-700/50`}
+                      className={`text-left ${isEven ? 'lg:text-right' : 'lg:text-left'} bg-slate-900 p-8 border border-white/5`}
                       dir={dir}
                     >
                       <div className="text-dazz-gold font-mono text-4xl font-light mb-4">
@@ -377,7 +377,7 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
   const renderEquipment = () => {
     if (!enabled('equipment') || !service.equipment?.length) return null;
     return (
-      <section className="py-24 bg-slate-50 border-y border-slate-200">
+      <section className="py-24 md:py-32 bg-slate-50 border-t border-slate-200">
         <div className="max-w-7xl mx-auto px-6">
           <div className="mb-16" dir={dir}>
             <span className="text-xs font-mono text-slate-400 block mb-4">06 / TECHNICAL</span>
@@ -424,7 +424,7 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
   const renderWhyChooseUs = () => {
     if (!enabled('whyChooseUs') || !service.whyChooseUs?.length) return null;
     return (
-      <section className="py-24 bg-white">
+      <section className="py-24 md:py-32 bg-white">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-col md:flex-row gap-16" dir={dir}>
             <div className="md:w-1/3">
@@ -460,9 +460,9 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
     const colClass = items.length === 2 ? 'md:grid-cols-2' : items.length === 3 ? 'md:grid-cols-3' : items.length === 4 ? 'md:grid-cols-4' : 'md:grid-cols-3 lg:grid-cols-4';
     
     return (
-      <section className="py-16 bg-slate-900 border-t border-slate-800">
+      <section className="py-16 md:py-24 bg-slate-950 border-t border-white/5">
         <div className="max-w-7xl mx-auto px-6">
-          <div className={`grid grid-cols-1 sm:grid-cols-2 ${colClass} gap-y-12 gap-x-8 divide-y sm:divide-y-0 sm:divide-x divide-slate-800`}>
+          <div className={`grid grid-cols-1 sm:grid-cols-2 ${colClass} gap-y-12 gap-x-8 divide-y sm:divide-y-0 sm:divide-x divide-white/10`}>
             {items.filter((h: any) => t(h.title)).map((high: any, i: number) => (
               <motion.div 
                 key={i} 
@@ -486,7 +486,7 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
   const renderGallery = () => {
     if (!enabled('gallery') || !service.gallery?.length) return null;
     return (
-      <section className="py-24 bg-white">
+      <section className="py-24 md:py-32 bg-slate-50">
         <div className="max-w-7xl mx-auto px-6">
           <div className="mb-16" dir={dir}>
             <span className="text-xs font-mono text-slate-400 block mb-4">08 / MEDIA</span>
@@ -524,11 +524,11 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
     if (!enabled('cta')) return null;
     const cta = service.cta;
     return (
-      <section className="relative py-32 bg-slate-900 text-white overflow-hidden flex items-center justify-center min-h-[50vh]">
+      <section className="relative py-32 md:py-40 bg-slate-950 text-white overflow-hidden flex items-center justify-center min-h-[50vh]">
         {cta?.backgroundImage && (
           <div className="absolute inset-0 z-0">
             <MediaRenderer media={cta.backgroundImage} fill className="object-cover opacity-30 mix-blend-luminosity" />
-            <div className="absolute inset-0 bg-gradient-to-b from-slate-900/50 to-slate-900/90" />
+            <div className="absolute inset-0 bg-gradient-to-b from-slate-950/50 to-slate-950/90" />
           </div>
         )}
         <div className="relative z-10 max-w-4xl mx-auto px-6 text-center flex flex-col items-center" dir={dir}>
@@ -544,7 +544,7 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-4xl md:text-6xl font-black mb-6 uppercase tracking-tight leading-tight"
+            className="text-3xl md:text-5xl font-bold mb-6 uppercase tracking-tight leading-tight"
           >
             {t(cta?.title)}
           </motion.h2>
@@ -577,7 +577,7 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
   const renderCategories = () => {
     if (!enabled('categories') || !service.categories?.length) return null;
     return (
-      <section className="py-24 bg-slate-50 text-slate-900 border-t border-slate-200">
+      <section className="py-24 md:py-32 bg-white text-slate-900 border-t border-slate-200">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex justify-between items-end mb-16" dir={dir}>
             <div>
@@ -586,7 +586,7 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
             </div>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-slate-200 border border-slate-200">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {service.categories.filter((cat: any) => t(cat.title)).map((cat: any, i: number) => (
               <motion.div 
                 key={i} 
@@ -594,7 +594,7 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
-                className="bg-slate-50 p-10 lg:p-16 group hover:bg-white transition-colors"
+                className="bg-slate-50 border border-slate-200 p-10 lg:p-16 group hover:bg-white transition-colors"
                 dir={dir}
               >
                 <div className="mb-8">
