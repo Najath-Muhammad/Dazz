@@ -39,8 +39,8 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
   const heroData = contactPageData.hero || {};
   const ctaData = contactPageData.cta || {};
 
-  const heroTitle = heroData.title?.[lang] || (isAr ? 'اتصل بنا\nدعنا نتواصل' : 'CONTACT US\nLET\'S CONNECT');
-  const heroSubtitle = heroData.description?.[lang] || (isAr ? 'هل لديك مشروع، استفسار، أو فرصة؟ تواصل مع فريق داز.' : 'Have a project, enquiry, or opportunity?\nGet in touch with the Dazz team.');
+  const heroTitle = settings?.pageHeaders?.contact?.title || (isAr ? 'اتصل بنا\nدعنا نتواصل' : 'CONTACT US\nLET\'S CONNECT');
+  const heroSubtitle = settings?.pageHeaders?.contact?.subtitle || (isAr ? 'هل لديك مشروع، استفسار، أو فرصة؟ تواصل مع فريق داز.' : 'Have a project, enquiry, or opportunity?\nGet in touch with the Dazz team.');
   
   // Use Contact Hero image if it exists in legacy pageHeaders, otherwise use default
   const rawBg = settings?.pageHeaders?.contact?.media;

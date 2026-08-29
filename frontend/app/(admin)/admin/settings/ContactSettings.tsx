@@ -8,7 +8,6 @@ interface ContactSettingsProps {
 
 export default function ContactSettings({ settings, onChange }: ContactSettingsProps) {
   const contactPage = settings.contactPage || {};
-  const mapConfig = settings.mapConfig || { latitude: 24.7136, longitude: 46.6753, address: { en: '', ar: '' }, markerTitle: { en: '', ar: '' }, zoom: 12 };
 
   const updateSection = (section: string, field: string, value: any) => {
     onChange({
@@ -55,15 +54,7 @@ export default function ContactSettings({ settings, onChange }: ContactSettingsP
     });
   };
 
-  const updateMapLocalized = (field: 'address' | 'markerTitle', lang: 'en' | 'ar', value: string) => {
-    onChange({
-      ...settings,
-      mapConfig: {
-        ...mapConfig,
-        [field]: { ...(mapConfig[field] || { en: '', ar: '' }), [lang]: value }
-      }
-    });
-  };
+
 
   return (
     <div className="space-y-10">
@@ -71,26 +62,7 @@ export default function ContactSettings({ settings, onChange }: ContactSettingsP
       <div className="bg-white p-6 rounded-lg border border-slate-200 space-y-6">
         <h2 className="text-xl font-bold text-slate-800 border-b border-slate-100 pb-2">Contact Page Content</h2>
         
-        <BilingualField
-          label="Hero Heading"
-          nameEn="heroTitleEn"
-          nameAr="heroTitleAr"
-          valueEn={contactPage.hero?.title?.en || ''}
-          valueAr={contactPage.hero?.title?.ar || ''}
-          onChangeEn={(v) => updateContactPageLocalized('hero', 'title', 'en', v)}
-          onChangeAr={(v) => updateContactPageLocalized('hero', 'title', 'ar', v)}
-        />
-        
-        <BilingualField
-          label="Hero Description"
-          nameEn="heroDescEn"
-          nameAr="heroDescAr"
-          valueEn={contactPage.hero?.description?.en || ''}
-          valueAr={contactPage.hero?.description?.ar || ''}
-          onChangeEn={(v) => updateContactPageLocalized('hero', 'description', 'en', v)}
-          onChangeAr={(v) => updateContactPageLocalized('hero', 'description', 'ar', v)}
-          type="textarea"
-        />
+
 
         <div className="pt-4 border-t border-slate-100">
           <BilingualField
@@ -186,47 +158,7 @@ export default function ContactSettings({ settings, onChange }: ContactSettingsP
         </div>
       </div>
 
-      {/* Map Settings */}
-      <div className="bg-white p-6 rounded-lg border border-slate-200 space-y-6">
-        <h2 className="text-xl font-bold text-slate-800 border-b border-slate-100 pb-2">Map Settings</h2>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Latitude</label>
-            <input 
-              type="number" 
-              step="any"
-              value={mapConfig.latitude || ''} 
-              onChange={(e) => updateSection('mapConfig', 'latitude', parseFloat(e.target.value))} 
-              className="w-full border border-slate-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-dazz-gold outline-none" 
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Longitude</label>
-            <input 
-              type="number"
-              step="any" 
-              value={mapConfig.longitude || ''} 
-              onChange={(e) => updateSection('mapConfig', 'longitude', parseFloat(e.target.value))} 
-              className="w-full border border-slate-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-dazz-gold outline-none" 
-            />
-          </div>
-        </div>
-        
-        <BilingualField
-          label="Map Marker Title"
-          nameEn="mapMarkerEn"
-          nameAr="mapMarkerAr"
-          valueEn={mapConfig.markerTitle?.en || ''}
-          valueAr={mapConfig.markerTitle?.ar || ''}
-          onChangeEn={(v) => updateMapLocalized('markerTitle', 'en', v)}
-          onChangeAr={(v) => updateMapLocalized('markerTitle', 'ar', v)}
-        />
-        
-        <div className="text-xs text-slate-500 italic mt-2">
-          Note: If using an external map provider (like Google Maps), ensure the API key is set in your environment variables.
-        </div>
-      </div>
+
     </div>
   );
 }
