@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import Link from 'next/link';
 import { MediaRenderer } from '@/components/MediaRenderer';
@@ -19,6 +19,24 @@ export function ServicesListingClient({ services, heroTitle, heroSubtitle, heroI
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 1000], [0, 300]);
   const opacity = useTransform(scrollY, [0, 400], [1, 0]);
+
+  const [activeCategory, setActiveCategory] = useState<string>('all');
+
+  const categories = [
+    { id: 'all', label: isAr ? 'الكل' : 'All Divisions' },
+    { id: 'construction', label: isAr ? 'المقاولات' : 'Construction' },
+    { id: 'food-trading', label: isAr ? 'تجارة الأغذية' : 'Food Trading' },
+    { id: 'logistics', label: isAr ? 'الخدمات اللوجستية' : 'Logistics' },
+    { id: 'hospitality', label: isAr ? 'الضيافة' : 'Hospitality' },
+    { id: 'other', label: isAr ? 'أخرى' : 'Other' }
+  ];
+
+  const availableCategoryIds = new Set(services.map(s => s.category));
+  const activeTabs = categories.filter(c => c.id === 'all' || availableCategoryIds.has(c.id));
+
+  const filteredServices = activeCategory === 'all' 
+    ? services 
+    : services.filter(s => s.category === activeCategory);
 
   const stripEmojis = (str: string) => {
     if (!str || typeof str !== 'string') return str;
@@ -81,20 +99,36 @@ export function ServicesListingClient({ services, heroTitle, heroSubtitle, heroI
       <section className="py-24 md:py-32 bg-slate-50 relative z-20">
         <div className="max-w-7xl mx-auto px-6" dir={dir}>
           
-          <div className="flex items-center gap-3 mb-16">
+          <div className="flex items-center gap-3 mb-8">
             <div className="w-1.5 h-8 bg-dazz-gold" />
             <h2 className="text-3xl font-bold uppercase tracking-tight text-slate-900">
               {isAr ? 'مجالات خبرتنا' : 'AREAS OF EXPERTISE'}
             </h2>
           </div>
 
-          {services.length === 0 ? (
+          <div className="flex flex-wrap items-center gap-4 mb-16 border-b border-slate-200 pb-4">
+            {activeTabs.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveCategory(tab.id)}
+                className={`text-sm font-bold uppercase tracking-widest px-4 py-2 transition-all ${
+                  activeCategory === tab.id 
+                    ? 'text-dazz-gold border-b-2 border-dazz-gold -mb-[18px]' 
+                    : 'text-slate-500 hover:text-slate-900'
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+
+          {filteredServices.length === 0 ? (
             <div className="text-center text-slate-500 py-24 border border-slate-200 rounded-lg">
               {isAr ? 'لا توجد خدمات متاحة حاليا.' : 'No services are currently available.'}
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {services.map((svc: any, i: number) => {
+              {filteredServices.map((svc: any, i: number) => {
                 const title = t(svc.name);
                 const desc = t(svc.shortDescription);
                 const image = svc.hero?.media || '';
