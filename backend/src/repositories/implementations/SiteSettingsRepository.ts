@@ -14,7 +14,7 @@ export class SiteSettingsRepository implements ISiteSettingsRepository {
     return await newItem.save();
   }
   async update(id: string, data: any): Promise<any | null> {
-    return await SiteSettings.findByIdAndUpdate(id, data, { new: true });
+    return await SiteSettings.findByIdAndUpdate(id, data, { returnDocument: 'after' });
   }
   async delete(id: string): Promise<any | null> {
     return await SiteSettings.findByIdAndDelete(id);

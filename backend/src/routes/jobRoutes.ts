@@ -11,6 +11,7 @@ const service = new JobService(repository);
 const controller = new JobController(service);
 
 router.get('/', controller.getJobs);
+router.get('/slug/:slug', controller.getJobBySlug);
 router.get('/:id', controller.getJobById);
 
 router.post('/', protect, controller.createJob);

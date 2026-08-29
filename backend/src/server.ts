@@ -36,22 +36,26 @@ import pageRoutes from './routes/pageRoutes';
 import projectRoutes from './routes/projectRoutes';
 import blogRoutes from './routes/blogRoutes';
 import jobRoutes from './routes/jobRoutes';
+import jobApplicationRoutes from './routes/jobApplicationRoutes';
 import contactMessageRoutes from './routes/contactMessageRoutes';
 import siteSettingsRoutes from './routes/siteSettingsRoutes';
 import mediaRoutes from './routes/mediaRoutes';
 import translationRoutes from './routes/translationRoutes';
 import serviceRoutes from './routes/serviceRoutes';
+import locationRoutes from './routes/locationRoutes';
 
 app.use('/api/auth', authRoutes);
 app.use('/api/content', pageRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/blogs', blogRoutes);
 app.use('/api/jobs', jobRoutes);
+app.use('/api/careers', jobApplicationRoutes);
 app.use('/api/contact', contactMessageRoutes);
 app.use('/api/settings', siteSettingsRoutes);
 app.use('/api/admin/media', mediaRoutes);
 app.use('/api/admin/translate', translationRoutes);
 app.use('/api/services', serviceRoutes);
+app.use('/api/locations', locationRoutes);
 
 app.get('/health', (req: Request, res: Response) => {
   res.status(200).json({ status: 'ok', message: 'Backend is running' });

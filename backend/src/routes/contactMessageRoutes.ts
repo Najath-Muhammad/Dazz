@@ -10,11 +10,12 @@ const repository = new ContactMessageRepository();
 const service = new ContactMessageService(repository);
 const controller = new ContactMessageController(service);
 
-router.get('/', controller.getContactMessages);
-router.get('/:id', controller.getContactMessageById);
+router.get('/', protect, controller.getContactMessages);
+router.get('/:id', protect, controller.getContactMessageById);
 
-router.post('/', protect, controller.createContactMessage);
+router.post('/', controller.createContactMessage);
 router.put('/:id', protect, controller.updateContactMessage);
+router.put('/:id/status', protect, controller.updateContactMessageStatus);
 router.delete('/:id', protect, controller.deleteContactMessage);
 
 export default router;

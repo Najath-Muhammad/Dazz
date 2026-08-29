@@ -3,7 +3,7 @@ import { ITranslationService } from '../interfaces/ITranslationService';
 dotenv.config();
 
 const TRANSLATION_API_KEY = process.env.TRANSLATION_API_KEY || '';
-const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${TRANSLATION_API_KEY}`;
+const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${TRANSLATION_API_KEY}`;
 
 const SYSTEM_PROMPT = `You are a professional English-to-Arabic translator specializing in corporate websites, construction, infrastructure, logistics, food trading, hospitality and international business.
 

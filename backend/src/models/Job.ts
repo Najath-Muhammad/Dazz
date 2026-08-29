@@ -1,21 +1,49 @@
 import mongoose, { Schema, Document } from 'mongoose';
+import { LocalizedString, LocalizedStringSchema, OptionalLocalizedStringSchema } from './types';
 
 export interface IJob extends Document {
-  title: string;
+  title: LocalizedString;
+  slug: string;
   department: string;
   location: string;
-  type: string;
-  description: string;
-  isActive: boolean;
+  type: string; // Full-time, Part-time, etc.
+  description: LocalizedString;
+  responsibilities: LocalizedString[];
+  requirements: LocalizedString[];
+  qualifications: LocalizedString[];
+  experience: LocalizedString;
+  skills: LocalizedString[];
+  salary?: string;
+  benefits?: string;
+  deadline?: Date;
+  status: 'DRAFT' | 'PUBLISHED' | 'CLOSED';
+  publishedAt?: Date;
 }
 
 const JobSchema: Schema = new Schema({
-  title: { type: String, required: true },
+  title: {
+    en: { type: String, required: true },
+    ar: { type: String, default: '' }
+  },
+  slug: { type: String, required: true, unique: true },
   department: { type: String, required: true },
   location: { type: String, required: true },
-  type: { type: String, required: true }, // e.g., 'Full-time', 'Part-time'
-  description: { type: String, required: true },
-  isActive: { type: Boolean, default: true },
+  type: { type: String, required: true },
+  description: {
+    en: { type: String, required: true },
+    ar: { type: String, default: '' }
+  },
+  responsibilities: [OptionalLocalizedStringSchema],
+  requirements: [OptionalLocalizedStringSchema],
+  qualifications: [OptionalLocalizedStringSchema],
+  experience: OptionalLocalizedStringSchema,
+  skills: [OptionalLocalizedStringSchema],
+  salary: { type: String },
+  benefits: { type: String },
+  deadline: { type: Date },
+  status: { type: String, enum: ['DRAFT', 'PUBLISHED', 'CLOSED'], default: 'DRAFT' },
+  publishedAt: { type: Date }
 }, { timestamps: true });
 
 export default mongoose.model<IJob>('Job', JobSchema);
+

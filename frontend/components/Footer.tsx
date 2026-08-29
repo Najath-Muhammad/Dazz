@@ -7,15 +7,15 @@ const quickLinks = [
   { name: 'Divisions', href: '/en/services' },
   { name: 'Project Gallery', href: '/projects' },
   { name: 'Blog', href: '/news' },
-  { name: 'Careers', href: '/careers-contact#careers' },
-  { name: 'Contact Us', href: '/careers-contact' },
+  { name: 'Careers', href: '/careers' },
+  { name: 'Contact Us', href: '/contact' },
 ];
 
 const divisionLinks = [
-  { name: 'Construction', href: '/construction' },
-  { name: 'Food Trading', href: '/food-trading' },
-  { name: 'Logistics', href: '/logistics' },
-  { name: 'Hospitality', href: '/hospitality' },
+  { name: 'Construction', href: '/en/services' },
+  { name: 'Food Trading', href: '/en/services' },
+  { name: 'Logistics', href: '/en/services' },
+  { name: 'Hospitality', href: '/en/services' },
 ];
 
 export function Footer() {
@@ -108,8 +108,8 @@ export function Footer() {
             &copy; {new Date().getFullYear()} Dazz Tradelink International. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
-            <Link href="/careers-contact" className="text-xs text-slate-600 hover:text-amber-400 transition-colors tracking-wide">Privacy Policy</Link>
-            <Link href="/careers-contact" className="text-xs text-slate-600 hover:text-amber-400 transition-colors tracking-wide">Terms of Use</Link>
+            <Link href="/contact" className="text-xs text-slate-600 hover:text-amber-400 transition-colors tracking-wide">Privacy Policy</Link>
+            <Link href="/contact" className="text-xs text-slate-600 hover:text-amber-400 transition-colors tracking-wide">Terms of Use</Link>
           </div>
         </div>
       </div>

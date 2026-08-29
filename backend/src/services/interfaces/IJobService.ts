@@ -1,6 +1,7 @@
 export interface IJobService {
   getAllJobs(): Promise<{ success: boolean; message: string; data?: any[] }>;
   getJobById(id: string): Promise<{ success: boolean; message: string; data?: any }>;
+  getJobBySlug(slug: string): Promise<{ success: boolean; message: string; data?: any }>;
 
   createJob(data: any): Promise<{ success: boolean; message: string; data?: any }>;
   updateJob(id: string, data: any): Promise<{ success: boolean; message: string; data?: any }>;

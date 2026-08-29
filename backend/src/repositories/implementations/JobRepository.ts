@@ -8,6 +8,9 @@ export class JobRepository implements IJobRepository {
   async findById(id: string): Promise<any | null> {
     return await Job.findById(id);
   }
+  async findBySlug(slug: string): Promise<any | null> {
+    return await Job.findOne({ slug });
+  }
 
   async create(data: any): Promise<any> {
     const newItem = new Job(data);

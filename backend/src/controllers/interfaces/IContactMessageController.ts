@@ -6,5 +6,6 @@ export interface IContactMessageController {
 
   createContactMessage(req: Request, res: Response): Promise<void>;
   updateContactMessage(req: Request, res: Response): Promise<void>;
+  updateContactMessageStatus(req: Request, res: Response): Promise<void>;
   deleteContactMessage(req: Request, res: Response): Promise<void>;
 }

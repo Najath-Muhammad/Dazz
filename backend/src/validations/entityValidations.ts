@@ -4,34 +4,58 @@ import { locString, requiredLocString, mediaObject } from './common';
 export const blogSchema = z.object({
   title: requiredLocString,
   slug: z.string().min(1, 'URL Slug is required').regex(/^[a-z0-9-]+$/, 'Slug must be lowercase alphanumeric with hyphens'),
+  category: requiredLocString,
   content: locString.optional(),
   excerpt: locString.optional(),
   author: z.string().optional(),
   publishedAt: z.string().datetime().optional().nullable(),
-  status: z.enum(['draft', 'published']).optional().default('draft'),
-  coverImage: mediaObject.optional(),
-  seo: z.any().optional(),
+  isPublished: z.boolean().optional().default(true),
+  featured: z.boolean().optional().default(false),
+  coverImage: z.any(),
+  metaTitle: locString.optional(),
+  metaDescription: locString.optional(),
 });
 
 export const contactMessageSchema = z.object({
-  name: z.string().min(1, 'Name is required'),
+  fullName: z.string().min(1, 'Full name is required'),
   email: z.string().email('Invalid email address'),
   phone: z.string().optional(),
-  subject: z.string().optional(),
+  company: z.string().optional(),
+  subject: z.string().min(1, 'Subject is required'),
   message: z.string().min(1, 'Message is required'),
-  status: z.enum(['unread', 'read', 'archived']).optional().default('unread'),
+  status: z.enum(['NEW', 'READ', 'IN PROGRESS', 'RESOLVED']).optional().default('NEW'),
 });
 
 export const jobSchema = z.object({
   title: requiredLocString,
-  department: locString.optional(),
-  location: locString.optional(),
-  type: z.enum(['full-time', 'part-time', 'contract', 'internship']).optional().default('full-time'),
-  description: locString.optional(),
-  requirements: z.array(locString).optional(),
+  slug: z.string().min(1, 'URL Slug is required').regex(/^[a-z0-9-]+$/, 'Slug must be lowercase alphanumeric with hyphens'),
+  department: z.string().min(1, 'Department is required'),
+  location: z.string().min(1, 'Location is required'),
+  type: z.string().min(1, 'Employment Type is required'),
+  description: requiredLocString,
   responsibilities: z.array(locString).optional(),
-  status: z.enum(['open', 'closed']).optional().default('open'),
-  postedAt: z.string().datetime().optional().nullable(),
+  requirements: z.array(locString).optional(),
+  qualifications: z.array(locString).optional(),
+  experience: locString.optional(),
+  skills: z.array(locString).optional(),
+  salary: z.string().optional(),
+  benefits: z.string().optional(),
+  deadline: z.string().optional().nullable().transform(v => !v ? null : v),
+  status: z.enum(['DRAFT', 'PUBLISHED', 'CLOSED']).optional().default('DRAFT'),
+  publishedAt: z.string().optional().nullable().transform(v => !v ? null : v),
+});
+
+export const jobApplicationSchema = z.object({
+  jobId: z.string().optional(), // Can be empty for general application
+  candidateName: z.string().min(1, 'Full name is required'),
+  email: z.string().email('Invalid email address'),
+  phone: z.string().min(1, 'Phone number is required'),
+  location: z.string().min(1, 'Location is required'),
+  coverLetter: z.string().optional(),
+  linkedInProfile: z.string().optional(),
+  portfolioUrl: z.string().optional(),
+  resume: z.any(), // Cloudinary file reference
+  status: z.enum(['NEW', 'REVIEWING', 'SHORTLISTED', 'REJECTED', 'HIRED']).optional().default('NEW'),
 });
 
 export const pageSchema = z.object({
@@ -45,16 +69,15 @@ export const pageSchema = z.object({
 export const projectSchema = z.object({
   title: requiredLocString,
   slug: z.string().min(1, 'URL Slug is required').regex(/^[a-z0-9-]+$/, 'Slug must be lowercase alphanumeric with hyphens'),
-  client: locString.optional(),
-  location: locString.optional(),
-  completionDate: z.string().datetime().optional().nullable(),
+  category: requiredLocString,
   description: locString.optional(),
-  status: z.enum(['draft', 'published']).optional().default('draft'),
-  featured: z.boolean().optional().default(false),
-  displayOrder: z.number().optional().default(0),
-  coverImage: mediaObject.optional(),
-  gallery: z.array(z.any()).optional(),
-  seo: z.any().optional(),
+  coverImage: z.any(), // accepts string or media object
+  galleryImages: z.array(z.any()).optional(),
+  location: locString.optional(),
+  year: z.string().optional(),
+  isPublished: z.boolean().optional().default(true),
+  metaTitle: locString.optional(),
+  metaDescription: locString.optional(),
 });
 
 export const siteSettingsSchema = z.object({
@@ -66,6 +89,14 @@ export const siteSettingsSchema = z.object({
   heroTitle: z.string().optional(),
   heroSubtitle: z.string().optional(),
   heroBackgroundImage: z.any().optional(),
+  pageHeaders: z.object({
+    home: z.object({ title: z.string().optional(), subtitle: z.string().optional(), media: z.any().optional() }).optional(),
+    about: z.object({ title: z.string().optional(), subtitle: z.string().optional(), media: z.any().optional() }).optional(),
+    services: z.object({ title: z.string().optional(), subtitle: z.string().optional(), media: z.any().optional() }).optional(),
+    projects: z.object({ title: z.string().optional(), subtitle: z.string().optional(), media: z.any().optional() }).optional(),
+    contact: z.object({ title: z.string().optional(), subtitle: z.string().optional(), media: z.any().optional() }).optional(),
+    news: z.object({ title: z.string().optional(), subtitle: z.string().optional(), media: z.any().optional() }).optional(),
+  }).optional(),
   aboutUsText: z.string().optional(),
   address: locString.optional(),
   workingHours: locString.optional(),
@@ -82,5 +113,49 @@ export const siteSettingsSchema = z.object({
     facebook: z.string().url().optional().or(z.literal('')),
     x: z.string().url().optional().or(z.literal('')),
     youtube: z.string().url().optional().or(z.literal(''))
+  }).optional(),
+  careers: z.object({
+    hero: z.object({ title: locString.optional(), subtitle: locString.optional(), media: z.any().optional() }).optional(),
+    whyWorkWithUs: z.object({
+      enabled: z.boolean().optional().default(true),
+      title: locString.optional(),
+      description: locString.optional(),
+      benefits: z.array(z.object({ 
+        title: locString.optional(), 
+        description: locString.optional(),
+        image: z.any().optional()
+      })).optional()
+    }).optional(),
+    culture: z.object({
+      enabled: z.boolean().optional().default(true),
+      title: locString.optional(),
+      description: locString.optional(),
+      gallery: z.array(z.any()).optional()
+    }).optional()
+  }).optional(),
+  contactPage: z.object({
+    hero: z.object({ title: locString.optional(), description: locString.optional() }).optional(),
+    contactHeading: locString.optional(),
+    cta: z.object({
+      heading: locString.optional(),
+      description: locString.optional(),
+      buttonText: locString.optional()
+    }).optional()
   }).optional()
+});
+
+export const locationSchema = z.object({
+  name: requiredLocString,
+  type: locString.optional(),
+  country: requiredLocString,
+  city: requiredLocString,
+  address: requiredLocString,
+  description: locString.optional(),
+  phone: z.string().optional(),
+  email: z.string().email('Invalid email address').optional().or(z.literal('')),
+  website: z.string().url('Invalid URL').optional().or(z.literal('')),
+  latitude: z.number().min(-90).max(90),
+  longitude: z.number().min(-180).max(180),
+  isActive: z.boolean().optional().default(true),
+  order: z.number().optional().default(0),
 });

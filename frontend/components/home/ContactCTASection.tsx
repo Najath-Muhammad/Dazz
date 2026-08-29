@@ -68,7 +68,7 @@ export function ContactCTASection() {
           className="flex flex-col sm:flex-row items-center justify-center gap-5"
         >
           <Link
-            href="/careers-contact"
+            href="/contact"
             className="group flex items-center gap-3 px-10 py-5 bg-dazz-gold text-dazz-navy text-sm font-bold tracking-widest uppercase hover:bg-dazz-gold-light transition-all duration-300"
           >
             CONTACT US

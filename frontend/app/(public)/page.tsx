@@ -33,7 +33,7 @@ async function getSiteSettings() {
 async function getProjects() {
   try {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
-    const res = await fetch(`${apiUrl}/projects?status=published&limit=6`, { next: { revalidate: 120 } });
+    const res = await fetch(`${apiUrl}/projects?status=published&limit=6`, { cache: 'no-store' });
     if (!res.ok) return [];
     const json = await res.json();
     return json.data || [];
@@ -43,7 +43,7 @@ async function getProjects() {
 async function getBlogs() {
   try {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
-    const res = await fetch(`${apiUrl}/blogs?status=published&limit=3`, { next: { revalidate: 120 } });
+    const res = await fetch(`${apiUrl}/blogs?status=published&limit=3`, { cache: 'no-store' });
     if (!res.ok) return [];
     const json = await res.json();
     return json.data || [];
@@ -57,14 +57,18 @@ export default async function HomePage() {
     getBlogs(),
   ]);
 
-  const heroTitle = settings?.heroTitle || 'DAZZ TRADELINK INTERNATIONAL';
-  const heroSubtitle = settings?.heroSubtitle || 'Empowering Industrial Excellence. Delivering trusted solutions across construction, food trading, logistics, and hospitality.';
+  const homeHeader = settings?.pageHeaders?.home;
 
+  const heroTitle = homeHeader?.title || settings?.heroTitle || 'DAZZ TRADELINK INTERNATIONAL';
+  const heroSubtitle = homeHeader?.subtitle || settings?.heroSubtitle || 'Empowering Industrial Excellence. Delivering trusted solutions across construction, food trading, logistics, and hospitality.';
+
+  const rawBg = homeHeader?.media || settings?.heroBackgroundImage;
   let heroBg = 'https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg';
-  if (settings?.heroBackgroundImage?.url) {
-    heroBg = settings.heroBackgroundImage.url;
-  } else if (typeof settings?.heroBackgroundImage === 'string' && settings.heroBackgroundImage !== '') {
-    heroBg = settings.heroBackgroundImage;
+  
+  if (rawBg?.url) {
+    heroBg = rawBg.url;
+  } else if (typeof rawBg === 'string' && rawBg !== '') {
+    heroBg = rawBg;
   }
 
   const aboutImage = settings?.heroBackgroundImage || null;

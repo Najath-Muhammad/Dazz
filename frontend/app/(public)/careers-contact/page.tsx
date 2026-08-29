@@ -70,22 +70,22 @@ export default function CareersContactPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-1">First Name</label>
-                    <input type="text" className="w-full border border-slate-300 rounded-sm px-4 py-2 focus:ring-amber-500 focus:border-amber-500" placeholder="John" />
+                    <input suppressHydrationWarning type="text" className="w-full border border-slate-300 rounded-sm px-4 py-2 focus:ring-amber-500 focus:border-amber-500" placeholder="John" />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-1">Last Name</label>
-                    <input type="text" className="w-full border border-slate-300 rounded-sm px-4 py-2 focus:ring-amber-500 focus:border-amber-500" placeholder="Doe" />
+                    <input suppressHydrationWarning type="text" className="w-full border border-slate-300 rounded-sm px-4 py-2 focus:ring-amber-500 focus:border-amber-500" placeholder="Doe" />
                   </div>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">Email Address</label>
-                  <input type="email" className="w-full border border-slate-300 rounded-sm px-4 py-2 focus:ring-amber-500 focus:border-amber-500" placeholder="john@example.com" />
+                  <input suppressHydrationWarning type="email" className="w-full border border-slate-300 rounded-sm px-4 py-2 focus:ring-amber-500 focus:border-amber-500" placeholder="john@example.com" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">Message</label>
                   <textarea rows={4} className="w-full border border-slate-300 rounded-sm px-4 py-2 focus:ring-amber-500 focus:border-amber-500" placeholder="How can we help you?"></textarea>
                 </div>
-                <Button variant="primary" type="button" className="w-full md:w-auto">Send Message</Button>
+                <Button suppressHydrationWarning variant="primary" type="button" className="w-full md:w-auto">Send Message</Button>
               </form>
             </div>
 
@@ -104,7 +104,7 @@ export default function CareersContactPage() {
                     <span className="bg-slate-100 text-slate-600 text-xs px-2 py-1 rounded font-semibold uppercase tracking-wider">Construction</span>
                   </div>
                   <p className="text-slate-500 text-sm mb-4">Dubai, UAE • Full-time</p>
-                  <Button variant="outline" size="sm">Apply Now</Button>
+                  <Button suppressHydrationWarning variant="outline" size="sm">Apply Now</Button>
                 </div>
 
                 <div className="p-6 border border-slate-200 hover:border-amber-500 transition-colors bg-white rounded-sm">
@@ -113,7 +113,7 @@ export default function CareersContactPage() {
                     <span className="bg-slate-100 text-slate-600 text-xs px-2 py-1 rounded font-semibold uppercase tracking-wider">Logistics</span>
                   </div>
                   <p className="text-slate-500 text-sm mb-4">Singapore • Full-time</p>
-                  <Button variant="outline" size="sm">Apply Now</Button>
+                  <Button suppressHydrationWarning variant="outline" size="sm">Apply Now</Button>
                 </div>
 
                 <div className="p-6 border border-slate-200 hover:border-amber-500 transition-colors bg-white rounded-sm">
@@ -122,7 +122,7 @@ export default function CareersContactPage() {
                     <span className="bg-slate-100 text-slate-600 text-xs px-2 py-1 rounded font-semibold uppercase tracking-wider">Food Trading</span>
                   </div>
                   <p className="text-slate-500 text-sm mb-4">London, UK • Full-time</p>
-                  <Button variant="outline" size="sm">Apply Now</Button>
+                  <Button suppressHydrationWarning variant="outline" size="sm">Apply Now</Button>
                 </div>
               </div>
             </div>

@@ -11,15 +11,25 @@ export interface IBlog extends Document {
   publishedAt?: Date;
   category?: LocalizedString;
   isPublished: boolean;
+  featured: boolean;
   metaTitle?: LocalizedString;
   metaDescription?: LocalizedString;
 }
 
 const BlogSchema: Schema = new Schema({
-  title: LocalizedStringSchema,
+  title: {
+    en: { type: String, required: true },
+    ar: { type: String, default: '' }
+  },
   slug: { type: String, required: true, unique: true },
-  excerpt: LocalizedStringSchema,
-  content: LocalizedStringSchema,
+  excerpt: {
+    en: { type: String, default: '' },
+    ar: { type: String, default: '' }
+  },
+  content: {
+    en: { type: String, default: '' },
+    ar: { type: String, default: '' }
+  },
   coverImage: { type: Schema.Types.Mixed, required: true },
   author: { type: String },
   publishedAt: { type: Date, default: Date.now },
@@ -28,6 +38,7 @@ const BlogSchema: Schema = new Schema({
     ar: { type: String }
   },
   isPublished: { type: Boolean, default: true },
+  featured: { type: Boolean, default: false },
   metaTitle: {
     en: { type: String },
     ar: { type: String }

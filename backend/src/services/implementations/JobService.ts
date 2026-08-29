@@ -26,6 +26,16 @@ export class JobService implements IJobService {
       return { success: false, message: 'Failed to retrieve Job' };
     }
   }
+  async getJobBySlug(slug: string) {
+    try {
+      const item = await this._repository.findBySlug(slug);
+      if (!item) return { success: false, message: 'Job not found' };
+      return { success: true, message: 'Job retrieved successfully', data: item };
+    } catch (error: any) {
+      console.error('Error in getJobBySlug:', error);
+      return { success: false, message: 'Failed to retrieve Job' };
+    }
+  }
   async createJob(data: any) {
     try {
       // Check edge cases here if needed, like manually checking if slug exists, though mongo throws 11000

@@ -11,8 +11,8 @@ const service = new BlogService(repository);
 const controller = new BlogController(service);
 
 router.get('/', controller.getBlogs);
-router.get('/:id', controller.getBlogById);
 router.get('/slug/:slug', controller.getBlogBySlug);
+router.get('/:id', controller.getBlogById);
 router.post('/', protect, controller.createBlog);
 router.put('/:id', protect, controller.updateBlog);
 router.delete('/:id', protect, controller.deleteBlog);

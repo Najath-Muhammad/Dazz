@@ -15,7 +15,8 @@ async function getProjects() {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/projects`, { next: { revalidate: 60 } });
     if (!res.ok) return [];
-    return res.json();
+    const json = await res.json();
+    return json?.data || [];
   } catch (error) {
     return [];
   }
@@ -48,8 +49,8 @@ export default async function ProjectsPage() {
               projects.map((p: any) => (
                 <ProjectCard 
                   key={p._id}
-                  title={p.title} 
-                  category={p.category} 
+                  title={p.title?.en || p.title || ''} 
+                  category={p.category?.en || p.category || ''} 
                   imageUrl={p.imageUrl} 
                   slug={p.slug} 
                 />
@@ -63,7 +64,7 @@ export default async function ProjectsPage() {
         title="Discuss Your Next Project" 
         description="Our experts are ready to turn your vision into reality."
       >
-        <Link href="/careers-contact">
+        <Link href="/contact">
           <Button variant="secondary">Contact Us</Button>
         </Link>
       </CTASection>

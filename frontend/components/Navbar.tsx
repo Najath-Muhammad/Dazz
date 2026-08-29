@@ -7,10 +7,10 @@ import { useGSAP } from '@gsap/react';
 import { ChevronDown, ArrowUpRight } from 'lucide-react';
 
 const divisions = [
-  { id: '01', name: 'CONSTRUCTION', href: '/construction', desc: 'Infrastructure & Building' },
-  { id: '02', name: 'FOOD TRADING', href: '/food-trading', desc: 'Global Supply & Distribution' },
-  { id: '03', name: 'LOGISTICS', href: '/logistics', desc: 'Fleet & Supply Chain' },
-  { id: '04', name: 'HOSPITALITY', href: '/hospitality', desc: 'Luxury Property Management' },
+  { id: '01', name: 'CONSTRUCTION', href: '/en/services', desc: 'Infrastructure & Building' },
+  { id: '02', name: 'FOOD TRADING', href: '/en/services', desc: 'Global Supply & Distribution' },
+  { id: '03', name: 'LOGISTICS', href: '/en/services', desc: 'Fleet & Supply Chain' },
+  { id: '04', name: 'HOSPITALITY', href: '/en/services', desc: 'Luxury Property Management' },
 ];
 
 const navLinks = [
@@ -19,8 +19,8 @@ const navLinks = [
   { name: 'DIVISIONS', href: '#divisions', hasMega: true },
   { name: 'PROJECT GALLERY', href: '/projects' },
   { name: 'BLOG', href: '/news' },
-  { name: 'CAREERS', href: '/careers-contact#careers' },
-  { name: 'CONTACT US', href: '/careers-contact' },
+  { name: 'CAREERS', href: '/careers' },
+  { name: 'CONTACT US', href: '/contact' },
 ];
 
 const allMenuLinks = [
@@ -29,8 +29,8 @@ const allMenuLinks = [
   { name: 'DIVISIONS', href: null, children: divisions },
   { name: 'PROJECT GALLERY', href: '/projects' },
   { name: 'BLOG', href: '/news' },
-  { name: 'CAREERS', href: '/careers-contact#careers' },
-  { name: 'CONTACT US', href: '/careers-contact' },
+  { name: 'CAREERS', href: '/careers' },
+  { name: 'CONTACT US', href: '/contact' },
 ];
 
 export function Navbar() {
@@ -40,6 +40,7 @@ export function Navbar() {
   const [mobileDivisionsOpen, setMobileDivisionsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const megaRef = useRef<HTMLDivElement>(null);
+  const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -54,6 +55,15 @@ export function Navbar() {
     setIsOpen(false);
     document.body.style.overflow = '';
   }, [pathname]);
+
+  const openMega = useCallback(() => {
+    if (closeTimerRef.current) clearTimeout(closeTimerRef.current);
+    setMegaOpen(true);
+  }, []);
+
+  const closeMegaDelayed = useCallback(() => {
+    closeTimerRef.current = setTimeout(() => setMegaOpen(false), 150);
+  }, []);
 
   // Mega menu animation
   useEffect(() => {
@@ -125,9 +135,12 @@ export function Navbar() {
           <nav className="hidden lg:flex items-center gap-8" aria-label="Main navigation">
             {navLinks.map((link) =>
               link.hasMega ? (
-                <div key={link.name} className="relative" onMouseLeave={() => setMegaOpen(false)}>
+                <div key={link.name} className="relative"
+                  onMouseEnter={openMega}
+                  onMouseLeave={closeMegaDelayed}
+                >
                   <button
-                    onMouseEnter={() => setMegaOpen(true)}
+                    onMouseEnter={openMega}
                     onClick={() => setMegaOpen(v => !v)}
                     onKeyDown={handleDivisionsKey}
                     aria-haspopup="true"
@@ -139,45 +152,48 @@ export function Navbar() {
                     <span className="absolute -bottom-2 left-0 w-0 h-px bg-dazz-gold transition-all duration-300 group-hover:w-full" />
                   </button>
 
-                  {/* Mega Menu */}
+                  {/* Mega Menu — pt-3 bridges the gap so mouse doesn't leave the zone */}
                   {megaOpen && (
                     <div
                       ref={megaRef}
                       role="menu"
-                      className="absolute top-full left-1/2 -translate-x-1/2 mt-6 w-[560px] bg-dazz-navy border border-white/10 shadow-2xl shadow-black/50"
-                      style={{ clipPath: 'none' }}
+                      onMouseEnter={openMega}
+                      onMouseLeave={closeMegaDelayed}
+                      className="absolute top-full left-1/2 -translate-x-1/2 pt-3 w-[560px]"
                     >
-                      {/* Gold top border */}
-                      <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-dazz-gold to-transparent" />
-                      <div className="p-6 grid grid-cols-2 gap-1">
-                        {divisions.map((div) => (
+                      <div className="bg-dazz-navy border border-white/10 shadow-2xl shadow-black/50">
+                        {/* Gold top border */}
+                        <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-dazz-gold to-transparent" />
+                        <div className="p-6 grid grid-cols-2 gap-1">
+                          {divisions.map((div) => (
+                            <Link
+                              key={div.id}
+                              href={div.href}
+                              role="menuitem"
+                              onClick={() => setMegaOpen(false)}
+                              className="flex items-start gap-4 p-4 group hover:bg-white/5 transition-colors duration-200"
+                            >
+                              <span className="text-xs font-mono text-dazz-gold/60 mt-1 flex-shrink-0">{div.id}</span>
+                              <div className="flex-1 min-w-0">
+                                <p className="text-sm font-bold tracking-widest text-white group-hover:text-dazz-gold transition-colors uppercase">
+                                  {div.name}
+                                </p>
+                                <p className="text-xs text-white/40 mt-0.5 font-light">{div.desc}</p>
+                              </div>
+                              <ArrowUpRight size={14} className="text-white/20 group-hover:text-dazz-gold transition-colors flex-shrink-0 mt-0.5 opacity-0 group-hover:opacity-100 translate-x-[-4px] group-hover:translate-x-0 transition-all duration-200" />
+                            </Link>
+                          ))}
+                        </div>
+                        <div className="px-6 pb-5 pt-2 border-t border-white/5">
                           <Link
-                            key={div.id}
-                            href={div.href}
-                            role="menuitem"
+                            href="/en/services"
                             onClick={() => setMegaOpen(false)}
-                            className="flex items-start gap-4 p-4 group hover:bg-white/5 transition-colors duration-200"
+                            className="flex items-center gap-2 text-xs font-bold tracking-widest text-white/40 hover:text-dazz-gold transition-colors uppercase"
                           >
-                            <span className="text-xs font-mono text-dazz-gold/60 mt-1 flex-shrink-0">{div.id}</span>
-                            <div className="flex-1 min-w-0">
-                              <p className="text-sm font-bold tracking-widest text-white group-hover:text-dazz-gold transition-colors uppercase">
-                                {div.name}
-                              </p>
-                              <p className="text-xs text-white/40 mt-0.5 font-light">{div.desc}</p>
-                            </div>
-                            <ArrowUpRight size={14} className="text-white/20 group-hover:text-dazz-gold transition-colors flex-shrink-0 mt-0.5 opacity-0 group-hover:opacity-100 translate-x-[-4px] group-hover:translate-x-0 transition-all duration-200" />
+                            VIEW ALL SERVICES
+                            <span className="w-8 h-px bg-current" />
                           </Link>
-                        ))}
-                      </div>
-                      <div className="px-6 pb-5 pt-2 border-t border-white/5">
-                        <Link
-                          href="/en/services"
-                          onClick={() => setMegaOpen(false)}
-                          className="flex items-center gap-2 text-xs font-bold tracking-widest text-white/40 hover:text-dazz-gold transition-colors uppercase"
-                        >
-                          VIEW ALL SERVICES
-                          <span className="w-8 h-px bg-current" />
-                        </Link>
+                        </div>
                       </div>
                     </div>
                   )}
@@ -197,6 +213,7 @@ export function Navbar() {
 
           {/* Mobile Toggle */}
           <button
+            suppressHydrationWarning
             onClick={toggleMenu}
             className="lg:hidden text-white hover:text-dazz-gold flex items-center gap-2.5 text-xs tracking-widest font-bold uppercase"
             aria-label="Toggle menu"

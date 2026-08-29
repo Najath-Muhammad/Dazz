@@ -20,13 +20,14 @@ async function getServices() {
   }
 }
 
-async function getPageData() {
+async function getHeroSettings() {
   try {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
-    const res = await fetch(`${apiUrl}/content/services`, { cache: 'no-store' });
+    const res = await fetch(`${apiUrl}/settings`, { next: { revalidate: 60 } });
     if (!res.ok) return null;
     const json = await res.json();
-    return json.data || null;
+    if (json.success && Array.isArray(json.data) && json.data.length > 0) return json.data[0];
+    return null;
   } catch (error) {
     return null;
   }
@@ -38,12 +39,20 @@ export default async function ServicesListingPage({ params }: { params: { lang: 
   const dir = isAr ? 'rtl' : 'ltr';
 
   const services = await getServices();
-  const pageData = await getPageData();
+  const settings = await getHeroSettings();
   
-  const content = pageData?.content || {};
-  const heroTitle = pageData?.title?.[lang] || (isAr ? 'خدماتنا' : 'OUR DIVISIONS & SERVICES');
-  const heroSubtitle = content.heroSubtitle?.[lang] || (isAr ? 'استكشف مجموعتنا الشاملة من الخدمات المتخصصة.' : 'Explore our comprehensive range of specialized services.');
-  const heroImage = content.heroImage || 'https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg';
+  const servicesHeader = settings?.pageHeaders?.services;
+  
+  const heroTitle = servicesHeader?.title || (isAr ? 'خدماتنا' : 'OUR DIVISIONS & SERVICES');
+  const heroSubtitle = servicesHeader?.subtitle || (isAr ? 'استكشف مجموعتنا الشاملة من الخدمات المتخصصة.' : 'Explore our comprehensive range of specialized services.');
+  
+  const rawBg = servicesHeader?.media;
+  let heroImage = 'https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg';
+  if (rawBg?.url) {
+    heroImage = rawBg.url;
+  } else if (typeof rawBg === 'string' && rawBg !== '') {
+    heroImage = rawBg;
+  }
 
   return (
     <ServicesListingClient 

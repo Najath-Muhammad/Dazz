@@ -18,11 +18,55 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: '/projects',
+        destination: '/en/projects',
+        permanent: true,
+      },
+      {
+        source: '/about-us',
+        destination: '/en/about-us',
+        permanent: true,
+      },
+      {
+        source: '/divisions-services',
+        destination: '/en/services',
+        permanent: true,
+      },
+      {
+        source: '/services',
+        destination: '/en/services',
+        permanent: true,
+      },
+      {
+        source: '/news',
+        destination: '/en/news',
+        permanent: true,
+      },
+      {
+        source: '/blog',
+        destination: '/en/news',
+        permanent: true,
+      },
+      {
+        source: '/careers',
+        destination: '/en/careers',
+        permanent: true,
+      },
+      {
+        source: '/contact',
+        destination: '/en/contact',
+        permanent: true,
+      },
+    ];
+  },
   async rewrites() {
     return [
       {
         source: '/api/:path*',
-        destination: 'http://localhost:5000/api/:path*',
+        destination: 'http://127.0.0.1:5000/api/:path*',
       },
     ];
   },

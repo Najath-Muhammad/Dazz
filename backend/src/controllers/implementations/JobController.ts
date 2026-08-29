@@ -37,6 +37,18 @@ export class JobController implements IJobController {
       handleError(res, error);
     }
   };
+  getJobBySlug = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const result = await this._service.getJobBySlug(req.params.slug as string);
+      if (!result.success) {
+        res.status(HTTP_STATUS.BAD_REQUEST).json(result);
+        return;
+      }
+      res.status(HTTP_STATUS.OK).json(result);
+    } catch (error) {
+      handleError(res, error);
+    }
+  };
   createJob = async (req: Request, res: Response): Promise<void> => {
     try {
       const validatedData = jobSchema.parse(req.body);

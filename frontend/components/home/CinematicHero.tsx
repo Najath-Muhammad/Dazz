@@ -1,5 +1,5 @@
 'use client';
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { MediaRenderer } from '@/components/MediaRenderer';
@@ -9,12 +9,26 @@ interface HeroProps {
   title: string;
   subtitle: string;
   backgroundImage: any;
+  hideExtras?: boolean;
 }
 
-export function CinematicHero({ title, subtitle, backgroundImage }: HeroProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
+function isVideoMedia(media: any): boolean {
+  if (!media) return false;
+  if (typeof media === 'string') {
+    return /\.(mp4|webm|mov|ogg)(\?|$)/i.test(media);
+  }
+  if (media?.resourceType === 'video') return true;
+  if (media?.url) return /\.(mp4|webm|mov|ogg)(\?|$)/i.test(media.url);
+  return false;
+}
 
+export function CinematicHero({ title, subtitle, backgroundImage, hideExtras = false }: HeroProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isVideo = useMemo(() => isVideoMedia(backgroundImage), [backgroundImage]);
+
+  // Only apply JS parallax for images — videos should never be translated
   useEffect(() => {
+    if (isVideo) return;
     const handleScroll = () => {
       if (!containerRef.current) return;
       const y = window.scrollY;
@@ -23,7 +37,7 @@ export function CinematicHero({ title, subtitle, backgroundImage }: HeroProps) {
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [isVideo]);
 
   return (
     <section
@@ -32,17 +46,35 @@ export function CinematicHero({ title, subtitle, backgroundImage }: HeroProps) {
       aria-label="Hero"
     >
       {/* Background */}
-      <div className="hero-bg-img absolute inset-[-10%] z-0 will-change-transform">
-        <MediaRenderer
-          media={backgroundImage}
-          fill
-          sizes="100vw"
-          className="object-cover opacity-50"
-          priority
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-slate-950/20" />
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-950/60 via-transparent to-transparent" />
-      </div>
+      {isVideo ? (
+        /* ── VIDEO background: simple absolute fill, no parallax, no inset trick ── */
+        <div className="absolute inset-0 z-0">
+          <MediaRenderer
+            media={backgroundImage}
+            fill
+            className="object-cover opacity-60"
+            muted
+            autoPlay
+            loop
+            playsInline
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-slate-950/20" />
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/70 via-transparent to-transparent" />
+        </div>
+      ) : (
+        /* ── IMAGE background: oversized wrapper enables CSS parallax ── */
+        <div className="hero-bg-img absolute inset-[-10%] z-0 will-change-transform">
+          <MediaRenderer
+            media={backgroundImage}
+            fill
+            sizes="100vw"
+            className="object-cover opacity-50"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-slate-950/20" />
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/60 via-transparent to-transparent" />
+        </div>
+      )}
 
       {/* Grid overlay */}
       <div
@@ -74,7 +106,7 @@ export function CinematicHero({ title, subtitle, backgroundImage }: HeroProps) {
             initial={{ y: '100%' }}
             animate={{ y: 0 }}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.4 }}
-            className="text-6xl md:text-8xl lg:text-[110px] font-extrabold text-white uppercase tracking-tighter leading-[0.95]"
+            className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white uppercase tracking-tighter leading-tight"
           >
             {title}
           </motion.h1>
@@ -91,47 +123,51 @@ export function CinematicHero({ title, subtitle, backgroundImage }: HeroProps) {
             {subtitle}
           </motion.p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.1 }}
-            className="flex items-center gap-6"
-          >
-            <Link
-              href="/about-us"
-              className="group flex items-center gap-3 px-8 py-4 bg-dazz-gold text-dazz-navy text-sm font-bold tracking-widest uppercase hover:bg-dazz-gold-light transition-all duration-300"
+          {!hideExtras && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 1.1 }}
+              className="flex items-center gap-6"
             >
-              Discover Our Legacy
-              <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-            </Link>
-            <Link
-              href="/projects"
-              className="group flex items-center gap-3 text-sm font-bold tracking-widest uppercase text-white/60 hover:text-white transition-colors"
-            >
-              View Projects
-              <span className="w-10 h-px bg-current group-hover:w-16 transition-all duration-300" />
-            </Link>
-          </motion.div>
+              <Link
+                href="/about-us"
+                className="group flex items-center gap-3 px-8 py-4 bg-dazz-gold text-dazz-navy text-sm font-bold tracking-widest uppercase hover:bg-dazz-gold-light transition-all duration-300"
+              >
+                Discover Our Legacy
+                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+              </Link>
+              <Link
+                href="/projects"
+                className="group flex items-center gap-3 text-sm font-bold tracking-widest uppercase text-white/60 hover:text-white transition-colors"
+              >
+                View Projects
+                <span className="w-10 h-px bg-current group-hover:w-16 transition-all duration-300" />
+              </Link>
+            </motion.div>
+          )}
         </div>
 
         {/* Stats row */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 1.3 }}
-          className="mt-16 pt-8 border-t border-white/10 grid grid-cols-3 gap-8 max-w-lg"
-        >
-          {[
-            { num: '500+', label: 'Specialists' },
-            { num: '4', label: 'Divisions' },
-            { num: '15+', label: 'Years Active' },
-          ].map((stat) => (
-            <div key={stat.label}>
-              <p className="text-3xl font-extrabold text-white tracking-tighter">{stat.num}</p>
-              <p className="text-[10px] font-mono tracking-[0.2em] text-white/40 uppercase mt-1">{stat.label}</p>
-            </div>
-          ))}
-        </motion.div>
+        {!hideExtras && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 1.3 }}
+            className="mt-16 pt-8 border-t border-white/10 grid grid-cols-3 gap-8 max-w-lg"
+          >
+            {[
+              { num: '500+', label: 'Specialists' },
+              { num: '4', label: 'Divisions' },
+              { num: '15+', label: 'Years Active' },
+            ].map((stat) => (
+              <div key={stat.label}>
+                <p className="text-3xl font-extrabold text-white tracking-tighter">{stat.num}</p>
+                <p className="text-[10px] font-mono tracking-[0.2em] text-white/40 uppercase mt-1">{stat.label}</p>
+              </div>
+            ))}
+          </motion.div>
+        )}
       </div>
 
       {/* Scroll indicator */}
