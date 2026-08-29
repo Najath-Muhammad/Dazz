@@ -54,6 +54,13 @@ export interface ISiteSettings extends Document {
     contactHeading?: LocalizedString;
     cta?: { heading?: LocalizedString; description?: LocalizedString; buttonText?: LocalizedString; };
   };
+  aboutUsPage?: {
+    missionVision?: {
+      enabled?: boolean;
+      mission?: { title?: LocalizedString; description?: LocalizedString; };
+      vision?: { title?: LocalizedString; description?: LocalizedString; };
+    };
+  };
 }
 
 const SiteSettingsSchema: Schema = new Schema({
@@ -121,6 +128,19 @@ const SiteSettingsSchema: Schema = new Schema({
       heading: OptionalLocalizedStringSchema,
       description: OptionalLocalizedStringSchema,
       buttonText: OptionalLocalizedStringSchema,
+    }
+  },
+  aboutUsPage: {
+    missionVision: {
+      enabled: { type: Boolean, default: true },
+      mission: {
+        title: OptionalLocalizedStringSchema,
+        description: OptionalLocalizedStringSchema
+      },
+      vision: {
+        title: OptionalLocalizedStringSchema,
+        description: OptionalLocalizedStringSchema
+      }
     }
   }
 }, { timestamps: true });

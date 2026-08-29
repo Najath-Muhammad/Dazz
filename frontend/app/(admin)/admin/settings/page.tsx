@@ -5,11 +5,12 @@ import { api } from '@/lib/api';
 import { MediaUploader } from '@/components/admin/MediaUploader';
 import CareersSettings from './CareersSettings';
 import ContactSettings from './ContactSettings';
+import AboutSettings from './AboutSettings';
 
 const TABS = [
   { id: 'general', label: 'General Info' },
   { id: 'home', label: 'Homepage Hero' },
-  { id: 'about', label: 'About Us Hero' },
+  { id: 'about', label: 'About Us Page' },
   { id: 'services', label: 'Services Hero' },
   { id: 'projects', label: 'Projects Hero' },
   { id: 'news', label: 'News Hero' },
@@ -180,6 +181,11 @@ export default function AdminSettingsPage() {
             <ContactSettings 
               settings={settings} 
               onChange={(newSettings) => setSettings(newSettings)} 
+            />
+          ) : activeTab === 'about' ? (
+            <AboutSettings
+              settings={settings}
+              onChange={(newSettings) => setSettings(newSettings)}
             />
           ) : (
             /* Dynamic Hero Tab */

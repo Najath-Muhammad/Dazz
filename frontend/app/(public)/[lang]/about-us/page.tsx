@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import { AboutHero } from '@/components/about/AboutHero';
 import { WhoWeAre } from '@/components/about/WhoWeAre';
+import { MissionVision } from '@/components/about/MissionVision';
 import { OurApproach } from '@/components/about/OurApproach';
 import { AboutDivisions } from '@/components/about/AboutDivisions';
 import { WhyDazz } from '@/components/about/WhyDazz';
@@ -41,10 +42,16 @@ export default async function AboutUsPage({ params }: { params: { lang: string }
   const rawBg = aboutHeader?.media;
   const heroImage = rawBg?.url || (typeof rawBg === 'string' && rawBg !== '' ? rawBg : '/images/about-hero.png');
 
+  const mvSettings = settings?.aboutUsPage?.missionVision;
+  const showMissionVision = mvSettings?.enabled !== false; // defaults to true
+
   return (
     <div dir={dir} className="bg-slate-950 font-sans">
       <AboutHero title={heroTitle} subtitle={heroSubtitle} media={heroImage} isAr={isAr} />
       <WhoWeAre isAr={isAr} />
+      {showMissionVision && (
+        <MissionVision isAr={isAr} mission={mvSettings?.mission} vision={mvSettings?.vision} />
+      )}
       <OurApproach isAr={isAr} />
       <AboutDivisions isAr={isAr} />
       <WhyDazz isAr={isAr} />
