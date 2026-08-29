@@ -106,7 +106,7 @@ export function CinematicHero({ title, subtitle, backgroundImage, hideExtras = f
             initial={{ y: '100%' }}
             animate={{ y: 0 }}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.4 }}
-            className="text-5xl md:text-7xl lg:text-[6rem] font-extrabold text-white uppercase tracking-tighter leading-[0.95]"
+            className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white uppercase tracking-tighter leading-[0.95]"
           >
             {(title.includes('\n') ? title.split('\n') : title.split(' ')).map((line, i) => (
               <span key={i} className="block">{line}</span>
