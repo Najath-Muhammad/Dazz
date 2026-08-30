@@ -34,7 +34,7 @@ export default function AdminServiceDetailsPage() {
         <Link href="/admin/services" className="text-slate-400 hover:text-slate-700 text-sm">← Back to Services</Link>
         <h1 className="text-2xl font-bold text-slate-900 ml-2">Service Details: {service.name?.en || 'Untitled'}</h1>
         <Link 
-          href={`/admin/services/${service._id}/edit`} 
+          href={`/admin/services/${service.id}/edit`} 
           className="ml-auto text-xs font-bold bg-dazz-navy text-white rounded px-4 py-2 hover:bg-blue-900 transition-colors"
         >
           Edit Service

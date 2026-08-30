@@ -258,7 +258,7 @@ export default async function JobDetailsPage({ params }: { params: Promise<{ slu
           <div className="bg-white p-8 md:p-14 border border-slate-200 shadow-xl shadow-slate-200/40 rounded-xl relative">
             {/* Side Accent */}
             <div className={`absolute top-0 ${isAr ? 'right-0' : 'left-0'} w-2 h-full bg-gradient-to-b from-dazz-gold to-dazz-navy rounded-l-xl`}></div>
-            <ApplicationForm lang={lang} isAr={isAr} jobId={job._id} />
+            <ApplicationForm lang={lang} isAr={isAr} jobId={job.id} />
           </div>
         </div>
       </div>

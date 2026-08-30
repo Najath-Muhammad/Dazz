@@ -102,8 +102,8 @@ export default function AdminSettingsPage() {
     setSaving(true);
     setMessage('');
     try {
-      if (settings._id) {
-        await api.put(`/settings/${settings._id}`, settings);
+      if (settings.id) {
+        await api.put(`/settings/${settings.id}`, settings);
       } else {
         await api.post('/settings', settings);
       }

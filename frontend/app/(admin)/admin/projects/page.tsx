@@ -117,14 +117,14 @@ export default function AdminProjectsPage() {
             <Eye size={15} />
           </Link>
           <Link
-            href={`/admin/projects/${p._id}/edit`}
+            href={`/admin/projects/${p.id}/edit`}
             className="p-1.5 text-blue-500 hover:text-blue-700 hover:bg-blue-50 rounded transition-colors"
             title="Edit"
           >
             <Edit2 size={15} />
           </Link>
           <button
-            onClick={() => handleDeleteClick(p._id)}
+            onClick={() => handleDeleteClick(p.id)}
             className="p-1.5 text-red-400 hover:text-red-600 hover:bg-red-50 rounded transition-colors"
             title="Delete"
           >

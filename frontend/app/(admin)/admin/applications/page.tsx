@@ -107,7 +107,7 @@ export default function AdminApplicationsPage() {
       align: 'right',
       render: (app) => (
         <Link
-          href={`/admin/applications/${app._id}`}
+          href={`/admin/applications/${app.id}`}
           className="inline-flex items-center justify-center p-2 bg-slate-100 text-dazz-navy hover:bg-dazz-navy hover:text-white rounded-md transition-colors"
           title="Review Application"
         >

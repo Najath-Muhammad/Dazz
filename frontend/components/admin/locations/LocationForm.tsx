@@ -87,7 +87,7 @@ export default function LocationForm({ initialData, isEdit = false }: LocationFo
     
     try {
       if (isEdit) {
-        await api.put(`/locations/${initialData._id}`, formData);
+        await api.put(`/locations/${initialData.id}`, formData);
         setMessage('Location updated successfully!');
       } else {
         await api.post('/locations', formData);

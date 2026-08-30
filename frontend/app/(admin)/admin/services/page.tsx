@@ -37,9 +37,9 @@ const ActionDropdown = ({ svc, onDelete }: { svc: any; onDelete: () => void }) =
       {open && (
         <div className="absolute right-0 bottom-full mb-1 w-36 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-[100] overflow-hidden text-left">
           <div className="py-1">
-            <Link href={`/admin/services/${svc._id}`} className="block px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100">Details</Link>
+            <Link href={`/admin/services/${svc.id}`} className="block px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100">Details</Link>
             <a href={`/en/services/${svc.slug}`} target="_blank" rel="noreferrer" className="block px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100">Preview</a>
-            <Link href={`/admin/services/${svc._id}/edit`} className="block px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100">Edit</Link>
+            <Link href={`/admin/services/${svc.id}/edit`} className="block px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100">Edit</Link>
             <button onClick={() => { setOpen(false); onDelete(); }} className="block w-full text-left px-4 py-2 text-sm font-bold text-red-600 hover:bg-red-50">Delete</button>
           </div>
         </div>
@@ -114,7 +114,7 @@ export default function AdminServicesPage() {
         setConfirmModal((prev) => ({ ...prev, isOpen: false }));
         try {
           await api.delete(`/services/${id}`);
-          setServices((prev) => prev.filter((s) => s._id !== id));
+          setServices((prev) => prev.filter((s) => s.id !== id));
         } catch {
           alert('Failed to delete service.');
         }
@@ -126,7 +126,7 @@ export default function AdminServicesPage() {
     const newStatus = current === 'published' ? 'draft' : 'published';
     try {
       const updated = await api.put<any>(`/services/${id}`, { status: newStatus });
-      setServices((prev) => prev.map((s) => (s._id === id ? { ...s, status: updated.status } : s)));
+      setServices((prev) => prev.map((s) => (s.id === id ? { ...s, status: updated.status } : s)));
     } catch {
       alert('Failed to update status.');
     }
@@ -185,7 +185,7 @@ export default function AdminServicesPage() {
       header: 'Status',
       render: (svc) => (
         <button
-          onClick={() => handleTogglePublish(svc._id, svc.status)}
+          onClick={() => handleTogglePublish(svc.id, svc.status)}
           className={`text-xs font-bold px-3 py-1 rounded-full cursor-pointer transition-all ${
             svc.status === 'published'
               ? 'bg-green-100 text-green-700 hover:bg-green-200'
@@ -210,7 +210,7 @@ export default function AdminServicesPage() {
       header: 'Actions',
       align: 'right',
       render: (svc) => (
-        <ActionDropdown svc={svc} onDelete={() => handleDeleteClick(svc._id, svc.name?.en || 'Untitled')} />
+        <ActionDropdown svc={svc} onDelete={() => handleDeleteClick(svc.id, svc.name?.en || 'Untitled')} />
       ),
     },
   ];

@@ -41,7 +41,7 @@ export function NewsClient({ blogs, lang, isAr, dir }: NewsClientProps) {
 
   // Find featured post
   const featuredPost = blogs.find(b => b.featured) || blogs[0];
-  const remainingPosts = blogs.filter(b => b._id !== featuredPost?._id);
+  const remainingPosts = blogs.filter(b => b.id !== featuredPost?.id);
 
   // Filter remaining posts
   const filteredPosts = activeCategory === 'ALL' 
@@ -147,7 +147,7 @@ export function NewsClient({ blogs, lang, isAr, dir }: NewsClientProps) {
 
               return (
                 <motion.div
-                  key={post._id}
+                  key={post.id}
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: '-50px' }}

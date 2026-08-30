@@ -97,7 +97,7 @@ export function RepeatableItemEditor({
         const itemTitle = (item as any)[titleKey]?.en || `Item #${i + 1}`;
         
         return (
-        <div key={item._id || i} className="border border-slate-200 rounded-lg overflow-hidden bg-white">
+        <div key={item.id || item._id || i} className="border border-slate-200 rounded-lg overflow-hidden bg-white">
           <div 
             className={`flex items-center justify-between p-4 bg-slate-50 cursor-pointer hover:bg-slate-100 transition-colors select-none ${isExpanded ? 'border-b border-slate-200' : ''}`}
             onClick={() => toggle(i)}

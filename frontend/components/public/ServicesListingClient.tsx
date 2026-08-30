@@ -134,7 +134,7 @@ export function ServicesListingClient({ services, heroTitle, heroSubtitle, heroI
                 const image = svc.hero?.media || '';
                 
                 return (
-                  <Link key={svc._id} href={`/${lang}/services/${svc.slug}`}>
+                  <Link key={svc.id} href={`/${lang}/services/${svc.slug}`}>
                     <motion.div 
                       initial={{ opacity: 0, y: 30 }}
                       whileInView={{ opacity: 1, y: 0 }}

@@ -72,7 +72,7 @@ export function ProjectsClient({ projects, lang, isAr, dir }: ProjectsClientProp
                 
                 return (
                   <ProjectCard 
-                    key={p._id}
+                    key={p.id}
                     title={p.title?.[lang] || p.title?.en || ''}
                     category={p.category?.[lang] || p.category?.en || ''}
                     imageUrl={p.coverImage}

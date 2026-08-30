@@ -107,7 +107,7 @@ export function FeaturedProjectsSection({ projects, isAr }: { projects: Project[
             <div className="md:col-span-5 grid grid-rows-2 gap-4">
               {displayed.slice(1, 3).map((project, i) => (
                 <motion.div
-                  key={project._id}
+                  key={project.id}
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -135,7 +135,7 @@ export function FeaturedProjectsSection({ projects, isAr }: { projects: Project[
             {/* Bottom row small projects */}
             {displayed.slice(3).map((project, i) => (
               <motion.div
-                key={project._id}
+                key={project.id}
                 className="md:col-span-4"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}

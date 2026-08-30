@@ -133,7 +133,7 @@ export default async function CareersPage({ params }: { params: Promise<{ lang: 
             ) : (
               jobs.map((job: any) => (
                 <Link 
-                  key={job._id}
+                  key={job.id}
                   href={`/${lang}/careers/${job.slug}`}
                   className="block group bg-slate-800/40 hover:bg-slate-800/80 border border-slate-700/50 hover:border-dazz-gold/50 rounded-lg p-6 md:p-8 transition-all duration-300 relative overflow-hidden"
                 >

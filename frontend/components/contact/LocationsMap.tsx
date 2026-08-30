@@ -21,7 +21,7 @@ function MapBounds({ locations, selectedId }: { locations: any[], selectedId: st
     if (locations.length === 0) return;
 
     if (selectedId) {
-      const loc = locations.find(l => l._id === selectedId);
+      const loc = locations.find(l => l.id === selectedId);
       if (loc) {
         map.setView([loc.latitude, loc.longitude], 15, { animate: true });
         return;
@@ -78,10 +78,10 @@ export default function LocationsMap({ locations, isAr }: LocationsMapProps) {
           
           {locations.map((loc) => (
             <Marker 
-              key={loc._id} 
+              key={loc.id} 
               position={[loc.latitude, loc.longitude]}
               eventHandlers={{
-                click: () => setSelectedId(loc._id),
+                click: () => setSelectedId(loc.id),
               }}
             >
               <Popup className={isAr ? 'leaflet-popup-rtl' : ''} closeButton={false}>
@@ -132,11 +132,11 @@ export default function LocationsMap({ locations, isAr }: LocationsMapProps) {
           
           <div className="space-y-4">
             {locations.map((loc, index) => {
-              const isActive = selectedId === loc._id;
+              const isActive = selectedId === loc.id;
               return (
                 <div 
-                  key={loc._id}
-                  onClick={() => setSelectedId(loc._id)}
+                  key={loc.id}
+                  onClick={() => setSelectedId(loc.id)}
                   className={`p-5 rounded-md cursor-pointer transition-all border ${
                     isActive 
                     ? 'bg-white border-dazz-gold shadow-md shadow-dazz-gold/10' 

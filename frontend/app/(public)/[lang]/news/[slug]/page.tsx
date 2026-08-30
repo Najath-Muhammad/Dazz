@@ -24,7 +24,7 @@ async function getRelatedBlogs(category: string, currentId: string) {
     if (!json.success || !json.data) return [];
     
     // Filter out current and try to match category if possible
-    let related = json.data.filter((b: any) => b._id !== currentId);
+    let related = json.data.filter((b: any) => b.id !== currentId);
     return related.slice(0, 3);
   } catch (error) {
     return [];
@@ -58,7 +58,7 @@ export default async function ArticleDetailPage({ params }: { params: Promise<{ 
   const isAr = lang === 'ar';
   const dir = isAr ? 'rtl' : 'ltr';
 
-  const relatedPosts = await getRelatedBlogs(post.category?.en, post._id);
+  const relatedPosts = await getRelatedBlogs(post.category?.en, post.id);
 
   const heroImage = typeof post.coverImage === 'string' ? post.coverImage : (post.coverImage?.url || 'https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg');
   
@@ -149,7 +149,7 @@ export default async function ArticleDetailPage({ params }: { params: Promise<{ 
                 const rpDate = new Date(rp.publishedAt || rp.createdAt).toLocaleDateString(isAr ? 'ar-SA' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 
                 return (
-                  <Link key={rp._id} href={`/${lang}/news/${rp.slug}`} className="group block h-full">
+                  <Link key={rp.id} href={`/${lang}/news/${rp.slug}`} className="group block h-full">
                     <div className="relative h-[250px] overflow-hidden bg-slate-200 mb-6">
                       <MediaRenderer media={rpImage} fill className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out" />
                       <div className="absolute inset-0 bg-dazz-navy/0 group-hover:bg-dazz-navy/10 transition-colors duration-500" />

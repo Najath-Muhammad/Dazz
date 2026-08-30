@@ -84,7 +84,7 @@ export function LatestBlogSection({ posts, isAr }: { posts: BlogPost[]; isAr?: b
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {displayed.map((post, i) => (
               <motion.div
-                key={post._id}
+                key={post.id}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-60px' }}

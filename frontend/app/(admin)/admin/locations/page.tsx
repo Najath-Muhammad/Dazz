@@ -28,7 +28,7 @@ export default function LocationsAdminPage() {
     if (!window.confirm('Are you sure you want to delete this location?')) return;
     try {
       await api.delete(`/locations/${id}`);
-      setLocations(locations.filter((loc) => loc._id !== id));
+      setLocations(locations.filter((loc) => loc.id !== id));
     } catch (error) {
       console.error('Failed to delete location:', error);
       alert('Failed to delete location');
@@ -38,7 +38,7 @@ export default function LocationsAdminPage() {
   const handleToggleActive = async (id: string, currentStatus: boolean) => {
     try {
       await api.put(`/locations/${id}`, { isActive: !currentStatus });
-      setLocations(locations.map((loc) => loc._id === id ? { ...loc, isActive: !currentStatus } : loc));
+      setLocations(locations.map((loc) => loc.id === id ? { ...loc, isActive: !currentStatus } : loc));
     } catch (error) {
       console.error('Failed to toggle status:', error);
     }
@@ -53,8 +53,8 @@ export default function LocationsAdminPage() {
     const item1 = newLocations[index];
     const item2 = newLocations[swapIndex];
     try {
-      await api.put(`/locations/${item1._id}`, { order: swapOrder === currentOrder ? swapIndex : swapOrder });
-      await api.put(`/locations/${item2._id}`, { order: swapOrder === currentOrder ? index : currentOrder });
+      await api.put(`/locations/${item1.id}`, { order: swapOrder === currentOrder ? swapIndex : swapOrder });
+      await api.put(`/locations/${item2.id}`, { order: swapOrder === currentOrder ? index : currentOrder });
       fetchLocations();
     } catch (error) {
       console.error('Failed to reorder:', error);
@@ -104,7 +104,7 @@ export default function LocationsAdminPage() {
       align: 'center',
       render: (loc) => (
         <button
-          onClick={() => handleToggleActive(loc._id, loc.isActive)}
+          onClick={() => handleToggleActive(loc.id, loc.isActive)}
           className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold transition-colors ${
             loc.isActive
               ? 'bg-green-100 text-green-700 hover:bg-green-200'
@@ -123,13 +123,13 @@ export default function LocationsAdminPage() {
       render: (loc) => (
         <div className="flex items-center justify-end gap-2">
           <Link
-            href={`/admin/locations/${loc._id}/edit`}
+            href={`/admin/locations/${loc.id}/edit`}
             className="p-1.5 text-blue-500 hover:text-blue-700 hover:bg-blue-50 rounded transition"
           >
             <Edit size={16} />
           </Link>
           <button
-            onClick={() => handleDelete(loc._id)}
+            onClick={() => handleDelete(loc.id)}
             className="p-1.5 text-red-400 hover:text-red-600 hover:bg-red-50 rounded transition"
           >
             <Trash2 size={16} />
