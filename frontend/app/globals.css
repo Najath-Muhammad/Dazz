@@ -43,7 +43,6 @@ body {
 
 p {
   font-weight: 500; /* Makes paragraphs globally bolder */
-  color: #334155; /* Slate-700 for better readability */
 }
 
 /* Force solid white background and dark text on browser autofill */
