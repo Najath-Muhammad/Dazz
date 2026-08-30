@@ -14,16 +14,16 @@ import { FormError } from '@/components/ui/FormError';
 const blogSchema = z.object({
   title: z.object({
     en: z.string().min(1, 'English title is required'),
-    ar: z.string().min(1, 'Arabic title is required')
+    ar: z.string().optional()
   }),
   slug: z.string().min(1, 'Slug is required'),
   category: z.object({
     en: z.string().min(1, 'English category is required'),
-    ar: z.string().min(1, 'Arabic category is required')
+    ar: z.string().optional()
   }),
   excerpt: z.object({
     en: z.string().min(1, 'English excerpt is required'),
-    ar: z.string().min(1, 'Arabic excerpt is required')
+    ar: z.string().optional()
   }),
   author: z.string().optional(),
   publishedAt: z.string().optional(),

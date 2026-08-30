@@ -73,9 +73,9 @@ export default function AdminNewProjectPage() {
               </div>
               <div dir="rtl">
                 <label className="block text-xs font-bold text-slate-500 mb-2 tracking-widest uppercase flex items-center gap-2 text-left" dir="ltr">
-                  <span>🇸🇦</span> Arabic
+                  <span>🇸🇦</span> Arabic <span className="text-[10px] text-dazz-gold font-normal">(Auto-translated if left blank)</span>
                 </label>
-                <input required type="text" value={formData.title.ar} onChange={(e) => handleLocalizedChange('title', 'ar', e.target.value)} className="w-full border border-slate-300 rounded-md px-4 py-2 text-right" />
+                <input type="text" value={formData.title.ar} onChange={(e) => handleLocalizedChange('title', 'ar', e.target.value)} className="w-full border border-slate-300 rounded-md px-4 py-2 text-right" />
               </div>
             </div>
             <div className="mt-4">
@@ -96,9 +96,9 @@ export default function AdminNewProjectPage() {
               </div>
               <div dir="rtl">
                 <label className="block text-xs font-bold text-slate-500 mb-2 tracking-widest uppercase flex items-center gap-2 text-left" dir="ltr">
-                  <span>🇸🇦</span> Arabic
+                  <span>🇸🇦</span> Arabic <span className="text-[10px] text-dazz-gold font-normal">(Auto-translated if left blank)</span>
                 </label>
-                <textarea required rows={5} value={formData.description.ar} onChange={(e) => handleLocalizedChange('description', 'ar', e.target.value)} className="w-full border border-slate-300 rounded-md px-4 py-2 text-right"></textarea>
+                <textarea rows={5} value={formData.description.ar} onChange={(e) => handleLocalizedChange('description', 'ar', e.target.value)} className="w-full border border-slate-300 rounded-md px-4 py-2 text-right"></textarea>
               </div>
             </div>
           </div>
@@ -113,8 +113,8 @@ export default function AdminNewProjectPage() {
                 <input required type="text" value={formData.category.en} onChange={(e) => handleLocalizedChange('category', 'en', e.target.value)} placeholder="e.g. Construction" className="w-full border border-slate-300 rounded-md px-4 py-2" />
               </div>
               <div dir="rtl">
-                <label className="block text-xs font-bold text-slate-500 mb-2 tracking-widest uppercase text-left" dir="ltr">Category 🇸🇦</label>
-                <input required type="text" value={formData.category.ar} onChange={(e) => handleLocalizedChange('category', 'ar', e.target.value)} className="w-full border border-slate-300 rounded-md px-4 py-2 text-right" />
+                <label className="block text-xs font-bold text-slate-500 mb-2 tracking-widest uppercase text-left" dir="ltr">Category 🇸🇦 <span className="text-[10px] text-dazz-gold font-normal">(Auto-translated)</span></label>
+                <input type="text" value={formData.category.ar} onChange={(e) => handleLocalizedChange('category', 'ar', e.target.value)} className="w-full border border-slate-300 rounded-md px-4 py-2 text-right" />
               </div>
               
               {/* Location */}
