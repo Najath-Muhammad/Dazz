@@ -20,6 +20,39 @@ export class ProjectService implements IProjectService {
       return { success: false, message: 'Failed to retrieve Projects' };
     }
   }
+
+  async getProjectsPaginated({ search, status, page, limit }: { search?: string; status?: string; page: number; limit: number }) {
+    try {
+      const query: any = {};
+      if (search) {
+        query['title.en'] = { $regex: search, $options: 'i' };
+      }
+      if (status === 'published') {
+        query.isPublished = true;
+      } else if (status === 'draft') {
+        query.isPublished = false;
+      }
+
+      const { items, total } = await this._repository.findPaginated(query, page, limit);
+      
+      return { 
+        success: true, 
+        message: 'Projects retrieved successfully', 
+        data: items,
+        pagination: {
+          total,
+          page,
+          limit,
+          totalPages: Math.ceil(total / limit),
+          hasNext: page * limit < total,
+          hasPrev: page > 1
+        }
+      };
+    } catch (error: any) {
+      console.error('Error in getProjectsPaginated:', error);
+      return { success: false, message: 'Failed to retrieve Projects' };
+    }
+  }
   async getProjectById(id: string) {
     try {
       const item = await this._repository.findById(id);

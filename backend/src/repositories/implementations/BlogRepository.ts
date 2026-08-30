@@ -5,6 +5,14 @@ export class BlogRepository implements IBlogRepository {
   async findAll(): Promise<any[]> {
     return await Blog.find();
   }
+  async findPaginated(query: object, page: number, limit: number): Promise<{ items: any[], total: number }> {
+    const skip = (page - 1) * limit;
+    const [items, total] = await Promise.all([
+      Blog.find(query).sort({ createdAt: -1 }).skip(skip).limit(limit),
+      Blog.countDocuments(query)
+    ]);
+    return { items, total };
+  }
   async findById(id: string): Promise<any | null> {
     return await Blog.findById(id);
   }

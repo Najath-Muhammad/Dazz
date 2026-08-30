@@ -20,6 +20,40 @@ export class ServiceService implements IServiceService {
       return { success: false, message: 'Failed to retrieve Services' };
     }
   }
+
+  async getServicesPaginated({ search, status, category, page, limit }: { search?: string; status?: string; category?: string; page: number; limit: number }) {
+    try {
+      const query: any = {};
+      if (search) {
+        query['name.en'] = { $regex: search, $options: 'i' };
+      }
+      if (status && status !== 'ALL') {
+        query.status = status; // e.g. 'published' or 'draft'
+      }
+      if (category && category !== 'ALL') {
+        query.category = category;
+      }
+
+      const { items, total } = await this._repository.findPaginated(query, page, limit);
+      
+      return { 
+        success: true, 
+        message: 'Services retrieved successfully', 
+        data: items,
+        pagination: {
+          total,
+          page,
+          limit,
+          totalPages: Math.ceil(total / limit),
+          hasNext: page * limit < total,
+          hasPrev: page > 1
+        }
+      };
+    } catch (error: any) {
+      console.error('Error in getServicesPaginated:', error);
+      return { success: false, message: 'Failed to retrieve Services' };
+    }
+  }
   async getServiceBySlug(slug: string) {
     try {
       const item = await this._repository.findBySlug(slug);

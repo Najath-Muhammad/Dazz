@@ -46,17 +46,17 @@ export function MissionVision({ isAr, mission, vision }: MissionVisionProps) {
 
   const fadeUp = {
     hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as const } }
   };
 
   const lineDraw = {
     hidden: { scaleY: 0, transformOrigin: 'top' },
-    visible: { scaleY: 1, transition: { duration: 1.5, ease: 'easeInOut' } }
+    visible: { scaleY: 1, transition: { duration: 1.5, ease: 'easeInOut' as const } }
   };
 
   const hoverAnim = {
     rest: { y: 0, opacity: 0.4 },
-    hover: { y: -5, opacity: 1, transition: { duration: 0.3, ease: 'easeOut' } }
+    hover: { y: -5, opacity: 1, transition: { duration: 0.3, ease: 'easeOut' as const } }
   };
 
   return (
@@ -80,9 +80,9 @@ export function MissionVision({ isAr, mission, vision }: MissionVisionProps) {
           className="flex flex-col items-center mb-24"
         >
           {/* Section Header */}
-          <motion.div variants={fadeUp} className="flex items-center gap-4 mb-6">
+          <motion.div variants={fadeUp} className={`flex items-center gap-4 mb-6 ${isAr ? 'flex-row-reverse' : ''}`}>
             <div className="w-12 h-px bg-dazz-gold" />
-            <span className="text-dazz-gold font-mono text-[10px] tracking-[0.3em] uppercase">
+            <span className={`text-dazz-gold font-mono text-[10px] tracking-[0.3em] uppercase ${isAr ? 'font-arabic uppercase-none text-xs tracking-widest' : ''}`}>
               {isAr ? 'اتجاهنا' : 'Our Direction'}
             </span>
             <div className="w-12 h-px bg-dazz-gold" />
@@ -90,7 +90,7 @@ export function MissionVision({ isAr, mission, vision }: MissionVisionProps) {
           
           <motion.h2 
             variants={fadeUp}
-            className="text-4xl md:text-5xl lg:text-7xl font-extrabold uppercase tracking-tighter text-white"
+            className={`text-4xl md:text-5xl lg:text-7xl font-extrabold tracking-tighter text-white ${isAr ? 'font-arabic text-5xl md:text-6xl lg:text-[5rem]' : 'uppercase'}`}
           >
             {isAr ? 'المهمة والرؤية' : 'Mission & Vision'}
           </motion.h2>
@@ -132,11 +132,11 @@ export function MissionVision({ isAr, mission, vision }: MissionVisionProps) {
               </div>
             </div>
             
-            <motion.h3 variants={fadeUp} className="text-2xl md:text-4xl font-bold uppercase tracking-tight text-white mb-8">
+            <motion.h3 variants={fadeUp} className={`text-2xl md:text-4xl font-bold tracking-tight text-white mb-8 ${isAr ? 'font-arabic text-3xl md:text-5xl uppercase-none' : 'uppercase'}`}>
               {mTitle}
             </motion.h3>
             
-            <motion.p variants={fadeUp} className={`text-lg md:text-xl text-slate-200 font-light leading-relaxed ${isAr ? 'text-right' : 'text-left'}`}>
+            <motion.p variants={fadeUp} className={`text-lg md:text-xl text-slate-200 font-light leading-relaxed ${isAr ? 'text-right font-arabic' : 'text-left'}`}>
               {mDesc}
             </motion.p>
           </motion.div>
@@ -165,11 +165,11 @@ export function MissionVision({ isAr, mission, vision }: MissionVisionProps) {
               </div>
             </div>
             
-            <motion.h3 variants={fadeUp} className="text-2xl md:text-4xl font-bold uppercase tracking-tight text-white mb-8">
+            <motion.h3 variants={fadeUp} className={`text-2xl md:text-4xl font-bold tracking-tight text-white mb-8 ${isAr ? 'font-arabic text-3xl md:text-5xl uppercase-none' : 'uppercase'}`}>
               {vTitle}
             </motion.h3>
             
-            <motion.p variants={fadeUp} className={`text-lg md:text-xl text-slate-200 font-light leading-relaxed ${isAr ? 'text-right' : 'text-left'}`}>
+            <motion.p variants={fadeUp} className={`text-lg md:text-xl text-slate-200 font-light leading-relaxed ${isAr ? 'text-right font-arabic' : 'text-left'}`}>
               {vDesc}
             </motion.p>
           </motion.div>

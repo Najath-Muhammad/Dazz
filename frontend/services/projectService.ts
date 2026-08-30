@@ -1,8 +1,9 @@
 import api from '@/lib/api';
 
 export const projectService = {
-  getProjects: async () => {
-    return await api.get<any[]>('/projects');
+  getProjects: async (params?: Record<string, any>) => {
+    const qs = params ? '?' + new URLSearchParams(params).toString() : '';
+    return await api.get<any>(`/projects${qs}`);
   },
   getProjectById: async (id: string) => {
     return await api.get<any>(`/projects/${id}`);

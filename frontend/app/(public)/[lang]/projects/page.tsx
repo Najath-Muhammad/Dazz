@@ -47,8 +47,21 @@ export default async function ProjectsPage({ params }: { params: Promise<{ lang:
 
   const projectsHeader = settings?.pageHeaders?.projects;
   
-  const heroTitle = projectsHeader?.title?.[lang] || (isAr ? 'معرض\nالمشاريع' : 'PROJECT\nGALLERY');
-  const heroSubtitle = projectsHeader?.subtitle?.[lang] || (isAr ? 'عرض لأهم مساعينا وأكثرها تأثيراً في جميع أنحاء المملكة.' : 'A showcase of our most prestigious and impactful endeavors across the Kingdom.');
+  let heroTitle = projectsHeader?.title;
+  if (!heroTitle || (typeof heroTitle === 'string' && heroTitle.toUpperCase().includes('PROJECT'))) {
+    heroTitle = isAr ? 'معرض\nالمشاريع' : 'PROJECT\nGALLERY';
+  } else if (typeof heroTitle === 'object') {
+    heroTitle = isAr ? (heroTitle.ar || heroTitle.en) : heroTitle.en;
+  }
+
+  let heroSubtitle = projectsHeader?.subtitle;
+  if (!heroSubtitle || (typeof heroSubtitle === 'string' && heroSubtitle.startsWith('A showcase of'))) {
+    heroSubtitle = isAr 
+      ? 'عرض لأهم مساعينا وأكثرها تأثيراً في جميع أنحاء المملكة.' 
+      : 'A showcase of our most prestigious and impactful endeavors across the Kingdom.';
+  } else if (typeof heroSubtitle === 'object') {
+    heroSubtitle = isAr ? (heroSubtitle.ar || heroSubtitle.en) : heroSubtitle.en;
+  }
   
   const rawBg = projectsHeader?.media;
   const heroImage = rawBg?.url || (typeof rawBg === 'string' && rawBg !== '' ? rawBg : '/images/project-hero.png');

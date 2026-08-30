@@ -1,5 +1,6 @@
 export interface IServiceRepository {
   findAll(): Promise<any[]>;
+  findPaginated(query: object, page: number, limit: number): Promise<{ items: any[], total: number }>;
   findPublished(): Promise<any[]>;
   findBySlug(slug: string): Promise<any>;
   findById(id: string): Promise<any>;

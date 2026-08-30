@@ -20,6 +20,42 @@ export class BlogService implements IBlogService {
       return { success: false, message: 'Failed to retrieve Blogs' };
     }
   }
+
+  async getBlogsPaginated({ search, status, category, page, limit }: { search?: string; status?: string; category?: string; page: number; limit: number }) {
+    try {
+      const query: any = {};
+      if (search) {
+        query['title.en'] = { $regex: search, $options: 'i' };
+      }
+      if (status === 'published') {
+        query.isPublished = true;
+      } else if (status === 'draft') {
+        query.isPublished = false;
+      }
+      if (category && category !== 'ALL') {
+        query['category.en'] = { $regex: new RegExp(`^${category}$`, 'i') }; // match category exactly, case insensitive
+      }
+
+      const { items, total } = await this._repository.findPaginated(query, page, limit);
+      
+      return { 
+        success: true, 
+        message: 'Blogs retrieved successfully', 
+        data: items,
+        pagination: {
+          total,
+          page,
+          limit,
+          totalPages: Math.ceil(total / limit),
+          hasNext: page * limit < total,
+          hasPrev: page > 1
+        }
+      };
+    } catch (error: any) {
+      console.error('Error in getBlogsPaginated:', error);
+      return { success: false, message: 'Failed to retrieve Blogs' };
+    }
+  }
   async getBlogById(id: string) {
     try {
       const item = await this._repository.findById(id);

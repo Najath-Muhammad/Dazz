@@ -55,13 +55,13 @@ export function ProjectsClient({ projects, lang, isAr, dir }: ProjectsClientProp
         />
 
         <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <AnimatePresence mode="popLayout">
+              <AnimatePresence mode="popLayout">
             {filteredProjects.length === 0 ? (
               <motion.p 
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="text-slate-500 font-light text-lg col-span-full py-12"
+                className={`text-slate-500 font-light text-lg col-span-full py-12 ${isAr ? 'font-arabic' : ''}`}
               >
                 {isAr ? 'لا توجد مشاريع متاحة في هذه الفئة حالياً.' : 'No projects available in this category at the moment.'}
               </motion.p>
@@ -99,16 +99,16 @@ export function ProjectsClient({ projects, lang, isAr, dir }: ProjectsClientProp
             viewport={{ once: true, margin: '-100px' }}
             transition={{ duration: 1 }}
           >
-            <h2 className="text-3xl md:text-5xl lg:text-6xl font-extrabold uppercase tracking-tighter text-slate-900 mb-6">
+            <h2 className={`text-3xl md:text-5xl lg:text-6xl font-extrabold tracking-tighter text-slate-900 mb-6 ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>
               {isAr ? 'ناقش مشروعك القادم' : 'DISCUSS YOUR NEXT PROJECT'}
             </h2>
-            <p className="text-lg md:text-xl text-slate-500 font-light mb-10 max-w-2xl mx-auto">
+            <p className={`text-lg md:text-xl text-slate-500 font-light mb-10 max-w-2xl mx-auto ${isAr ? 'font-arabic' : ''}`}>
               {isAr 
                 ? 'خبراؤنا مستعدون لتحويل رؤيتك إلى واقع ملموس بدقة صناعية.' 
                 : 'Our experts are ready to turn your vision into reality with industrial precision.'}
             </p>
             <Link href={`/${isAr ? 'ar' : 'en'}/contact`}>
-              <Button variant="primary" className="text-lg px-10 py-4">
+              <Button variant="primary" className={`text-lg px-10 py-4 ${isAr ? 'font-arabic uppercase-none' : ''}`}>
                 {isAr ? 'تواصل معنا' : 'CONTACT US'}
               </Button>
             </Link>

@@ -47,8 +47,23 @@ export default async function NewsPage({ params }: { params: Promise<{ lang: str
   ]);
 
   const newsHeader = settings?.pageHeaders?.news;
-  const heroTitle = newsHeader?.title || (isAr ? 'الأخبار\nوالرؤى' : 'NEWS &\nINSIGHTS');
-  const heroSubtitle = newsHeader?.subtitle || (isAr ? 'أحدث الإنجازات وتحديثات الصناعة من شركة داز ترادلينك.' : 'Stay updated with our latest company milestones and industry perspectives.');
+  let heroTitle = newsHeader?.title;
+  if (typeof heroTitle === 'object' && heroTitle !== null) {
+    heroTitle = isAr ? (heroTitle.ar || heroTitle.en) : heroTitle.en;
+  }
+  if (!heroTitle || (typeof heroTitle === 'string' && heroTitle.toUpperCase().includes('NEWS'))) {
+    heroTitle = isAr ? 'الأخبار\nوالرؤى' : 'NEWS &\nINSIGHTS';
+  }
+
+  let heroSubtitle = newsHeader?.subtitle;
+  if (typeof heroSubtitle === 'object' && heroSubtitle !== null) {
+    heroSubtitle = isAr ? (heroSubtitle.ar || heroSubtitle.en) : heroSubtitle.en;
+  }
+  if (!heroSubtitle || (typeof heroSubtitle === 'string' && heroSubtitle.startsWith('Stay updated'))) {
+    heroSubtitle = isAr 
+      ? 'أحدث الإنجازات وتحديثات الصناعة من شركة داز ترادلينك.' 
+      : 'Stay updated with our latest company milestones and industry perspectives.';
+  }
   
   const rawBg = newsHeader?.media;
   const heroImage = rawBg?.url || (typeof rawBg === 'string' && rawBg !== '' ? rawBg : '/images/about-hero.png');
@@ -59,6 +74,7 @@ export default async function NewsPage({ params }: { params: Promise<{ lang: str
         title={heroTitle}
         subtitle={heroSubtitle}
         backgroundImage={heroImage}
+        isAr={isAr}
       />
       <NewsClient 
         blogs={blogs} 

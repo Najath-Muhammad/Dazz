@@ -11,7 +11,7 @@ interface ProjectCardProps {
 
 export function ProjectCard({ title, category, imageUrl, slug }: ProjectCardProps) {
   return (
-    <Link href={`/projects/${slug}`} className="group block relative overflow-hidden bg-slate-900 aspect-[4/3]">
+    <Link href={`/en/projects/${slug}`} className="group block relative overflow-hidden bg-slate-900 aspect-[4/3]">
       <MediaRenderer
         media={imageUrl}
         fill

@@ -63,16 +63,16 @@ export function ServicesListingClient({ services, heroTitle, heroSubtitle, heroI
           >
             <div className="flex items-center gap-4 mb-6">
               <div className="w-12 h-[1px] bg-dazz-gold" />
-              <p className="text-dazz-gold font-mono text-sm tracking-widest uppercase">
+              <p className={`text-dazz-gold font-mono text-sm tracking-widest ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>
                 {isAr ? 'الخدمات والأقسام' : 'DIVISIONS & SERVICES'}
               </p>
             </div>
             
-            <h1 className="text-5xl md:text-7xl font-extrabold text-white uppercase tracking-tighter leading-[1.1] mb-8">
+            <h1 className={`text-5xl md:text-7xl font-extrabold text-white tracking-tighter leading-[1.1] mb-8 ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>
               {heroTitle}
             </h1>
             
-            <p className="text-xl md:text-2xl font-light text-slate-300 max-w-2xl leading-relaxed">
+            <p className={`text-xl md:text-2xl font-light text-slate-300 max-w-2xl leading-relaxed ${isAr ? 'font-arabic' : ''}`}>
               {heroSubtitle}
             </p>
           </motion.div>
@@ -101,7 +101,7 @@ export function ServicesListingClient({ services, heroTitle, heroSubtitle, heroI
           
           <div className="flex items-center gap-3 mb-8">
             <div className="w-1.5 h-8 bg-dazz-gold" />
-            <h2 className="text-3xl font-bold uppercase tracking-tight text-slate-900">
+            <h2 className={`text-3xl font-bold tracking-tight text-slate-900 ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>
               {isAr ? 'مجالات خبرتنا' : 'AREAS OF EXPERTISE'}
             </h2>
           </div>
@@ -111,11 +111,11 @@ export function ServicesListingClient({ services, heroTitle, heroSubtitle, heroI
               <button
                 key={tab.id}
                 onClick={() => setActiveCategory(tab.id)}
-                className={`text-sm font-bold uppercase tracking-widest px-4 py-2 transition-all ${
+                className={`text-sm font-bold tracking-widest px-4 py-2 transition-all ${
                   activeCategory === tab.id 
                     ? 'text-dazz-gold border-b-2 border-dazz-gold -mb-[18px]' 
                     : 'text-slate-500 hover:text-slate-900'
-                }`}
+                } ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}
               >
                 {tab.label}
               </button>
@@ -123,7 +123,7 @@ export function ServicesListingClient({ services, heroTitle, heroSubtitle, heroI
           </div>
 
           {filteredServices.length === 0 ? (
-            <div className="text-center text-slate-500 py-24 border border-slate-200 rounded-lg">
+            <div className={`text-center text-slate-500 py-24 border border-slate-200 rounded-lg ${isAr ? 'font-arabic' : ''}`}>
               {isAr ? 'لا توجد خدمات متاحة حاليا.' : 'No services are currently available.'}
             </div>
           ) : (
@@ -155,15 +155,15 @@ export function ServicesListingClient({ services, heroTitle, heroSubtitle, heroI
                       
                       <div className="flex-1 p-8 flex flex-col justify-between">
                         <div>
-                          <h3 className="text-2xl font-bold uppercase tracking-tight text-slate-900 mb-4 group-hover:text-dazz-gold transition-colors">
+                          <h3 className={`text-2xl font-bold tracking-tight text-slate-900 mb-4 group-hover:text-dazz-gold transition-colors ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>
                             {title}
                           </h3>
-                          <p className="text-slate-600 font-light line-clamp-3 leading-relaxed">
+                          <p className={`text-slate-600 font-light line-clamp-3 leading-relaxed ${isAr ? 'font-arabic' : ''}`}>
                             {desc}
                           </p>
                         </div>
                         
-                        <div className="flex items-center gap-2 text-sm font-bold tracking-widest text-slate-400 group-hover:text-dazz-navy transition-colors mt-6 uppercase">
+                        <div className={`flex items-center gap-2 text-sm font-bold tracking-widest text-slate-400 group-hover:text-dazz-navy transition-colors mt-6 ${isAr ? 'font-arabic uppercase-none flex-row-reverse self-end' : 'uppercase'}`}>
                           {isAr ? 'عرض التفاصيل' : 'EXPLORE SERVICE'} 
                           <ArrowRight size={16} className={`transition-transform duration-300 group-hover:translate-x-1 ${isAr ? 'rotate-180 group-hover:-translate-x-1' : ''}`} />
                         </div>

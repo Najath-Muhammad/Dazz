@@ -26,9 +26,9 @@ export function OurApproach({ isAr }: { isAr?: boolean }) {
 
       <div className="max-w-[1400px] mx-auto px-6 relative z-10">
         <div className="mb-16">
-          <span className="text-[120px] font-extrabold text-slate-200/60 leading-none tracking-tighter block mb-6">02</span>
-          <div className="w-12 h-px bg-dazz-gold mb-4" />
-          <h2 className="text-sm font-bold uppercase tracking-widest text-slate-500">
+          <span className={`text-[120px] font-extrabold text-slate-200/60 leading-none tracking-tighter block mb-6 ${isAr ? 'font-arabic text-right' : ''}`}>02</span>
+          <div className={`w-12 h-px bg-dazz-gold mb-4 ${isAr ? 'ml-auto' : ''}`} />
+          <h2 className={`text-sm font-bold tracking-widest text-slate-500 ${isAr ? 'font-arabic text-base uppercase-none' : 'uppercase'}`}>
             {isAr ? 'نهجنا' : 'Our Approach'}
           </h2>
         </div>
@@ -41,12 +41,12 @@ export function OurApproach({ isAr }: { isAr?: boolean }) {
                 whileInView={{ y: 0 }}
                 viewport={{ once: true, margin: '-100px' }}
                 transition={{ duration: 0.8, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                className="flex items-center gap-8"
+                className={`flex items-center gap-8 ${isAr ? 'flex-row-reverse' : ''}`}
               >
                 <span className="text-xl md:text-2xl font-mono text-slate-300 group-hover:text-dazz-gold transition-colors duration-300">
                   0{i + 1}
                 </span>
-                <span className="text-4xl md:text-6xl lg:text-7xl font-extrabold uppercase tracking-tighter text-slate-900 group-hover:text-dazz-navy transition-colors duration-300">
+                <span className={`text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tighter text-slate-900 group-hover:text-dazz-navy transition-colors duration-300 ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>
                   {word}
                 </span>
               </motion.div>

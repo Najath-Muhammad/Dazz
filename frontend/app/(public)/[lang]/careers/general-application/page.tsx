@@ -21,6 +21,7 @@ export default async function GeneralApplicationPage({ params }: { params: Promi
         title={title}
         subtitle={subtitle}
         backgroundImage="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg"
+        isAr={isAr}
       />
       
       <div className="max-w-4xl mx-auto -mt-24 relative z-20 bg-white rounded-xl shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] p-8 md:p-12 border border-slate-100">

@@ -78,7 +78,7 @@ export function NewsClient({ blogs, lang, isAr, dir }: NewsClientProps) {
 
             <div className={`absolute bottom-0 ${isAr ? 'right-0' : 'left-0'} p-8 md:p-16 w-full md:w-2/3 lg:w-1/2 flex flex-col items-start gap-4 z-10`}>
               <div className="flex items-center gap-4">
-                <span className="bg-dazz-gold text-slate-900 text-[10px] font-bold tracking-widest uppercase px-3 py-1">
+                <span className={`bg-dazz-gold text-slate-900 text-[10px] font-bold tracking-widest px-3 py-1 ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>
                   {isAr ? 'مقال مميز' : 'Featured Article'}
                 </span>
                 <span className="text-white/70 text-xs font-mono uppercase tracking-widest flex items-center gap-2">
@@ -87,15 +87,15 @@ export function NewsClient({ blogs, lang, isAr, dir }: NewsClientProps) {
                 </span>
               </div>
               
-              <h2 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight uppercase leading-tight group-hover:text-dazz-gold transition-colors duration-500">
+              <h2 className={`text-4xl md:text-5xl font-extrabold text-white tracking-tight leading-tight group-hover:text-dazz-gold transition-colors duration-500 ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>
                 {isAr ? (featuredPost.title?.ar || featuredPost.title?.en) : featuredPost.title?.en}
               </h2>
               
-              <p className="text-white/80 text-lg line-clamp-2 md:line-clamp-3 leading-relaxed">
+              <p className={`text-white/80 text-lg line-clamp-2 md:line-clamp-3 leading-relaxed ${isAr ? 'font-arabic' : ''}`}>
                 {isAr ? (featuredPost.excerpt?.ar || featuredPost.excerpt?.en) : featuredPost.excerpt?.en}
               </p>
 
-              <div className="mt-4 flex items-center gap-3 text-sm font-bold tracking-widest uppercase text-white group-hover:text-dazz-gold transition-colors">
+              <div className={`mt-4 flex items-center gap-3 text-sm font-bold tracking-widest text-white group-hover:text-dazz-gold transition-colors ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>
                 {isAr ? 'اقرأ المقال' : 'Read Article'}
                 <ArrowRight size={16} className={`transition-transform duration-300 ${isAr ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1'}`} />
               </div>
@@ -108,22 +108,23 @@ export function NewsClient({ blogs, lang, isAr, dir }: NewsClientProps) {
       <section className="py-12 max-w-[1400px] mx-auto px-6 border-t border-slate-200">
         
         {/* Filter Bar */}
-        <div className="flex flex-wrap items-center gap-4 md:gap-8 mb-16">
-          <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">
+        <div className={`flex flex-wrap items-center gap-4 md:gap-8 mb-16 ${isAr ? 'flex-row-reverse' : ''}`}>
+          <span className={`text-xs font-bold text-slate-400 tracking-widest ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>
             {isAr ? 'تصفية حسب:' : 'Filter by:'}
           </span>
-          <div className="flex flex-wrap gap-2 md:gap-4">
+          <div className={`flex flex-wrap gap-2 md:gap-4 ${isAr ? 'flex-row-reverse' : ''}`}>
             {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className={`text-xs md:text-sm font-bold tracking-widest uppercase px-4 py-2 transition-all duration-300 ${
+                className={`text-xs md:text-sm font-bold tracking-widest px-4 py-2 transition-all duration-300 ${
                   activeCategory === cat 
                     ? 'bg-dazz-navy text-white' 
                     : 'text-slate-500 hover:text-dazz-navy hover:bg-slate-100'
-                }`}
+                } ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}
               >
-                {cat}
+                {/* Need to translate category name but let's just stick to uppercase if not ar */}
+                {isAr && cat === 'ALL' ? 'الكل' : (isAr && cat === 'COMPANY NEWS' ? 'أخبار الشركة' : cat)}
               </button>
             ))}
           </div>
@@ -132,7 +133,7 @@ export function NewsClient({ blogs, lang, isAr, dir }: NewsClientProps) {
         {/* Grid */}
         {filteredPosts.length === 0 ? (
           <div className="py-32 text-center border border-slate-100 bg-slate-50">
-            <p className="text-slate-500 font-medium">
+            <p className={`text-slate-500 font-medium ${isAr ? 'font-arabic' : ''}`}>
               {isAr ? 'لا توجد مقالات تطابق هذا الفلتر.' : 'No articles found for this category.'}
             </p>
           </div>
@@ -167,9 +168,9 @@ export function NewsClient({ blogs, lang, isAr, dir }: NewsClientProps) {
                   </Link>
 
                   <div className="flex-1 flex flex-col">
-                    <div className="flex items-center gap-4 mb-4">
+                    <div className={`flex items-center gap-4 mb-4 ${isAr ? 'flex-row-reverse' : ''}`}>
                       {post.category?.en && (
-                        <span className="text-[10px] font-bold tracking-widest text-dazz-gold uppercase">
+                        <span className={`text-[10px] font-bold tracking-widest text-dazz-gold ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>
                           {isAr ? (post.category.ar || post.category.en) : post.category.en}
                         </span>
                       )}
@@ -178,19 +179,19 @@ export function NewsClient({ blogs, lang, isAr, dir }: NewsClientProps) {
                       </span>
                     </div>
 
-                    <h3 className="text-2xl font-extrabold uppercase tracking-tight text-slate-900 group-hover:text-dazz-navy transition-colors leading-tight mb-4">
+                    <h3 className={`text-2xl font-extrabold tracking-tight text-slate-900 group-hover:text-dazz-navy transition-colors leading-tight mb-4 ${isAr ? 'font-arabic text-right uppercase-none' : 'uppercase'}`}>
                       <Link href={`/${lang}/news/${post.slug}`}>
                         {isAr ? (post.title?.ar || post.title?.en) : post.title?.en}
                       </Link>
                     </h3>
 
-                    <p className="text-slate-500 font-light leading-relaxed line-clamp-3 mb-6">
+                    <p className={`text-slate-500 font-light leading-relaxed line-clamp-3 mb-6 ${isAr ? 'font-arabic text-right' : ''}`}>
                       {isAr ? (post.excerpt?.ar || post.excerpt?.en) : post.excerpt?.en}
                     </p>
 
                     <Link 
                       href={`/${lang}/news/${post.slug}`}
-                      className="mt-auto flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-slate-900 group-hover:text-dazz-gold transition-colors w-fit"
+                      className={`mt-auto flex items-center gap-2 text-xs font-bold tracking-widest text-slate-900 group-hover:text-dazz-gold transition-colors w-fit ${isAr ? 'flex-row-reverse ml-auto font-arabic uppercase-none' : 'uppercase'}`}
                     >
                       {isAr ? 'اقرأ المقال' : 'Read Article'}
                       <span className="w-8 h-px bg-current group-hover:w-12 transition-all duration-300" />

@@ -5,6 +5,14 @@ export class ServiceRepository implements IServiceRepository {
   async findAll(filter: object = {}): Promise<any[]> {
     return await Service.find(filter).sort({ displayOrder: 1, createdAt: -1 });
   }
+  async findPaginated(query: object, page: number, limit: number): Promise<{ items: any[], total: number }> {
+    const skip = (page - 1) * limit;
+    const [items, total] = await Promise.all([
+      Service.find(query).sort({ displayOrder: 1, createdAt: -1 }).skip(skip).limit(limit),
+      Service.countDocuments(query)
+    ]);
+    return { items, total };
+  }
   async findPublished(): Promise<any[]> {
     return await Service.find({ status: 'published' }).sort({ displayOrder: 1 });
   }

@@ -15,7 +15,12 @@ export class ProjectController implements IProjectController {
   }
   getProjects = async (req: Request, res: Response): Promise<void> => {
     try {
-      const result = await this._service.getAllProjects();
+      const page = parseInt(req.query.page as string) || 1;
+      const limit = parseInt(req.query.limit as string) || 100; // Use 100 as default to support existing public endpoints
+      const search = req.query.search as string;
+      const status = req.query.status as string;
+
+      const result = await this._service.getProjectsPaginated({ page, limit, search, status });
       if (!result.success) {
         res.status(HTTP_STATUS.BAD_REQUEST).json(result);
         return;

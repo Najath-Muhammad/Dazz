@@ -77,11 +77,11 @@ export default async function ArticleDetailPage({ params }: { params: Promise<{ 
         
         <div className="relative z-10 w-full max-w-4xl mx-auto px-6 pb-16 md:pb-24 text-center flex flex-col items-center">
           {category && (
-            <span className="bg-dazz-gold text-slate-900 text-xs font-bold tracking-widest uppercase px-4 py-1.5 mb-6">
+            <span className={`bg-dazz-gold text-slate-900 text-xs font-bold tracking-widest px-4 py-1.5 mb-6 ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>
               {category}
             </span>
           )}
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white tracking-tight uppercase leading-[1.1] mb-6">
+          <h1 className={`text-4xl md:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.1] mb-6 ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>
             {title}
           </h1>
           <div className="flex items-center gap-6 text-white/70 text-sm font-mono tracking-widest uppercase">
@@ -101,7 +101,7 @@ export default async function ArticleDetailPage({ params }: { params: Promise<{ 
         <div className="max-w-[800px] mx-auto px-6">
           <Link 
             href={`/${lang}/news`}
-            className={`inline-flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-slate-400 hover:text-dazz-navy transition-colors mb-16 ${isAr ? 'flex-row-reverse' : ''}`}
+            className={`inline-flex items-center gap-2 text-xs font-bold tracking-widest text-slate-400 hover:text-dazz-navy transition-colors mb-16 ${isAr ? 'flex-row-reverse font-arabic uppercase-none' : 'uppercase'}`}
           >
             {isAr ? <ArrowRight size={16} /> : <ArrowLeft size={16} />}
             {isAr ? 'العودة إلى الأخبار' : 'Back to News'}
@@ -112,8 +112,8 @@ export default async function ArticleDetailPage({ params }: { params: Promise<{ 
           </article>
 
           {/* Social Share */}
-          <div className="mt-20 pt-8 border-t border-slate-200 flex items-center justify-between">
-            <span className="text-sm font-bold text-slate-900 uppercase tracking-widest">
+          <div className={`mt-20 pt-8 border-t border-slate-200 flex items-center justify-between ${isAr ? 'flex-row-reverse' : ''}`}>
+            <span className={`text-sm font-bold text-slate-900 tracking-widest ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>
               {isAr ? 'مشاركة المقال' : 'Share Article'}
             </span>
             <div className="flex items-center gap-4">
@@ -132,11 +132,11 @@ export default async function ArticleDetailPage({ params }: { params: Promise<{ 
       {relatedPosts.length > 0 && (
         <section className="py-24 bg-slate-50 border-t border-slate-200">
           <div className="max-w-[1400px] mx-auto px-6">
-            <div className="flex items-center justify-between mb-12">
-              <h3 className="text-3xl md:text-4xl font-extrabold text-slate-900 uppercase tracking-tight">
+            <div className={`flex items-center justify-between mb-12 ${isAr ? 'flex-row-reverse' : ''}`}>
+              <h3 className={`text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>
                 {isAr ? 'مقالات ذات صلة' : 'Related Articles'}
               </h3>
-              <Link href={`/${lang}/news`} className={`hidden md:flex items-center gap-2 text-sm font-bold tracking-widest uppercase text-slate-400 hover:text-dazz-navy transition-colors group ${isAr ? 'flex-row-reverse' : ''}`}>
+              <Link href={`/${lang}/news`} className={`hidden md:flex items-center gap-2 text-sm font-bold tracking-widest text-slate-400 hover:text-dazz-navy transition-colors group ${isAr ? 'flex-row-reverse font-arabic uppercase-none' : 'uppercase'}`}>
                 {isAr ? 'عرض الكل' : 'View All'}
                 {isAr ? <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" /> : <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />}
               </Link>
@@ -155,7 +155,7 @@ export default async function ArticleDetailPage({ params }: { params: Promise<{ 
                       <div className="absolute inset-0 bg-dazz-navy/0 group-hover:bg-dazz-navy/10 transition-colors duration-500" />
                     </div>
                     <p className="text-[10px] font-mono tracking-widest text-slate-400 uppercase mb-3">{rpDate}</p>
-                    <h4 className="text-xl font-extrabold uppercase tracking-tight text-slate-900 group-hover:text-dazz-navy transition-colors leading-tight">
+                    <h4 className={`text-xl font-extrabold tracking-tight text-slate-900 group-hover:text-dazz-navy transition-colors leading-tight ${isAr ? 'font-arabic uppercase-none text-right' : 'uppercase'}`}>
                       {rpTitle}
                     </h4>
                   </Link>

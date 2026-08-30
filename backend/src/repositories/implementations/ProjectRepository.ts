@@ -5,6 +5,14 @@ export class ProjectRepository implements IProjectRepository {
   async findAll(): Promise<any[]> {
     return await Project.find();
   }
+  async findPaginated(query: object, page: number, limit: number): Promise<{ items: any[], total: number }> {
+    const skip = (page - 1) * limit;
+    const [items, total] = await Promise.all([
+      Project.find(query).sort({ createdAt: -1 }).skip(skip).limit(limit),
+      Project.countDocuments(query)
+    ]);
+    return { items, total };
+  }
   async findById(id: string): Promise<any | null> {
     return await Project.findById(id);
   }

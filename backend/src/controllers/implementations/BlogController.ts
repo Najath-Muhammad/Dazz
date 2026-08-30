@@ -15,7 +15,13 @@ export class BlogController implements IBlogController {
   }
   getBlogs = async (req: Request, res: Response): Promise<void> => {
     try {
-      const result = await this._service.getAllBlogs();
+      const page = parseInt(req.query.page as string) || 1;
+      const limit = parseInt(req.query.limit as string) || 100;
+      const search = req.query.search as string;
+      const status = req.query.status as string;
+      const category = req.query.category as string;
+
+      const result = await this._service.getBlogsPaginated({ page, limit, search, status, category });
       if (!result.success) {
         res.status(HTTP_STATUS.BAD_REQUEST).json(result);
         return;

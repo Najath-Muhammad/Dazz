@@ -51,8 +51,8 @@ export default function LocationsMap({ locations, isAr }: LocationsMapProps) {
     return (
       <div className="w-full h-[500px] bg-slate-100 flex flex-col items-center justify-center text-center p-6 border border-slate-200">
         <MapPin size={48} className="text-slate-300 mb-4" />
-        <h3 className="text-xl font-bold text-slate-500 font-serif mb-2">{isAr ? 'مواقعنا' : 'LOCATIONS'}</h3>
-        <p className="text-slate-400">{isAr ? 'ستظهر مواقعنا هنا قريباً.' : 'Our locations will appear here.'}</p>
+        <h3 className={`text-xl font-bold text-slate-500 font-serif mb-2 ${isAr ? 'font-arabic' : ''}`}>{isAr ? 'مواقعنا' : 'LOCATIONS'}</h3>
+        <p className={`text-slate-400 ${isAr ? 'font-arabic' : ''}`}>{isAr ? 'ستظهر مواقعنا هنا قريباً.' : 'Our locations will appear here.'}</p>
       </div>
     );
   }
@@ -86,13 +86,13 @@ export default function LocationsMap({ locations, isAr }: LocationsMapProps) {
             >
               <Popup className={isAr ? 'leaflet-popup-rtl' : ''} closeButton={false}>
                 <div className="p-1 min-w-[200px]" dir={isAr ? 'rtl' : 'ltr'}>
-                  <h4 className="font-bold text-slate-900 text-lg font-serif leading-tight mb-1">{getLangStr(loc.name)}</h4>
-                  <p className="text-slate-500 text-sm mb-3">{getLangStr(loc.city)}, {getLangStr(loc.country)}</p>
+                  <h4 className={`font-bold text-slate-900 text-lg font-serif leading-tight mb-1 ${isAr ? 'font-arabic' : ''}`}>{getLangStr(loc.name)}</h4>
+                  <p className={`text-slate-500 text-sm mb-3 ${isAr ? 'font-arabic' : ''}`}>{getLangStr(loc.city)}, {getLangStr(loc.country)}</p>
                   
                   <div className="space-y-2 mb-4 text-sm">
                     <p className="text-slate-600 flex items-start gap-2">
                       <MapPin size={14} className="mt-0.5 text-dazz-gold shrink-0" />
-                      <span className="leading-snug">{getLangStr(loc.address)}</span>
+                      <span className={`leading-snug ${isAr ? 'font-arabic' : ''}`}>{getLangStr(loc.address)}</span>
                     </p>
                     {loc.phone && (
                       <p className="text-slate-600 flex items-center gap-2">
@@ -112,7 +112,7 @@ export default function LocationsMap({ locations, isAr }: LocationsMapProps) {
                     href={`https://www.google.com/maps/dir/?api=1&destination=${loc.latitude},${loc.longitude}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 w-full py-2 bg-slate-900 text-white text-xs font-bold uppercase tracking-wider rounded-sm hover:bg-dazz-gold hover:text-dazz-navy transition-colors"
+                    className={`flex items-center justify-center gap-2 w-full py-2 bg-slate-900 text-white text-xs font-bold tracking-wider rounded-sm hover:bg-dazz-gold hover:text-dazz-navy transition-colors ${isAr ? 'font-arabic uppercase-none flex-row-reverse' : 'uppercase'}`}
                   >
                     <Navigation size={14} /> {isAr ? 'الحصول على الاتجاهات' : 'GET DIRECTIONS'}
                   </a>
@@ -126,7 +126,7 @@ export default function LocationsMap({ locations, isAr }: LocationsMapProps) {
       {/* Location List Section */}
       <div className="w-full lg:w-1/3 h-[400px] lg:h-[600px] overflow-y-auto bg-slate-50 border-l border-slate-200">
         <div className="p-6">
-          <h3 className="text-xl font-bold font-serif text-slate-900 mb-6 flex items-center gap-2">
+          <h3 className={`text-xl font-bold font-serif text-slate-900 mb-6 flex items-center gap-2 ${isAr ? 'flex-row-reverse font-arabic' : ''}`}>
             <MapPin size={20} className="text-dazz-gold" /> {isAr ? 'مكاتبنا' : 'OUR OFFICES'}
           </h3>
           
@@ -143,20 +143,20 @@ export default function LocationsMap({ locations, isAr }: LocationsMapProps) {
                     : 'bg-white border-slate-200 hover:border-slate-300 hover:shadow-sm'
                   }`}
                 >
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="flex gap-4">
+                  <div className={`flex items-start justify-between gap-4 ${isAr ? 'flex-row-reverse text-right' : ''}`}>
+                    <div className={`flex gap-4 ${isAr ? 'flex-row-reverse' : ''}`}>
                       <div className="text-xl font-light text-slate-300 font-serif">
                         {String(index + 1).padStart(2, '0')}
                       </div>
                       <div>
-                        <h4 className={`font-bold font-serif text-lg mb-1 ${isActive ? 'text-dazz-navy' : 'text-slate-900'}`}>
+                        <h4 className={`font-bold font-serif text-lg mb-1 ${isActive ? 'text-dazz-navy' : 'text-slate-900'} ${isAr ? 'font-arabic' : ''}`}>
                           {getLangStr(loc.name)}
                         </h4>
-                        <p className="text-sm text-slate-500 mb-2">
+                        <p className={`text-sm text-slate-500 mb-2 ${isAr ? 'font-arabic' : ''}`}>
                           {getLangStr(loc.city)}, {getLangStr(loc.country)}
                         </p>
                         {loc.type && (
-                          <span className="inline-block px-2.5 py-0.5 bg-slate-100 text-slate-600 text-[10px] font-bold uppercase tracking-wider rounded-sm">
+                          <span className={`inline-block px-2.5 py-0.5 bg-slate-100 text-slate-600 text-[10px] font-bold tracking-wider rounded-sm ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>
                             {getLangStr(loc.type)}
                           </span>
                         )}

@@ -39,29 +39,29 @@ export function CinematicProjectCard({ title, category, imageUrl, slug, year, lo
         <div className="absolute inset-0 bg-dazz-navy/20 mix-blend-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
         {/* Top Metadata */}
-        <div className="absolute top-0 left-0 p-6 md:p-8 w-full flex justify-between items-start">
+        <div className={`absolute top-0 p-6 md:p-8 w-full flex justify-between items-start ${lang === 'ar' ? 'flex-row-reverse right-0' : 'left-0'}`}>
           {year && (
-            <span className="text-white/50 font-mono text-sm tracking-widest">{year}</span>
+            <span className={`text-white/50 font-mono text-sm tracking-widest ${lang === 'ar' ? 'font-arabic' : ''}`}>{year}</span>
           )}
           {location && (
-            <span className="text-white/50 font-mono text-sm tracking-widest text-right max-w-[50%]">{location}</span>
+            <span className={`text-white/50 font-mono text-sm tracking-widest text-right max-w-[50%] ${lang === 'ar' ? 'font-arabic' : ''}`}>{location}</span>
           )}
         </div>
 
         {/* Bottom Content */}
-        <div className="absolute bottom-0 left-0 p-6 md:p-8 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 ease-out">
-          <div className="flex items-end justify-between gap-4">
+        <div className={`absolute bottom-0 p-6 md:p-8 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 ease-out ${lang === 'ar' ? 'right-0' : 'left-0'}`}>
+          <div className={`flex items-end justify-between gap-4 ${lang === 'ar' ? 'flex-row-reverse text-right' : ''}`}>
             <div>
-              <span className="text-dazz-gold font-mono text-[10px] md:text-xs tracking-[0.2em] uppercase mb-3 block opacity-80 group-hover:opacity-100 transition-opacity duration-300">
+              <span className={`text-dazz-gold font-mono text-[10px] md:text-xs tracking-[0.2em] mb-3 block opacity-80 group-hover:opacity-100 transition-opacity duration-300 ${lang === 'ar' ? 'font-arabic uppercase-none' : 'uppercase'}`}>
                 {category}
               </span>
-              <h3 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-white uppercase tracking-tighter leading-tight max-w-[90%]">
+              <h3 className={`text-2xl md:text-3xl lg:text-4xl font-extrabold text-white tracking-tighter leading-tight max-w-[90%] ${lang === 'ar' ? 'font-arabic uppercase-none' : 'uppercase'}`}>
                 {title}
               </h3>
             </div>
             
-            <div className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center bg-white/5 backdrop-blur-sm opacity-0 group-hover:opacity-100 group-hover:bg-dazz-gold group-hover:border-dazz-gold transition-all duration-500 transform translate-x-[-20px] group-hover:translate-x-0">
-              <ArrowRight size={20} className="text-white group-hover:-rotate-45 transition-transform duration-500" />
+            <div className={`w-12 h-12 rounded-full border border-white/20 flex items-center justify-center bg-white/5 backdrop-blur-sm opacity-0 group-hover:opacity-100 group-hover:bg-dazz-gold group-hover:border-dazz-gold transition-all duration-500 transform ${lang === 'ar' ? 'translate-x-[20px]' : 'translate-x-[-20px]'} group-hover:translate-x-0`}>
+              <ArrowRight size={20} className={`text-white transition-transform duration-500 ${lang === 'ar' ? 'rotate-180 group-hover:rotate-[225deg]' : 'group-hover:-rotate-45'}`} />
             </div>
           </div>
         </div>

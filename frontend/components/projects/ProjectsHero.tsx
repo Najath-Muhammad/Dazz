@@ -49,9 +49,9 @@ export function ProjectsHero({ title, subtitle, media, isAr }: ProjectsHeroProps
           transition={{ duration: 1, delay: 0.2, ease: 'easeOut' }}
           className="max-w-[150px] mb-8"
         >
-          <div className="flex items-center gap-4">
+          <div className={`flex items-center gap-4 ${isAr ? 'flex-row-reverse' : ''}`}>
             <div className="h-[1px] bg-dazz-gold flex-1" />
-            <span className="text-dazz-gold font-mono text-[10px] tracking-[0.3em] uppercase whitespace-nowrap">
+            <span className={`text-dazz-gold font-mono text-[10px] tracking-[0.3em] uppercase whitespace-nowrap ${isAr ? 'font-arabic text-xs tracking-widest uppercase-none' : ''}`}>
               {isAr ? 'معرض المشاريع' : 'PROJECT GALLERY'}
             </span>
           </div>
@@ -63,7 +63,7 @@ export function ProjectsHero({ title, subtitle, media, isAr }: ProjectsHeroProps
             initial={{ y: '100%' }}
             animate={{ y: 0 }}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.4 }}
-            className="text-5xl md:text-7xl lg:text-[100px] font-extrabold text-white uppercase tracking-tighter leading-[0.9]"
+            className={`text-5xl md:text-7xl lg:text-[100px] font-extrabold text-white tracking-tighter leading-[0.9] ${isAr ? 'font-arabic uppercase-none lg:text-[110px]' : 'uppercase'}`}
           >
             {title.split('\n').map((line, i) => (
               <span key={i} className="block">{line}</span>
@@ -76,7 +76,7 @@ export function ProjectsHero({ title, subtitle, media, isAr }: ProjectsHeroProps
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.8 }}
-          className="text-lg md:text-xl text-slate-400 max-w-2xl font-light leading-relaxed"
+          className={`text-lg md:text-xl text-slate-400 max-w-2xl font-light leading-relaxed ${isAr ? 'font-arabic' : ''}`}
         >
           {subtitle}
         </motion.p>

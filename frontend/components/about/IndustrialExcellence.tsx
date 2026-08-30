@@ -54,16 +54,18 @@ export function IndustrialExcellence({ isAr }: { isAr?: boolean }) {
               viewport={{ once: true, margin: '-100px' }}
               transition={{ duration: 1 }}
             >
-              <div className="flex items-center gap-4 mb-8">
+              <div className={`flex items-center gap-4 mb-8 ${isAr ? 'flex-row-reverse' : ''}`}>
                 <div className="h-[1px] w-12 bg-dazz-gold" />
-                <span className="text-dazz-gold font-mono text-[10px] tracking-[0.3em] uppercase">06 — Excellence</span>
+                <span className={`text-dazz-gold font-mono text-[10px] tracking-[0.3em] uppercase ${isAr ? 'font-arabic text-xs tracking-widest uppercase-none' : ''}`}>
+                  {isAr ? '06 — التميز' : '06 — Excellence'}
+                </span>
               </div>
-              <h2 className="text-5xl md:text-7xl lg:text-[100px] font-extrabold text-white uppercase tracking-tighter leading-[0.9]">
-                {isAr ? 'تمكين التفوق' : 'EMPOWERING'} <br />
+              <h2 className={`text-5xl md:text-7xl lg:text-[100px] font-extrabold text-white tracking-tighter leading-[0.9] ${isAr ? 'font-arabic uppercase-none text-right lg:text-[110px]' : 'uppercase'}`}>
+                {isAr ? 'تمكين' : 'EMPOWERING'} <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/40">
-                  {isAr ? 'الصناعي' : 'INDUSTRIAL'}
-                </span> <br />
-                {isAr ? 'الامتياز.' : 'EXCELLENCE.'}
+                  {isAr ? 'التفوق الصناعي' : 'INDUSTRIAL'}
+                </span> {isAr ? '' : <br />}
+                {isAr ? '' : 'EXCELLENCE.'}
               </h2>
             </motion.div>
           </div>
@@ -80,7 +82,7 @@ export function IndustrialExcellence({ isAr }: { isAr?: boolean }) {
               <div className="absolute top-0 left-0 w-4 h-4 border-t border-l border-dazz-gold" />
               <div className="absolute bottom-0 right-0 w-4 h-4 border-b border-r border-dazz-gold" />
               
-              <p className="text-white/70 font-light leading-relaxed text-sm">
+              <p className={`text-white/70 font-light leading-relaxed text-sm ${isAr ? 'font-arabic text-right' : ''}`}>
                 {isAr 
                   ? 'مصمم لتلبية الاحتياجات التشغيلية للبيئات الصناعية، ومصمم لدفع الكفاءة على مستوى المملكة.' 
                   : 'Designed to meet the operational needs of industrial environments, engineered to drive efficiency across the Kingdom.'}

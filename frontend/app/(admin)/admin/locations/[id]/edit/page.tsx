@@ -15,7 +15,7 @@ export default function EditLocationPage({ params }: { params: Promise<{ id: str
     const fetchData = async () => {
       try {
         const data = await api.get(`/locations/${id}`);
-        setInitialData(data.data);
+        setInitialData((data as any).data);
       } catch (error) {
         console.error('Failed to fetch location:', error);
       } finally {

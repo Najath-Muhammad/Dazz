@@ -71,10 +71,10 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.7 }}
           >
-            <p className="text-dazz-gold font-mono tracking-[0.2em] uppercase mb-4 text-xs md:text-sm">
+            <p className={`text-dazz-gold font-mono tracking-[0.2em] uppercase mb-4 text-xs md:text-sm ${isAr ? 'font-arabic tracking-widest uppercase-none' : ''}`}>
               {service.category} / 01
             </p>
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold mb-6 tracking-tighter leading-[1.1] uppercase">
+            <h1 className={`text-4xl md:text-6xl lg:text-7xl font-extrabold mb-6 tracking-tighter leading-[1.1] ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>
               {t(hero?.title) || t(service.name)}
             </h1>
           </motion.div>
@@ -95,7 +95,7 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
               transition={{ duration: 0.8, delay: 1.1 }}
               className="flex justify-start md:justify-end"
             >
-              <p className="text-xs font-mono tracking-widest text-slate-500 uppercase">
+              <p className={`text-xs font-mono tracking-widest text-slate-500 ${isAr ? 'font-arabic text-right uppercase-none' : 'uppercase'}`}>
                 DAZZ TRADLINK INTERNATIONAL<br/>{isAr ? 'قسم الخدمات' : 'SERVICE DIVISION'}
               </p>
             </motion.div>
@@ -120,23 +120,23 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
               className={`flex-1 ${isAr ? 'lg:order-2' : ''}`}
               dir={dir}
             >
-              <div className="flex items-center gap-4 mb-8">
+              <div className={`flex items-center gap-4 mb-8 ${isAr ? 'flex-row-reverse text-right' : ''}`}>
                 <span className="text-xs font-mono text-slate-400">01</span>
-                <h2 className="text-sm font-bold tracking-[0.2em] uppercase text-dazz-navy">
+                <h2 className={`text-sm font-bold tracking-[0.2em] text-dazz-navy ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>
                   {t(intro?.sectionLabel) || (isAr ? 'عن الخدمة' : 'ABOUT THE SERVICE')}
                 </h2>
               </div>
               
-              <h3 className="text-3xl md:text-4xl lg:text-5xl font-light leading-tight mb-8">
+              <h3 className={`text-3xl md:text-4xl lg:text-5xl font-light leading-tight mb-8 ${isAr ? 'font-arabic text-right' : ''}`}>
                 {t(intro?.title)}
               </h3>
               
-              <p className="text-lg md:text-xl text-slate-600 mb-8 leading-relaxed">
+              <p className={`text-lg md:text-xl text-slate-600 mb-8 leading-relaxed ${isAr ? 'font-arabic text-right' : ''}`}>
                 {t(intro?.mainDescription)}
               </p>
               
               {intro?.paragraphs?.map((p: any, i: number) => (
-                <p key={i} className="text-slate-500 mb-6 leading-relaxed font-light">
+                <p key={i} className={`text-slate-500 mb-6 leading-relaxed font-light ${isAr ? 'font-arabic text-right' : ''}`}>
                   {t(p)}
                 </p>
               ))}
@@ -168,11 +168,11 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
           <div className="flex flex-col md:flex-row gap-16" dir={dir}>
             <div className="md:w-1/3">
               <div className="sticky top-40">
-                <span className="text-xs font-mono text-slate-400 block mb-4">02</span>
-                <h2 className="text-3xl font-bold uppercase tracking-tight text-slate-900 mb-6">
+                <span className={`text-xs font-mono text-slate-400 block mb-4 ${isAr ? 'text-right' : ''}`}>02</span>
+                <h2 className={`text-3xl font-bold tracking-tight text-slate-900 mb-6 ${isAr ? 'font-arabic uppercase-none text-right' : 'uppercase'}`}>
                   {isAr ? 'القدرات الأساسية' : 'CORE CAPABILITIES'}
                 </h2>
-                <div className="w-12 h-[2px] bg-dazz-gold" />
+                <div className={`w-12 h-[2px] bg-dazz-gold ${isAr ? 'ml-auto' : ''}`} />
               </div>
             </div>
             
@@ -188,15 +188,15 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
                     className="group border-b border-slate-200 py-8 relative cursor-default"
                   >
                     <div className="absolute left-0 bottom-0 h-[2px] bg-dazz-navy w-0 group-hover:w-full transition-all duration-700 ease-out z-10" />
-                    <div className="flex flex-col md:flex-row gap-6 md:items-start relative z-20">
+                    <div className={`flex flex-col md:flex-row gap-6 md:items-start relative z-20 ${isAr ? 'md:flex-row-reverse text-right' : ''}`}>
                       <div className="text-xl font-mono text-dazz-gold font-bold group-hover:-translate-y-2 transition-transform duration-500">
                         {(i + 1).toString().padStart(2, '0')}
                       </div>
                       <div>
-                        <h3 className="text-2xl font-bold text-slate-900 mb-3 uppercase tracking-tight group-hover:text-dazz-navy transition-colors">
+                        <h3 className={`text-2xl font-bold text-slate-900 mb-3 tracking-tight group-hover:text-dazz-navy transition-colors ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>
                           {t(cap.title)}
                         </h3>
-                        <p className="text-slate-600 leading-relaxed font-light">
+                        <p className={`text-slate-600 leading-relaxed font-light ${isAr ? 'font-arabic' : ''}`}>
                           {t(cap.description)}
                         </p>
                       </div>
@@ -217,9 +217,9 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
       <section className="py-24 md:py-32 bg-slate-950 text-white">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex justify-between items-end mb-16" dir={dir}>
-            <div>
+            <div className={isAr ? 'text-right' : ''}>
               <span className="text-xs font-mono text-slate-400 block mb-4">03</span>
-              <h2 className="text-3xl font-bold uppercase tracking-tight">{isAr ? 'الحلول والخدمات' : 'SOLUTIONS & SERVICES'}</h2>
+              <h2 className={`text-3xl font-bold tracking-tight ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>{isAr ? 'الحلول والخدمات' : 'SOLUTIONS & SERVICES'}</h2>
             </div>
           </div>
           
@@ -241,10 +241,10 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
                     </div>
                   ) : null}
                 </div>
-                <h3 className="text-2xl font-bold mb-4 uppercase tracking-tight">{t(sol.title)}</h3>
-                <p className="text-slate-400 leading-relaxed font-light mb-8">{t(sol.description)}</p>
+                <h3 className={`text-2xl font-bold mb-4 tracking-tight ${isAr ? 'font-arabic uppercase-none text-right' : 'uppercase'}`}>{t(sol.title)}</h3>
+                <p className={`text-slate-400 leading-relaxed font-light mb-8 ${isAr ? 'font-arabic text-right' : ''}`}>{t(sol.description)}</p>
                 {t(sol.ctaText) && (
-                  <a href={sol.ctaUrl || '#'} className="inline-flex items-center gap-2 text-dazz-gold text-sm font-bold tracking-widest uppercase hover:text-white transition-colors">
+                  <a href={sol.ctaUrl || '#'} className={`inline-flex items-center gap-2 text-dazz-gold text-sm font-bold tracking-widest hover:text-white transition-colors ${isAr ? 'flex-row-reverse font-arabic uppercase-none' : 'uppercase'}`}>
                     {t(sol.ctaText)} <ArrowRight size={16} className={isAr ? 'rotate-180' : ''} />
                   </a>
                 )}
@@ -262,13 +262,13 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
       <section className="py-24 md:py-32 bg-slate-50">
         <div className="max-w-7xl mx-auto px-6">
           <div className="mb-12" dir={dir}>
-            <div className="flex items-center gap-3 mb-2">
+            <div className={`flex items-center gap-3 mb-2 ${isAr ? 'flex-row-reverse' : ''}`}>
               <div className="w-1.5 h-8 bg-dazz-gold" />
-              <h2 className="text-3xl font-bold uppercase tracking-tight text-slate-900">
+              <h2 className={`text-3xl font-bold tracking-tight text-slate-900 ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>
                 {isAr ? 'تطبيقاتنا' : 'OUR APPLICATIONS'}
               </h2>
             </div>
-            <div className="w-24 h-[2px] bg-dazz-gold ml-4" />
+            <div className={`w-24 h-[2px] bg-dazz-gold ${isAr ? 'ml-auto' : 'ml-4'}`} />
           </div>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -297,7 +297,7 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
                 </div>
                 
                 <div className="pt-3 pb-6 px-4 text-center">
-                  <h3 className="text-lg md:text-xl font-bold text-white uppercase tracking-wide">
+                  <h3 className={`text-lg md:text-xl font-bold text-white tracking-wide ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>
                     {t(app.title)}
                   </h3>
                 </div>
@@ -317,8 +317,8 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
         
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="text-center mb-20" dir={dir}>
-            <span className="text-xs font-mono text-dazz-gold block mb-4">05 / PROCESS</span>
-            <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight">{isAr ? 'آلية العمل' : 'HOW WE WORK'}</h2>
+            <span className="text-xs font-mono text-dazz-gold block mb-4">{isAr ? '05 / العمل' : '05 / PROCESS'}</span>
+            <h2 className={`text-3xl md:text-4xl font-bold tracking-tight ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>{isAr ? 'آلية العمل' : 'HOW WE WORK'}</h2>
           </div>
           
           <div className="space-y-16 lg:space-y-0 relative">
@@ -338,8 +338,8 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
                       <div className="text-dazz-gold font-mono text-4xl font-light mb-4">
                         {(i + 1).toString().padStart(2, '0')}
                       </div>
-                      <h3 className="text-2xl font-bold uppercase tracking-tight mb-4">{t(step.title)}</h3>
-                      <p className="text-slate-400 font-light leading-relaxed">{t(step.description)}</p>
+                      <h3 className={`text-2xl font-bold tracking-tight mb-4 ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>{t(step.title)}</h3>
+                      <p className={`text-slate-400 font-light leading-relaxed ${isAr ? 'font-arabic' : ''}`}>{t(step.description)}</p>
                     </motion.div>
                   </div>
                   
@@ -380,8 +380,8 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
       <section className="py-24 md:py-32 bg-slate-50 border-t border-slate-200">
         <div className="max-w-7xl mx-auto px-6">
           <div className="mb-16" dir={dir}>
-            <span className="text-xs font-mono text-slate-400 block mb-4">06 / TECHNICAL</span>
-            <h2 className="text-3xl font-bold uppercase tracking-tight text-slate-900">{isAr ? 'المعدات والمواصفات التقنية' : 'EQUIPMENT & SPECIFICATIONS'}</h2>
+            <span className={`text-xs font-mono text-slate-400 block mb-4 ${isAr ? 'text-right' : ''}`}>{isAr ? '06 / التقنية' : '06 / TECHNICAL'}</span>
+            <h2 className={`text-3xl font-bold tracking-tight text-slate-900 ${isAr ? 'font-arabic text-right uppercase-none' : 'uppercase'}`}>{isAr ? 'المعدات والمواصفات التقنية' : 'EQUIPMENT & SPECIFICATIONS'}</h2>
           </div>
           
           <div className="space-y-4">
@@ -400,14 +400,14 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
                     <MediaRenderer media={eq.image} fill className="object-cover mix-blend-multiply group-hover:scale-105 transition-transform duration-700" />
                   </div>
                 )}
-                <div className="p-8 md:p-10 flex-1 flex flex-col justify-center">
-                  <h3 className="text-2xl font-bold text-slate-900 mb-3 uppercase tracking-tight">{t(eq.name || eq.title)}</h3>
-                  <p className="text-slate-600 font-light mb-6 leading-relaxed max-w-3xl">{t(eq.description)}</p>
+                <div className={`p-8 md:p-10 flex-1 flex flex-col justify-center ${isAr ? 'text-right' : ''}`}>
+                  <h3 className={`text-2xl font-bold text-slate-900 mb-3 tracking-tight ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>{t(eq.name || eq.title)}</h3>
+                  <p className={`text-slate-600 font-light mb-6 leading-relaxed max-w-3xl ${isAr ? 'font-arabic ml-auto' : ''}`}>{t(eq.description)}</p>
                   
-                  {t(eq.specification) && (
+                  {eq.specification && (
                     <div className="mt-auto pt-6 border-t border-slate-100">
-                      <p className="text-xs font-mono text-slate-400 uppercase tracking-widest mb-2">Technical Specs</p>
-                      <p className="font-mono text-sm text-slate-700 bg-slate-50 inline-block px-4 py-2 border border-slate-100">
+                      <p className={`text-xs font-mono text-slate-400 tracking-widest mb-2 ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>{isAr ? 'المواصفات التقنية' : 'Technical Specs'}</p>
+                      <p className={`font-mono text-sm text-slate-700 bg-slate-50 inline-block px-4 py-2 border border-slate-100 ${isAr ? 'font-arabic text-right' : ''}`}>
                         {t(eq.specification)}
                       </p>
                     </div>
@@ -427,9 +427,9 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
       <section className="py-24 md:py-32 bg-white">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-col md:flex-row gap-16" dir={dir}>
-            <div className="md:w-1/3">
+            <div className={`md:w-1/3 ${isAr ? 'text-right' : ''}`}>
               <span className="text-xs font-mono text-slate-400 block mb-4">07</span>
-              <h2 className="text-3xl font-bold uppercase tracking-tight text-slate-900">{isAr ? 'لماذا تختارنا' : 'WHY CHOOSE US'}</h2>
+              <h2 className={`text-3xl font-bold tracking-tight text-slate-900 ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>{isAr ? 'لماذا تختارنا' : 'WHY CHOOSE US'}</h2>
             </div>
             <div className="md:w-2/3">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
@@ -440,10 +440,11 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: i * 0.1 }}
+                    className={isAr ? 'text-right' : ''}
                   >
                     <div className="text-dazz-gold font-mono text-sm mb-4">/ {(i + 1).toString().padStart(2, '0')}</div>
-                    <h3 className="text-xl font-bold text-slate-900 mb-3 uppercase tracking-tight">{t(item.title)}</h3>
-                    <p className="text-slate-600 font-light leading-relaxed">{t(item.description)}</p>
+                    <h3 className={`text-xl font-bold text-slate-900 mb-3 tracking-tight ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>{t(item.title)}</h3>
+                    <p className={`text-slate-600 font-light leading-relaxed ${isAr ? 'font-arabic' : ''}`}>{t(item.description)}</p>
                   </motion.div>
                 ))}
               </div>
@@ -473,8 +474,8 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
                 className={`px-6 ${i === 0 ? 'sm:pl-0' : ''}`}
                 dir={dir}
               >
-                <p className="text-xs font-mono text-dazz-gold uppercase tracking-widest mb-2">{t(high.title)}</p>
-                <p className="text-2xl text-white font-light tracking-tight">{t(high.description) || t(high.sub)}</p>
+                <p className={`text-xs font-mono text-dazz-gold tracking-widest mb-2 ${isAr ? 'font-arabic uppercase-none text-right' : 'uppercase'}`}>{t(high.title)}</p>
+                <p className={`text-2xl text-white font-light tracking-tight ${isAr ? 'font-arabic text-right' : ''}`}>{t(high.description) || t(high.sub)}</p>
               </motion.div>
             ))}
           </div>
@@ -489,8 +490,8 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
       <section className="py-24 md:py-32 bg-slate-50">
         <div className="max-w-7xl mx-auto px-6">
           <div className="mb-16" dir={dir}>
-            <span className="text-xs font-mono text-slate-400 block mb-4">08 / MEDIA</span>
-            <h2 className="text-3xl font-bold uppercase tracking-tight text-slate-900">{isAr ? 'معرض الصور' : 'PROJECT GALLERY'}</h2>
+            <span className={`text-xs font-mono text-slate-400 block mb-4 ${isAr ? 'text-right' : ''}`}>{isAr ? '08 / الوسائط' : '08 / MEDIA'}</span>
+            <h2 className={`text-3xl font-bold tracking-tight text-slate-900 ${isAr ? 'font-arabic uppercase-none text-right' : 'uppercase'}`}>{isAr ? 'معرض الصور' : 'PROJECT GALLERY'}</h2>
           </div>
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[250px]">
@@ -508,7 +509,7 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
                   <MediaRenderer media={img.media} fill className="object-cover transition-transform duration-1000 group-hover:scale-105" />
                   {t(img.caption) && (
                     <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <p className="text-white text-sm font-medium">{t(img.caption)}</p>
+                      <p className={`text-white text-sm font-medium ${isAr ? 'font-arabic text-right' : ''}`}>{t(img.caption)}</p>
                     </div>
                   )}
                 </motion.div>
@@ -544,7 +545,7 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-3xl md:text-5xl font-bold mb-6 uppercase tracking-tight leading-tight"
+            className={`text-3xl md:text-5xl font-bold mb-6 tracking-tight leading-tight ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}
           >
             {t(cta?.title)}
           </motion.h2>
@@ -553,7 +554,7 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-xl font-light text-slate-300 mb-10 max-w-2xl"
+            className={`text-xl font-light text-slate-300 mb-10 max-w-2xl ${isAr ? 'font-arabic' : ''}`}
           >
             {t(cta?.description)}
           </motion.p>
@@ -564,7 +565,7 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.6 }}
               href={cta.buttonUrl || '#'} 
-              className="inline-block px-10 py-5 bg-white text-slate-900 font-bold tracking-widest text-sm uppercase hover:bg-dazz-gold transition-colors"
+              className={`inline-block px-10 py-5 bg-white text-slate-900 font-bold tracking-widest text-sm hover:bg-dazz-gold transition-colors ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}
             >
               {t(cta.buttonText)}
             </motion.a>
@@ -580,9 +581,9 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
       <section className="py-24 md:py-32 bg-white text-slate-900 border-t border-slate-200">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex justify-between items-end mb-16" dir={dir}>
-            <div>
+            <div className={isAr ? 'text-right' : ''}>
               <span className="text-xs font-mono text-slate-400 block mb-4">03b</span>
-              <h2 className="text-3xl font-bold uppercase tracking-tight">{isAr ? 'المنتجات' : 'PRODUCTS & CATEGORIES'}</h2>
+              <h2 className={`text-3xl font-bold tracking-tight ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>{isAr ? 'المنتجات' : 'PRODUCTS & CATEGORIES'}</h2>
             </div>
           </div>
           
@@ -604,8 +605,8 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
                     </div>
                   ) : null}
                 </div>
-                <h3 className="text-2xl font-bold mb-4 uppercase tracking-tight text-slate-900">{t(cat.title)}</h3>
-                <p className="text-slate-600 leading-relaxed font-light mb-8">{t(cat.description)}</p>
+                <h3 className={`text-2xl font-bold mb-4 tracking-tight text-slate-900 ${isAr ? 'font-arabic text-right uppercase-none' : 'uppercase'}`}>{t(cat.title)}</h3>
+                <p className={`text-slate-600 leading-relaxed font-light mb-8 ${isAr ? 'font-arabic text-right' : ''}`}>{t(cat.description)}</p>
               </motion.div>
             ))}
           </div>

@@ -20,6 +20,42 @@ export class JobService implements IJobService {
       return { success: false, message: 'Failed to retrieve Jobs' };
     }
   }
+
+  async getJobsPaginated({ search, status, page, limit }: { search?: string; status?: string; page: number; limit: number }) {
+    try {
+      const query: any = {};
+      if (search) {
+        query['$or'] = [
+          { 'title.en': { $regex: search, $options: 'i' } },
+          { department: { $regex: search, $options: 'i' } }
+        ];
+      }
+      if (status === 'published') {
+        query.isActive = true;
+      } else if (status === 'draft') {
+        query.isActive = false;
+      }
+
+      const { items, total } = await this._repository.findPaginated(query, page, limit);
+      
+      return { 
+        success: true, 
+        message: 'Jobs retrieved successfully', 
+        data: items,
+        pagination: {
+          total,
+          page,
+          limit,
+          totalPages: Math.ceil(total / limit),
+          hasNext: page * limit < total,
+          hasPrev: page > 1
+        }
+      };
+    } catch (error: any) {
+      console.error('Error in getJobsPaginated:', error);
+      return { success: false, message: 'Failed to retrieve Jobs' };
+    }
+  }
   async getJobById(id: string) {
     try {
       const item = await this._repository.findById(id);

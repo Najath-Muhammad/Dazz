@@ -10,6 +10,7 @@ interface HeroProps {
   subtitle: string;
   backgroundImage: any;
   hideExtras?: boolean;
+  isAr?: boolean;
 }
 
 function isVideoMedia(media: any): boolean {
@@ -22,7 +23,7 @@ function isVideoMedia(media: any): boolean {
   return false;
 }
 
-export function CinematicHero({ title, subtitle, backgroundImage, hideExtras = false }: HeroProps) {
+export function CinematicHero({ title, subtitle, backgroundImage, hideExtras = false, isAr = false }: HeroProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const isVideo = useMemo(() => isVideoMedia(backgroundImage), [backgroundImage]);
 
@@ -94,9 +95,9 @@ export function CinematicHero({ title, subtitle, backgroundImage, hideExtras = f
             initial={{ y: '100%' }}
             animate={{ y: 0 }}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.4 }}
-            className="text-4xl md:text-5xl lg:text-7xl font-extrabold text-white uppercase tracking-tighter leading-tight"
+            className={`text-4xl md:text-5xl lg:text-7xl font-extrabold text-white tracking-tighter leading-tight ${isAr ? 'font-arabic uppercase-none text-right' : 'uppercase'}`}
           >
-            {title.includes('\n') ? title.split('\n').map((line, i, arr) => (
+            {typeof title === 'string' && title.includes('\n') ? title.split('\n').map((line, i, arr) => (
               <React.Fragment key={i}>
                 {line}
                 {i !== arr.length - 1 && <br />}
@@ -110,8 +111,8 @@ export function CinematicHero({ title, subtitle, backgroundImage, hideExtras = f
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.9 }}
-            className="text-lg md:text-2xl text-slate-200 max-w-2xl font-light leading-relaxed"
+            transition={{ duration: 1, delay: 0.6 }}
+            className={`text-lg md:text-2xl text-slate-300 font-light max-w-2xl leading-relaxed drop-shadow-md ${isAr ? 'font-arabic text-right' : ''}`}
           >
             {subtitle}
           </motion.p>
@@ -120,11 +121,10 @@ export function CinematicHero({ title, subtitle, backgroundImage, hideExtras = f
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1.1 }}
-            className="flex-shrink-0"
           >
-            <Link href="/contact" className="group flex items-center justify-center gap-4 bg-dazz-gold text-slate-950 px-8 py-4 rounded-sm font-bold tracking-[0.2em] uppercase hover:bg-white transition-colors">
-              <span>Partner With Us</span>
-              <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+            <Link href={isAr ? '/ar/contact' : '/en/contact'} className={`group flex items-center justify-center gap-4 bg-dazz-gold text-slate-950 px-8 py-4 rounded-sm font-bold tracking-[0.2em] transition-colors hover:bg-white ${isAr ? 'font-arabic uppercase-none flex-row-reverse' : 'uppercase'}`}>
+              <span>{isAr ? 'شراكة معنا' : 'Partner With Us'}</span>
+              <ArrowRight size={18} className={`transition-transform ${isAr ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1'}`} />
             </Link>
           </motion.div>
         </div>
@@ -138,13 +138,13 @@ export function CinematicHero({ title, subtitle, backgroundImage, hideExtras = f
             className="pt-8 border-t border-white/10 grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-16 max-w-2xl"
           >
             {[
-              { num: '500+', label: 'Specialists' },
-              { num: '4', label: 'Divisions' },
-              { num: '15+', label: 'Years Active' },
+              { num: '500+', label: isAr ? 'متخصص' : 'Specialists' },
+              { num: '4', label: isAr ? 'قطاعات' : 'Divisions' },
+              { num: '15+', label: isAr ? 'سنوات من الخبرة' : 'Years Active' },
             ].map((stat) => (
-              <div key={stat.label} className="group">
-                <p className="text-4xl md:text-5xl font-extrabold text-white tracking-tighter group-hover:text-dazz-gold transition-colors">{stat.num}</p>
-                <p className="text-[10px] md:text-xs font-mono tracking-[0.2em] text-white/40 uppercase mt-2">{stat.label}</p>
+              <div key={stat.label} className={`group ${isAr ? 'text-right' : ''}`}>
+                <p className={`text-4xl md:text-5xl font-extrabold text-white tracking-tighter group-hover:text-dazz-gold transition-colors ${isAr ? 'font-arabic' : ''}`}>{stat.num}</p>
+                <p className={`text-[10px] md:text-xs font-mono mt-2 tracking-[0.2em] text-white/50 ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>{stat.label}</p>
               </div>
             ))}
           </motion.div>

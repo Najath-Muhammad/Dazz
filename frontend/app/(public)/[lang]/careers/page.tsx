@@ -53,8 +53,23 @@ export default async function CareersPage({ params }: { params: Promise<{ lang: 
   const whyData = careersSettings.whyWorkWithUs || { enabled: false };
   const cultureData = careersSettings.culture || { enabled: false };
 
-  const heroTitle = heroData.title?.[lang] || (isAr ? 'وظائف\nابنِ مستقبلك معنا' : 'CAREERS\nBUILD YOUR FUTURE');
-  const heroSubtitle = heroData.subtitle?.[lang] || (isAr ? 'اكتشف فرصًا لا حصر لها.' : 'Discover endless opportunities with Dazz Tradlink.');
+  let heroTitle = heroData.title;
+  if (typeof heroTitle === 'object' && heroTitle !== null) {
+    heroTitle = isAr ? (heroTitle.ar || heroTitle.en) : heroTitle.en;
+  }
+  if (!heroTitle || (typeof heroTitle === 'string' && heroTitle.toUpperCase().includes('CAREERS'))) {
+    heroTitle = isAr ? 'وظائف\nابنِ مستقبلك معنا' : 'CAREERS\nBUILD YOUR FUTURE';
+  }
+
+  let heroSubtitle = heroData.subtitle;
+  if (typeof heroSubtitle === 'object' && heroSubtitle !== null) {
+    heroSubtitle = isAr ? (heroSubtitle.ar || heroSubtitle.en) : heroSubtitle.en;
+  }
+  if (!heroSubtitle || (typeof heroSubtitle === 'string' && heroSubtitle.startsWith('Discover'))) {
+    heroSubtitle = isAr 
+      ? 'اكتشف فرصًا لا حصر لها.' 
+      : 'Discover endless opportunities with Dazz Tradlink.';
+  }
   
   const rawBg = heroData.media;
   const heroImage = rawBg?.url || (typeof rawBg === 'string' && rawBg !== '' ? rawBg : '/images/careers-hero.png');
@@ -65,6 +80,7 @@ export default async function CareersPage({ params }: { params: Promise<{ lang: 
         title={heroTitle}
         subtitle={heroSubtitle}
         backgroundImage={heroImage}
+        isAr={isAr}
       />
 
       {/* Why Work With Us */}
@@ -94,12 +110,12 @@ export default async function CareersPage({ params }: { params: Promise<{ lang: 
         <div className="absolute top-0 right-0 w-1/2 h-full bg-dazz-navy-light/10 transform skew-x-12 origin-top-right"></div>
         
         <div className="max-w-7xl mx-auto relative z-10">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+          <div className={`flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6 ${isAr ? 'text-right md:flex-row-reverse' : ''}`}>
             <div>
-              <h2 className="text-4xl md:text-5xl font-serif font-bold text-white mb-4">
+              <h2 className={`text-4xl md:text-5xl font-serif font-bold text-white mb-4 ${isAr ? 'font-arabic' : ''}`}>
                 {isAr ? 'الوظائف الشاغرة' : 'Open Positions'}
               </h2>
-              <p className="text-slate-300 max-w-xl">
+              <p className={`text-slate-300 max-w-xl ${isAr ? 'font-arabic text-right ml-auto' : ''}`}>
                 {isAr ? 'اكتشف فرصك وابدأ رحلتك معنا.' : 'Explore your opportunities and start your journey with us.'}
               </p>
             </div>
@@ -108,7 +124,7 @@ export default async function CareersPage({ params }: { params: Promise<{ lang: 
           <div className="space-y-4">
             {jobs.length === 0 ? (
               <div className="p-12 border border-slate-700/50 rounded-lg text-center bg-slate-800/20 backdrop-blur-sm">
-                <p className="text-xl text-slate-400 mb-6">
+                <p className={`text-xl text-slate-400 mb-6 ${isAr ? 'font-arabic' : ''}`}>
                   {isAr ? 'لا توجد وظائف شاغرة حالياً. يرجى مراجعتنا لاحقاً.' : 'There are no open positions at the moment. Please check back later.'}
                 </p>
               </div>
@@ -121,23 +137,23 @@ export default async function CareersPage({ params }: { params: Promise<{ lang: 
                 >
                   <div className="absolute left-0 top-0 w-1 h-full bg-dazz-gold scale-y-0 group-hover:scale-y-100 transition-transform origin-top"></div>
                   
-                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                  <div className={`flex flex-col md:flex-row md:items-center justify-between gap-6 ${isAr ? 'md:flex-row-reverse text-right' : ''}`}>
                     <div className="space-y-2">
-                      <div className="flex flex-wrap items-center gap-3 mb-2">
+                      <div className={`flex flex-wrap items-center gap-3 mb-2 ${isAr ? 'flex-row-reverse' : ''}`}>
                         <span className="text-xs font-bold px-3 py-1 bg-dazz-gold/10 text-dazz-gold rounded-full uppercase tracking-wider">
                           {job.department}
                         </span>
                         <span className="text-xs font-semibold text-slate-400">
                           {job.type}
                         </span>
-                        <span className="text-xs font-semibold text-slate-400">
+                        <span className={`text-xs font-semibold text-slate-400 ${isAr ? 'font-arabic' : ''}`}>
                           {job.location}
                         </span>
                       </div>
-                      <h3 className="text-2xl font-bold text-white group-hover:text-dazz-gold transition-colors">
+                      <h3 className={`text-2xl font-bold text-white group-hover:text-dazz-gold transition-colors ${isAr ? 'font-arabic' : ''}`}>
                         {job.title?.[lang]}
                       </h3>
-                      <p className="text-slate-400 line-clamp-2 max-w-3xl">
+                      <p className={`text-slate-400 line-clamp-2 max-w-3xl ${isAr ? 'font-arabic text-right' : ''}`}>
                         {job.description?.[lang]}
                       </p>
                     </div>

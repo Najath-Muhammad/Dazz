@@ -64,12 +64,12 @@ export default async function HomePage() {
   const heroTitleObj = homeHeader?.title || settings?.heroTitle;
   const heroTitle = typeof heroTitleObj === 'string' 
     ? heroTitleObj 
-    : (heroTitleObj?.en || 'DAZZ TRADLINK INTERNATIONAL');
+    : (heroTitleObj?.en || 'Building Solutions,\nBuilding Trust');
 
   const heroSubtitleObj = homeHeader?.subtitle || settings?.heroSubtitle;
   const heroSubtitle = typeof heroSubtitleObj === 'string'
     ? heroSubtitleObj
-    : (heroSubtitleObj?.en || 'Empowering Industrial Excellence. Delivering trusted solutions across construction, food trading, logistics, and hospitality.');
+    : (heroSubtitleObj?.en || 'Your leading partner for comprehensive construction, trading, and industrial solutions across Saudi Arabia.');
 
   const rawBg = homeHeader?.media || settings?.heroBackgroundImage;
   let heroBg = 'https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg';
@@ -85,7 +85,7 @@ export default async function HomePage() {
   return (
     <>
       {/* 1. Hero */}
-      <CinematicHero title={heroTitle} subtitle={heroSubtitle} backgroundImage={heroBg} />
+      <CinematicHero title={heroTitle} subtitle={heroSubtitle} backgroundImage={heroBg} isAr={false} />
 
       {/* 2. Short About Us */}
       <ShortAboutSection image={aboutImage} />

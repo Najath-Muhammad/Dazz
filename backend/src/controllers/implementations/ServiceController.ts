@@ -19,12 +19,30 @@ export class ServiceController implements IServiceController {
   getServices = async (req: Request, res: Response): Promise<void> => {
   try {
     const isAdmin = !!(req as any).user;
+    
+    if (isAdmin && req.query.page) {
+      // If admin and using pagination
+      const page = parseInt(req.query.page as string) || 1;
+      const limit = parseInt(req.query.limit as string) || 100;
+      const search = req.query.search as string;
+      const status = req.query.status as string;
+      const category = req.query.category as string;
+
+      const result = await this._service.getServicesPaginated({ page, limit, search, status, category });
+      if (!result.success) {
+        res.status(HTTP_STATUS.BAD_REQUEST).json(result);
+        return;
+      }
+      res.status(HTTP_STATUS.OK).json(result);
+    } else {
+      // Public facing or non-paginated admin fetch
       const result = await this._service.getAllServices(isAdmin);
-    if (!result.success) {
-      res.status(HTTP_STATUS.BAD_REQUEST).json(result);
-      return;
+      if (!result.success) {
+        res.status(HTTP_STATUS.BAD_REQUEST).json(result);
+        return;
+      }
+      res.status(HTTP_STATUS.OK).json(result);
     }
-    res.status(HTTP_STATUS.OK).json(result);
   } catch (e) {
     handleError(res, e);
   }

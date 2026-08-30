@@ -57,14 +57,14 @@ export function WhyWorkWithUsInteractive({ title, description, principles, isAr 
         
         {/* Header */}
         <div className="mb-20 md:mb-32">
-          <p className="font-mono text-dazz-gold text-xs tracking-[0.2em] uppercase mb-4 opacity-80">
+          <p className={`font-mono text-dazz-gold text-xs tracking-[0.2em] mb-4 opacity-80 ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>
             {isAr ? 'لماذا تعمل معنا؟' : 'Why Work With Us'}
           </p>
-          <h2 className="text-4xl md:text-6xl font-serif font-bold max-w-3xl leading-tight">
+          <h2 className={`text-4xl md:text-6xl font-serif font-bold max-w-3xl leading-tight ${isAr ? 'font-arabic' : ''}`}>
             {title}
           </h2>
           {description && (
-            <p className="mt-6 text-slate-400 max-w-xl text-lg md:text-xl font-light leading-relaxed whitespace-pre-wrap">
+            <p className={`mt-6 text-slate-400 max-w-xl text-lg md:text-xl font-light leading-relaxed whitespace-pre-wrap ${isAr ? 'font-arabic' : ''}`}>
               {description}
             </p>
           )}
@@ -106,10 +106,10 @@ export function WhyWorkWithUsInteractive({ title, description, principles, isAr 
                   </div>
 
                   {/* Title & Arrow */}
-                  <div className="flex-1 flex items-center justify-between">
+                  <div className={`flex-1 flex items-center justify-between ${isAr ? 'flex-row-reverse' : ''}`}>
                     <h3 className={`text-3xl lg:text-4xl font-bold font-serif transition-transform duration-500 ease-out ${
                       isHovered ? (isAr ? '-translate-x-4 text-white' : 'translate-x-4 text-white') : 'text-slate-300'
-                    }`}>
+                    } ${isAr ? 'font-arabic' : ''}`}>
                       {principle.title}
                     </h3>
                     
@@ -127,7 +127,7 @@ export function WhyWorkWithUsInteractive({ title, description, principles, isAr 
                   style={{ maxHeight: isHovered ? '120px' : '0px', opacity: isHovered ? 1 : 0 }}
                 >
                   <div className={`pb-10 w-1/2 ${isAr ? 'mr-[20%]' : 'ml-[20%]'}`}>
-                    <p className="text-slate-400 font-light text-lg leading-relaxed">
+                    <p className={`text-slate-400 font-light text-lg leading-relaxed ${isAr ? 'font-arabic' : ''}`}>
                       {principle.description}
                     </p>
                   </div>
@@ -154,11 +154,11 @@ export function WhyWorkWithUsInteractive({ title, description, principles, isAr 
                   onClick={() => setMobileExpanded(isExpanded ? null : idx)}
                   className="w-full flex items-center justify-between p-6 text-left"
                 >
-                  <div className="flex items-center gap-4">
+                  <div className={`flex items-center gap-4 ${isAr ? 'flex-row-reverse' : ''}`}>
                     <span className={`font-mono text-sm ${isExpanded ? 'text-dazz-gold' : 'text-slate-500'}`}>
                       {formattedNum}
                     </span>
-                    <h3 className={`font-serif font-bold text-xl ${isExpanded ? 'text-white' : 'text-slate-300'}`}>
+                    <h3 className={`font-serif font-bold text-xl ${isExpanded ? 'text-white' : 'text-slate-300'} ${isAr ? 'font-arabic text-right' : ''}`}>
                       {principle.title}
                     </h3>
                   </div>
@@ -170,7 +170,7 @@ export function WhyWorkWithUsInteractive({ title, description, principles, isAr 
                   style={{ maxHeight: isExpanded ? '400px' : '0px', opacity: isExpanded ? 1 : 0 }}
                 >
                   <div className="p-6 pt-0 space-y-6">
-                    <p className="text-slate-400 font-light leading-relaxed">
+                    <p className={`text-slate-400 font-light leading-relaxed ${isAr ? 'font-arabic text-right' : ''}`}>
                       {principle.description}
                     </p>
                     {principle.image && (

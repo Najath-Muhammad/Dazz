@@ -76,10 +76,10 @@ export function ContactForm({ isAr = false }: ContactFormProps) {
           <CheckCircle size={40} />
         </div>
         <div>
-          <h3 className="text-2xl font-bold text-white mb-2 font-serif">
+          <h3 className={`text-2xl font-bold text-white mb-2 font-serif ${isAr ? 'font-arabic' : ''}`}>
             {isAr ? 'تم استلام الرسالة' : 'MESSAGE RECEIVED'}
           </h3>
-          <p className="text-slate-300">
+          <p className={`text-slate-300 ${isAr ? 'font-arabic' : ''}`}>
             {isAr 
               ? 'شكرًا لتواصلك مع داز. سنعود إليك في أقرب وقت ممكن.' 
               : 'Thank you for contacting Dazz. We\'ll get back to you as soon as possible.'}
@@ -87,7 +87,7 @@ export function ContactForm({ isAr = false }: ContactFormProps) {
         </div>
         <button 
           onClick={() => setStatus('idle')}
-          className="px-6 py-3 border border-slate-600 hover:border-dazz-gold text-slate-300 hover:text-dazz-gold rounded-sm transition-colors text-sm font-bold uppercase tracking-wider"
+          className={`px-6 py-3 border border-slate-600 hover:border-dazz-gold text-slate-300 hover:text-dazz-gold rounded-sm transition-colors text-sm font-bold tracking-wider ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}
         >
           {isAr ? 'إرسال رسالة أخرى' : 'Send Another Message'}
         </button>
@@ -97,7 +97,7 @@ export function ContactForm({ isAr = false }: ContactFormProps) {
 
   return (
     <form noValidate onSubmit={handleSubmit} className="bg-white p-8 md:p-10 rounded-lg shadow-xl shadow-dazz-navy/5 border border-slate-100">
-      <h3 className="text-2xl font-bold text-slate-900 mb-6 font-serif">
+      <h3 className={`text-2xl font-bold text-slate-900 mb-6 font-serif ${isAr ? 'font-arabic text-right' : ''}`}>
         {isAr ? 'أرسل لنا استفسارًا' : 'Send Us an Inquiry'}
       </h3>
       
@@ -108,10 +108,10 @@ export function ContactForm({ isAr = false }: ContactFormProps) {
         </div>
       )}
 
-      <div className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className={`space-y-6 ${isAr ? 'text-right' : ''}`}>
+        <div className={`grid grid-cols-1 md:grid-cols-2 gap-6 ${isAr ? 'text-right' : ''}`}>
           <div className="space-y-2">
-            <label className="block text-sm font-bold text-slate-700 uppercase tracking-wider text-xs">
+            <label className={`block text-sm font-bold text-slate-700 tracking-wider text-xs ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>
               {isAr ? 'الاسم الكامل *' : 'Full Name *'}
             </label>
             <input 
@@ -125,7 +125,7 @@ export function ContactForm({ isAr = false }: ContactFormProps) {
             <FormError message={errors.fullName} isAr={isAr} />
           </div>
           <div className="space-y-2">
-            <label className="block text-sm font-bold text-slate-700 uppercase tracking-wider text-xs">
+            <label className={`block text-sm font-bold text-slate-700 tracking-wider text-xs ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>
               {isAr ? 'البريد الإلكتروني *' : 'Email *'}
             </label>
             <input 
@@ -140,9 +140,9 @@ export function ContactForm({ isAr = false }: ContactFormProps) {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className={`grid grid-cols-1 md:grid-cols-2 gap-6 ${isAr ? 'text-right' : ''}`}>
           <div className="space-y-2">
-            <label className="block text-sm font-bold text-slate-700 uppercase tracking-wider text-xs">
+            <label className={`block text-sm font-bold text-slate-700 tracking-wider text-xs ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>
               {isAr ? 'رقم الهاتف' : 'Phone Number'}
             </label>
             <input 
@@ -157,7 +157,7 @@ export function ContactForm({ isAr = false }: ContactFormProps) {
             <FormError message={errors.phone} isAr={isAr} />
           </div>
           <div className="space-y-2">
-            <label className="block text-sm font-bold text-slate-700 uppercase tracking-wider text-xs">
+            <label className={`block text-sm font-bold text-slate-700 tracking-wider text-xs ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>
               {isAr ? 'الشركة' : 'Company'}
             </label>
             <input 
@@ -173,7 +173,7 @@ export function ContactForm({ isAr = false }: ContactFormProps) {
         </div>
 
         <div className="space-y-2">
-          <label className="block text-sm font-bold text-slate-700 uppercase tracking-wider text-xs">
+          <label className={`block text-sm font-bold text-slate-700 tracking-wider text-xs ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>
             {isAr ? 'الموضوع *' : 'Subject *'}
           </label>
           <input 
@@ -188,7 +188,7 @@ export function ContactForm({ isAr = false }: ContactFormProps) {
         </div>
 
         <div className="space-y-2">
-          <label className="block text-sm font-bold text-slate-700 uppercase tracking-wider text-xs">
+          <label className={`block text-sm font-bold text-slate-700 tracking-wider text-xs ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>
             {isAr ? 'الرسالة *' : 'Message *'}
           </label>
           <textarea 
@@ -205,14 +205,14 @@ export function ContactForm({ isAr = false }: ContactFormProps) {
         <button 
           type="submit"
           disabled={status === 'loading'}
-          className="group w-full md:w-auto mt-4 px-10 py-4 bg-dazz-navy text-white text-sm font-bold uppercase tracking-wider rounded-sm hover:bg-slate-900 transition-all flex items-center justify-center gap-3 disabled:opacity-70 disabled:cursor-not-allowed"
+          className={`group w-full md:w-auto mt-4 px-10 py-4 bg-dazz-navy text-white text-sm font-bold tracking-wider rounded-sm hover:bg-slate-900 transition-all flex items-center justify-center gap-3 disabled:opacity-70 disabled:cursor-not-allowed ${isAr ? 'font-arabic uppercase-none flex-row-reverse' : 'uppercase'}`}
         >
           {status === 'loading' ? (
             <Loader2 size={18} className="animate-spin" />
           ) : (
             <>
               {isAr ? 'إرسال الرسالة' : 'Send Message'}
-              <ArrowRight size={18} className={`group-hover:${isAr ? '-translate-x-1' : 'translate-x-1'} transition-transform`} />
+              <ArrowRight size={18} className={`group-hover:${isAr ? '-translate-x-1' : 'translate-x-1'} transition-transform ${isAr ? 'rotate-180' : ''}`} />
             </>
           )}
         </button>

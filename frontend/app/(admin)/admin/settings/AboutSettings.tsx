@@ -158,7 +158,7 @@ export default function AboutSettings({ settings, onChange }: AboutSettingsProps
                 label="Mission Description"
                 nameEn="missionDescEn"
                 nameAr="missionDescAr"
-                isTextArea
+                type="textarea"
                 valueEn={aboutUsPage.missionVision?.mission?.description?.en || ''}
                 valueAr={aboutUsPage.missionVision?.mission?.description?.ar || ''}
                 onChangeEn={(v) => updateLocalized(['missionVision', 'mission', 'description'], 'en', v)}
@@ -186,7 +186,7 @@ export default function AboutSettings({ settings, onChange }: AboutSettingsProps
                 label="Vision Description"
                 nameEn="visionDescEn"
                 nameAr="visionDescAr"
-                isTextArea
+                type="textarea"
                 valueEn={aboutUsPage.missionVision?.vision?.description?.en || ''}
                 valueAr={aboutUsPage.missionVision?.vision?.description?.ar || ''}
                 onChangeEn={(v) => updateLocalized(['missionVision', 'vision', 'description'], 'en', v)}

@@ -57,7 +57,7 @@ export default async function JobDetailsPage({ params }: { params: Promise<{ slu
             <div className="w-6 h-6 flex items-center justify-center border border-dazz-gold/40 bg-dazz-gold/10 flex-shrink-0 mt-0.5 rounded-full shadow-sm group-hover:bg-dazz-gold group-hover:scale-110 transition-all duration-300">
               <CheckCircle2 size={14} className="text-dazz-gold group-hover:text-white transition-colors" />
             </div>
-            <span className="leading-relaxed text-base font-light">{item[lang]}</span>
+            <span className={`leading-relaxed text-base font-light ${isAr ? 'font-arabic text-right' : ''}`}>{item[lang]}</span>
           </li>
         ))}
       </ul>
@@ -84,41 +84,41 @@ export default async function JobDetailsPage({ params }: { params: Promise<{ slu
         <div className="max-w-6xl mx-auto px-6 relative z-10">
           <Link 
             href={`/${lang}/careers`} 
-            className={`inline-flex items-center gap-3 text-dazz-gold hover:text-white transition-colors mb-12 font-mono text-xs tracking-[0.2em] uppercase`}
+            className={`inline-flex items-center gap-3 text-dazz-gold hover:text-white transition-colors mb-12 font-mono text-xs tracking-[0.2em] ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}
           >
             <ArrowLeft size={16} className={isAr ? 'rotate-180' : ''} />
             <span>{isAr ? 'العودة للوظائف' : 'Back to Careers'}</span>
           </Link>
           
           <div className="max-w-4xl backdrop-blur-sm bg-[#0A0F1A]/40 p-8 rounded-2xl border border-white/5 shadow-2xl">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-8 text-white leading-tight">
+            <h1 className={`text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-8 text-white leading-tight ${isAr ? 'font-arabic text-right' : ''}`}>
               {job.title?.[lang]}
             </h1>
             
             <div className="flex flex-wrap items-center gap-x-10 gap-y-6 text-slate-300 border-t border-white/10 pt-8">
               <div className="flex flex-col gap-2">
-                <span className="text-[10px] font-mono text-slate-400 uppercase tracking-[0.2em]">{isAr ? 'القسم' : 'Department'}</span>
-                <div className="flex items-center gap-2">
+                <span className={`text-[10px] font-mono text-slate-400 tracking-[0.2em] ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>{isAr ? 'القسم' : 'Department'}</span>
+                <div className={`flex items-center gap-2 ${isAr ? 'flex-row-reverse' : ''}`}>
                   <Briefcase size={16} className="text-dazz-gold" />
-                  <span className="font-bold text-sm tracking-wide text-white">{job.department}</span>
+                  <span className={`font-bold text-sm tracking-wide text-white ${isAr ? 'font-arabic' : ''}`}>{job.department}</span>
                 </div>
               </div>
               <div className="h-10 w-px bg-white/10 hidden md:block"></div>
               
               <div className="flex flex-col gap-2">
-                <span className="text-[10px] font-mono text-slate-400 uppercase tracking-[0.2em]">{isAr ? 'الموقع' : 'Location'}</span>
-                <div className="flex items-center gap-2">
+                <span className={`text-[10px] font-mono text-slate-400 tracking-[0.2em] ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>{isAr ? 'الموقع' : 'Location'}</span>
+                <div className={`flex items-center gap-2 ${isAr ? 'flex-row-reverse' : ''}`}>
                   <MapPin size={16} className="text-dazz-gold" />
-                  <span className="font-bold text-sm tracking-wide text-white">{job.location}</span>
+                  <span className={`font-bold text-sm tracking-wide text-white ${isAr ? 'font-arabic' : ''}`}>{job.location}</span>
                 </div>
               </div>
               <div className="h-10 w-px bg-white/10 hidden md:block"></div>
 
               <div className="flex flex-col gap-2">
-                <span className="text-[10px] font-mono text-slate-400 uppercase tracking-[0.2em]">{isAr ? 'نوع الوظيفة' : 'Type'}</span>
-                <div className="flex items-center gap-2">
+                <span className={`text-[10px] font-mono text-slate-400 tracking-[0.2em] ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>{isAr ? 'نوع الوظيفة' : 'Type'}</span>
+                <div className={`flex items-center gap-2 ${isAr ? 'flex-row-reverse' : ''}`}>
                   <Clock size={16} className="text-dazz-gold" />
-                  <span className="font-bold text-sm tracking-wide text-white">{job.type}</span>
+                  <span className={`font-bold text-sm tracking-wide text-white ${isAr ? 'font-arabic' : ''}`}>{job.type}</span>
                 </div>
               </div>
 
@@ -126,8 +126,8 @@ export default async function JobDetailsPage({ params }: { params: Promise<{ slu
                 <>
                   <div className="h-10 w-px bg-white/10 hidden md:block"></div>
                   <div className="flex flex-col gap-2">
-                    <span className="text-[10px] font-mono text-slate-400 uppercase tracking-[0.2em]">{isAr ? 'تاريخ النشر' : 'Published'}</span>
-                    <div className="flex items-center gap-2">
+                    <span className={`text-[10px] font-mono text-slate-400 tracking-[0.2em] ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>{isAr ? 'تاريخ النشر' : 'Published'}</span>
+                    <div className={`flex items-center gap-2 ${isAr ? 'flex-row-reverse' : ''}`}>
                       <Calendar size={16} className="text-dazz-gold" />
                       <span className="font-bold text-sm tracking-wide text-white">{new Date(job.publishedAt).toLocaleDateString()}</span>
                     </div>
@@ -150,36 +150,36 @@ export default async function JobDetailsPage({ params }: { params: Promise<{ slu
 
               <div className="space-y-16 mt-2">
                 <div>
-                  <h2 className="text-sm font-mono text-dazz-gold tracking-widest uppercase mb-4">{isAr ? 'عن الوظيفة' : 'About the Role'}</h2>
-                  <p className="text-slate-600 leading-relaxed whitespace-pre-wrap text-lg font-light">
+                  <h2 className={`text-sm font-mono text-dazz-gold tracking-widest mb-4 ${isAr ? 'font-arabic uppercase-none text-right' : 'uppercase'}`}>{isAr ? 'عن الوظيفة' : 'About the Role'}</h2>
+                  <p className={`text-slate-600 leading-relaxed whitespace-pre-wrap text-lg font-light ${isAr ? 'font-arabic text-right' : ''}`}>
                     {job.description?.[lang]}
                   </p>
                 </div>
 
                 {job.responsibilities && job.responsibilities.length > 0 && renderList(job.responsibilities) && (
                   <div>
-                    <h2 className="text-sm font-mono text-dazz-gold tracking-widest uppercase mb-4">{isAr ? 'المسؤوليات' : 'Key Responsibilities'}</h2>
+                    <h2 className={`text-sm font-mono text-dazz-gold tracking-widest mb-4 ${isAr ? 'font-arabic uppercase-none text-right' : 'uppercase'}`}>{isAr ? 'المسؤوليات' : 'Key Responsibilities'}</h2>
                     {renderList(job.responsibilities)}
                   </div>
                 )}
 
                 {job.requirements && job.requirements.length > 0 && renderList(job.requirements) && (
                   <div>
-                    <h2 className="text-sm font-mono text-dazz-gold tracking-widest uppercase mb-4">{isAr ? 'المتطلبات' : 'Requirements'}</h2>
+                    <h2 className={`text-sm font-mono text-dazz-gold tracking-widest mb-4 ${isAr ? 'font-arabic uppercase-none text-right' : 'uppercase'}`}>{isAr ? 'المتطلبات' : 'Requirements'}</h2>
                     {renderList(job.requirements)}
                   </div>
                 )}
 
                 {job.qualifications && job.qualifications.length > 0 && renderList(job.qualifications) && (
                   <div>
-                    <h2 className="text-sm font-mono text-dazz-gold tracking-widest uppercase mb-4">{isAr ? 'المؤهلات' : 'Qualifications'}</h2>
+                    <h2 className={`text-sm font-mono text-dazz-gold tracking-widest mb-4 ${isAr ? 'font-arabic uppercase-none text-right' : 'uppercase'}`}>{isAr ? 'المؤهلات' : 'Qualifications'}</h2>
                     {renderList(job.qualifications)}
                   </div>
                 )}
                 
                 {job.skills && job.skills.length > 0 && renderList(job.skills) && (
                   <div>
-                    <h2 className="text-sm font-mono text-dazz-gold tracking-widest uppercase mb-4">{isAr ? 'المهارات' : 'Skills'}</h2>
+                    <h2 className={`text-sm font-mono text-dazz-gold tracking-widest mb-4 ${isAr ? 'font-arabic uppercase-none text-right' : 'uppercase'}`}>{isAr ? 'المهارات' : 'Skills'}</h2>
                     {renderList(job.skills)}
                   </div>
                 )}
@@ -194,7 +194,7 @@ export default async function JobDetailsPage({ params }: { params: Promise<{ slu
                 {/* Abstract corner */}
                 <div className={`absolute -top-12 ${isAr ? '-left-12' : '-right-12'} w-24 h-24 bg-dazz-gold/10 rotate-45`}></div>
                 
-                <h3 className="text-xs font-mono text-slate-500 tracking-[0.2em] uppercase mb-8 pb-4 border-b border-slate-100">
+                <h3 className={`text-xs font-mono text-slate-500 tracking-[0.2em] mb-8 pb-4 border-b border-slate-100 ${isAr ? 'font-arabic uppercase-none text-right' : 'uppercase'}`}>
                   {isAr ? 'ملخص الوظيفة' : 'Job Overview'}
                 </h3>
                 
@@ -202,31 +202,31 @@ export default async function JobDetailsPage({ params }: { params: Promise<{ slu
                   {(job.salary || (job.experience && job.experience[lang])) && (
                     <div className="flex flex-col gap-6">
                       {job.experience?.[lang] && (
-                        <div>
-                          <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block mb-1">{isAr ? 'الخبرة' : 'Experience'}</span>
-                          <p className="font-bold text-lg text-slate-900">{job.experience[lang]}</p>
+                        <div className={isAr ? 'text-right' : ''}>
+                          <span className={`text-[10px] font-mono text-slate-400 tracking-widest block mb-1 ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>{isAr ? 'الخبرة' : 'Experience'}</span>
+                          <p className={`font-bold text-lg text-slate-900 ${isAr ? 'font-arabic' : ''}`}>{job.experience[lang]}</p>
                         </div>
                       )}
                       {job.salary && (
-                        <div>
-                          <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block mb-1">{isAr ? 'الراتب' : 'Salary'}</span>
-                          <p className="font-bold text-lg text-slate-900">{job.salary}</p>
+                        <div className={isAr ? 'text-right' : ''}>
+                          <span className={`text-[10px] font-mono text-slate-400 tracking-widest block mb-1 ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>{isAr ? 'الراتب' : 'Salary'}</span>
+                          <p className={`font-bold text-lg text-slate-900 ${isAr ? 'font-arabic' : ''}`}>{job.salary}</p>
                         </div>
                       )}
                     </div>
                   )}
 
                   {job.benefits && (
-                    <div className="pt-6 border-t border-slate-100">
-                      <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block mb-1">{isAr ? 'المزايا' : 'Benefits'}</span>
-                      <p className="font-bold text-slate-900 leading-relaxed">{job.benefits}</p>
+                    <div className={`pt-6 border-t border-slate-100 ${isAr ? 'text-right' : ''}`}>
+                      <span className={`text-[10px] font-mono text-slate-400 tracking-widest block mb-1 ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>{isAr ? 'المزايا' : 'Benefits'}</span>
+                      <p className={`font-bold text-slate-900 leading-relaxed ${isAr ? 'font-arabic' : ''}`}>{job.benefits}</p>
                     </div>
                   )}
                   
                   {job.deadline && (
-                    <div className="pt-6 border-t border-slate-100">
-                      <span className="text-[10px] font-mono text-red-500 uppercase tracking-widest block mb-1">{isAr ? 'الموعد النهائي' : 'Deadline'}</span>
-                      <p className="font-bold text-slate-900">{new Date(job.deadline).toLocaleDateString()}</p>
+                    <div className={`pt-6 border-t border-slate-100 ${isAr ? 'text-right' : ''}`}>
+                      <span className={`text-[10px] font-mono text-red-500 tracking-widest block mb-1 ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>{isAr ? 'الموعد النهائي' : 'Deadline'}</span>
+                      <p className={`font-bold text-slate-900 ${isAr ? 'font-arabic' : ''}`}>{new Date(job.deadline).toLocaleDateString()}</p>
                     </div>
                   )}
                 </div>
@@ -234,7 +234,7 @@ export default async function JobDetailsPage({ params }: { params: Promise<{ slu
                 <div className="mt-8 pt-8 border-t border-slate-100">
                   <a 
                     href="#apply"
-                    className="block w-full text-center px-6 py-4 bg-dazz-navy text-white font-bold rounded-lg hover:bg-dazz-gold transition-colors duration-300"
+                    className={`block w-full text-center px-6 py-4 bg-dazz-navy text-white font-bold rounded-lg hover:bg-dazz-gold transition-colors duration-300 ${isAr ? 'font-arabic' : ''}`}
                   >
                     {isAr ? 'قدم الآن' : 'Apply Now'}
                   </a>
@@ -247,10 +247,10 @@ export default async function JobDetailsPage({ params }: { params: Promise<{ slu
         {/* Spacious Application Form Section */}
         <div id="apply" className="mt-32 max-w-4xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-serif font-bold text-slate-900 mb-4">
+            <h2 className={`text-4xl font-serif font-bold text-slate-900 mb-4 ${isAr ? 'font-arabic' : ''}`}>
               {isAr ? 'قدم على هذه الوظيفة' : 'Apply for this Role'}
             </h2>
-            <p className="text-slate-500 text-lg">
+            <p className={`text-slate-500 text-lg ${isAr ? 'font-arabic' : ''}`}>
               {isAr ? 'أرسل تفاصيلك وسيرتك الذاتية. نتطلع إلى التعرف عليك.' : 'Submit your details and resume below. We look forward to reviewing your application.'}
             </p>
           </div>

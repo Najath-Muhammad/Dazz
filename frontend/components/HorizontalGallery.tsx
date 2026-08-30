@@ -80,7 +80,7 @@ export function HorizontalGallery() {
               </div>
               <div className="text-right">
                 <span className="text-slate-500 text-sm block uppercase tracking-widest">{project.location}</span>
-                <Link href={`/projects/${project.slug}`} className="text-sm font-bold text-dazz-navy hover:text-dazz-gold transition-colors mt-2 block">
+                <Link href={`/en/projects/${project.slug}`} className="text-sm font-bold text-dazz-navy hover:text-dazz-gold transition-colors mt-2 block">
                   Explore Project
                 </Link>
               </div>

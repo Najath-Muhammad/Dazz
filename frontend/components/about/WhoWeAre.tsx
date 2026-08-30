@@ -28,10 +28,10 @@ export function WhoWeAre({ isAr }: { isAr?: boolean }) {
             className="md:col-span-4"
           >
             <div className="flex flex-col gap-6">
-              <span className="text-[120px] font-extrabold text-slate-100 leading-none tracking-tighter">01</span>
+              <span className={`text-[120px] font-extrabold text-slate-100 leading-none tracking-tighter ${isAr ? 'font-arabic' : ''}`}>01</span>
               <div>
-                <div className="w-12 h-px bg-dazz-navy mb-4" />
-                <h2 className="text-2xl font-bold uppercase tracking-widest text-slate-900">
+                <div className={`w-12 h-px bg-dazz-navy mb-4 ${isAr ? 'ml-auto' : ''}`} />
+                <h2 className={`text-2xl font-bold tracking-widest text-slate-900 ${isAr ? 'font-arabic text-3xl uppercase-none' : 'uppercase'}`}>
                   {isAr ? 'من نحن' : 'Who We Are'}
                 </h2>
               </div>
@@ -48,7 +48,7 @@ export function WhoWeAre({ isAr }: { isAr?: boolean }) {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: '-100px' }}
                   transition={{ duration: 0.8, delay: index * 0.15 }}
-                  className={`${index === 0 ? 'text-xl md:text-2xl font-light text-slate-900 leading-snug' : 'text-lg text-slate-600 font-light leading-relaxed'}`}
+                  className={`${index === 0 ? 'text-xl md:text-2xl font-light text-slate-900 leading-snug' : 'text-lg text-slate-600 font-light leading-relaxed'} ${isAr ? 'font-arabic' : ''}`}
                 >
                   {paragraph}
                 </motion.p>

@@ -58,19 +58,21 @@ export default async function LocalizedHomePage({ params }: { params: Promise<{ 
   const homeHeader = settings?.pageHeaders?.home;
 
   let heroTitle = homeHeader?.title || settings?.heroTitle;
-  if (!heroTitle || typeof heroTitle === 'string' && heroTitle.toUpperCase() === 'DAZZ TRADLINK INTERNATIONAL') {
-    heroTitle = isAr ? 'داز تريدلينك العالمية' : 'DAZZ TRADLINK INTERNATIONAL';
-  } else if (typeof heroTitle === 'object') {
+  if (typeof heroTitle === 'object' && heroTitle !== null) {
     heroTitle = isAr ? (heroTitle.ar || heroTitle.en) : heroTitle.en;
+  }
+  if (!heroTitle || (typeof heroTitle === 'string' && (heroTitle.toUpperCase().includes('DAZZ TRADLINK') || heroTitle.includes('Building Solutions')))) {
+    heroTitle = isAr ? 'نبني الحلول،\nنبني الثقة' : 'Building Solutions,\nBuilding Trust';
   }
 
   let heroSubtitle = homeHeader?.subtitle || settings?.heroSubtitle;
-  if (!heroSubtitle || typeof heroSubtitle === 'string' && heroSubtitle.startsWith('Empowering')) {
-    heroSubtitle = isAr 
-      ? 'تمكين التميز الصناعي. تقديم حلول موثوقة في المقاولات، التجارة الغذائية، الخدمات اللوجستية، والضيافة.' 
-      : 'Empowering Industrial Excellence. Delivering trusted solutions across construction, food trading, logistics, and hospitality.';
-  } else if (typeof heroSubtitle === 'object') {
+  if (typeof heroSubtitle === 'object' && heroSubtitle !== null) {
     heroSubtitle = isAr ? (heroSubtitle.ar || heroSubtitle.en) : heroSubtitle.en;
+  }
+  if (!heroSubtitle || (typeof heroSubtitle === 'string' && (heroSubtitle.startsWith('Empowering') || heroSubtitle.includes('Your leading partner')))) {
+    heroSubtitle = isAr 
+      ? 'شريكك الرائد للحلول الشاملة في مجال البناء والتجارة والصناعة في جميع أنحاء المملكة العربية السعودية.' 
+      : 'Your leading partner for comprehensive construction, trading, and industrial solutions across Saudi Arabia.';
   }
 
   const rawBg = homeHeader?.media || settings?.heroBackgroundImage;
@@ -87,7 +89,7 @@ export default async function LocalizedHomePage({ params }: { params: Promise<{ 
   return (
     <div dir={isAr ? 'rtl' : 'ltr'}>
       {/* 1. Hero */}
-      <CinematicHero title={heroTitle || ''} subtitle={heroSubtitle || ''} backgroundImage={heroBg} />
+      <CinematicHero title={heroTitle || ''} subtitle={heroSubtitle || ''} backgroundImage={heroBg} isAr={isAr} />
 
       {/* 2. Short About Us */}
       <ShortAboutSection image={aboutImage} isAr={isAr} />

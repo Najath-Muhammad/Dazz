@@ -18,7 +18,7 @@ export function ProjectsFilter({ categories, activeCategory, onSelect, isAr }: P
           <button
             key={category}
             onClick={() => onSelect(category)}
-            className="relative py-4 text-sm md:text-base font-bold uppercase tracking-widest transition-colors duration-300"
+            className={`relative py-4 text-sm md:text-base font-bold tracking-widest transition-colors duration-300 ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}
             style={{ color: isActive ? '#0f172a' : '#94a3b8' }}
           >
             {category}

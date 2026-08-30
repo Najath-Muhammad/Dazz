@@ -37,8 +37,21 @@ export default async function AboutUsPage({ params }: { params: Promise<{ lang: 
   const settings = await getHeroSettings();
   const aboutHeader = settings?.pageHeaders?.about;
   
-  const heroTitle = aboutHeader?.title || (isAr ? 'تمكين\nالامتياز الصناعي.' : 'EMPOWERING\nINDUSTRIAL\nEXCELLENCE.');
-  const heroSubtitle = aboutHeader?.subtitle || (isAr ? 'مصمم لتلبية الاحتياجات التشغيلية للبيئات الصناعية.' : 'Designed to meet the operational needs of industrial environments.');
+  let heroTitle = aboutHeader?.title;
+  if (!heroTitle || (typeof heroTitle === 'string' && (heroTitle.toUpperCase().includes('EMPOWERING') || heroTitle.toUpperCase().includes('BUILDING EXCELLENCE')))) {
+    heroTitle = isAr ? 'بناء التميز.\nخلق تأثير.' : 'BUILDING EXCELLENCE.\nCREATING IMPACT.';
+  } else if (typeof heroTitle === 'object') {
+    heroTitle = isAr ? (heroTitle.ar || heroTitle.en) : heroTitle.en;
+  }
+
+  let heroSubtitle = aboutHeader?.subtitle;
+  if (!heroSubtitle || (typeof heroSubtitle === 'string' && heroSubtitle.startsWith('Designed to meet'))) {
+    heroSubtitle = isAr 
+      ? 'مصمم لتلبية الاحتياجات التشغيلية للبيئات الصناعية.' 
+      : 'Designed to meet the operational needs of industrial environments.';
+  } else if (typeof heroSubtitle === 'object') {
+    heroSubtitle = isAr ? (heroSubtitle.ar || heroSubtitle.en) : heroSubtitle.en;
+  }
   
   const rawBg = aboutHeader?.media;
   const heroImage = rawBg?.url || (typeof rawBg === 'string' && rawBg !== '' ? rawBg : '/images/about-hero.png');

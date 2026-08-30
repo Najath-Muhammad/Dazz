@@ -82,7 +82,7 @@ export function FeaturedProjectsSection({ projects, isAr }: { projects: Project[
                 viewport={{ once: true }}
                 transition={{ duration: 0.7 }}
               >
-                <Link href={`/projects/${displayed[0].slug}`} className="group block relative h-[480px] overflow-hidden bg-slate-100">
+                <Link href={`${isAr ? '/ar' : '/en'}/projects/${displayed[0].slug}`} className="group block relative h-[480px] overflow-hidden bg-slate-100">
                   {getImageUrl(displayed[0]) && (
                     <MediaRenderer
                       media={getImageUrl(displayed[0])}
@@ -113,7 +113,7 @@ export function FeaturedProjectsSection({ projects, isAr }: { projects: Project[
                   viewport={{ once: true }}
                   transition={{ duration: 0.7, delay: 0.1 * (i + 1) }}
                 >
-                  <Link href={`/projects/${project.slug}`} className="group block relative h-[228px] overflow-hidden bg-slate-100">
+                  <Link href={`${isAr ? '/ar' : '/en'}/projects/${project.slug}`} className="group block relative h-[228px] overflow-hidden bg-slate-100">
                     {getImageUrl(project) && (
                       <MediaRenderer
                         media={getImageUrl(project)}
@@ -142,7 +142,7 @@ export function FeaturedProjectsSection({ projects, isAr }: { projects: Project[
                 viewport={{ once: true }}
                 transition={{ duration: 0.7, delay: 0.1 * (i + 3) }}
               >
-                <Link href={`/projects/${project.slug}`} className="group block relative h-[220px] overflow-hidden bg-slate-100">
+                <Link href={`${isAr ? '/ar' : '/en'}/projects/${project.slug}`} className="group block relative h-[220px] overflow-hidden bg-slate-100">
                   {getImageUrl(project) && (
                     <MediaRenderer
                       media={getImageUrl(project)}

@@ -129,13 +129,13 @@ export default function LocationsMapWrapper({ isAr }: LocationsMapWrapperProps) 
   return (
     <div>
       <div className="text-center mb-12">
-        <h2 className="text-3xl md:text-5xl font-serif font-bold text-slate-900 mb-4 uppercase tracking-wider">
+        <h2 className={`text-3xl md:text-5xl font-serif font-bold text-slate-900 mb-4 tracking-wider ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>
           {isAr ? 'حضورنا الدولي' : 'INTERNATIONAL PRESENCE'}
         </h2>
-        <h3 className="text-xl md:text-2xl font-bold text-dazz-gold mb-3">
+        <h3 className={`text-xl md:text-2xl font-bold text-dazz-gold mb-3 ${isAr ? 'font-arabic' : ''}`}>
           {isAr ? 'مواقعنا' : 'OUR LOCATIONS'}
         </h3>
-        <p className="text-lg text-slate-500 max-w-2xl mx-auto">
+        <p className={`text-lg text-slate-500 max-w-2xl mx-auto ${isAr ? 'font-arabic' : ''}`}>
           {isAr 
             ? 'حضور عالمي مبني على الثقة، نقدم التميز عبر الحدود وفي مختلف الصناعات.' 
             : 'A global footprint built on trust, delivering excellence across borders and industries.'}

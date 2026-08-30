@@ -116,15 +116,15 @@ export default function ApplicationForm({ lang, isAr, jobId }: ApplicationFormPr
         <div className="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
           <CheckCircle2 size={32} />
         </div>
-        <h3 className="text-2xl font-bold text-green-800">
+        <h3 className={`text-2xl font-bold text-green-800 ${isAr ? 'font-arabic' : ''}`}>
           {isAr ? 'تم استلام طلبك بنجاح!' : 'Application Received!'}
         </h3>
-        <p className="text-green-700">
+        <p className={`text-green-700 ${isAr ? 'font-arabic' : ''}`}>
           {isAr ? 'شكراً لاهتمامك بالانضمام إلى فريقنا. سنقوم بمراجعة طلبك والرد عليك قريباً.' : 'Thank you for your interest in joining our team. We will review your application and get back to you soon.'}
         </p>
         <button 
           onClick={() => setSuccess(false)}
-          className="mt-6 text-sm font-bold text-green-700 hover:text-green-900 underline"
+          className={`mt-6 text-sm font-bold text-green-700 hover:text-green-900 underline ${isAr ? 'font-arabic' : ''}`}
         >
           {isAr ? 'تقديم طلب آخر' : 'Submit another application'}
         </button>
@@ -140,9 +140,9 @@ export default function ApplicationForm({ lang, isAr, jobId }: ApplicationFormPr
         </div>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+      <div className={`grid grid-cols-1 md:grid-cols-2 gap-5 ${isAr ? 'text-right' : ''}`}>
         <div className="space-y-2">
-          <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-widest">{isAr ? 'الاسم الكامل *' : 'Full Name *'}</label>
+          <label className={`block text-[11px] font-bold text-slate-500 tracking-widest ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>{isAr ? 'الاسم الكامل *' : 'Full Name *'}</label>
           <input 
             type="text" 
             value={formData.candidateName}
@@ -155,7 +155,7 @@ export default function ApplicationForm({ lang, isAr, jobId }: ApplicationFormPr
           <FormError message={errors.candidateName} isAr={isAr} />
         </div>
         <div className="space-y-2">
-          <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-widest">{isAr ? 'البريد الإلكتروني *' : 'Email Address *'}</label>
+          <label className={`block text-[11px] font-bold text-slate-500 tracking-widest ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>{isAr ? 'البريد الإلكتروني *' : 'Email Address *'}</label>
           <input 
             type="email" 
             value={formData.email}
@@ -168,7 +168,7 @@ export default function ApplicationForm({ lang, isAr, jobId }: ApplicationFormPr
           <FormError message={errors.email} isAr={isAr} />
         </div>
         <div className="space-y-2">
-          <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-widest">{isAr ? 'رقم الهاتف *' : 'Phone Number *'}</label>
+          <label className={`block text-[11px] font-bold text-slate-500 tracking-widest ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>{isAr ? 'رقم الهاتف *' : 'Phone Number *'}</label>
           <input 
             type="tel" 
             value={formData.phone}
@@ -181,7 +181,7 @@ export default function ApplicationForm({ lang, isAr, jobId }: ApplicationFormPr
           <FormError message={errors.phone} isAr={isAr} />
         </div>
         <div className="space-y-2">
-          <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-widest">{isAr ? 'الموقع/المدينة *' : 'Location / City *'}</label>
+          <label className={`block text-[11px] font-bold text-slate-500 tracking-widest ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>{isAr ? 'الموقع/المدينة *' : 'Location / City *'}</label>
           <input 
             type="text" 
             value={formData.location}
@@ -195,8 +195,8 @@ export default function ApplicationForm({ lang, isAr, jobId }: ApplicationFormPr
         </div>
       </div>
 
-      <div className="space-y-2">
-        <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-widest">{isAr ? 'رسالة تعريفية (اختياري)' : 'Cover Letter (Optional)'}</label>
+      <div className={`space-y-2 ${isAr ? 'text-right' : ''}`}>
+        <label className={`block text-[11px] font-bold text-slate-500 tracking-widest ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>{isAr ? 'رسالة تعريفية (اختياري)' : 'Cover Letter (Optional)'}</label>
         <textarea 
           rows={4}
           value={formData.coverLetter}
@@ -205,9 +205,9 @@ export default function ApplicationForm({ lang, isAr, jobId }: ApplicationFormPr
         />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+      <div className={`grid grid-cols-1 md:grid-cols-2 gap-5 ${isAr ? 'text-right' : ''}`}>
         <div className="space-y-2">
-          <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-widest">{isAr ? 'رابط لينكد إن (اختياري)' : 'LinkedIn Profile (Optional)'}</label>
+          <label className={`block text-[11px] font-bold text-slate-500 tracking-widest ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>{isAr ? 'رابط لينكد إن (اختياري)' : 'LinkedIn Profile (Optional)'}</label>
           <input 
             type="url" 
             value={formData.linkedInProfile}
@@ -221,7 +221,7 @@ export default function ApplicationForm({ lang, isAr, jobId }: ApplicationFormPr
           <FormError message={errors.linkedInProfile} isAr={isAr} />
         </div>
         <div className="space-y-2">
-          <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-widest">{isAr ? 'رابط محفظة الأعمال (اختياري)' : 'Portfolio URL (Optional)'}</label>
+          <label className={`block text-[11px] font-bold text-slate-500 tracking-widest ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>{isAr ? 'رابط محفظة الأعمال (اختياري)' : 'Portfolio URL (Optional)'}</label>
           <input 
             type="url" 
             value={formData.portfolioUrl}
@@ -237,13 +237,13 @@ export default function ApplicationForm({ lang, isAr, jobId }: ApplicationFormPr
       </div>
 
       <div className="space-y-2">
-        <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-widest">{isAr ? 'السيرة الذاتية *' : 'Resume / CV *'}</label>
+        <label className={`block text-[11px] font-bold text-slate-500 tracking-widest ${isAr ? 'font-arabic uppercase-none text-right' : 'uppercase'}`}>{isAr ? 'السيرة الذاتية *' : 'Resume / CV *'}</label>
         
         {!file ? (
           <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-slate-200 border-dashed rounded-lg cursor-pointer bg-slate-50/50 hover:bg-slate-50 hover:border-dazz-gold/50 transition-all duration-300">
             <div className="flex flex-col items-center justify-center pt-5 pb-6">
               <Upload size={24} className="text-slate-400 mb-2" />
-              <p className="text-sm text-slate-600"><span className="font-bold text-dazz-navy">{isAr ? 'اضغط للرفع' : 'Click to upload'}</span> {isAr ? 'أو اسحب الملف هنا' : 'or drag and drop'}</p>
+              <p className={`text-sm text-slate-600 ${isAr ? 'font-arabic' : ''}`}><span className="font-bold text-dazz-navy">{isAr ? 'اضغط للرفع' : 'Click to upload'}</span> {isAr ? 'أو اسحب الملف هنا' : 'or drag and drop'}</p>
               <p className="text-xs text-slate-400 mt-1">PDF, DOC, DOCX (MAX. 5MB)</p>
             </div>
             <input type="file" className="hidden" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" onChange={handleFileChange} />
@@ -273,7 +273,7 @@ export default function ApplicationForm({ lang, isAr, jobId }: ApplicationFormPr
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full flex justify-center items-center gap-2 py-4 px-6 border border-transparent rounded-lg shadow-sm text-base font-bold text-dazz-navy bg-dazz-gold hover:bg-white hover:text-dazz-navy transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-dazz-gold disabled:opacity-50"
+        className={`w-full flex justify-center items-center gap-2 py-4 px-6 border border-transparent rounded-lg shadow-sm text-base font-bold text-dazz-navy bg-dazz-gold hover:bg-white hover:text-dazz-navy transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-dazz-gold disabled:opacity-50 ${isAr ? 'font-arabic' : ''}`}
       >
         {isSubmitting ? (
           <>

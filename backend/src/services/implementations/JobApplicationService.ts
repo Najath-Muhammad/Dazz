@@ -16,6 +16,40 @@ export class JobApplicationService implements IJobApplicationService {
       return { success: false, message: 'Failed to retrieve applications' };
     }
   }
+
+  async getApplicationsPaginated({ search, status, page, limit }: { search?: string; status?: string; page: number; limit: number }) {
+    try {
+      const query: any = {};
+      if (search) {
+        query['$or'] = [
+          { candidateName: { $regex: search, $options: 'i' } },
+          { email: { $regex: search, $options: 'i' } }
+        ];
+      }
+      if (status && status !== 'ALL') {
+        query.status = status;
+      }
+
+      const { items, total } = await this._repository.findPaginated(query, page, limit);
+      
+      return { 
+        success: true, 
+        message: 'Applications retrieved successfully', 
+        data: items,
+        pagination: {
+          total,
+          page,
+          limit,
+          totalPages: Math.ceil(total / limit),
+          hasNext: page * limit < total,
+          hasPrev: page > 1
+        }
+      };
+    } catch (error: any) {
+      console.error('Error in getApplicationsPaginated:', error);
+      return { success: false, message: 'Failed to retrieve applications' };
+    }
+  }
   async getApplicationById(id: string) {
     try {
       const item = await this._repository.findById(id);

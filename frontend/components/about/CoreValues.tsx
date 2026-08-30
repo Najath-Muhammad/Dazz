@@ -20,9 +20,9 @@ export function CoreValues({ isAr }: { isAr?: boolean }) {
       <div className="max-w-[1400px] mx-auto px-6">
         
         <div className="mb-20">
-          <span className="text-[120px] font-extrabold text-slate-100 leading-none tracking-tighter block mb-6">05</span>
-          <div className="w-12 h-px bg-dazz-navy mb-4" />
-          <h2 className="text-4xl md:text-5xl font-extrabold uppercase tracking-tighter text-slate-900">
+          <span className={`text-[120px] font-extrabold text-slate-100 leading-none tracking-tighter block mb-6 ${isAr ? 'font-arabic text-right' : ''}`}>05</span>
+          <div className={`w-12 h-px bg-dazz-navy mb-4 ${isAr ? 'ml-auto' : ''}`} />
+          <h2 className={`text-4xl md:text-5xl font-extrabold tracking-tighter text-slate-900 ${isAr ? 'font-arabic uppercase-none text-right' : 'uppercase'}`}>
             {isAr ? 'القيم والمبادئ' : 'VALUES & PRINCIPLES'}
           </h2>
         </div>
@@ -36,14 +36,14 @@ export function CoreValues({ isAr }: { isAr?: boolean }) {
               transition={{ duration: 0.8, delay: i * 0.1 }}
               className="group"
             >
-              <div className="flex items-center gap-4 mb-6">
+              <div className={`flex items-center gap-4 mb-6 ${isAr ? 'flex-row-reverse' : ''}`}>
                 <span className="text-xs font-mono text-dazz-gold">0{i + 1}</span>
                 <div className="h-[1px] bg-slate-200 flex-1 group-hover:bg-dazz-gold transition-colors duration-500" />
               </div>
-              <h3 className="text-2xl font-bold uppercase tracking-tight text-slate-900 mb-4">
+              <h3 className={`text-2xl font-bold tracking-tight text-slate-900 mb-4 ${isAr ? 'font-arabic text-right uppercase-none' : 'uppercase'}`}>
                 {isAr ? val.titleAr : val.title}
               </h3>
-              <p className="text-slate-500 font-light leading-relaxed">
+              <p className={`text-slate-500 font-light leading-relaxed ${isAr ? 'font-arabic text-right' : ''}`}>
                 {isAr ? val.descAr : val.desc}
               </p>
             </motion.div>

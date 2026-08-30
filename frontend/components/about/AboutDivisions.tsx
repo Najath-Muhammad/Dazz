@@ -20,9 +20,9 @@ export function AboutDivisions({ isAr }: { isAr?: boolean }) {
       <div className="max-w-[1400px] mx-auto px-6">
         
         <div className="mb-16">
-          <span className="text-[120px] font-extrabold text-slate-100 leading-none tracking-tighter block mb-6">03</span>
-          <div className="w-12 h-px bg-dazz-navy mb-4" />
-          <h2 className="text-sm font-bold uppercase tracking-widest text-slate-500">
+          <span className={`text-[120px] font-extrabold text-slate-100 leading-none tracking-tighter block mb-6 ${isAr ? 'font-arabic text-right' : ''}`}>03</span>
+          <div className={`w-12 h-px bg-dazz-navy mb-4 ${isAr ? 'ml-auto' : ''}`} />
+          <h2 className={`text-sm font-bold tracking-widest text-slate-500 ${isAr ? 'font-arabic text-base uppercase-none' : 'uppercase'}`}>
             {isAr ? 'قطاعاتنا' : 'Our Divisions'}
           </h2>
         </div>
@@ -51,19 +51,19 @@ export function AboutDivisions({ isAr }: { isAr?: boolean }) {
                 )}
               </AnimatePresence>
 
-              <div className="relative z-10 flex items-center justify-between">
-                <div className="flex items-center gap-8 md:gap-16">
+              <div className={`relative z-10 flex items-center justify-between ${isAr ? 'flex-row-reverse' : ''}`}>
+                <div className={`flex items-center gap-8 md:gap-16 ${isAr ? 'flex-row-reverse' : ''}`}>
                   <span className="text-xl md:text-2xl font-mono text-slate-300 group-hover:text-dazz-gold transition-colors duration-500">
                     {div.id}
                   </span>
-                  <h3 className="text-3xl md:text-5xl lg:text-6xl font-extrabold uppercase tracking-tighter text-slate-900 group-hover:text-dazz-navy transition-colors duration-500">
+                  <h3 className={`text-3xl md:text-5xl lg:text-6xl font-extrabold tracking-tighter text-slate-900 group-hover:text-dazz-navy transition-colors duration-500 ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>
                     {isAr ? div.titleAr : div.title}
                   </h3>
                 </div>
                 <motion.div
                   className="w-16 h-16 md:w-24 md:h-24 rounded-full border border-slate-200 flex items-center justify-center bg-white group-hover:border-dazz-gold group-hover:bg-dazz-gold transition-colors duration-500"
                 >
-                  <ArrowRight size={24} className="text-slate-400 group-hover:text-white group-hover:-rotate-45 transition-all duration-500" />
+                  <ArrowRight size={24} className={`text-slate-400 group-hover:text-white transition-all duration-500 ${isAr ? 'rotate-180 group-hover:rotate-[225deg]' : 'group-hover:-rotate-45'}`} />
                 </motion.div>
               </div>
             </Link>
