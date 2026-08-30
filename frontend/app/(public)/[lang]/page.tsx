@@ -45,25 +45,33 @@ async function getBlogs() {
   } catch { return []; }
 }
 
-export default async function LocalizedHomePage({ params }: { params: { lang: string } }) {
+export default async function LocalizedHomePage({ params }: { params: Promise<{ lang: string }> }) {
+  const resolvedParams = await params;
+  
   const [settings, projects, blogs] = await Promise.all([
     getSiteSettings(),
     getProjects(),
     getBlogs(),
   ]);
 
-  const isAr = params.lang === 'ar';
+  const isAr = resolvedParams.lang === 'ar';
   const homeHeader = settings?.pageHeaders?.home;
 
-  const heroTitleObj = homeHeader?.title || settings?.heroTitle;
-  const heroTitle = typeof heroTitleObj === 'string' 
-    ? heroTitleObj 
-    : (isAr ? (heroTitleObj?.ar || heroTitleObj?.en) : (heroTitleObj?.en || 'DAZZ TRADLINK INTERNATIONAL'));
+  let heroTitle = homeHeader?.title || settings?.heroTitle;
+  if (!heroTitle || typeof heroTitle === 'string' && heroTitle.toUpperCase() === 'DAZZ TRADLINK INTERNATIONAL') {
+    heroTitle = isAr ? 'داز تريدلينك العالمية' : 'DAZZ TRADLINK INTERNATIONAL';
+  } else if (typeof heroTitle === 'object') {
+    heroTitle = isAr ? (heroTitle.ar || heroTitle.en) : heroTitle.en;
+  }
 
-  const heroSubtitleObj = homeHeader?.subtitle || settings?.heroSubtitle;
-  const heroSubtitle = typeof heroSubtitleObj === 'string'
-    ? heroSubtitleObj
-    : (isAr ? (heroSubtitleObj?.ar || heroSubtitleObj?.en) : (heroSubtitleObj?.en || 'Empowering Industrial Excellence. Delivering trusted solutions across construction, food trading, logistics, and hospitality.'));
+  let heroSubtitle = homeHeader?.subtitle || settings?.heroSubtitle;
+  if (!heroSubtitle || typeof heroSubtitle === 'string' && heroSubtitle.startsWith('Empowering')) {
+    heroSubtitle = isAr 
+      ? 'تمكين التميز الصناعي. تقديم حلول موثوقة في المقاولات، التجارة الغذائية، الخدمات اللوجستية، والضيافة.' 
+      : 'Empowering Industrial Excellence. Delivering trusted solutions across construction, food trading, logistics, and hospitality.';
+  } else if (typeof heroSubtitle === 'object') {
+    heroSubtitle = isAr ? (heroSubtitle.ar || heroSubtitle.en) : heroSubtitle.en;
+  }
 
   const rawBg = homeHeader?.media || settings?.heroBackgroundImage;
   let heroBg = 'https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg';

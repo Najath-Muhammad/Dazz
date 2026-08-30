@@ -59,6 +59,65 @@ export function Navbar() {
     }
   }, [pathname, isArabic, router]);
 
+  const getLocalizedHref = useCallback((href: string | null) => {
+    if (!href) return null;
+    if (!isArabic) {
+      // Return English equivalent
+      if (href.startsWith('/ar/')) return href.replace(/^\/ar/, '/en');
+      if (href === '/ar') return '/';
+      return href;
+    }
+    // Return Arabic equivalent
+    if (href.startsWith('/en/')) return href.replace(/^\/en/, '/ar');
+    if (href === '/en') return '/ar';
+    if (href === '/') return '/ar';
+    if (href.startsWith('/') && !href.startsWith('/ar/')) return `/ar${href}`;
+    return href;
+  }, [isArabic]);
+
+  // Localize division texts
+  const localizedDivisions = divisions.map(div => ({
+    ...div,
+    href: getLocalizedHref(div.href) || div.href,
+    name: isArabic ? (
+      div.id === '01' ? 'المقاولات' : 
+      div.id === '02' ? 'التجارة الغذائية' : 
+      div.id === '03' ? 'الخدمات اللوجستية' : 'الضيافة'
+    ) : div.name,
+    desc: isArabic ? (
+      div.id === '01' ? 'البنية التحتية والمباني' : 
+      div.id === '02' ? 'التوريد والتوزيع العالمي' : 
+      div.id === '03' ? 'الأساطيل وسلاسل الإمداد' : 'إدارة العقارات الفاخرة'
+    ) : div.desc
+  }));
+
+  const localizedNavLinks = navLinks.map(link => ({
+    ...link,
+    href: getLocalizedHref(link.href) || link.href,
+    name: isArabic ? (
+      link.name === 'HOME' ? 'الرئيسية' :
+      link.name === 'ABOUT US' ? 'من نحن' :
+      link.name === 'DIVISIONS' ? 'أقسامنا' :
+      link.name === 'PROJECT GALLERY' ? 'معرض المشاريع' :
+      link.name === 'BLOG' ? 'المدونة' :
+      link.name === 'CAREERS' ? 'الوظائف' : 'اتصل بنا'
+    ) : link.name
+  }));
+
+  const localizedAllMenuLinks = allMenuLinks.map(link => ({
+    ...link,
+    href: getLocalizedHref(link.href),
+    name: isArabic ? (
+      link.name === 'HOME' ? 'الرئيسية' :
+      link.name === 'ABOUT US' ? 'من نحن' :
+      link.name === 'DIVISIONS' ? 'أقسامنا' :
+      link.name === 'PROJECT GALLERY' ? 'معرض المشاريع' :
+      link.name === 'BLOG' ? 'المدونة' :
+      link.name === 'CAREERS' ? 'الوظائف' : 'اتصل بنا'
+    ) : link.name,
+    children: link.children ? localizedDivisions : undefined
+  }));
+
   const isActive = useCallback((href: string | null | undefined) => {
     if (!href) return pathname.includes('/services');
     if (href === '/') return pathname === '/' || pathname === '/en' || pathname === '/ar';
@@ -157,8 +216,8 @@ export function Navbar() {
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden lg:flex items-center gap-8" aria-label="Main navigation">
-            {navLinks.map((link) =>
+          <nav className={`hidden lg:flex items-center gap-8 ${isArabic ? 'font-arabic' : ''}`} aria-label="Main navigation">
+            {localizedNavLinks.map((link) =>
               link.hasMega ? (
                 <div key={link.name} className="relative"
                   onMouseEnter={openMega}
@@ -170,7 +229,7 @@ export function Navbar() {
                     onKeyDown={handleDivisionsKey}
                     aria-haspopup="true"
                     aria-expanded={megaOpen}
-                    className={`flex items-center gap-1.5 text-xs font-bold tracking-widest uppercase relative group cursor-pointer transition-colors ${
+                    className={`flex items-center gap-1.5 text-xs font-bold tracking-widest relative group cursor-pointer transition-colors ${isArabic ? 'uppercase-none text-base' : 'uppercase'} ${
                       isActive(link.href) ? 'text-dazz-gold' : 'text-white/80 hover:text-dazz-gold'
                     }`}
                   >
@@ -194,7 +253,7 @@ export function Navbar() {
                         {/* Gold top border */}
                         <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-dazz-gold to-transparent" />
                         <div className="p-6 grid grid-cols-2 gap-1">
-                          {divisions.map((div) => (
+                          {localizedDivisions.map((div) => (
                             <Link
                               key={div.id}
                               href={div.href}
@@ -204,7 +263,7 @@ export function Navbar() {
                             >
                               <span className="text-xs font-mono text-dazz-gold/60 mt-1 flex-shrink-0">{div.id}</span>
                               <div className="flex-1 min-w-0">
-                                <p className="text-sm font-bold tracking-widest text-white group-hover:text-dazz-gold transition-colors uppercase">
+                                <p className={`text-sm font-bold tracking-widest text-white group-hover:text-dazz-gold transition-colors ${isArabic ? 'uppercase-none text-base' : 'uppercase'}`}>
                                   {div.name}
                                 </p>
                                 <p className="text-xs text-white/40 mt-0.5 font-light">{div.desc}</p>
@@ -215,11 +274,11 @@ export function Navbar() {
                         </div>
                         <div className="px-6 pb-5 pt-2 border-t border-white/5">
                           <Link
-                            href="/en/services"
+                            href={getLocalizedHref('/en/services') || '/services'}
                             onClick={() => setMegaOpen(false)}
-                            className="flex items-center gap-2 text-xs font-bold tracking-widest text-white/40 hover:text-dazz-gold transition-colors uppercase"
+                            className={`flex items-center gap-2 text-xs font-bold tracking-widest text-white/40 hover:text-dazz-gold transition-colors ${isArabic ? 'uppercase-none' : 'uppercase'}`}
                           >
-                            VIEW ALL SERVICES
+                            {isArabic ? 'عرض جميع الخدمات' : 'VIEW ALL SERVICES'}
                             <span className="w-8 h-px bg-current" />
                           </Link>
                         </div>
@@ -231,7 +290,7 @@ export function Navbar() {
                 <Link
                   key={link.name}
                   href={link.href}
-                  className={`text-xs font-bold tracking-widest uppercase relative group transition-colors ${
+                  className={`text-xs font-bold tracking-widest relative group transition-colors ${isArabic ? 'uppercase-none text-base' : 'uppercase'} ${
                     isActive(link.href) ? 'text-dazz-gold' : 'text-white/80 hover:text-dazz-gold'
                   }`}
                 >
@@ -292,12 +351,12 @@ export function Navbar() {
         </button>
 
         <div className="flex flex-col items-start px-10 md:px-20 space-y-3 w-full max-w-lg py-20">
-          {allMenuLinks.map((link, index) =>
+          {localizedAllMenuLinks.map((link, index) =>
             link.children ? (
               <div key={link.name} className="menu-link-item w-full">
                 <button 
                   onClick={() => setMobileDivisionsOpen(!mobileDivisionsOpen)}
-                  className={`flex items-center gap-4 text-3xl md:text-4xl font-serif font-bold transition-colors w-full text-left ${
+                  className={`flex items-center gap-4 text-3xl md:text-4xl font-serif font-bold transition-colors w-full text-left ${isArabic ? 'font-arabic text-right' : ''} ${
                     isActive(link.href!) ? 'text-dazz-gold' : 'text-white/80 hover:text-dazz-gold'
                   }`}
                 >
@@ -312,7 +371,7 @@ export function Navbar() {
                         key={div.id}
                         href={div.href}
                         onClick={toggleMenu}
-                        className="flex items-center gap-3 py-2 text-sm font-bold tracking-widest text-white/50 hover:text-dazz-gold transition-colors uppercase"
+                        className={`flex items-center gap-3 py-2 text-sm font-bold tracking-widest text-white/50 hover:text-dazz-gold transition-colors ${isArabic ? 'font-arabic uppercase-none' : 'uppercase'}`}
                       >
                         <span className="text-xs font-mono text-dazz-gold/40">{div.id}</span>
                         {div.name}
@@ -326,7 +385,7 @@ export function Navbar() {
                 <Link
                   href={link.href!}
                   onClick={toggleMenu}
-                  className={`flex items-center gap-4 text-3xl md:text-4xl font-serif font-bold transition-colors ${
+                  className={`flex items-center gap-4 text-3xl md:text-4xl font-serif font-bold transition-colors ${isArabic ? 'font-arabic text-right' : ''} ${
                     isActive(link.href) ? 'text-dazz-gold' : 'text-white/80 hover:text-dazz-gold'
                   }`}
                 >
