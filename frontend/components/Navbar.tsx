@@ -9,10 +9,10 @@ import { useGSAP } from '@gsap/react';
 import { ChevronDown, ArrowUpRight } from 'lucide-react';
 
 const divisions = [
-  { id: '01', name: 'CONSTRUCTION', href: '/en/services', desc: 'Infrastructure & Building' },
-  { id: '02', name: 'FOOD TRADING', href: '/en/services', desc: 'Global Supply & Distribution' },
-  { id: '03', name: 'LOGISTICS', href: '/en/services', desc: 'Fleet & Supply Chain' },
-  { id: '04', name: 'HOSPITALITY', href: '/en/services', desc: 'Luxury Property Management' },
+  { id: '01', categoryId: 'construction', name: 'CONSTRUCTION & INFRASTRUCTURE', href: '/en/services?category=construction', desc: 'Concrete Ready Mix, Piling, Equipment & Cement Trading' },
+  { id: '02', categoryId: 'hospitality', name: 'REAL ESTATE & HOSPITALITY', href: '/en/services?category=hospitality', desc: 'Real Estate Development, Travel, Hotels & Catering' },
+  { id: '03', categoryId: 'food-trading', name: 'TRADING & DISTRIBUTION', href: '/en/services?category=food-trading', desc: 'Food Import/Export, Seafoods, Mobile Accessories & Services' },
+  { id: '04', categoryId: 'logistics', name: 'LOGISTICS & ENVIRONMENTAL SOLUTIONS', href: '/en/services?category=logistics', desc: 'Land Transportation, Disinfection Systems & Waste Management' },
 ];
 
 const navLinks = [
@@ -80,14 +80,14 @@ export function Navbar() {
     ...div,
     href: getLocalizedHref(div.href) || div.href,
     name: isArabic ? (
-      div.id === '01' ? 'المقاولات' : 
-      div.id === '02' ? 'التجارة الغذائية' : 
-      div.id === '03' ? 'الخدمات اللوجستية' : 'الضيافة'
+      div.id === '01' ? 'المقاولات والبنية التحتية' : 
+      div.id === '02' ? 'العقارات والضيافة' : 
+      div.id === '03' ? 'التجارة والتوزيع' : 'الخدمات اللوجستية والحلول البيئية'
     ) : div.name,
     desc: isArabic ? (
-      div.id === '01' ? 'البنية التحتية والمباني' : 
-      div.id === '02' ? 'التوريد والتوزيع العالمي' : 
-      div.id === '03' ? 'الأساطيل وسلاسل الإمداد' : 'إدارة العقارات الفاخرة'
+      div.id === '01' ? 'محطات الخرسانة الجاهزة، الحفر، المعدات وتجارة الأسمنت' : 
+      div.id === '02' ? 'التطوير العقاري، السفر والسياحة، الفنادق والتموين' : 
+      div.id === '03' ? 'تجارة الأغذية، المأكولات البحرية، إكسسوارات الهواتف والخدمات' : 'النقل البري، أنظمة التطهير وإدارة النفايات'
     ) : div.desc
   }));
 
@@ -248,7 +248,7 @@ export function Navbar() {
                       role="menu"
                       onMouseEnter={openMega}
                       onMouseLeave={closeMegaDelayed}
-                      className="absolute top-full left-1/2 -translate-x-1/2 pt-3 w-[420px]"
+                      className="absolute top-full left-1/2 -translate-x-1/2 pt-3 w-[480px]"
                     >
                       <div className="bg-dazz-navy border border-white/10 shadow-2xl shadow-black/50">
                         {/* Gold top border */}
