@@ -40,22 +40,40 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
   const ctaData = contactPageData.cta || {};
 
 
-  let heroTitle = settings?.pageHeaders?.contact?.title;
-  if (typeof heroTitle === 'object' && heroTitle !== null) {
-    heroTitle = isAr ? (heroTitle.ar || heroTitle.en) : heroTitle.en;
+  let rawTitle = settings?.pageHeaders?.contact?.title || contactPageData.hero?.title;
+  let heroTitle: string | undefined;
+  if (typeof rawTitle === 'object' && rawTitle !== null) {
+    heroTitle = isAr ? (rawTitle.ar || rawTitle.en) : (rawTitle.en || rawTitle.ar);
+  } else if (typeof rawTitle === 'string') {
+    heroTitle = rawTitle;
   }
-  if (!heroTitle || (typeof heroTitle === 'string' && heroTitle.toUpperCase().includes('CONTACT'))) {
-    heroTitle = isAr ? 'اتصل بنا\nدعنا نتواصل' : 'CONTACT US\nLET\'S CONNECT';
+  
+  if (isAr) {
+    if (!heroTitle || !/[\u0600-\u06FF]/.test(heroTitle)) {
+      heroTitle = 'اتصل بنا\nدعنا نتواصل';
+    }
+  } else {
+    if (!heroTitle || /[\u0600-\u06FF]/.test(heroTitle)) {
+      heroTitle = "CONTACT US\nLET'S CONNECT";
+    }
   }
 
-  let heroSubtitle = settings?.pageHeaders?.contact?.subtitle;
-  if (typeof heroSubtitle === 'object' && heroSubtitle !== null) {
-    heroSubtitle = isAr ? (heroSubtitle.ar || heroSubtitle.en) : heroSubtitle.en;
+  let rawSubtitle = settings?.pageHeaders?.contact?.subtitle || contactPageData.hero?.subtitle;
+  let heroSubtitle: string | undefined;
+  if (typeof rawSubtitle === 'object' && rawSubtitle !== null) {
+    heroSubtitle = isAr ? (rawSubtitle.ar || rawSubtitle.en) : (rawSubtitle.en || rawSubtitle.ar);
+  } else if (typeof rawSubtitle === 'string') {
+    heroSubtitle = rawSubtitle;
   }
-  if (!heroSubtitle || (typeof heroSubtitle === 'string' && heroSubtitle.startsWith('Have a project'))) {
-    heroSubtitle = isAr 
-      ? 'هل لديك مشروع، استفسار، أو فرصة؟ تواصل مع فريق داز.' 
-      : 'Have a project, enquiry, or opportunity?\nGet in touch with the Dazz team.';
+
+  if (isAr) {
+    if (!heroSubtitle || !/[\u0600-\u06FF]/.test(heroSubtitle)) {
+      heroSubtitle = 'هل لديك مشروع، استفسار، أو فرصة؟ تواصل مع فريق داز.';
+    }
+  } else {
+    if (!heroSubtitle || /[\u0600-\u06FF]/.test(heroSubtitle)) {
+      heroSubtitle = 'Have a project, enquiry, or opportunity?\nGet in touch with the Dazz team.';
+    }
   }
   
   // Use Contact Hero image if it exists in legacy pageHeaders, otherwise use default
