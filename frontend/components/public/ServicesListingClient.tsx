@@ -22,21 +22,44 @@ export function ServicesListingClient({ services, heroTitle, heroSubtitle, heroI
 
   const [activeCategory, setActiveCategory] = useState<string>('all');
 
-  const categories = [
-    { id: 'all', match: ['all'], label: isAr ? 'الكل' : 'All Divisions' },
+  const knownCategories = [
     { id: 'construction', match: ['construction', 'construction-infrastructure'], label: isAr ? 'المقاولات والبنية التحتية' : 'Construction & Infrastructure' },
     { id: 'hospitality', match: ['hospitality', 'real-estate-hospitality', 'real-estate'], label: isAr ? 'العقارات والضيافة' : 'Real Estate & Hospitality' },
     { id: 'food-trading', match: ['food-trading', 'trading-distribution', 'trading'], label: isAr ? 'التجارة والتوزيع' : 'Trading & Distribution' },
     { id: 'logistics', match: ['logistics', 'logistics-environmental', 'environmental'], label: isAr ? 'الخدمات اللوجستية والحلول البيئية' : 'Logistics & Environmental Solutions' }
   ];
 
-  const availableCategoryIds = new Set(services.map(s => s.category));
-  const activeTabs = categories.filter(c => c.id === 'all' || c.match.some(m => availableCategoryIds.has(m)));
+  const availableCategoryIds = new Set(services.map(s => s.category).filter(Boolean));
+
+  const activeTabs: { id: string; match: string[]; label: string }[] = [
+    { id: 'all', match: ['all'], label: isAr ? 'الكل' : 'All Divisions' }
+  ];
+
+  knownCategories.forEach(cat => {
+    if (cat.match.some(m => availableCategoryIds.has(m))) {
+      activeTabs.push(cat);
+    }
+  });
+
+  availableCategoryIds.forEach(catId => {
+    const isMatched = knownCategories.some(k => k.match.includes(catId));
+    if (!isMatched && catId !== 'all') {
+      const formattedLabel = catId
+        .split('-')
+        .map((w: string) => w.charAt(0).toUpperCase() + w.slice(1))
+        .join(' ');
+      activeTabs.push({
+        id: catId,
+        match: [catId],
+        label: catId === 'other' ? (isAr ? 'أخرى' : 'Other') : formattedLabel
+      });
+    }
+  });
 
   const filteredServices = activeCategory === 'all' 
     ? services 
     : services.filter(s => {
-        const cat = categories.find(c => c.id === activeCategory);
+        const cat = activeTabs.find(c => c.id === activeCategory);
         return cat ? cat.match.includes(s.category) : s.category === activeCategory;
       });
 
