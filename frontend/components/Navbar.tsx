@@ -209,6 +209,7 @@ export function Navbar() {
                 alt="DAZZ Tradlink" 
                 fill
                 priority
+                loading="eager"
                 sizes="250px"
                 className="object-contain object-left"
               />
