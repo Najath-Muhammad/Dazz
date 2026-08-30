@@ -76,9 +76,9 @@ import bcrypt from 'bcrypt';
 
 const seedAdmin = async () => {
   try {
-    const adminCount = await Admin.countDocuments();
-    if (adminCount === 0) {
-      console.log('No admin found. Seeding default admin...');
+    const existingAdmin = await Admin.findOne({ email: 'admin@dazztradlink.com' });
+    if (!existingAdmin) {
+      console.log('Seeding default admin...');
       const passwordHash = await bcrypt.hash('password123', 10);
       await Admin.create({
         email: 'admin@dazztradlink.com',
