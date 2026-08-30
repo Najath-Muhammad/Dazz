@@ -1,7 +1,7 @@
 import { handleError } from '../../utils/errorHandler';
 import { siteSettingsSchema } from '../../validations/entityValidations';
 import { Request, Response } from 'express';
-import { ApiResponse } from '../../utils/ApiResponse';
+import { successResponse, errorResponse } from '@najathm/api-response';
 import { HTTP_STATUS, RESPONSE_MESSAGES } from '../../utils/constants';
 import { ISiteSettingsController } from '../interfaces/ISiteSettingsController';
 import { ISiteSettingsService } from '../../services/interfaces/ISiteSettingsService';

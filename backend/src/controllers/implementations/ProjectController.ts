@@ -1,7 +1,7 @@
 import { handleError } from '../../utils/errorHandler';
 import { projectSchema } from '../../validations/entityValidations';
 import { Request, Response } from 'express';
-import { ApiResponse } from '../../utils/ApiResponse';
+import { successResponse, errorResponse } from '@najathm/api-response';
 import { HTTP_STATUS, RESPONSE_MESSAGES } from '../../utils/constants';
 import { IProjectController } from '../interfaces/IProjectController';
 import { IProjectService } from '../../services/interfaces/IProjectService';

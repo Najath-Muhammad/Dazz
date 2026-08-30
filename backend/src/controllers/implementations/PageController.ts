@@ -1,7 +1,7 @@
 import { handleError } from '../../utils/errorHandler';
 import { pageSchema } from '../../validations/entityValidations';
 import { Request, Response } from 'express';
-import { ApiResponse } from '../../utils/ApiResponse';
+import { successResponse, errorResponse } from '@najathm/api-response';
 import { HTTP_STATUS, RESPONSE_MESSAGES } from '../../utils/constants';
 import { IPageController } from '../interfaces/IPageController';
 import { IPageService } from '../../services/interfaces/IPageService';

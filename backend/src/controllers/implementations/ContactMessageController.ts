@@ -1,7 +1,7 @@
 import { handleError } from '../../utils/errorHandler';
 import { contactMessageSchema } from '../../validations/entityValidations';
 import { Request, Response } from 'express';
-import { ApiResponse } from '../../utils/ApiResponse';
+import { successResponse, errorResponse } from '@najathm/api-response';
 import { HTTP_STATUS, RESPONSE_MESSAGES } from '../../utils/constants';
 import { IContactMessageController } from '../interfaces/IContactMessageController';
 import { IContactMessageService } from '../../services/interfaces/IContactMessageService';

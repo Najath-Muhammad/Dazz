@@ -4,7 +4,7 @@ import { IServiceService } from '../../services/interfaces/IServiceService';
 import { serviceSchema } from '../../validations/serviceValidation';
 import { Request, Response } from 'express';
 
-import { ApiResponse } from '../../utils/ApiResponse';
+import { successResponse, errorResponse } from '@najathm/api-response';
 import { HTTP_STATUS, RESPONSE_MESSAGES } from '../../utils/constants';
 
 

@@ -1,7 +1,7 @@
 import { handleError } from '../../utils/errorHandler';
 import { blogSchema } from '../../validations/entityValidations';
 import { Request, Response } from 'express';
-import { ApiResponse } from '../../utils/ApiResponse';
+import { successResponse, errorResponse } from '@najathm/api-response';
 import { HTTP_STATUS, RESPONSE_MESSAGES } from '../../utils/constants';
 import { IBlogController } from '../interfaces/IBlogController';
 import { IBlogService } from '../../services/interfaces/IBlogService';
