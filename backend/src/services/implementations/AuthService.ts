@@ -2,7 +2,7 @@ import { IAuthService } from '../interfaces/IAuthService';
 import { IAuthRepository } from '../../repositories/interfaces/IAuthRepository';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-
+import { AdminMapper } from '../../mappers';
 const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret_for_development';
 
 export class AuthService implements IAuthService {
@@ -27,15 +27,12 @@ export class AuthService implements IAuthService {
 
     return {
       token,
-      admin: {
-        id: admin._id,
-        email: admin.email,
-        name: admin.name,
-      }
+      admin: AdminMapper.toDTO(admin)
     };
   }
 
   async getMe(id: string): Promise<any | null> {
-    return await this.repository.findById(id);
+    const admin = await this.repository.findById(id);
+    return AdminMapper.toDTO(admin);
   }
 }

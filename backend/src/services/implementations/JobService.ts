@@ -2,6 +2,7 @@ import { IJobService } from '../interfaces/IJobService';
 import { IJobRepository } from '../../repositories/interfaces/IJobRepository';
 import { autoTranslate } from '../../utils/autoTranslate';
 import { TRANSLATABLE_FIELDS } from '../../utils/translatableFields';
+import { BaseMapper } from '../../mappers';
 
 const JOB_FIELDS = TRANSLATABLE_FIELDS.Job;
 
@@ -14,7 +15,7 @@ export class JobService implements IJobService {
   async getAllJobs() {
     try {
       const items = await this._repository.findAll();
-      return { success: true, message: 'Jobs retrieved successfully', data: items };
+      return { success: true, message: 'Jobs retrieved successfully', data: BaseMapper.toDTOList(items) };
     } catch (error: any) {
       console.error('Error in getAllJobs:', error);
       return { success: false, message: 'Failed to retrieve Jobs' };
@@ -41,7 +42,7 @@ export class JobService implements IJobService {
       return { 
         success: true, 
         message: 'Jobs retrieved successfully', 
-        data: items,
+        data: BaseMapper.toDTOList(items),
         pagination: {
           total,
           page,
@@ -60,7 +61,7 @@ export class JobService implements IJobService {
     try {
       const item = await this._repository.findById(id);
       if (!item) return { success: false, message: 'Job not found' };
-      return { success: true, message: 'Job retrieved successfully', data: item };
+      return { success: true, message: 'Job retrieved successfully', data: BaseMapper.toDTO(item) };
     } catch (error: any) {
       console.error('Error in getJobById:', error);
       return { success: false, message: 'Failed to retrieve Job' };
@@ -70,7 +71,7 @@ export class JobService implements IJobService {
     try {
       const item = await this._repository.findBySlug(slug);
       if (!item) return { success: false, message: 'Job not found' };
-      return { success: true, message: 'Job retrieved successfully', data: item };
+      return { success: true, message: 'Job retrieved successfully', data: BaseMapper.toDTO(item) };
     } catch (error: any) {
       console.error('Error in getJobBySlug:', error);
       return { success: false, message: 'Failed to retrieve Job' };
@@ -80,7 +81,7 @@ export class JobService implements IJobService {
     try {
       const newItem = await this._repository.create(data);
       this._translateAndUpdate(newItem._id.toString(), newItem.toObject ? newItem.toObject() : newItem, {});
-      return { success: true, message: 'Job created. Arabic translation in progress.', data: newItem };
+      return { success: true, message: 'Job created. Arabic translation in progress.', data: BaseMapper.toDTO(newItem) };
     } catch (error: any) {
       console.error('Error in createJob:', error);
       if (error?.code === 11000) return { success: false, message: 'A Job with this unique identifier already exists.' };
@@ -95,7 +96,7 @@ export class JobService implements IJobService {
       const updatedItem = await this._repository.update(id, data);
       const existingMeta = (existing as any).translationMeta || {};
       this._translateAndUpdate(id, updatedItem, existingMeta);
-      return { success: true, message: 'Job updated. Arabic translation in progress.', data: updatedItem };
+      return { success: true, message: 'Job updated. Arabic translation in progress.', data: BaseMapper.toDTO(updatedItem) };
     } catch (error: any) {
       console.error('Error in updateJob:', error);
       if (error?.code === 11000) return { success: false, message: 'A Job with this unique identifier already exists.' };

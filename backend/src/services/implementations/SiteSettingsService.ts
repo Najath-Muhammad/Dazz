@@ -2,6 +2,7 @@ import { ISiteSettingsService } from '../interfaces/ISiteSettingsService';
 import { ISiteSettingsRepository } from '../../repositories/interfaces/ISiteSettingsRepository';
 import { autoTranslate } from '../../utils/autoTranslate';
 import { TRANSLATABLE_FIELDS } from '../../utils/translatableFields';
+import { BaseMapper } from '../../mappers';
 
 const SETTINGS_FIELDS = TRANSLATABLE_FIELDS.SiteSettings;
 
@@ -14,7 +15,7 @@ export class SiteSettingsService implements ISiteSettingsService {
   async getAllSiteSettingss() {
     try {
       const items = await this._repository.findAll();
-      return { success: true, message: 'SiteSettingss retrieved successfully', data: items };
+      return { success: true, message: 'SiteSettingss retrieved successfully', data: BaseMapper.toDTOList(items) };
     } catch (error: any) {
       console.error('Error in getAllSiteSettingss:', error);
       return { success: false, message: 'Failed to retrieve SiteSettingss' };
@@ -24,7 +25,7 @@ export class SiteSettingsService implements ISiteSettingsService {
     try {
       const item = await this._repository.findById(id);
       if (!item) return { success: false, message: 'SiteSettings not found' };
-      return { success: true, message: 'SiteSettings retrieved successfully', data: item };
+      return { success: true, message: 'SiteSettings retrieved successfully', data: BaseMapper.toDTO(item) };
     } catch (error: any) {
       console.error('Error in getSiteSettingsById:', error);
       return { success: false, message: 'Failed to retrieve SiteSettings' };
@@ -34,7 +35,7 @@ export class SiteSettingsService implements ISiteSettingsService {
     try {
       const newItem = await this._repository.create(data);
       this._translateAndUpdate(newItem._id.toString(), newItem.toObject ? newItem.toObject() : newItem, {});
-      return { success: true, message: 'SiteSettings created. Arabic translation in progress.', data: newItem };
+      return { success: true, message: 'SiteSettings created. Arabic translation in progress.', data: BaseMapper.toDTO(newItem) };
     } catch (error: any) {
       console.error('Error in createSiteSettings:', error);
       if (error?.code === 11000) return { success: false, message: 'A SiteSettings with this unique identifier already exists.' };
@@ -49,7 +50,7 @@ export class SiteSettingsService implements ISiteSettingsService {
       const updatedItem = await this._repository.update(id, data);
       const existingMeta = (existing as any).translationMeta || {};
       this._translateAndUpdate(id, updatedItem, existingMeta);
-      return { success: true, message: 'SiteSettings updated. Arabic translation in progress.', data: updatedItem };
+      return { success: true, message: 'SiteSettings updated. Arabic translation in progress.', data: BaseMapper.toDTO(updatedItem) };
     } catch (error: any) {
       console.error('Error in updateSiteSettings:', error);
       if (error?.code === 11000) return { success: false, message: 'A SiteSettings with this unique identifier already exists.' };

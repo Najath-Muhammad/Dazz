@@ -2,6 +2,7 @@ import { IBlogService } from '../interfaces/IBlogService';
 import { IBlogRepository } from '../../repositories/interfaces/IBlogRepository';
 import { autoTranslate } from '../../utils/autoTranslate';
 import { TRANSLATABLE_FIELDS } from '../../utils/translatableFields';
+import { BaseMapper } from '../../mappers';
 
 const BLOG_FIELDS = TRANSLATABLE_FIELDS.Blog;
 
@@ -14,7 +15,7 @@ export class BlogService implements IBlogService {
   async getAllBlogs() {
     try {
       const items = await this._repository.findAll();
-      return { success: true, message: 'Blogs retrieved successfully', data: items };
+      return { success: true, message: 'Blogs retrieved successfully', data: BaseMapper.toDTOList(items) };
     } catch (error: any) {
       console.error('Error in getAllBlogs:', error);
       return { success: false, message: 'Failed to retrieve Blogs' };
@@ -41,7 +42,7 @@ export class BlogService implements IBlogService {
       return { 
         success: true, 
         message: 'Blogs retrieved successfully', 
-        data: items,
+        data: BaseMapper.toDTOList(items),
         pagination: {
           total,
           page,
@@ -60,7 +61,7 @@ export class BlogService implements IBlogService {
     try {
       const item = await this._repository.findById(id);
       if (!item) return { success: false, message: 'Blog not found' };
-      return { success: true, message: 'Blog retrieved successfully', data: item };
+      return { success: true, message: 'Blog retrieved successfully', data: BaseMapper.toDTO(item) };
     } catch (error: any) {
       console.error('Error in getBlogById:', error);
       return { success: false, message: 'Failed to retrieve Blog' };
@@ -70,7 +71,7 @@ export class BlogService implements IBlogService {
     try {
       const item = await this._repository.findBySlug(slug);
       if (!item) return { success: false, message: 'Blog not found' };
-      return { success: true, message: 'Blog retrieved successfully', data: item };
+      return { success: true, message: 'Blog retrieved successfully', data: BaseMapper.toDTO(item) };
     } catch (error: any) {
       console.error('Error in getBlogBySlug:', error);
       return { success: false, message: 'Failed to retrieve Blog' };
@@ -81,7 +82,7 @@ export class BlogService implements IBlogService {
       const newItem = await this._repository.create(data);
       // Fire-and-forget background translation
       this._translateAndUpdate(newItem._id.toString(), newItem.toObject ? newItem.toObject() : newItem, {});
-      return { success: true, message: 'Blog created. Arabic translation in progress.', data: newItem };
+      return { success: true, message: 'Blog created. Arabic translation in progress.', data: BaseMapper.toDTO(newItem) };
     } catch (error: any) {
       console.error('Error in createBlog:', error);
       if (error?.code === 11000) return { success: false, message: 'A Blog with this unique identifier already exists.' };
@@ -97,7 +98,7 @@ export class BlogService implements IBlogService {
       // Fire-and-forget background translation
       const existingMeta = (existing as any).translationMeta || {};
       this._translateAndUpdate(id, updatedItem, existingMeta);
-      return { success: true, message: 'Blog updated. Arabic translation in progress.', data: updatedItem };
+      return { success: true, message: 'Blog updated. Arabic translation in progress.', data: BaseMapper.toDTO(updatedItem) };
     } catch (error: any) {
       console.error('Error in updateBlog:', error);
       if (error?.code === 11000) return { success: false, message: 'A Blog with this unique identifier already exists.' };

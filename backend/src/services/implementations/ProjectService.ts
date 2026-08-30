@@ -2,6 +2,7 @@ import { IProjectService } from '../interfaces/IProjectService';
 import { IProjectRepository } from '../../repositories/interfaces/IProjectRepository';
 import { autoTranslate } from '../../utils/autoTranslate';
 import { TRANSLATABLE_FIELDS } from '../../utils/translatableFields';
+import { BaseMapper } from '../../mappers';
 
 const PROJECT_FIELDS = TRANSLATABLE_FIELDS.Project;
 
@@ -14,7 +15,7 @@ export class ProjectService implements IProjectService {
   async getAllProjects() {
     try {
       const items = await this._repository.findAll();
-      return { success: true, message: 'Projects retrieved successfully', data: items };
+      return { success: true, message: 'Projects retrieved successfully', data: BaseMapper.toDTOList(items) };
     } catch (error: any) {
       console.error('Error in getAllProjects:', error);
       return { success: false, message: 'Failed to retrieve Projects' };
@@ -38,7 +39,7 @@ export class ProjectService implements IProjectService {
       return { 
         success: true, 
         message: 'Projects retrieved successfully', 
-        data: items,
+        data: BaseMapper.toDTOList(items),
         pagination: {
           total,
           page,
@@ -57,7 +58,7 @@ export class ProjectService implements IProjectService {
     try {
       const item = await this._repository.findById(id);
       if (!item) return { success: false, message: 'Project not found' };
-      return { success: true, message: 'Project retrieved successfully', data: item };
+      return { success: true, message: 'Project retrieved successfully', data: BaseMapper.toDTO(item) };
     } catch (error: any) {
       console.error('Error in getProjectById:', error);
       return { success: false, message: 'Failed to retrieve Project' };
@@ -67,7 +68,7 @@ export class ProjectService implements IProjectService {
     try {
       const item = await this._repository.findBySlug(slug);
       if (!item) return { success: false, message: 'Project not found' };
-      return { success: true, message: 'Project retrieved successfully', data: item };
+      return { success: true, message: 'Project retrieved successfully', data: BaseMapper.toDTO(item) };
     } catch (error: any) {
       console.error('Error in getProjectBySlug:', error);
       return { success: false, message: 'Failed to retrieve Project' };
@@ -77,7 +78,7 @@ export class ProjectService implements IProjectService {
     try {
       const newItem = await this._repository.create(data);
       this._translateAndUpdate(newItem._id.toString(), newItem.toObject ? newItem.toObject() : newItem, {});
-      return { success: true, message: 'Project created. Arabic translation in progress.', data: newItem };
+      return { success: true, message: 'Project created. Arabic translation in progress.', data: BaseMapper.toDTO(newItem) };
     } catch (error: any) {
       console.error('Error in createProject:', error);
       if (error?.code === 11000) return { success: false, message: 'A Project with this unique identifier already exists.' };
@@ -92,7 +93,7 @@ export class ProjectService implements IProjectService {
       const updatedItem = await this._repository.update(id, data);
       const existingMeta = (existing as any).translationMeta || {};
       this._translateAndUpdate(id, updatedItem, existingMeta);
-      return { success: true, message: 'Project updated. Arabic translation in progress.', data: updatedItem };
+      return { success: true, message: 'Project updated. Arabic translation in progress.', data: BaseMapper.toDTO(updatedItem) };
     } catch (error: any) {
       console.error('Error in updateProject:', error);
       if (error?.code === 11000) return { success: false, message: 'A Project with this unique identifier already exists.' };

@@ -50,6 +50,11 @@ export class AuthController implements IAuthController {
   };
 
   logout = async (req: Request, res: Response): Promise<void> => {
-    res.status(HTTP_STATUS.OK).json(successResponse({ message: RESPONSE_MESSAGES.SUCCESS, data: null }));
+    try {
+      res.status(HTTP_STATUS.OK).json(successResponse({ message: RESPONSE_MESSAGES.SUCCESS, data: null }));
+    } catch (error) {
+      console.error('Logout Error:', error);
+      res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(errorResponse({ message: RESPONSE_MESSAGES.SERVER_ERROR }));
+    }
   };
 }
