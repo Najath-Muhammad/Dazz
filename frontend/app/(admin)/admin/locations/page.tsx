@@ -28,7 +28,7 @@ export default function LocationsAdminPage() {
     if (!window.confirm('Are you sure you want to delete this location?')) return;
     try {
       await api.delete(`/locations/${id}`);
-      setLocations(locations.filter((loc) => loc.id !== id));
+      setLocations(locations.filter((loc) => (loc.id || loc._id) !== id));
     } catch (error) {
       console.error('Failed to delete location:', error);
       alert('Failed to delete location');
@@ -38,7 +38,7 @@ export default function LocationsAdminPage() {
   const handleToggleActive = async (id: string, currentStatus: boolean) => {
     try {
       await api.put(`/locations/${id}`, { isActive: !currentStatus });
-      setLocations(locations.map((loc) => loc.id === id ? { ...loc, isActive: !currentStatus } : loc));
+      setLocations(locations.map((loc) => (loc.id || loc._id) === id ? { ...loc, isActive: !currentStatus } : loc));
     } catch (error) {
       console.error('Failed to toggle status:', error);
     }
@@ -102,40 +102,46 @@ export default function LocationsAdminPage() {
       key: 'status',
       header: 'Status',
       align: 'center',
-      render: (loc) => (
-        <button
-          onClick={() => handleToggleActive(loc.id, loc.isActive)}
-          className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold transition-colors ${
-            loc.isActive
-              ? 'bg-green-100 text-green-700 hover:bg-green-200'
-              : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
-          }`}
-        >
-          {loc.isActive ? <CheckCircle size={14} /> : <XCircle size={14} />}
-          {loc.isActive ? 'ACTIVE' : 'INACTIVE'}
-        </button>
-      ),
+      render: (loc) => {
+        const id = loc.id || loc._id;
+        return (
+          <button
+            onClick={() => handleToggleActive(id, loc.isActive)}
+            className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold transition-colors ${
+              loc.isActive
+                ? 'bg-green-100 text-green-700 hover:bg-green-200'
+                : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
+            }`}
+          >
+            {loc.isActive ? <CheckCircle size={14} /> : <XCircle size={14} />}
+            {loc.isActive ? 'ACTIVE' : 'INACTIVE'}
+          </button>
+        );
+      },
     },
     {
       key: 'actions',
       header: 'Actions',
       align: 'right',
-      render: (loc) => (
-        <div className="flex items-center justify-end gap-2">
-          <Link
-            href={`/admin/locations/${loc.id}/edit`}
-            className="p-1.5 text-blue-500 hover:text-blue-700 hover:bg-blue-50 rounded transition"
-          >
-            <Edit size={16} />
-          </Link>
-          <button
-            onClick={() => handleDelete(loc.id)}
-            className="p-1.5 text-red-400 hover:text-red-600 hover:bg-red-50 rounded transition"
-          >
-            <Trash2 size={16} />
-          </button>
-        </div>
-      ),
+      render: (loc) => {
+        const id = loc.id || loc._id;
+        return (
+          <div className="flex items-center justify-end gap-2">
+            <Link
+              href={`/admin/locations/${id}/edit`}
+              className="p-1.5 text-blue-500 hover:text-blue-700 hover:bg-blue-50 rounded transition"
+            >
+              <Edit size={16} />
+            </Link>
+            <button
+              onClick={() => handleDelete(id)}
+              className="p-1.5 text-red-400 hover:text-red-600 hover:bg-red-50 rounded transition"
+            >
+              <Trash2 size={16} />
+            </button>
+          </div>
+        );
+      },
     },
   ];
 
