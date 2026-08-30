@@ -7,7 +7,7 @@ import { MediaUploader } from '@/components/admin/MediaUploader';
 import { DataTable, Column } from '@/components/admin/DataTable';
 import { Pagination } from '@/components/admin/Pagination';
 import { SearchBar } from '@/components/admin/SearchBar';
-import { Filter } from 'lucide-react';
+import { Filter, Eye, Edit2, Trash2 } from 'lucide-react';
 
 const CATEGORY_LABELS: Record<string, string> = {
   'construction': 'Construction & Infrastructure',
@@ -213,9 +213,36 @@ export default function AdminServicesPage() {
       key: 'actions',
       header: 'Actions',
       align: 'right',
-      render: (svc) => (
-        <ActionDropdown svc={svc} onDelete={() => handleDeleteClick(svc.id, svc.name?.en || 'Untitled')} />
-      ),
+      render: (svc) => {
+        const id = svc.id || svc._id;
+        return (
+          <div className="flex items-center justify-end gap-1.5">
+            <a
+              href={`/en/services/${svc.slug}`}
+              target="_blank"
+              rel="noreferrer"
+              className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded transition-colors"
+              title="Preview"
+            >
+              <Eye size={16} />
+            </a>
+            <Link
+              href={`/admin/services/${id}/edit`}
+              className="p-1.5 text-blue-500 hover:text-blue-700 hover:bg-blue-50 rounded transition-colors"
+              title="Edit"
+            >
+              <Edit2 size={16} />
+            </Link>
+            <button
+              onClick={() => handleDeleteClick(id, svc.name?.en || 'Untitled')}
+              className="p-1.5 text-red-400 hover:text-red-600 hover:bg-red-50 rounded transition-colors"
+              title="Delete"
+            >
+              <Trash2 size={16} />
+            </button>
+          </div>
+        );
+      },
     },
   ];
 

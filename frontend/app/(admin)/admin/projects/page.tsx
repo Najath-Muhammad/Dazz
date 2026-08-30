@@ -106,32 +106,35 @@ export default function AdminProjectsPage() {
       key: 'actions',
       header: 'Actions',
       align: 'right',
-      render: (p) => (
-        <div className="flex items-center justify-end gap-1.5">
-          <Link
-            href={`/en/projects/${p.slug}`}
-            target="_blank"
-            className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded transition-colors"
-            title="Preview"
-          >
-            <Eye size={15} />
-          </Link>
-          <Link
-            href={`/admin/projects/${p.id}/edit`}
-            className="p-1.5 text-blue-500 hover:text-blue-700 hover:bg-blue-50 rounded transition-colors"
-            title="Edit"
-          >
-            <Edit2 size={15} />
-          </Link>
-          <button
-            onClick={() => handleDeleteClick(p.id)}
-            className="p-1.5 text-red-400 hover:text-red-600 hover:bg-red-50 rounded transition-colors"
-            title="Delete"
-          >
-            <Trash2 size={15} />
-          </button>
-        </div>
-      ),
+      render: (p) => {
+        const id = p.id || p._id;
+        return (
+          <div className="flex items-center justify-end gap-1.5">
+            <Link
+              href={`/en/projects/${p.slug}`}
+              target="_blank"
+              className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded transition-colors"
+              title="Preview"
+            >
+              <Eye size={15} />
+            </Link>
+            <Link
+              href={`/admin/projects/${id}/edit`}
+              className="p-1.5 text-blue-500 hover:text-blue-700 hover:bg-blue-50 rounded transition-colors"
+              title="Edit"
+            >
+              <Edit2 size={15} />
+            </Link>
+            <button
+              onClick={() => handleDeleteClick(id)}
+              className="p-1.5 text-red-400 hover:text-red-600 hover:bg-red-50 rounded transition-colors"
+              title="Delete"
+            >
+              <Trash2 size={15} />
+            </button>
+          </div>
+        );
+      },
     },
   ];
 

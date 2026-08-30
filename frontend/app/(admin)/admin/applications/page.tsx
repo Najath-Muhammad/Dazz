@@ -105,15 +105,20 @@ export default function AdminApplicationsPage() {
       key: 'actions',
       header: 'Actions',
       align: 'right',
-      render: (app) => (
-        <Link
-          href={`/admin/applications/${app.id}`}
-          className="inline-flex items-center justify-center p-2 bg-slate-100 text-dazz-navy hover:bg-dazz-navy hover:text-white rounded-md transition-colors"
-          title="Review Application"
-        >
-          <Eye size={16} />
-        </Link>
-      ),
+      render: (app) => {
+        const id = app.id || app._id;
+        return (
+          <div className="flex items-center justify-end">
+            <Link
+              href={`/admin/applications/${id}`}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 text-dazz-navy hover:bg-dazz-navy hover:text-white rounded-md text-xs font-bold transition-colors"
+              title="Review Application"
+            >
+              <Eye size={14} /> Review
+            </Link>
+          </div>
+        );
+      },
     },
   ];
 
