@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { PageHero } from '@/components/ui/PageHero';
 import { ContactForm } from '@/components/contact/ContactForm';
-import { ArrowRight, MapPin, Phone, Mail, Globe } from 'lucide-react';
+import { ArrowRight, MapPin, Phone, Mail } from 'lucide-react';
 import Link from 'next/link';
 import LocationsMapWrapper from '@/components/contact/LocationsMapWrapper';
 
@@ -83,7 +83,6 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
   const address = settings?.address?.[lang] || (isAr ? '٤٧٦٤، شارع الملك خالد،\nالشرفية، جدة ٢٢٢٣٤' : '4764, King Khalid St,\nAsh Sharafiyah, Jeddah 22234');
   const phone = settings?.phoneNumber || '+966 59 222 8228';
   const email = settings?.contactEmail || 'info@dazztradlink.com';
-  const website = settings?.websiteUrl || 'www.dazztradlink.com';
 
   const mapConfig = settings?.mapConfig || { latitude: 21.5222, longitude: 39.1718, zoom: 15 };
 
@@ -135,15 +134,6 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
                   </h4>
                   <a href={`mailto:${email}`} className="inline-block text-lg md:text-xl font-light text-slate-300 group-hover:text-white hover:underline transition-all break-all">
                     {email}
-                  </a>
-                </div>
-                
-                <div className="group">
-                  <h4 className={`text-sm font-bold tracking-widest text-dazz-gold mb-3 flex items-center gap-2 ${isAr ? 'flex-row-reverse font-arabic uppercase-none' : 'uppercase'}`}>
-                    <Globe size={16} /> {isAr ? 'الموقع الإلكتروني' : 'Website'}
-                  </h4>
-                  <a href={`https://${website.replace(/^https?:\/\//, '')}`} target="_blank" rel="noopener noreferrer" className="inline-block text-lg font-light text-slate-300 group-hover:text-white hover:underline transition-all">
-                    {website}
                   </a>
                 </div>
               </div>
