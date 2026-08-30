@@ -4,7 +4,6 @@ import path from 'path';
 
 const nextConfig: NextConfig = {
   outputFileTracingRoot: path.join(__dirname, '../../'),
-  // @ts-expect-error - this property might not be perfectly typed in some versions but Next.js requests it
   allowedDevOrigins: ['172.23.224.1', 'localhost'],
   images: {
     remotePatterns: [
@@ -63,10 +62,15 @@ const nextConfig: NextConfig = {
     ];
   },
   async rewrites() {
+    const isProd = process.env.NODE_ENV === 'production';
+    const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:5000/api';
+    
+    // In production, Next.js frontend might just communicate directly to the backend URL 
+    // depending on the architecture. But if we need rewrites to avoid CORS:
     return [
       {
         source: '/api/:path*',
-        destination: 'http://127.0.0.1:5000/api/:path*',
+        destination: `${apiBaseUrl}/:path*`,
       },
     ];
   },

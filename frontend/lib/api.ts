@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 
 // Create an Axios instance with base configuration
 export const apiClient = axios.create({
-  baseURL: typeof window === 'undefined' ? (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api') : '/api',
+  baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api',
   headers: {
     'Content-Type': 'application/json',
   },

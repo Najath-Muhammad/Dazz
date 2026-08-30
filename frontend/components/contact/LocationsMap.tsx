@@ -76,12 +76,12 @@ export default function LocationsMap({ locations, isAr }: LocationsMapProps) {
           />
           <MapBounds locations={locations} selectedId={selectedId} />
           
-          {locations.map((loc) => (
+          {locations.map((loc, index) => (
             <Marker 
-              key={loc.id} 
+              key={loc.id || loc._id || index} 
               position={[loc.latitude, loc.longitude]}
               eventHandlers={{
-                click: () => setSelectedId(loc.id),
+                click: () => setSelectedId(loc.id || loc._id),
               }}
             >
               <Popup className={isAr ? 'leaflet-popup-rtl' : ''} closeButton={false}>
@@ -132,11 +132,12 @@ export default function LocationsMap({ locations, isAr }: LocationsMapProps) {
           
           <div className="space-y-4">
             {locations.map((loc, index) => {
-              const isActive = selectedId === loc.id;
+              const activeId = loc.id || loc._id;
+              const isActive = selectedId === activeId;
               return (
                 <div 
-                  key={loc.id}
-                  onClick={() => setSelectedId(loc.id)}
+                  key={activeId || index}
+                  onClick={() => setSelectedId(activeId)}
                   className={`p-5 rounded-md cursor-pointer transition-all border ${
                     isActive 
                     ? 'bg-white border-dazz-gold shadow-md shadow-dazz-gold/10' 
