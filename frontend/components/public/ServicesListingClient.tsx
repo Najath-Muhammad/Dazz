@@ -23,20 +23,22 @@ export function ServicesListingClient({ services, heroTitle, heroSubtitle, heroI
   const [activeCategory, setActiveCategory] = useState<string>('all');
 
   const categories = [
-    { id: 'all', label: isAr ? 'الكل' : 'All Divisions' },
-    { id: 'construction', label: isAr ? 'المقاولات' : 'Construction' },
-    { id: 'food-trading', label: isAr ? 'تجارة الأغذية' : 'Food Trading' },
-    { id: 'logistics', label: isAr ? 'الخدمات اللوجستية' : 'Logistics' },
-    { id: 'hospitality', label: isAr ? 'الضيافة' : 'Hospitality' },
-    { id: 'other', label: isAr ? 'أخرى' : 'Other' }
+    { id: 'all', match: ['all'], label: isAr ? 'الكل' : 'All Divisions' },
+    { id: 'construction', match: ['construction', 'construction-infrastructure'], label: isAr ? 'المقاولات والبنية التحتية' : 'Construction & Infrastructure' },
+    { id: 'hospitality', match: ['hospitality', 'real-estate-hospitality', 'real-estate'], label: isAr ? 'العقارات والضيافة' : 'Real Estate & Hospitality' },
+    { id: 'food-trading', match: ['food-trading', 'trading-distribution', 'trading'], label: isAr ? 'التجارة والتوزيع' : 'Trading & Distribution' },
+    { id: 'logistics', match: ['logistics', 'logistics-environmental', 'environmental'], label: isAr ? 'الخدمات اللوجستية والحلول البيئية' : 'Logistics & Environmental Solutions' }
   ];
 
   const availableCategoryIds = new Set(services.map(s => s.category));
-  const activeTabs = categories.filter(c => c.id === 'all' || availableCategoryIds.has(c.id));
+  const activeTabs = categories.filter(c => c.id === 'all' || c.match.some(m => availableCategoryIds.has(m)));
 
   const filteredServices = activeCategory === 'all' 
     ? services 
-    : services.filter(s => s.category === activeCategory);
+    : services.filter(s => {
+        const cat = categories.find(c => c.id === activeCategory);
+        return cat ? cat.match.includes(s.category) : s.category === activeCategory;
+      });
 
   const stripEmojis = (str: string) => {
     if (!str || typeof str !== 'string') return str;

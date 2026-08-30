@@ -10,10 +10,14 @@ import { SearchBar } from '@/components/admin/SearchBar';
 import { Filter } from 'lucide-react';
 
 const CATEGORY_LABELS: Record<string, string> = {
-  'construction': 'Construction',
-  'food-trading': 'Food Trading',
-  'logistics': 'Logistics',
-  'hospitality': 'Hospitality',
+  'construction': 'Construction & Infrastructure',
+  'construction-infrastructure': 'Construction & Infrastructure',
+  'food-trading': 'Trading & Distribution',
+  'trading-distribution': 'Trading & Distribution',
+  'logistics': 'Logistics & Environmental Solutions',
+  'logistics-environmental': 'Logistics & Environmental Solutions',
+  'hospitality': 'Real Estate & Hospitality',
+  'real-estate-hospitality': 'Real Estate & Hospitality',
   'other': 'Other',
 };
 
@@ -250,10 +254,10 @@ export default function AdminServicesPage() {
             <Filter size={16} className="text-slate-400" />
             <select suppressHydrationWarning value={filterCategory} onChange={(e) => { setFilterCategory(e.target.value); setPage(1); }} className="border border-slate-300 rounded-md py-2 px-3 text-sm outline-none focus:border-dazz-navy">
               <option value="ALL">All Categories</option>
-              <option value="construction">Construction</option>
-              <option value="food-trading">Food Trading</option>
-              <option value="logistics">Logistics</option>
-              <option value="hospitality">Hospitality</option>
+              <option value="construction">Construction & Infrastructure</option>
+              <option value="food-trading">Trading & Distribution</option>
+              <option value="logistics">Logistics & Environmental Solutions</option>
+              <option value="hospitality">Real Estate & Hospitality</option>
               <option value="other">Other</option>
             </select>
           </div>
