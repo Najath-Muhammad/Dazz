@@ -107,7 +107,7 @@ export function WhyWorkWithUsInteractive({ title, description, principles, isAr 
 
                   {/* Title & Arrow */}
                   <div className={`flex-1 flex items-center justify-between ${isAr ? 'flex-row-reverse' : ''}`}>
-                    <h3 className={`text-3xl lg:text-4xl font-bold font-serif transition-transform duration-500 ease-out ${
+                    <h3 className={`text-2xl lg:text-3xl font-bold font-serif transition-transform duration-500 ease-out ${
                       isHovered ? (isAr ? '-translate-x-4 text-white' : 'translate-x-4 text-white') : 'text-slate-300'
                     } ${isAr ? 'font-arabic' : ''}`}>
                       {principle.title}
