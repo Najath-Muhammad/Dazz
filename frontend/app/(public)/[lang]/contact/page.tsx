@@ -80,11 +80,48 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
   const rawBg = settings?.pageHeaders?.contact?.media;
   const heroImage = rawBg?.url || (typeof rawBg === 'string' && rawBg !== '' ? rawBg : '/images/contact-hero.png');
 
-  const address = settings?.address?.[lang] || (isAr ? '٤٧٦٤، شارع الملك خالد،\nالشرفية، جدة ٢٢٢٣٤' : '4764, King Khalid St,\nAsh Sharafiyah, Jeddah 22234');
-  const phone = settings?.phoneNumber || '+966 59 222 8228';
+  const address = settings?.address?.[lang] || (isAr ? '٣٠٦، مركز الأعمال التجاري – ٤٧٤٦،\nشارع الملك خالد، البغدادية، جدة، المملكة العربية السعودية' : '306, Commercial Business Centre – 4746,\nKing Khalid Street, Al Baghdadiyah, Jeddah, Saudi Arabia');
+  const phone = settings?.phoneNumber || '+966 53 083 3855';
   const email = settings?.contactEmail || 'info@dazztradlink.com';
 
-  const mapConfig = settings?.mapConfig || { latitude: 21.5222, longitude: 39.1718, zoom: 15 };
+  const globalOffices = [
+    {
+      country: isAr ? 'المملكة العربية السعودية' : 'Saudi Arabia',
+      type: isAr ? 'المقر الرئيسي' : 'HEADQUARTERS',
+      flag: '🇸🇦',
+      address: isAr 
+        ? '٣٠٦، مركز الأعمال التجاري – ٤٧٤٦، شارع الملك خالد، البغدادية، جدة، المملكة العربية السعودية'
+        : '306, Commercial Business Centre – 4746, King Khalid Street, Al Baghdadiyah, Jeddah, Saudi Arabia',
+      phone: '+966 53 083 3855'
+    },
+    {
+      country: isAr ? 'الإمارات العربية المتحدة' : 'United Arab Emirates',
+      type: isAr ? 'مكتب إقليمي' : 'REGIONAL OFFICE',
+      flag: '🇦🇪',
+      address: isAr 
+        ? 'مركز الأعمال، مدينة الشارقة للنشر المنطقة الحرة، الشارقة، الإمارات العربية المتحدة'
+        : 'Business Centre, Sharjah Publishing City Free Zone, Sharjah, United Arab Emirates',
+      phone: '+971 56 578 6797'
+    },
+    {
+      country: isAr ? 'الهند' : 'India',
+      type: isAr ? 'مكتب إقليمي' : 'REGIONAL OFFICE',
+      flag: '🇮🇳',
+      address: isAr 
+        ? 'رقم IX/344، منزل أوبيديان، بالوندا، تشونغاثارا، نيلامبور، مالابورام - ٦٧٩٣٣٤، كيرالا، الهند'
+        : 'No. IX/344, Uppidiyan House, Palunda, Chungathara, Nilambur, Malappuram – 679334, Kerala, India',
+      phone: '+91 81118 84000'
+    },
+    {
+      country: isAr ? 'هونج كونج' : 'Hong Kong',
+      type: isAr ? 'مكتب إقليمي' : 'REGIONAL OFFICE',
+      flag: '🇭🇰',
+      address: isAr 
+        ? 'الوحدة ٢٩٠٤-٠٥، الطابق ٢٩، مركز التجارة العالمي، ٣ طريق أربوثنوت، سنترال، هونغ كونغ'
+        : 'Unit 2904–05, 29/F, Universal Trade Centre, 3 Arbuthnot Road, Central, Hong Kong',
+      phone: null
+    }
+  ];
 
   return (
     <main dir={dir} className="min-h-screen bg-slate-50">
@@ -112,7 +149,7 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
               <div className={`space-y-10 relative z-10 ${isAr ? 'text-right' : ''}`}>
                 <div className="group">
                   <h4 className={`text-sm font-bold tracking-widest text-dazz-gold mb-3 flex items-center gap-2 ${isAr ? 'flex-row-reverse font-arabic uppercase-none' : 'uppercase'}`}>
-                    <MapPin size={16} /> {isAr ? 'زورنا' : 'Visit Us'}
+                    <MapPin size={16} /> {isAr ? 'المقر الرئيسي' : 'Headquarters'}
                   </h4>
                   <p className={`text-slate-300 whitespace-pre-wrap leading-relaxed group-hover:text-white transition-colors ${isAr ? 'font-arabic' : ''}`}>
                     {address}
@@ -148,8 +185,75 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
         </div>
       </section>
 
+      {/* Global Offices Section */}
+      <section className="py-20 px-6 bg-slate-100 border-t border-b border-slate-200">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <span className={`text-xs font-bold tracking-widest text-dazz-gold uppercase ${isAr ? 'font-arabic uppercase-none' : ''}`}>
+              {isAr ? 'شبكتنا العالمية' : 'OUR GLOBAL NETWORK'}
+            </span>
+            <h2 className={`text-3xl md:text-5xl font-serif font-bold text-slate-900 mt-2 mb-4 ${isAr ? 'font-arabic' : ''}`}>
+              {isAr ? 'المكاتب والمقرات العالمية' : 'Global Offices & Hubs'}
+            </h2>
+            <p className={`text-slate-500 max-w-2xl mx-auto text-base md:text-lg ${isAr ? 'font-arabic' : ''}`}>
+              {isAr 
+                ? 'تواصل مباشرة مع فرقنا المحلية في المملكة العربية السعودية، الإمارات، الهند، وهونج كونج.'
+                : 'Connect directly with our regional teams across Saudi Arabia, UAE, India, and Hong Kong.'}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {globalOffices.map((office, idx) => (
+              <div 
+                key={idx} 
+                className="bg-white p-8 rounded-lg border border-slate-200 shadow-sm hover:shadow-xl hover:border-dazz-gold/50 transition-all duration-300 flex flex-col justify-between group"
+              >
+                <div>
+                  <div className={`flex items-center justify-between mb-6 ${isAr ? 'flex-row-reverse' : ''}`}>
+                    <div className={`flex items-center gap-3 ${isAr ? 'flex-row-reverse' : ''}`}>
+                      <span className="text-3xl">{office.flag}</span>
+                      <h3 className={`text-xl font-bold font-serif text-slate-900 group-hover:text-dazz-navy transition-colors ${isAr ? 'font-arabic' : ''}`}>
+                        {office.country}
+                      </h3>
+                    </div>
+                    <span className={`px-3 py-1 bg-dazz-navy/5 text-dazz-navy text-[11px] font-bold tracking-wider rounded-full border border-dazz-navy/10 ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>
+                      {office.type}
+                    </span>
+                  </div>
+
+                  <div className={`space-y-4 mb-6 ${isAr ? 'text-right' : ''}`}>
+                    <div className={`flex items-start gap-3 text-slate-600 ${isAr ? 'flex-row-reverse' : ''}`}>
+                      <MapPin size={18} className="text-dazz-gold shrink-0 mt-1" />
+                      <p className={`text-sm leading-relaxed ${isAr ? 'font-arabic' : ''}`}>
+                        {office.address}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {office.phone && (
+                  <div className={`pt-4 border-t border-slate-100 flex items-center justify-between ${isAr ? 'flex-row-reverse' : ''}`}>
+                    <span className={`text-xs text-slate-400 font-bold uppercase tracking-wider ${isAr ? 'font-arabic uppercase-none' : ''}`}>
+                      {isAr ? 'الهاتف' : 'Telephone'}
+                    </span>
+                    <a 
+                      href={`tel:${office.phone.replace(/\s+/g, '')}`} 
+                      dir="ltr"
+                      className="flex items-center gap-2 text-dazz-navy font-semibold hover:text-dazz-gold transition-colors text-base"
+                    >
+                      <Phone size={15} className="text-dazz-gold" />
+                      {office.phone}
+                    </a>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Location / Map Section */}
-      <section className="py-12 bg-white">
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-6">
           <LocationsMapWrapper isAr={isAr} />
         </div>
