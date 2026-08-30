@@ -8,7 +8,7 @@ import { Pagination } from '@/components/admin/Pagination';
 import { SearchBar } from '@/components/admin/SearchBar';
 
 export default function AdminCareersPage() {
-  const [jobs, setJobs] = useState<any[]>([]);
+  const [jobs, setJobs] = useState<SafeAny[]>([]);
   const [loading, setLoading] = useState(true);
   
   // Pagination & Filters
@@ -39,7 +39,7 @@ export default function AdminCareersPage() {
         status: filterStatus === 'ALL' ? '' : filterStatus.toLowerCase()
       }).toString();
       
-      const data: any = await api.get(`/jobs?${qs}`);
+      const data: SafeAny = await api.get(`/jobs?${qs}`);
       if (data.data && data.pagination) {
         setJobs(data.data);
         setTotalPages(data.pagination.totalPages);
@@ -76,7 +76,7 @@ export default function AdminCareersPage() {
     return <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800">Draft</span>;
   };
 
-  const columns: Column<any>[] = [
+  const columns: Column<SafeAny>[] = [
     {
       key: 'title',
       header: 'Job Title',

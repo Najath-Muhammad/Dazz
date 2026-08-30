@@ -16,7 +16,7 @@ const STATUS_COLORS: Record<string, string> = {
 };
 
 export default function AdminApplicationsPage() {
-  const [applications, setApplications] = useState<any[]>([]);
+  const [applications, setApplications] = useState<SafeAny[]>([]);
   const [loading, setLoading] = useState(true);
   
   // Pagination & Filters
@@ -37,7 +37,7 @@ export default function AdminApplicationsPage() {
         status: filterStatus === 'ALL' ? '' : filterStatus.toUpperCase()
       }).toString();
       
-      const res: any = await api.get(`/applications?${qs}`);
+      const res: SafeAny = await api.get(`/applications?${qs}`);
       if (res.data && res.pagination) {
         setApplications(res.data);
         setTotalPages(res.pagination.totalPages);
@@ -56,7 +56,7 @@ export default function AdminApplicationsPage() {
 
   // Filter logic moved to backend
 
-  const columns: Column<any>[] = [
+  const columns: Column<SafeAny>[] = [
     {
       key: 'candidate',
       header: 'Candidate Name',

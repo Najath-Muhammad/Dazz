@@ -1,10 +1,10 @@
 export interface IJobApplicationRepository {
-  findAll(): Promise<any[]>;
-  findPaginated(query: object, page: number, limit: number): Promise<{ items: any[], total: number }>;
+  findAll(): Promise<SafeAny[]>;
+  findPaginated(query: object, page: number, limit: number): Promise<{ items: SafeAny[], total: number }>;
   findById(id: string): Promise<any | null>;
-  findByJobId(jobId: string): Promise<any[]>;
+  findByJobId(jobId: string): Promise<SafeAny[]>;
   
-  create(data: any): Promise<any>;
-  update(id: string, data: any): Promise<any | null>;
+  create(data: SafeAny): Promise<SafeAny>;
+  update(id: string, data: SafeAny): Promise<any | null>;
   delete(id: string): Promise<any | null>;
 }

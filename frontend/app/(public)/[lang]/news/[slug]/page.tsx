@@ -24,7 +24,7 @@ async function getRelatedBlogs(category: string, currentId: string) {
     if (!json.success || !json.data) return [];
     
     // Filter out current and try to match category if possible
-    let related = json.data.filter((b: any) => b.id !== currentId);
+    const related = json.data.filter((b: SafeAny) => b.id !== currentId);
     return related.slice(0, 3);
   } catch (error) {
     return [];
@@ -143,7 +143,7 @@ export default async function ArticleDetailPage({ params }: { params: Promise<{ 
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {relatedPosts.map((rp: any) => {
+              {relatedPosts.map((rp: SafeAny) => {
                 const rpTitle = isAr ? (rp.title?.ar || rp.title?.en) : rp.title?.en;
                 const rpImage = typeof rp.coverImage === 'string' ? rp.coverImage : (rp.coverImage?.url || '');
                 const rpDate = new Date(rp.publishedAt || rp.createdAt).toLocaleDateString(isAr ? 'ar-SA' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' });

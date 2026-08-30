@@ -1,8 +1,8 @@
 export interface ISiteSettingsService {
-  getAllSiteSettingss(): Promise<{ success: boolean; message: string; data?: any[] }>;
-  getSiteSettingsById(id: string): Promise<{ success: boolean; message: string; data?: any }>;
+  getAllSiteSettingss(): Promise<{ success: boolean; message: string; data?: SafeAny[] }>;
+  getSiteSettingsById(id: string): Promise<{ success: boolean; message: string; data?: SafeAny }>;
 
-  createSiteSettings(data: any): Promise<{ success: boolean; message: string; data?: any }>;
-  updateSiteSettings(id: string, data: any): Promise<{ success: boolean; message: string; data?: any }>;
-  deleteSiteSettings(id: string): Promise<{ success: boolean; message: string; data?: any }>;
+  createSiteSettings(data: SafeAny): Promise<{ success: boolean; message: string; data?: SafeAny }>;
+  updateSiteSettings(id: string, data: SafeAny): Promise<{ success: boolean; message: string; data?: SafeAny }>;
+  deleteSiteSettings(id: string): Promise<{ success: boolean; message: string; data?: SafeAny }>;
 }

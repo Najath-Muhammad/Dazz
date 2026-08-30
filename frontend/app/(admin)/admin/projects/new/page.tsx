@@ -42,7 +42,7 @@ export default function AdminNewProjectPage() {
     try {
       await projectService.createProject(formData);
       router.push('/admin/projects');
-    } catch (err: any) {
+    } catch (err: SafeAny) {
       setError(err.message || 'Failed to create project');
       setLoading(false);
     }
@@ -138,7 +138,7 @@ export default function AdminNewProjectPage() {
                   label="Cover Image / Video"
                   folder="dazz/projects"
                   value={formData.coverImage}
-                  onChange={(media) => setFormData({ ...formData, coverImage: media as any })}
+                  onChange={(media) => setFormData({ ...formData, coverImage: media as SafeAny })}
                 />
               </div>
               <div>

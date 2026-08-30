@@ -13,7 +13,7 @@ export default function AdminEditProjectPage({ params }: { params: Promise<{ id:
   const resolvedParams = React.use(params);
   const id = resolvedParams.id;
 
-  const [formData, setFormData] = useState<any>(null);
+  const [formData, setFormData] = useState<SafeAny>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
@@ -48,7 +48,7 @@ export default function AdminEditProjectPage({ params }: { params: Promise<{ id:
     lang: 'en' | 'ar',
     value: string
   ) => {
-    setFormData((prev: any) => ({
+    setFormData((prev: SafeAny) => ({
       ...prev,
       [field]: { ...prev[field], [lang]: value },
     }));
@@ -63,7 +63,7 @@ export default function AdminEditProjectPage({ params }: { params: Promise<{ id:
       await projectService.updateProject(id, formData);
       setSaved(true);
       setTimeout(() => setSaved(false), 3000);
-    } catch (err: any) {
+    } catch (err: SafeAny) {
       setError(err.message || 'Failed to save project');
     } finally {
       setSaving(false);

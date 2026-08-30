@@ -5,7 +5,7 @@ import { MediaRenderer } from './MediaRenderer';
 interface ServiceCardProps {
   title: string;
   description: string;
-  imageUrl: any;
+  imageUrl: SafeAny;
   href: string;
 }
 

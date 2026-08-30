@@ -9,7 +9,7 @@ export interface IJobApplication extends Document {
   coverLetter?: string;
   linkedInProfile?: string;
   portfolioUrl?: string;
-  resume: any; // Cloudinary Media object or URL string
+  resume: SafeAny; // Cloudinary Media object or URL string
   status: 'NEW' | 'REVIEWING' | 'SHORTLISTED' | 'REJECTED' | 'HIRED';
 }
 

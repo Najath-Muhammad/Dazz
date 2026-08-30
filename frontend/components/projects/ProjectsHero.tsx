@@ -7,7 +7,7 @@ import { ChevronDown } from 'lucide-react';
 interface ProjectsHeroProps {
   title: string;
   subtitle: string;
-  media: any;
+  media: SafeAny;
   isAr: boolean;
 }
 

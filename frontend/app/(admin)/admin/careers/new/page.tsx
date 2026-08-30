@@ -35,7 +35,7 @@ export default function NewJobPage() {
   const handleLocalizedChange = (field: string, lang: 'en' | 'ar', value: string) => {
     setFormData(prev => ({
       ...prev,
-      [field]: { ...(prev as any)[field], [lang]: value }
+      [field]: { ...(prev as SafeAny)[field], [lang]: value }
     }));
   };
 
@@ -59,7 +59,7 @@ export default function NewJobPage() {
         return acc;
       }, {} as Record<string, string>);
 
-      const res: any = await api.post('/admin/translate/batch', {
+      const res: SafeAny = await api.post('/admin/translate/batch', {
         fields: fieldsToTranslate
       });
 
@@ -101,7 +101,7 @@ export default function NewJobPage() {
     setLoading(true);
     
     try {
-      const payload: any = { ...formData };
+      const payload: SafeAny = { ...formData };
       if (payload.status === 'PUBLISHED' && !payload.publishedAt) {
         payload.publishedAt = new Date().toISOString();
       }
@@ -114,7 +114,7 @@ export default function NewJobPage() {
 
       await api.post('/jobs', payload);
       router.push('/admin/careers');
-    } catch (err: any) {
+    } catch (err: SafeAny) {
       setError(err.response?.data?.message || err.message || 'Failed to create job');
     } finally {
       setLoading(false);

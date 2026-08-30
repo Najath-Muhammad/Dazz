@@ -1,9 +1,9 @@
 export interface IProjectService {
-  getAllProjects(): Promise<{ success: boolean; message: string; data?: any[] }>;
-  getProjectsPaginated(params: { search?: string; status?: string; page: number; limit: number }): Promise<{ success: boolean; message: string; data?: any[]; pagination?: any }>;
-  getProjectById(id: string): Promise<{ success: boolean; message: string; data?: any }>;
-  getProjectBySlug(slug: string): Promise<{ success: boolean; message: string; data?: any }>;
-  createProject(data: any): Promise<{ success: boolean; message: string; data?: any }>;
-  updateProject(id: string, data: any): Promise<{ success: boolean; message: string; data?: any }>;
-  deleteProject(id: string): Promise<{ success: boolean; message: string; data?: any }>;
+  getAllProjects(): Promise<{ success: boolean; message: string; data?: SafeAny[] }>;
+  getProjectsPaginated(params: { search?: string; status?: string; page: number; limit: number }): Promise<{ success: boolean; message: string; data?: SafeAny[]; pagination?: SafeAny }>;
+  getProjectById(id: string): Promise<{ success: boolean; message: string; data?: SafeAny }>;
+  getProjectBySlug(slug: string): Promise<{ success: boolean; message: string; data?: SafeAny }>;
+  createProject(data: SafeAny): Promise<{ success: boolean; message: string; data?: SafeAny }>;
+  updateProject(id: string, data: SafeAny): Promise<{ success: boolean; message: string; data?: SafeAny }>;
+  deleteProject(id: string): Promise<{ success: boolean; message: string; data?: SafeAny }>;
 }

@@ -6,6 +6,7 @@ import { MediaRenderer } from '@/components/MediaRenderer';
 import { ArrowRight } from 'lucide-react';
 
 interface BlogPost {
+  id?: string;
   _id: string;
   title: { en: string; ar?: string };
   slug: string;

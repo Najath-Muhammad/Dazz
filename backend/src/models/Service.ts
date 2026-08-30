@@ -10,7 +10,7 @@ export interface IHero {
   title: LocalizedString;
   subtitle: LocalizedString;
   description: LocalizedString;
-  media: any;
+  media: SafeAny;
   ctaPrimary: { text: LocalizedString; url: string };
   ctaSecondary: { text: LocalizedString; url: string };
 }
@@ -19,31 +19,31 @@ export interface IIntroduction {
   title: LocalizedString;
   mainDescription: LocalizedString;
   paragraphs: LocalizedString[];
-  image: any;
+  image: SafeAny;
 }
 export interface ICapability {
   _id?: string; icon: string;
   title: LocalizedString; description: LocalizedString; order: number;
 }
 export interface ISolution {
-  _id?: string; icon: string; image: any;
+  _id?: string; icon: string; image: SafeAny;
   title: LocalizedString; description: LocalizedString;
   ctaText: LocalizedString; ctaUrl: string; order: number;
 }
 export interface ICategory {
-  _id?: string; icon: string; image: any;
+  _id?: string; icon: string; image: SafeAny;
   title: LocalizedString; description: LocalizedString; order: number;
 }
 export interface IApplication {
-  _id?: string; icon: string; image: any;
+  _id?: string; icon: string; image: SafeAny;
   title: LocalizedString; description: LocalizedString; order: number;
 }
 export interface IProcessStep {
-  _id?: string; stepNumber: number; icon: string; image: any;
+  _id?: string; stepNumber: number; icon: string; image: SafeAny;
   title: LocalizedString; description: LocalizedString; order: number;
 }
 export interface IEquipment {
-  _id?: string; icon: string; image: any;
+  _id?: string; icon: string; image: SafeAny;
   name: LocalizedString; description: LocalizedString;
   specification: LocalizedString; order: number;
 }
@@ -56,12 +56,12 @@ export interface IHighlight {
   title: LocalizedString; description: LocalizedString; order: number;
 }
 export interface IGalleryItem {
-  _id?: string; mediaType: 'image' | 'video'; media: any;
+  _id?: string; mediaType: 'image' | 'video'; media: SafeAny;
   caption: LocalizedString; category: string; order: number;
 }
 export interface ICTA {
   title: LocalizedString; description: LocalizedString;
-  buttonText: LocalizedString; buttonUrl: string; backgroundImage: any;
+  buttonText: LocalizedString; buttonUrl: string; backgroundImage: SafeAny;
 }
 
 export interface IService extends Document {
@@ -87,7 +87,7 @@ export interface IService extends Document {
   highlights: IHighlight[];
   gallery: IGalleryItem[];
   cta: ICTA;
-  seo: { title: LocalizedString; description: LocalizedString; ogImage: any };
+  seo: { title: LocalizedString; description: LocalizedString; ogImage: SafeAny };
   translationStatus?: { ar: string };
   translationMeta?: Record<string, string>;
   createdAt: Date;

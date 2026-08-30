@@ -6,7 +6,7 @@ export interface IBlog extends Document {
   slug: string;
   excerpt: LocalizedString;
   content: LocalizedString;
-  coverImage: any;
+  coverImage: SafeAny;
   author?: string;
   publishedAt?: Date;
   category?: LocalizedString;

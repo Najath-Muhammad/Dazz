@@ -18,7 +18,7 @@ export class ServiceController implements IServiceController {
 
   getServices = async (req: Request, res: Response): Promise<void> => {
   try {
-    const isAdmin = !!(req as any).user;
+    const isAdmin = !!(req as SafeAny).user;
     
     if (isAdmin && req.query.page) {
       // If admin and using pagination

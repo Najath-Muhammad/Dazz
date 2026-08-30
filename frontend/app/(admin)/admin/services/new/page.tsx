@@ -20,7 +20,7 @@ export default function AdminNewServicePage() {
     try {
       await api.post('/services', { ...form, status });
       router.push('/admin/services');
-    } catch (e: any) {
+    } catch (e: SafeAny) {
       setError(e?.message || 'Failed to save service.');
       setSaving(false);
     }

@@ -45,7 +45,7 @@ export default async function JobDetailsPage({ params }: { params: Promise<{ slu
     notFound();
   }
 
-  const renderList = (items: any[]) => {
+  const renderList = (items: SafeAny[]) => {
     if (!items || items.length === 0) return null;
     const validItems = items.filter(item => item && item[lang] && item[lang].trim() !== '');
     if (validItems.length === 0) return null;

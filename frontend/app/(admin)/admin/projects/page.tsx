@@ -11,7 +11,7 @@ import { Filter } from 'lucide-react';
 import { Trash2, Edit2, Eye } from 'lucide-react';
 
 export default function AdminProjectsPage() {
-  const [projects, setProjects] = useState<any[]>([]);
+  const [projects, setProjects] = useState<SafeAny[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   
@@ -68,7 +68,7 @@ export default function AdminProjectsPage() {
     }
   };
 
-  const columns: Column<any>[] = [
+  const columns: Column<SafeAny>[] = [
     {
       key: 'title',
       header: 'Title',

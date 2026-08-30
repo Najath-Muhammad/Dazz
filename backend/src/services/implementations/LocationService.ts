@@ -22,7 +22,7 @@ export class LocationService implements ILocationService {
         return { success: true, message: 'No locations found', data: [] };
       }
       return { success: true, message: 'Locations retrieved successfully', data: BaseMapper.toDTOList(items) };
-    } catch (error: any) {
+    } catch (error: SafeAny) {
       console.error('Error in getAllLocations:', error);
       return { success: false, message: 'Failed to retrieve locations' };
     }
@@ -36,25 +36,25 @@ export class LocationService implements ILocationService {
       const item = await this._repository.findById(id);
       if (!item) return { success: false, message: 'Location not found' };
       return { success: true, message: 'Location retrieved successfully', data: BaseMapper.toDTO(item) };
-    } catch (error: any) {
+    } catch (error: SafeAny) {
       console.error('Error in getLocationById:', error);
       return { success: false, message: 'Failed to retrieve location' };
     }
   }
 
-  async createLocation(data: any) {
+  async createLocation(data: SafeAny) {
     try {
       const newItem = await this._repository.create(data);
       if (!newItem) return { success: false, message: 'Failed to create location' };
       this._translateAndUpdate(newItem._id.toString(), newItem.toObject ? newItem.toObject() : newItem, {});
       return { success: true, message: 'Location created. Arabic translation in progress.', data: BaseMapper.toDTO(newItem) };
-    } catch (error: any) {
+    } catch (error: SafeAny) {
       console.error('Error in createLocation:', error);
       return { success: false, message: 'Failed to create location' };
     }
   }
 
-  async updateLocation(id: string, data: any) {
+  async updateLocation(id: string, data: SafeAny) {
     try {
       if (!isValidObjectId(id)) {
         return { success: false, message: 'Invalid location ID format' };
@@ -65,10 +65,10 @@ export class LocationService implements ILocationService {
       const updatedItem = await this._repository.update(id, data);
       if (!updatedItem) return { success: false, message: 'Failed to update location' };
 
-      const existingMeta = (existing as any).translationMeta || {};
+      const existingMeta = (existing as SafeAny).translationMeta || {};
       this._translateAndUpdate(id, updatedItem, existingMeta);
       return { success: true, message: 'Location updated. Arabic translation in progress.', data: BaseMapper.toDTO(updatedItem) };
-    } catch (error: any) {
+    } catch (error: SafeAny) {
       console.error('Error in updateLocation:', error);
       return { success: false, message: 'Failed to update location' };
     }
@@ -84,13 +84,13 @@ export class LocationService implements ILocationService {
 
       await this._repository.delete(id);
       return { success: true, message: 'Location deleted successfully' };
-    } catch (error: any) {
+    } catch (error: SafeAny) {
       console.error('Error in deleteLocation:', error);
       return { success: false, message: 'Failed to delete location' };
     }
   }
 
-  private async _translateAndUpdate(id: string, docData: any, existingMeta: Record<string, string>) {
+  private async _translateAndUpdate(id: string, docData: SafeAny, existingMeta: Record<string, string>) {
     try {
       const { updatedData, translationMeta, status } = await autoTranslate(docData, LOCATION_FIELDS, existingMeta);
       await this._repository.update(id, {

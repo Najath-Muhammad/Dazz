@@ -94,7 +94,7 @@ export function ContentBuilder({ value, onChange }: ContentBuilderProps) {
             folder="dazz/blogs"
             value={block.en} // Store media URL in 'en' for simplicity
             onChange={(val) => {
-              const url = typeof val === 'string' ? val : (val as any).url || '';
+              const url = typeof val === 'string' ? val : (val as SafeAny).url || '';
               const newBlocks = blocks.map(b => b.id === block.id ? { ...b, en: url, ar: url } : b);
               updateParent(newBlocks);
             }}

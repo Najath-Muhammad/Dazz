@@ -83,7 +83,7 @@ export class TranslationService implements ITranslationService {
 
       const translation = await this.callGemini(text.trim());
       return { success: true, message: 'Translated', data: { translation } };
-    } catch (error: any) {
+    } catch (error: SafeAny) {
       console.error(error);
       return { success: false, message: error.message || 'Translation failed' };
     }
@@ -121,7 +121,7 @@ export class TranslationService implements ITranslationService {
       }
 
       return { success: true, message: 'Translated', data: { translations: parsed } };
-    } catch (error: any) {
+    } catch (error: SafeAny) {
       console.error(error);
       return { success: false, message: error.message || 'Translation failed' };
     }

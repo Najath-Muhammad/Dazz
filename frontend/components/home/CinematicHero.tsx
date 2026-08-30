@@ -8,12 +8,12 @@ import { ArrowRight, ChevronDown } from 'lucide-react';
 interface HeroProps {
   title: string;
   subtitle: string;
-  backgroundImage: any;
+  backgroundImage: SafeAny;
   hideExtras?: boolean;
   isAr?: boolean;
 }
 
-function isVideoMedia(media: any): boolean {
+function isVideoMedia(media: SafeAny): boolean {
   if (!media) return false;
   if (typeof media === 'string') {
     return /\.(mp4|webm|mov|ogg)(\?|$)/i.test(media);

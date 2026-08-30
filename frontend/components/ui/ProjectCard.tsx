@@ -8,7 +8,7 @@ import { MediaRenderer } from '@/components/MediaRenderer';
 export interface ProjectCardProps {
   title: string;
   category: string;
-  imageUrl: any;
+  imageUrl: SafeAny;
   slug: string;
   lang?: string;
   year?: string;

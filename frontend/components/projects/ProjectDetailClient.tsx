@@ -6,7 +6,7 @@ import { ArrowLeft, ArrowRight, MapPin, Calendar, Tag } from 'lucide-react';
 import Link from 'next/link';
 
 interface ProjectDetailClientProps {
-  project: any;
+  project: SafeAny;
   lang: string;
   isAr: boolean;
   dir: 'ltr' | 'rtl';
@@ -20,7 +20,7 @@ export function ProjectDetailClient({ project, lang, isAr, dir }: ProjectDetailC
     if (!str || typeof str !== 'string') return str;
     return str.replace(/[\u{1F300}-\u{1F64F}\u{1F680}-\u{1F6FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{1F900}-\u{1F9FF}\u{1FA70}-\u{1FAFF}\u{1F1E6}-\u{1F1FF}]/gu, '').trim();
   };
-  const t = (field: any) => stripEmojis(field?.[lang] || field?.en || '');
+  const t = (field: SafeAny) => stripEmojis(field?.[lang] || field?.en || '');
 
   const title = t(project.title);
   const category = t(project.category);
@@ -154,7 +154,7 @@ export function ProjectDetailClient({ project, lang, isAr, dir }: ProjectDetailC
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1">
-            {project.galleryImages.map((img: any, i: number) => (
+            {project.galleryImages.map((img: SafeAny, i: number) => (
               <motion.div 
                 key={i}
                 initial={{ opacity: 0, y: 20 }}

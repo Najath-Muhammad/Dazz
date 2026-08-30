@@ -8,7 +8,7 @@ import { Pagination } from '@/components/admin/Pagination';
 import { SearchBar } from '@/components/admin/SearchBar';
 
 export default function AdminBlogsPage() {
-  const [blogs, setBlogs] = useState<any[]>([]);
+  const [blogs, setBlogs] = useState<SafeAny[]>([]);
   const [loading, setLoading] = useState(true);
   
   // Pagination & Filters
@@ -41,7 +41,7 @@ export default function AdminBlogsPage() {
         category: filterCategory === 'ALL' ? '' : filterCategory
       }).toString();
       
-      const data: any = await api.get(`/blogs?${qs}`);
+      const data: SafeAny = await api.get(`/blogs?${qs}`);
       if (data.data && data.pagination) {
         setBlogs(data.data);
         setTotalPages(data.pagination.totalPages);
@@ -77,7 +77,7 @@ export default function AdminBlogsPage() {
     return true;
   });
 
-  const columns: Column<any>[] = [
+  const columns: Column<SafeAny>[] = [
     {
       key: 'title',
       header: 'Post Title',

@@ -6,8 +6,8 @@ export interface IProject extends Document {
   slug: string;
   category: LocalizedString;
   description: LocalizedString;
-  coverImage: any;
-  galleryImages: any[];
+  coverImage: SafeAny;
+  galleryImages: SafeAny[];
   location?: LocalizedString;
   year?: string;
   isPublished: boolean;

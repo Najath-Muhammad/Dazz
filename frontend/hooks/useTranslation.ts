@@ -29,7 +29,7 @@ export function useTranslation() {
       if (!res.data.success) throw new Error(res.data.message);
       setStatus('done');
       return res.data.data.translation;
-    } catch (err: any) {
+    } catch (err: SafeAny) {
       const msg = err?.response?.data?.message || err?.message || 'Translation failed. Please try again.';
       setError(msg);
       setStatus('error');
@@ -59,7 +59,7 @@ export function useTranslation() {
       if (!res.data.success) throw new Error(res.data.message);
       setStatus('done');
       return res.data.data.translations;
-    } catch (err: any) {
+    } catch (err: SafeAny) {
       const msg = err?.response?.data?.message || err?.message || 'Batch translation failed. Please try again.';
       setError(msg);
       setStatus('error');

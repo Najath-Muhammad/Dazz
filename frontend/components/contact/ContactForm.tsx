@@ -63,7 +63,7 @@ export function ContactForm({ isAr = false }: ContactFormProps) {
       
       setStatus('success');
       setFormData({ fullName: '', email: '', phone: '', company: '', subject: '', message: '' });
-    } catch (err: any) {
+    } catch (err: SafeAny) {
       setStatus('error');
       setErrorMessage(err.message || (isAr ? 'حدث خطأ غير متوقع.' : 'An unexpected error occurred.'));
     }

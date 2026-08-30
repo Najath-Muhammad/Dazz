@@ -6,7 +6,7 @@ import { MediaRenderer } from '@/components/MediaRenderer';
 import { ArrowRight, Hexagon } from 'lucide-react';
 
 interface Props {
-  services: any[];
+  services: SafeAny[];
   heroTitle: string;
   heroSubtitle: string;
   heroImage: string;
@@ -43,7 +43,7 @@ export function ServicesListingClient({ services, heroTitle, heroSubtitle, heroI
     return str.replace(/[\u{1F300}-\u{1F64F}\u{1F680}-\u{1F6FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{1F900}-\u{1F9FF}\u{1FA70}-\u{1FAFF}\u{1F1E6}-\u{1F1FF}]/gu, '').trim();
   };
 
-  const t = (field: any) => stripEmojis(field?.[lang] || field?.en || '');
+  const t = (field: SafeAny) => stripEmojis(field?.[lang] || field?.en || '');
 
   return (
     <div className="bg-white min-h-screen">
@@ -128,7 +128,7 @@ export function ServicesListingClient({ services, heroTitle, heroSubtitle, heroI
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {filteredServices.map((svc: any, i: number) => {
+              {filteredServices.map((svc: SafeAny, i: number) => {
                 const title = t(svc.name);
                 const desc = t(svc.shortDescription);
                 const image = svc.hero?.media || '';

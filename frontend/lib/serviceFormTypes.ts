@@ -29,14 +29,14 @@ export const SECTION_LABELS: Record<SectionKey, string> = {
 export const ALWAYS_ENABLED: SectionKey[] = ['hero', 'introduction', 'cta'];
 
 export interface CapabilityItem { _id?: string; icon: string; title: LocalizedField; description: LocalizedField; order: number }
-export interface SolutionItem { _id?: string; icon: string; image: any; title: LocalizedField; description: LocalizedField; ctaText: LocalizedField; ctaUrl: string; order: number }
-export interface CategoryItem { _id?: string; icon: string; image: any; title: LocalizedField; description: LocalizedField; order: number }
-export interface ApplicationItem { _id?: string; icon: string; image: any; title: LocalizedField; description: LocalizedField; order: number }
-export interface ProcessItem { _id?: string; stepNumber: number; icon: string; image: any; title: LocalizedField; description: LocalizedField; order: number }
-export interface EquipmentItem { _id?: string; icon: string; image: any; name: LocalizedField; description: LocalizedField; specification: LocalizedField; order: number }
+export interface SolutionItem { _id?: string; icon: string; image: SafeAny; title: LocalizedField; description: LocalizedField; ctaText: LocalizedField; ctaUrl: string; order: number }
+export interface CategoryItem { _id?: string; icon: string; image: SafeAny; title: LocalizedField; description: LocalizedField; order: number }
+export interface ApplicationItem { _id?: string; icon: string; image: SafeAny; title: LocalizedField; description: LocalizedField; order: number }
+export interface ProcessItem { _id?: string; stepNumber: number; icon: string; image: SafeAny; title: LocalizedField; description: LocalizedField; order: number }
+export interface EquipmentItem { _id?: string; icon: string; image: SafeAny; name: LocalizedField; description: LocalizedField; specification: LocalizedField; order: number }
 export interface WhyChooseUsItem { _id?: string; icon: string; title: LocalizedField; description: LocalizedField; order: number }
 export interface HighlightItem { _id?: string; icon: string; title: LocalizedField; description: LocalizedField; order: number }
-export interface GalleryItem { _id?: string; mediaType: 'image' | 'video'; media: any; caption: LocalizedField; category: string; order: number }
+export interface GalleryItem { _id?: string; mediaType: 'image' | 'video'; media: SafeAny; caption: LocalizedField; category: string; order: number }
 
 export interface ServiceFormData {
   name: LocalizedField;
@@ -53,13 +53,13 @@ export interface ServiceFormData {
 
   hero: {
     eyebrow: LocalizedField; title: LocalizedField; subtitle: LocalizedField; description: LocalizedField;
-    media: any;
+    media: SafeAny;
     ctaPrimary: { text: LocalizedField; url: string };
     ctaSecondary: { text: LocalizedField; url: string };
   };
   introduction: {
     sectionLabel: LocalizedField; title: LocalizedField;
-    mainDescription: LocalizedField; paragraphs: LocalizedField[]; image: any;
+    mainDescription: LocalizedField; paragraphs: LocalizedField[]; image: SafeAny;
   };
   capabilities: CapabilityItem[];
   solutions: SolutionItem[];
@@ -70,8 +70,8 @@ export interface ServiceFormData {
   whyChooseUs: WhyChooseUsItem[];
   highlights: HighlightItem[];
   gallery: GalleryItem[];
-  cta: { title: LocalizedField; description: LocalizedField; buttonText: LocalizedField; buttonUrl: string; backgroundImage: any };
-  seo: { title: LocalizedField; description: LocalizedField; ogImage: any };
+  cta: { title: LocalizedField; description: LocalizedField; buttonText: LocalizedField; buttonUrl: string; backgroundImage: SafeAny };
+  seo: { title: LocalizedField; description: LocalizedField; ogImage: SafeAny };
 }
 
 export function makeDefaultForm(): ServiceFormData {

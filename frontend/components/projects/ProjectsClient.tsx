@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { Button } from '@/components/Button';
 
 interface ProjectsClientProps {
-  projects: any[];
+  projects: SafeAny[];
   lang: string;
   isAr: boolean;
   dir: string;

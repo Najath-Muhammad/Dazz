@@ -2,7 +2,7 @@ import Location, { ILocation } from '../../models/Location';
 import { ILocationRepository } from '../interfaces/ILocationRepository';
 
 export class LocationRepository implements ILocationRepository {
-  async findAll(query: any = {}): Promise<ILocation[]> {
+  async findAll(query: SafeAny = {}): Promise<ILocation[]> {
     return await Location.find(query).sort({ order: 1, createdAt: -1 });
   }
   async findById(id: string): Promise<ILocation | null> {

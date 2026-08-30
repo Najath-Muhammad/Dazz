@@ -17,7 +17,7 @@ const CATEGORY_LABELS: Record<string, string> = {
   'other': 'Other',
 };
 
-const ActionDropdown = ({ svc, onDelete }: { svc: any; onDelete: () => void }) => {
+const ActionDropdown = ({ svc, onDelete }: { svc: SafeAny; onDelete: () => void }) => {
   const [open, setOpen] = useState(false);
   const ref = React.useRef<HTMLDivElement>(null);
 
@@ -49,7 +49,7 @@ const ActionDropdown = ({ svc, onDelete }: { svc: any; onDelete: () => void }) =
 };
 
 export default function AdminServicesPage() {
-  const [services, setServices] = useState<any[]>([]);
+  const [services, setServices] = useState<SafeAny[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   
@@ -62,7 +62,7 @@ export default function AdminServicesPage() {
   const [filterStatus, setFilterStatus] = useState('ALL');
   const limit = 10;
   
-  const [pageData, setPageData] = useState<any>(null);
+  const [pageData, setPageData] = useState<SafeAny>(null);
   const [isPageModalOpen, setIsPageModalOpen] = useState(false);
   const [savingPage, setSavingPage] = useState(false);
   const [confirmModal, setConfirmModal] = useState<{
@@ -80,7 +80,7 @@ export default function AdminServicesPage() {
         category: filterCategory === 'ALL' ? '' : filterCategory
       }).toString();
       
-      const data = await api.get<any>(`/services?${qs}`);
+      const data = await api.get<SafeAny>(`/services?${qs}`);
       if (data.data && data.pagination) {
         setServices(data.data);
         setTotalPages(data.pagination.totalPages);
@@ -97,7 +97,7 @@ export default function AdminServicesPage() {
 
   const fetchPageData = async () => {
     try {
-      const data = await api.get<any>('/content/services');
+      const data = await api.get<SafeAny>('/content/services');
       setPageData(data);
     } catch { /* will create on save */ }
   };
@@ -125,7 +125,7 @@ export default function AdminServicesPage() {
   const handleTogglePublish = async (id: string, current: string) => {
     const newStatus = current === 'published' ? 'draft' : 'published';
     try {
-      const updated = await api.put<any>(`/services/${id}`, { status: newStatus });
+      const updated = await api.put<SafeAny>(`/services/${id}`, { status: newStatus });
       setServices((prev) => prev.map((s) => (s.id === id ? { ...s, status: updated.status } : s)));
     } catch {
       alert('Failed to update status.');
@@ -152,7 +152,7 @@ export default function AdminServicesPage() {
     }
   };
 
-  const columns: Column<any>[] = [
+  const columns: Column<SafeAny>[] = [
     {
       key: 'service',
       header: 'Service',

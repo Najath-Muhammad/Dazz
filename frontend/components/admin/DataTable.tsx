@@ -50,7 +50,7 @@ function SkeletonRow({ colCount }: { colCount: number }) {
 
 // ─── DataTable ──────────────────────────────────────────────────────────────────
 
-export function DataTable<T extends Record<string, any>>({
+export function DataTable<T extends Record<string, SafeAny>>({
   columns,
   data,
   loading = false,

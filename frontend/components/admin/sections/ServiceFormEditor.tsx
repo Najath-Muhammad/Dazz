@@ -49,7 +49,7 @@ export function ServiceFormEditor({ form, setForm, onSave, saving, isEdit }: Pro
 
   const autoSlug = (en: string) => en.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
 
-  const setArr = (key: keyof ServiceFormData) => (items: any[]) =>
+  const setArr = (key: keyof ServiceFormData) => (items: SafeAny[]) =>
     setForm(p => ({ ...p, [key]: items }));
 
   const renderSection = () => {
@@ -310,7 +310,7 @@ export function ServiceFormEditor({ form, setForm, onSave, saving, isEdit }: Pro
             <button
               key={item.key}
               type="button"
-              onClick={() => setActiveSection(item.key as any)}
+              onClick={() => setActiveSection(item.key as SafeAny)}
               className={`w-full text-left px-4 py-3 text-sm font-medium border-b border-slate-100 last:border-0 transition-colors flex items-center justify-between ${
                 activeSection === item.key
                   ? 'bg-dazz-navy text-white'

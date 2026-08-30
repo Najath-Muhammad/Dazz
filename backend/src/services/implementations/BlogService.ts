@@ -21,7 +21,7 @@ export class BlogService implements IBlogService {
         return { success: true, message: 'No blogs found', data: [] };
       }
       return { success: true, message: 'Blogs retrieved successfully', data: BaseMapper.toDTOList(items) };
-    } catch (error: any) {
+    } catch (error: SafeAny) {
       console.error('Error in getAllBlogs:', error);
       return { success: false, message: 'Failed to retrieve blogs' };
     }
@@ -29,7 +29,7 @@ export class BlogService implements IBlogService {
 
   async getBlogsPaginated({ search, status, category, page, limit }: { search?: string; status?: string; category?: string; page: number; limit: number }) {
     try {
-      const query: any = {};
+      const query: SafeAny = {};
       if (search) {
         query['title.en'] = { $regex: search, $options: 'i' };
       }
@@ -64,7 +64,7 @@ export class BlogService implements IBlogService {
           hasPrev: page > 1
         }
       };
-    } catch (error: any) {
+    } catch (error: SafeAny) {
       console.error('Error in getBlogsPaginated:', error);
       return { success: false, message: 'Failed to retrieve blogs' };
     }
@@ -78,7 +78,7 @@ export class BlogService implements IBlogService {
       const item = await this._repository.findById(id);
       if (!item) return { success: false, message: 'Blog not found' };
       return { success: true, message: 'Blog retrieved successfully', data: BaseMapper.toDTO(item) };
-    } catch (error: any) {
+    } catch (error: SafeAny) {
       console.error('Error in getBlogById:', error);
       return { success: false, message: 'Failed to retrieve blog' };
     }
@@ -92,27 +92,27 @@ export class BlogService implements IBlogService {
       const item = await this._repository.findBySlug(slug);
       if (!item) return { success: false, message: 'Blog not found' };
       return { success: true, message: 'Blog retrieved successfully', data: BaseMapper.toDTO(item) };
-    } catch (error: any) {
+    } catch (error: SafeAny) {
       console.error('Error in getBlogBySlug:', error);
       return { success: false, message: 'Failed to retrieve blog' };
     }
   }
 
-  async createBlog(data: any) {
+  async createBlog(data: SafeAny) {
     try {
       const newItem = await this._repository.create(data);
       if (!newItem) return { success: false, message: 'Failed to create blog' };
       // Fire-and-forget background translation
       this._translateAndUpdate(newItem._id.toString(), newItem.toObject ? newItem.toObject() : newItem, {});
       return { success: true, message: 'Blog created. Arabic translation in progress.', data: BaseMapper.toDTO(newItem) };
-    } catch (error: any) {
+    } catch (error: SafeAny) {
       console.error('Error in createBlog:', error);
       if (error?.code === 11000) return { success: false, message: 'A blog with this slug already exists.' };
       return { success: false, message: 'Failed to create blog' };
     }
   }
 
-  async updateBlog(id: string, data: any) {
+  async updateBlog(id: string, data: SafeAny) {
     try {
       if (!isValidObjectId(id)) {
         return { success: false, message: 'Invalid blog ID format' };
@@ -124,10 +124,10 @@ export class BlogService implements IBlogService {
       if (!updatedItem) return { success: false, message: 'Failed to update blog' };
 
       // Fire-and-forget background translation
-      const existingMeta = (existing as any).translationMeta || {};
+      const existingMeta = (existing as SafeAny).translationMeta || {};
       this._translateAndUpdate(id, updatedItem, existingMeta);
       return { success: true, message: 'Blog updated. Arabic translation in progress.', data: BaseMapper.toDTO(updatedItem) };
-    } catch (error: any) {
+    } catch (error: SafeAny) {
       console.error('Error in updateBlog:', error);
       if (error?.code === 11000) return { success: false, message: 'A blog with this slug already exists.' };
       return { success: false, message: 'Failed to update blog' };
@@ -144,14 +144,14 @@ export class BlogService implements IBlogService {
 
       await this._repository.delete(id);
       return { success: true, message: 'Blog deleted successfully' };
-    } catch (error: any) {
+    } catch (error: SafeAny) {
       console.error('Error in deleteBlog:', error);
       return { success: false, message: 'Failed to delete blog' };
     }
   }
 
   /** Background: translate and silently update the document */
-  private async _translateAndUpdate(id: string, docData: any, existingMeta: Record<string, string>) {
+  private async _translateAndUpdate(id: string, docData: SafeAny, existingMeta: Record<string, string>) {
     try {
       const { updatedData, translationMeta, status } = await autoTranslate(docData, BLOG_FIELDS, existingMeta);
       await this._repository.update(id, {

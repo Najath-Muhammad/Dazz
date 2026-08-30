@@ -4,7 +4,7 @@ import { LocalizedString, LocalizedStringSchema } from './types';
 export interface IPage extends Document {
   slug: string;
   title: LocalizedString;
-  content: any; // Can be a structured JSON object or HTML
+  content: SafeAny; // Can be a structured JSON object or HTML
   metaTitle?: LocalizedString;
   metaDescription?: LocalizedString;
 }

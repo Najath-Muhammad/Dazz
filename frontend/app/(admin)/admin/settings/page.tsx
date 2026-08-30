@@ -20,7 +20,7 @@ const TABS = [
 ];
 
 export default function AdminSettingsPage() {
-  const [settings, setSettings] = useState<any>({
+  const [settings, setSettings] = useState<SafeAny>({
     companyName: { en: 'DAZZ Tradlink', ar: '' },
     contactEmail: '',
     phoneNumber: '',
@@ -38,7 +38,7 @@ export default function AdminSettingsPage() {
   useEffect(() => {
     const fetchSettings = async () => {
       try {
-        const data = await api.get<any>('/settings');
+        const data = await api.get<SafeAny>('/settings');
         let currentSettings = data;
         if (data && Array.isArray(data) && data.length > 0) {
           currentSettings = data[0];
@@ -59,7 +59,7 @@ export default function AdminSettingsPage() {
         // Auto-fetch legacy services page data just in case they added it before we centralized
         if (!currentSettings.pageHeaders.services || (!currentSettings.pageHeaders.services.title && !currentSettings.pageHeaders.services.media)) {
            try {
-             const svcData = await api.get<any>('/content/services');
+             const svcData = await api.get<SafeAny>('/content/services');
              if (svcData && svcData.content) {
                 currentSettings.pageHeaders.services = {
                    title: svcData.title?.en || '',
@@ -84,7 +84,7 @@ export default function AdminSettingsPage() {
     setSettings({ ...settings, [e.target.name]: e.target.value });
   };
 
-  const handleHeroChange = (page: string, field: string, value: any) => {
+  const handleHeroChange = (page: string, field: string, value: SafeAny) => {
     setSettings({
       ...settings,
       pageHeaders: {
@@ -108,7 +108,7 @@ export default function AdminSettingsPage() {
         await api.post('/settings', settings);
       }
       setMessage('Settings updated successfully!');
-    } catch (err: any) {
+    } catch (err: SafeAny) {
       setMessage(err.message || 'Failed to update settings');
     } finally {
       setSaving(false);

@@ -1,9 +1,9 @@
 export interface IProjectRepository {
-  findAll(): Promise<any[]>;
-  findPaginated(query: object, page: number, limit: number): Promise<{ items: any[], total: number }>;
+  findAll(): Promise<SafeAny[]>;
+  findPaginated(query: object, page: number, limit: number): Promise<{ items: SafeAny[], total: number }>;
   findById(id: string): Promise<any | null>;
   findBySlug(slug: string): Promise<any | null>;
-  create(data: any): Promise<any>;
-  update(id: string, data: any): Promise<any | null>;
+  create(data: SafeAny): Promise<SafeAny>;
+  update(id: string, data: SafeAny): Promise<any | null>;
   delete(id: string): Promise<any | null>;
 }

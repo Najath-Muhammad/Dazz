@@ -4,7 +4,7 @@ import Page from '../../models/Page';
 import mongoose from 'mongoose';
 
 export class PageRepository implements IPageRepository {
-  async findAll(): Promise<any[]> {
+  async findAll(): Promise<SafeAny[]> {
     return await Page.find();
   }
   async findById(id: string): Promise<any | null> {
@@ -14,11 +14,11 @@ export class PageRepository implements IPageRepository {
     return await Page.findOne({ slug: id });
   }
 
-  async create(data: any): Promise<any> {
+  async create(data: SafeAny): Promise<SafeAny> {
     const newItem = new Page(data);
     return await newItem.save();
   }
-  async update(id: string, data: any): Promise<any | null> {
+  async update(id: string, data: SafeAny): Promise<any | null> {
     if (mongoose.Types.ObjectId.isValid(id)) {
       return await Page.findByIdAndUpdate(id, data, { new: true });
     }

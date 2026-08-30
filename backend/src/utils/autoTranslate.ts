@@ -11,12 +11,12 @@ function hash(text: string): string {
 }
 
 /** Safely get a nested value from an object using dot-path (no array notation) */
-function getPath(obj: any, path: string): any {
+function getPath(obj: SafeAny, path: string): SafeAny {
   return path.split('.').reduce((cur, key) => cur?.[key], obj);
 }
 
 /** Safely set a nested value on an object using dot-path (creates missing nodes) */
-function setPath(obj: any, path: string, value: any): void {
+function setPath(obj: SafeAny, path: string, value: SafeAny): void {
   const parts = path.split('.');
   let cur = obj;
   for (let i = 0; i < parts.length - 1; i++) {
@@ -50,11 +50,11 @@ function parseArrayPath(fieldPath: string): { arrayPath: string; itemField: stri
  * @returns             { updatedData, translationMeta, status }
  */
 export async function autoTranslate(
-  data: any,
+  data: SafeAny,
   fieldPaths: string[],
   existingMeta: Record<string, string> = {}
 ): Promise<{
-  updatedData: any;
+  updatedData: SafeAny;
   translationMeta: Record<string, string>;
   status: TranslationStatusAr;
 }> {
@@ -67,7 +67,7 @@ export async function autoTranslate(
 
     if (arrayInfo) {
       // Array field: e.g. 'capabilities[].title'
-      const arr: any[] = getPath(data, arrayInfo.arrayPath);
+      const arr: SafeAny[] = getPath(data, arrayInfo.arrayPath);
       if (!Array.isArray(arr)) continue;
 
       arr.forEach((item, index) => {
@@ -151,7 +151,7 @@ export async function autoTranslate(
 
     if (arrayInfo && info.index !== undefined) {
       // Array item
-      const arr: any[] = getPath(updatedData, arrayInfo.arrayPath);
+      const arr: SafeAny[] = getPath(updatedData, arrayInfo.arrayPath);
       if (!Array.isArray(arr) || !arr[info.index]) continue;
 
       if (arrayInfo.itemField) {

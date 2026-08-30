@@ -2,14 +2,14 @@ import React from 'react';
 import { BilingualField } from '@/components/admin/BilingualField';
 
 interface ContactSettingsProps {
-  settings: any;
-  onChange: (newSettings: any) => void;
+  settings: SafeAny;
+  onChange: (newSettings: SafeAny) => void;
 }
 
 export default function ContactSettings({ settings, onChange }: ContactSettingsProps) {
   const contactPage = settings.contactPage || {};
 
-  const updateSection = (section: string, field: string, value: any) => {
+  const updateSection = (section: string, field: string, value: SafeAny) => {
     onChange({
       ...settings,
       [section]: {
@@ -19,7 +19,7 @@ export default function ContactSettings({ settings, onChange }: ContactSettingsP
     });
   };
 
-  const updateRoot = (field: string, value: any) => {
+  const updateRoot = (field: string, value: SafeAny) => {
     onChange({
       ...settings,
       [field]: value

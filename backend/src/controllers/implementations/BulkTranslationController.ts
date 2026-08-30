@@ -10,7 +10,7 @@ import Project from '../../models/Project';
 import Location from '../../models/Location';
 import Service from '../../models/Service';
 
-const MODEL_MAP: Record<string, { model: any; fields: string[] }> = {
+const MODEL_MAP: Record<string, { model: SafeAny; fields: string[] }> = {
   Blog: { model: Blog, fields: TRANSLATABLE_FIELDS.Blog },
   Job: { model: Job, fields: TRANSLATABLE_FIELDS.Job },
   Project: { model: Project, fields: TRANSLATABLE_FIELDS.Project },
@@ -25,7 +25,7 @@ export class BulkTranslationController {
    */
   getStatus = async (req: Request, res: Response): Promise<void> => {
     try {
-      const results: Record<string, any> = {};
+      const results: Record<string, SafeAny> = {};
 
       for (const [modelName, { model }] of Object.entries(MODEL_MAP)) {
         const total = await model.countDocuments({});

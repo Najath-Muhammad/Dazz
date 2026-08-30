@@ -52,7 +52,7 @@ export function MediaUploader({ value, onChange, folder = 'dazz/general', label 
     try {
       const response = await api.post<Media>('/admin/media/upload', formData);
       onChange(response);
-    } catch (err: any) {
+    } catch (err: SafeAny) {
       setError(err.message || 'Failed to upload media');
     } finally {
       setIsUploading(false);
@@ -68,7 +68,7 @@ export function MediaUploader({ value, onChange, folder = 'dazz/general', label 
       const response = await api.post<Media>('/admin/media/validate-url', { url: urlInput });
       onChange(response);
       setUrlInput('');
-    } catch (err: any) {
+    } catch (err: SafeAny) {
       setError(err.message || 'Invalid Cloudinary URL');
     } finally {
       setIsUploading(false);

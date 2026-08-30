@@ -4,7 +4,7 @@ import { Document } from 'mongoose';
  * Base mapper that strips internal tracking fields and version keys from Mongoose documents.
  */
 export class BaseMapper {
-  static toDTO<T = any>(doc: any): T {
+  static toDTO<T = any>(doc: SafeAny): T {
     if (!doc) return doc;
 
     // Convert to plain object if it's a Mongoose document
@@ -24,7 +24,7 @@ export class BaseMapper {
     return obj as T;
   }
 
-  static toDTOList<T = any>(docs: any[]): T[] {
+  static toDTOList<T = any>(docs: SafeAny[]): T[] {
     if (!docs || !Array.isArray(docs)) return [];
     return docs.map(doc => this.toDTO<T>(doc));
   }
@@ -34,7 +34,7 @@ export class BaseMapper {
  * Admin mapper ensures sensitive fields like passwordHash are never sent to the client.
  */
 export class AdminMapper extends BaseMapper {
-  static toDTO(doc: any): any {
+  static toDTO(doc: SafeAny): SafeAny {
     const obj = super.toDTO(doc);
     if (!obj) return obj;
 
@@ -44,7 +44,7 @@ export class AdminMapper extends BaseMapper {
     return obj;
   }
 
-  static toDTOList(docs: any[]): any[] {
+  static toDTOList(docs: SafeAny[]): SafeAny[] {
     if (!docs || !Array.isArray(docs)) return [];
     return docs.map(doc => this.toDTO(doc));
   }

@@ -19,7 +19,7 @@ export class JobApplicationService implements IJobApplicationService {
         return { success: true, message: 'No applications found', data: [] };
       }
       return { success: true, message: 'Applications retrieved successfully', data: BaseMapper.toDTOList(items) };
-    } catch (error: any) {
+    } catch (error: SafeAny) {
       console.error('Error in getAllApplications:', error);
       return { success: false, message: 'Failed to retrieve applications' };
     }
@@ -27,7 +27,7 @@ export class JobApplicationService implements IJobApplicationService {
 
   async getApplicationsPaginated({ search, status, page, limit }: { search?: string; status?: string; page: number; limit: number }) {
     try {
-      const query: any = {};
+      const query: SafeAny = {};
       if (search) {
         query['$or'] = [
           { candidateName: { $regex: search, $options: 'i' } },
@@ -60,7 +60,7 @@ export class JobApplicationService implements IJobApplicationService {
           hasPrev: page > 1
         }
       };
-    } catch (error: any) {
+    } catch (error: SafeAny) {
       console.error('Error in getApplicationsPaginated:', error);
       return { success: false, message: 'Failed to retrieve applications' };
     }
@@ -74,7 +74,7 @@ export class JobApplicationService implements IJobApplicationService {
       const item = await this._repository.findById(id);
       if (!item) return { success: false, message: 'Application not found' };
       return { success: true, message: 'Application retrieved successfully', data: BaseMapper.toDTO(item) };
-    } catch (error: any) {
+    } catch (error: SafeAny) {
       console.error('Error in getApplicationById:', error);
       return { success: false, message: 'Failed to retrieve application' };
     }
@@ -90,18 +90,18 @@ export class JobApplicationService implements IJobApplicationService {
         return { success: true, message: 'No applications found for this job', data: [] };
       }
       return { success: true, message: 'Applications retrieved successfully', data: BaseMapper.toDTOList(items) };
-    } catch (error: any) {
+    } catch (error: SafeAny) {
       console.error('Error in getApplicationsByJobId:', error);
       return { success: false, message: 'Failed to retrieve applications' };
     }
   }
 
-  async createApplication(data: any) {
+  async createApplication(data: SafeAny) {
     try {
       const newItem = await this._repository.create(data);
       if (!newItem) return { success: false, message: 'Failed to submit application' };
       return { success: true, message: 'Application submitted successfully', data: BaseMapper.toDTO(newItem) };
-    } catch (error: any) {
+    } catch (error: SafeAny) {
       console.error('Error in createApplication:', error);
       return { success: false, message: 'Failed to submit application' };
     }
@@ -118,14 +118,14 @@ export class JobApplicationService implements IJobApplicationService {
       const existing = await this._repository.findById(id);
       if (!existing) return { success: false, message: 'Application not found' };
 
-      if ((existing as any).status === status) {
+      if ((existing as SafeAny).status === status) {
         return { success: true, message: 'Application status is already up to date', data: BaseMapper.toDTO(existing) };
       }
 
       const updatedItem = await this._repository.update(id, { status });
       if (!updatedItem) return { success: false, message: 'Failed to update application status' };
       return { success: true, message: 'Application status updated successfully', data: BaseMapper.toDTO(updatedItem) };
-    } catch (error: any) {
+    } catch (error: SafeAny) {
       console.error('Error in updateApplicationStatus:', error);
       return { success: false, message: 'Failed to update application status' };
     }
@@ -141,7 +141,7 @@ export class JobApplicationService implements IJobApplicationService {
 
       await this._repository.delete(id);
       return { success: true, message: 'Application deleted successfully' };
-    } catch (error: any) {
+    } catch (error: SafeAny) {
       console.error('Error in deleteApplication:', error);
       return { success: false, message: 'Failed to delete application' };
     }

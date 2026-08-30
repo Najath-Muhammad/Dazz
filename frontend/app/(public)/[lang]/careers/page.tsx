@@ -31,7 +31,7 @@ async function getJobs() {
     if (!res.ok) return [];
     const json = await res.json();
     // Filter to PUBLISHED only
-    return (json?.data || []).filter((j: any) => j.status === 'PUBLISHED');
+    return (json?.data || []).filter((j: SafeAny) => j.status === 'PUBLISHED');
   } catch (error) {
     return [];
   }
@@ -96,7 +96,7 @@ export default async function CareersPage({ params }: { params: Promise<{ lang: 
               : 'Build with purpose. Grow with possibility.\n\nAt Dazz, we believe that great work comes from great people working together. We bring together different skills, perspectives, and ideas to create solutions that make a meaningful impact across the industries we serve.\n\nOur environment encourages innovation, collaboration, ownership, and continuous growth. Whether you\'re building, managing, creating, or solving, you\'ll have the opportunity to contribute to work that goes beyond the ordinary.\n\nJoin us. Bring your ideas. Build what\'s next.')
           }
           isAr={isAr}
-          principles={(whyData.benefits || []).map((b: any) => ({
+          principles={(whyData.benefits || []).map((b: SafeAny) => ({
             title: b.title?.[lang] || '',
             description: b.description?.[lang] || '',
             image: b.image?.url || (typeof b.image === 'string' ? b.image : undefined)
@@ -131,7 +131,7 @@ export default async function CareersPage({ params }: { params: Promise<{ lang: 
                 </p>
               </div>
             ) : (
-              jobs.map((job: any) => (
+              jobs.map((job: SafeAny) => (
                 <Link 
                   key={job.id}
                   href={`/${lang}/careers/${job.slug}`}

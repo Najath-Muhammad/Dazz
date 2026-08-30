@@ -5,6 +5,7 @@ import { MediaUploader } from '../MediaUploader';
 import { emptyLoc, LocalizedField } from '@/lib/serviceFormTypes';
 
 interface LocItem {
+  id?: string;
   _id?: string;
   icon?: string;
   title?: LocalizedField;
@@ -13,7 +14,7 @@ interface LocItem {
   specification?: LocalizedField; // for equipment
   label?: LocalizedField;      // for applications
   sub?: LocalizedField;        // for highlights
-  image?: any;
+  image?: SafeAny;
   ctaText?: LocalizedField;
   ctaUrl?: string;
   stepNumber?: number;
@@ -66,14 +67,14 @@ export function RepeatableItemEditor({
   };
 
   const remove = (i: number) => setItems(safeItems.filter((_, j) => j !== i));
-  const update = (i: number, key: string, val: any) => {
+  const update = (i: number, key: string, val: SafeAny) => {
     const next = [...safeItems];
     next[i] = { ...next[i], [key]: val };
     setItems(next);
   };
   const updateLoc = (i: number, key: string, lang: 'en' | 'ar', val: string) => {
     const next = [...safeItems];
-    next[i] = { ...next[i], [key]: { ...(next[i] as any)[key], [lang]: val } };
+    next[i] = { ...next[i], [key]: { ...(next[i] as SafeAny)[key], [lang]: val } };
     setItems(next);
   };
 
@@ -94,7 +95,7 @@ export function RepeatableItemEditor({
 
       {safeItems.map((item, i) => {
         const isExpanded = expanded[i] ?? (safeItems.length <= 2);
-        const itemTitle = (item as any)[titleKey]?.en || `Item #${i + 1}`;
+        const itemTitle = (item as SafeAny)[titleKey]?.en || `Item #${i + 1}`;
         
         return (
         <div key={item.id || item._id || i} className="border border-slate-200 rounded-lg overflow-hidden bg-white">
@@ -149,7 +150,7 @@ export function RepeatableItemEditor({
                 label={titleKey === 'name' ? 'Name' : titleKey === 'label' ? 'Label' : 'Title'}
                 note={titleKey === 'name' ? 'The name of the item.' : titleKey === 'label' ? 'A short label for the item.' : 'The main title for this item.'}
                 nameEn={`${titleKey}_en_${i}`} nameAr={`${titleKey}_ar_${i}`}
-                valueEn={(item as any)[titleKey]?.en || ''} valueAr={(item as any)[titleKey]?.ar || ''}
+                valueEn={(item as SafeAny)[titleKey]?.en || ''} valueAr={(item as SafeAny)[titleKey]?.ar || ''}
                 onChangeEn={v => updateLoc(i, titleKey, 'en', v)}
                 onChangeAr={v => updateLoc(i, titleKey, 'ar', v)} />
 
@@ -157,7 +158,7 @@ export function RepeatableItemEditor({
                 label={subKey === 'sub' ? 'Sub-label' : 'Description'}
                 note="Additional details or secondary text."
                 nameEn={`${subKey}_en_${i}`} nameAr={`${subKey}_ar_${i}`}
-                valueEn={(item as any)[subKey]?.en || ''} valueAr={(item as any)[subKey]?.ar || ''}
+                valueEn={(item as SafeAny)[subKey]?.en || ''} valueAr={(item as SafeAny)[subKey]?.ar || ''}
                 onChangeEn={v => updateLoc(i, subKey, 'en', v)}
                 onChangeAr={v => updateLoc(i, subKey, 'ar', v)}
                 type="textarea" rows={2} />

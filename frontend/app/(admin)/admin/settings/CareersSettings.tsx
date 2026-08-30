@@ -4,8 +4,8 @@ import { BilingualField } from '@/components/admin/BilingualField';
 import { Plus, Trash2, ChevronDown, ChevronUp } from 'lucide-react';
 
 interface CareersSettingsProps {
-  settings: any;
-  onChange: (newSettings: any) => void;
+  settings: SafeAny;
+  onChange: (newSettings: SafeAny) => void;
 }
 
 export default function CareersSettings({ settings, onChange }: CareersSettingsProps) {
@@ -17,7 +17,7 @@ export default function CareersSettings({ settings, onChange }: CareersSettingsP
     culture: { enabled: true, title: { en: '', ar: '' }, description: { en: '', ar: '' }, gallery: [] }
   };
 
-  const updateSection = (section: 'hero' | 'whyWorkWithUs' | 'culture', field: string, value: any) => {
+  const updateSection = (section: 'hero' | 'whyWorkWithUs' | 'culture', field: string, value: SafeAny) => {
     onChange({
       ...settings,
       careers: {
@@ -52,7 +52,7 @@ export default function CareersSettings({ settings, onChange }: CareersSettingsP
     updateSection('whyWorkWithUs', 'benefits', newBenefits);
   };
 
-  const updateBenefitImage = (index: number, media: any) => {
+  const updateBenefitImage = (index: number, media: SafeAny) => {
     const newBenefits = [...(careers.whyWorkWithUs.benefits || [])];
     newBenefits[index] = {
       ...newBenefits[index],
@@ -161,7 +161,7 @@ export default function CareersSettings({ settings, onChange }: CareersSettingsP
               </div>
               
               <div className="space-y-4">
-                {(careers.whyWorkWithUs?.benefits || []).map((benefit: any, index: number) => {
+                {(careers.whyWorkWithUs?.benefits || []).map((benefit: SafeAny, index: number) => {
                   const isExpanded = expandedIndex === index;
                   return (
                     <div key={index} className="border border-slate-200 rounded-md overflow-hidden bg-white shadow-sm transition-all">

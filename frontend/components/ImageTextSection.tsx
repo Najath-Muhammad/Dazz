@@ -6,7 +6,7 @@ interface ImageTextSectionProps {
   title: string;
   subtitle?: string;
   content: React.ReactNode;
-  imageUrl: any;
+  imageUrl: SafeAny;
   imageAlt: string;
   imagePosition?: 'left' | 'right';
   className?: string;

@@ -20,7 +20,7 @@ export function useZodValidation<T>(schema: ZodType<T>) {
             let message = issue.message;
             
             if (isAr) {
-              const anyIssue = issue as any;
+              const anyIssue = issue as SafeAny;
               if (anyIssue.code === 'invalid_type' && anyIssue.received === 'undefined') {
                 message = 'هذا الحقل مطلوب';
               } else if (anyIssue.code === 'invalid_string' && anyIssue.validation === 'email') {

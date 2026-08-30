@@ -54,7 +54,7 @@ export default function AdminEditBlogPage() {
   useEffect(() => {
     const fetchBlog = async () => {
       try {
-        const res: any = await api.get(`/blogs/${id}`);
+        const res: SafeAny = await api.get(`/blogs/${id}`);
         const data = res;
         if (data) {
           setFormData({
@@ -88,13 +88,13 @@ export default function AdminEditBlogPage() {
       }
       return next;
     });
-    if ((errors as any)[field]) clearErrors();
+    if ((errors as SafeAny)[field]) clearErrors();
   };
 
   const handleStringChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const value = e.target.type === 'checkbox' ? (e.target as HTMLInputElement).checked : e.target.value;
     setFormData({ ...formData, [e.target.name]: value });
-    if ((errors as any)[e.target.name]) clearErrors();
+    if ((errors as SafeAny)[e.target.name]) clearErrors();
   };
 
   const handleContentChange = (val: string) => {
@@ -118,7 +118,7 @@ export default function AdminEditBlogPage() {
       };
       await api.put(`/blogs/${id}`, payload);
       router.push('/admin/blogs');
-    } catch (err: any) {
+    } catch (err: SafeAny) {
       setError(err.response?.data?.message || err.message || 'Failed to update blog post');
       setLoading(false);
     }
@@ -152,8 +152,8 @@ export default function AdminEditBlogPage() {
                 valueAr={formData.title.ar}
                 onChangeEn={(v) => handleLocalizedChange('title', 'en', v)}
                 onChangeAr={(v) => handleLocalizedChange('title', 'ar', v)}
-                errorEn={(errors as any).title?.en || (errors.title === 'English title is required' ? errors.title : undefined)}
-                errorAr={(errors as any).title?.ar || (errors.title === 'Arabic title is required' ? errors.title : undefined)}
+                errorEn={(errors as SafeAny).title?.en || (errors.title === 'English title is required' ? errors.title : undefined)}
+                errorAr={(errors as SafeAny).title?.ar || (errors.title === 'Arabic title is required' ? errors.title : undefined)}
               />
               <div>
                 <label className="block text-xs font-bold text-slate-500 mb-1 tracking-widest uppercase">URL Slug (Auto-generated)</label>
@@ -168,8 +168,8 @@ export default function AdminEditBlogPage() {
                 valueAr={formData.category.ar}
                 onChangeEn={(v) => handleLocalizedChange('category', 'en', v)}
                 onChangeAr={(v) => handleLocalizedChange('category', 'ar', v)}
-                errorEn={(errors as any).category?.en || (errors.category === 'English category is required' ? errors.category : undefined)}
-                errorAr={(errors as any).category?.ar || (errors.category === 'Arabic category is required' ? errors.category : undefined)}
+                errorEn={(errors as SafeAny).category?.en || (errors.category === 'English category is required' ? errors.category : undefined)}
+                errorAr={(errors as SafeAny).category?.ar || (errors.category === 'Arabic category is required' ? errors.category : undefined)}
               />
               <BilingualField
                 label="Short Excerpt"
@@ -181,8 +181,8 @@ export default function AdminEditBlogPage() {
                 onChangeAr={(v) => handleLocalizedChange('excerpt', 'ar', v)}
                 type="textarea"
                 rows={2}
-                errorEn={(errors as any).excerpt?.en || (errors.excerpt === 'English excerpt is required' ? errors.excerpt : undefined)}
-                errorAr={(errors as any).excerpt?.ar || (errors.excerpt === 'Arabic excerpt is required' ? errors.excerpt : undefined)}
+                errorEn={(errors as SafeAny).excerpt?.en || (errors.excerpt === 'English excerpt is required' ? errors.excerpt : undefined)}
+                errorAr={(errors as SafeAny).excerpt?.ar || (errors.excerpt === 'Arabic excerpt is required' ? errors.excerpt : undefined)}
               />
             </div>
           </div>
@@ -195,7 +195,7 @@ export default function AdminEditBlogPage() {
                   label="Featured Image"
                   folder="dazz/blogs"
                   value={formData.coverImage}
-                  onChange={(media) => setFormData({ ...formData, coverImage: media as any })}
+                  onChange={(media) => setFormData({ ...formData, coverImage: media as SafeAny })}
                 />
               </div>
               <div className="space-y-6">

@@ -6,7 +6,7 @@ import 'leaflet/dist/leaflet.css';
 import { MapPin, Phone, Mail, Navigation, ChevronRight } from 'lucide-react';
 
 // Fix Leaflet's default icon path issues in React
-delete (L.Icon.Default.prototype as any)._getIconUrl;
+delete (L.Icon.Default.prototype as SafeAny)._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
   iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
@@ -14,7 +14,7 @@ L.Icon.Default.mergeOptions({
 });
 
 // Component to handle auto-fitting bounds based on markers
-function MapBounds({ locations, selectedId }: { locations: any[], selectedId: string | null }) {
+function MapBounds({ locations, selectedId }: { locations: SafeAny[], selectedId: string | null }) {
   const map = useMap();
   
   useEffect(() => {
@@ -40,7 +40,7 @@ function MapBounds({ locations, selectedId }: { locations: any[], selectedId: st
 }
 
 interface LocationsMapProps {
-  locations: any[];
+  locations: SafeAny[];
   isAr: boolean;
 }
 
@@ -57,7 +57,7 @@ export default function LocationsMap({ locations, isAr }: LocationsMapProps) {
     );
   }
 
-  const getLangStr = (obj: any) => obj?.[isAr ? 'ar' : 'en'] || obj?.en || '';
+  const getLangStr = (obj: SafeAny) => obj?.[isAr ? 'ar' : 'en'] || obj?.en || '';
 
   return (
     <div className="flex flex-col lg:flex-row shadow-2xl border border-slate-200 rounded-lg overflow-hidden bg-white">

@@ -21,7 +21,7 @@ export class ServiceService implements IServiceService {
         return { success: true, message: 'No services found', data: [] };
       }
       return { success: true, message: 'Services retrieved successfully', data: BaseMapper.toDTOList(items) };
-    } catch (error: any) {
+    } catch (error: SafeAny) {
       console.error('Error in getAllServices:', error);
       return { success: false, message: 'Failed to retrieve services' };
     }
@@ -29,7 +29,7 @@ export class ServiceService implements IServiceService {
 
   async getServicesPaginated({ search, status, category, page, limit }: { search?: string; status?: string; category?: string; page: number; limit: number }) {
     try {
-      const query: any = {};
+      const query: SafeAny = {};
       if (search) {
         query['name.en'] = { $regex: search, $options: 'i' };
       }
@@ -62,7 +62,7 @@ export class ServiceService implements IServiceService {
           hasPrev: page > 1
         }
       };
-    } catch (error: any) {
+    } catch (error: SafeAny) {
       console.error('Error in getServicesPaginated:', error);
       return { success: false, message: 'Failed to retrieve services' };
     }
@@ -76,7 +76,7 @@ export class ServiceService implements IServiceService {
       const item = await this._repository.findBySlug(slug);
       if (!item) return { success: false, message: 'Service not found' };
       return { success: true, message: 'Service retrieved successfully', data: BaseMapper.toDTO(item) };
-    } catch (error: any) {
+    } catch (error: SafeAny) {
       console.error('Error in getServiceBySlug:', error);
       return { success: false, message: 'Failed to retrieve service' };
     }
@@ -90,26 +90,26 @@ export class ServiceService implements IServiceService {
       const item = await this._repository.findById(id);
       if (!item) return { success: false, message: 'Service not found' };
       return { success: true, message: 'Service retrieved successfully', data: BaseMapper.toDTO(item) };
-    } catch (error: any) {
+    } catch (error: SafeAny) {
       console.error('Error in getServiceById:', error);
       return { success: false, message: 'Failed to retrieve service' };
     }
   }
 
-  async createService(data: any) {
+  async createService(data: SafeAny) {
     try {
       const newItem = await this._repository.create(data);
       if (!newItem) return { success: false, message: 'Failed to create service' };
       this._translateAndUpdate(newItem._id.toString(), newItem.toObject ? newItem.toObject() : newItem, {});
       return { success: true, message: 'Service created. Arabic translation in progress.', data: BaseMapper.toDTO(newItem) };
-    } catch (error: any) {
+    } catch (error: SafeAny) {
       console.error('Error in createService:', error);
       if (error?.code === 11000) return { success: false, message: 'A service with this slug already exists.' };
       return { success: false, message: 'Failed to create service' };
     }
   }
 
-  async updateService(id: string, data: any) {
+  async updateService(id: string, data: SafeAny) {
     try {
       if (!isValidObjectId(id)) {
         return { success: false, message: 'Invalid service ID format' };
@@ -120,10 +120,10 @@ export class ServiceService implements IServiceService {
       const updatedItem = await this._repository.update(id, data);
       if (!updatedItem) return { success: false, message: 'Failed to update service' };
 
-      const existingMeta = (existing as any).translationMeta || {};
+      const existingMeta = (existing as SafeAny).translationMeta || {};
       this._translateAndUpdate(id, updatedItem, existingMeta);
       return { success: true, message: 'Service updated. Arabic translation in progress.', data: BaseMapper.toDTO(updatedItem) };
-    } catch (error: any) {
+    } catch (error: SafeAny) {
       console.error('Error in updateService:', error);
       if (error?.code === 11000) return { success: false, message: 'A service with this slug already exists.' };
       return { success: false, message: 'Failed to update service' };
@@ -140,7 +140,7 @@ export class ServiceService implements IServiceService {
 
       await this._repository.delete(id);
       return { success: true, message: 'Service deleted successfully' };
-    } catch (error: any) {
+    } catch (error: SafeAny) {
       console.error('Error in deleteService:', error);
       return { success: false, message: 'Failed to delete service' };
     }
@@ -157,14 +157,14 @@ export class ServiceService implements IServiceService {
       const copy = await this._repository.duplicate(id);
       if (!copy) return { success: false, message: 'Failed to duplicate service' };
       return { success: true, message: 'Service duplicated successfully', data: BaseMapper.toDTO(copy) };
-    } catch (error: any) {
+    } catch (error: SafeAny) {
       console.error('Error in duplicateService:', error);
       if (error?.code === 11000) return { success: false, message: 'A service with this slug already exists.' };
       return { success: false, message: 'Failed to duplicate service' };
     }
   }
 
-  private async _translateAndUpdate(id: string, docData: any, existingMeta: Record<string, string>) {
+  private async _translateAndUpdate(id: string, docData: SafeAny, existingMeta: Record<string, string>) {
     try {
       const { updatedData, translationMeta, status } = await autoTranslate(docData, SERVICE_FIELDS, existingMeta);
       await this._repository.update(id, {

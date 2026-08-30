@@ -55,13 +55,13 @@ export default function AdminNewBlogPage() {
       }
       return next;
     });
-    if ((errors as any)[field]) clearErrors();
+    if ((errors as SafeAny)[field]) clearErrors();
   };
 
   const handleStringChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const value = e.target.type === 'checkbox' ? (e.target as HTMLInputElement).checked : e.target.value;
     setFormData({ ...formData, [e.target.name]: value });
-    if ((errors as any)[e.target.name]) clearErrors();
+    if ((errors as SafeAny)[e.target.name]) clearErrors();
   };
 
   const handleContentChange = (val: string) => {
@@ -89,7 +89,7 @@ export default function AdminNewBlogPage() {
       };
       await api.post('/blogs', payload);
       router.push('/admin/blogs');
-    } catch (err: any) {
+    } catch (err: SafeAny) {
       setError(err.response?.data?.message || err.message || 'Failed to create blog post');
       setLoading(false);
     }
@@ -121,8 +121,8 @@ export default function AdminNewBlogPage() {
                 valueAr={formData.title.ar}
                 onChangeEn={(v) => handleLocalizedChange('title', 'en', v)}
                 onChangeAr={(v) => handleLocalizedChange('title', 'ar', v)}
-                errorEn={(errors as any).title?.en || (errors.title === 'English title is required' ? errors.title : undefined)}
-                errorAr={(errors as any).title?.ar || (errors.title === 'Arabic title is required' ? errors.title : undefined)}
+                errorEn={(errors as SafeAny).title?.en || (errors.title === 'English title is required' ? errors.title : undefined)}
+                errorAr={(errors as SafeAny).title?.ar || (errors.title === 'Arabic title is required' ? errors.title : undefined)}
               />
 
               <div>
@@ -140,8 +140,8 @@ export default function AdminNewBlogPage() {
                 onChangeEn={(v) => handleLocalizedChange('category', 'en', v)}
                 onChangeAr={(v) => handleLocalizedChange('category', 'ar', v)}
                 placeholder="e.g. COMPANY NEWS"
-                errorEn={(errors as any).category?.en || (errors.category === 'English category is required' ? errors.category : undefined)}
-                errorAr={(errors as any).category?.ar || (errors.category === 'Arabic category is required' ? errors.category : undefined)}
+                errorEn={(errors as SafeAny).category?.en || (errors.category === 'English category is required' ? errors.category : undefined)}
+                errorAr={(errors as SafeAny).category?.ar || (errors.category === 'Arabic category is required' ? errors.category : undefined)}
               />
 
               <BilingualField
@@ -155,8 +155,8 @@ export default function AdminNewBlogPage() {
                 type="textarea"
                 rows={2}
                 note="A brief summary shown on the blog cards."
-                errorEn={(errors as any).excerpt?.en || (errors.excerpt === 'English excerpt is required' ? errors.excerpt : undefined)}
-                errorAr={(errors as any).excerpt?.ar || (errors.excerpt === 'Arabic excerpt is required' ? errors.excerpt : undefined)}
+                errorEn={(errors as SafeAny).excerpt?.en || (errors.excerpt === 'English excerpt is required' ? errors.excerpt : undefined)}
+                errorAr={(errors as SafeAny).excerpt?.ar || (errors.excerpt === 'Arabic excerpt is required' ? errors.excerpt : undefined)}
               />
             </div>
           </div>
@@ -170,7 +170,7 @@ export default function AdminNewBlogPage() {
                   label="Featured Image"
                   folder="dazz/blogs"
                   value={formData.coverImage}
-                  onChange={(media) => setFormData({ ...formData, coverImage: media as any })}
+                  onChange={(media) => setFormData({ ...formData, coverImage: media as SafeAny })}
                 />
               </div>
               

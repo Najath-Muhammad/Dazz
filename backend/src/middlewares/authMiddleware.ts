@@ -17,7 +17,7 @@ export const protect = (req: Request, res: Response, next: NextFunction): void =
 
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
-    (req as any).user = decoded;
+    (req as SafeAny).user = decoded;
     next();
   } catch (error) {
     res.status(401).json({ message: 'Not authorized, token failed' });

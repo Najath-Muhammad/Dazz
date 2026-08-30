@@ -35,7 +35,7 @@ export default function BulkTranslationPage() {
   };
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+     
     fetchStatus();
   }, []);
 
@@ -47,8 +47,8 @@ export default function BulkTranslationPage() {
       toast.loading(`Translating missing Arabic for ${target}...`, { id: 'migrate' });
 
       const payload = model ? { model } : {};
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const res = await apiClient.post<{ success: boolean; message: string; data: any }>('/admin/translate/bulk-migrate', payload);
+       
+      const res = await apiClient.post<{ success: boolean; message: string; data: SafeAny }>('/admin/translate/bulk-migrate', payload);
       
       if (res.data.success) {
         toast.success(`Bulk migration completed for ${target}.`, { id: 'migrate' });
@@ -58,8 +58,8 @@ export default function BulkTranslationPage() {
       }
     } catch (error: unknown) {
       console.error('Migration failed:', error);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      toast.error((error as any)?.response?.data?.message || 'Bulk migration failed.', { id: 'migrate' });
+       
+      toast.error((error as SafeAny)?.response?.data?.message || 'Bulk migration failed.', { id: 'migrate' });
     } finally {
       setIsMigrating(false);
       setMigratingModel(null);

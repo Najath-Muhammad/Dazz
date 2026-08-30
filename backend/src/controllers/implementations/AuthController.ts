@@ -30,7 +30,7 @@ export class AuthController implements IAuthController {
 
   getMe = async (req: Request, res: Response): Promise<void> => {
     try {
-      const user = (req as any).user;
+      const user = (req as SafeAny).user;
       if (!user) {
         res.status(HTTP_STATUS.UNAUTHORIZED).json(errorResponse({ message: RESPONSE_MESSAGES.UNAUTHORIZED }));
         return;

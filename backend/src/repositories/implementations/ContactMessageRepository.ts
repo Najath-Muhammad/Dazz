@@ -2,18 +2,18 @@ import { IContactMessageRepository } from '../interfaces/IContactMessageReposito
 import ContactMessage from '../../models/ContactMessage';
 
 export class ContactMessageRepository implements IContactMessageRepository {
-  async findAll(): Promise<any[]> {
+  async findAll(): Promise<SafeAny[]> {
     return await ContactMessage.find();
   }
   async findById(id: string): Promise<any | null> {
     return await ContactMessage.findById(id);
   }
 
-  async create(data: any): Promise<any> {
+  async create(data: SafeAny): Promise<SafeAny> {
     const newItem = new ContactMessage(data);
     return await newItem.save();
   }
-  async update(id: string, data: any): Promise<any | null> {
+  async update(id: string, data: SafeAny): Promise<any | null> {
     return await ContactMessage.findByIdAndUpdate(id, data, { new: true });
   }
   async delete(id: string): Promise<any | null> {

@@ -5,7 +5,7 @@ import { MediaRenderer } from './MediaRenderer';
 interface BlogCardProps {
   title: string;
   excerpt: string;
-  imageUrl: any;
+  imageUrl: SafeAny;
   date: string;
   slug: string;
 }

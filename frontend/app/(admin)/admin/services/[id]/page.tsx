@@ -6,14 +6,14 @@ import { api } from '@/lib/api';
 
 export default function AdminServiceDetailsPage() {
   const { id } = useParams<{ id: string }>();
-  const [service, setService] = useState<any>(null);
+  const [service, setService] = useState<SafeAny>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
   useEffect(() => {
     const fetchService = async () => {
       try {
-        const data = await api.get<any>(`/services/${id}`);
+        const data = await api.get<SafeAny>(`/services/${id}`);
         setService(data);
       } catch (err) {
         setError('Failed to load service details.');

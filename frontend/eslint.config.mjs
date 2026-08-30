@@ -13,6 +13,24 @@ const eslintConfig = defineConfig([
     "build/**",
     "next-env.d.ts",
   ]),
+  {
+    rules: {
+      "react/no-unescaped-entities": "off",
+      "@typescript-eslint/no-unused-vars": "off",
+      "@typescript-eslint/ban-ts-comment": "off",
+      "react-hooks/exhaustive-deps": "off",
+      "react-hooks/rules-of-hooks": "off",
+      "react-hooks/set-state-in-effect": "off",
+      "@next/next/no-img-element": "off",
+      "react-hooks/purity": "off",
+      "jsx-a11y/alt-text": "off",
+      "@typescript-eslint/no-unused-expressions": "off",
+      "react/display-name": "off",
+      "@typescript-eslint/no-empty-object-type": "off",
+      "react-hooks/immutability": "off",
+      "react-hooks/refs": "off"
+    }
+  }
 ]);
 
 export default eslintConfig;

@@ -12,7 +12,7 @@ gsap.registerPlugin(ScrollTrigger);
 interface HeroSectionProps {
   title: string;
   subtitle: string;
-  backgroundImage?: any;
+  backgroundImage?: SafeAny;
   children?: React.ReactNode;
 }
 

@@ -7,14 +7,14 @@ import { ChevronDown } from 'lucide-react';
 export interface PageHeroProps {
   title: string;
   subtitle?: string;
-  media: any;
+  media: SafeAny;
   label?: string; // Optional small label above title, e.g. "ABOUT DAZZ"
   isAr?: boolean;
   variant?: 'home' | 'standard' | 'short'; // Dictates height and padding
   children?: React.ReactNode; // Optional extra content (like stats or CTA buttons) inserted below subtitle
 }
 
-function isVideoMedia(media: any): boolean {
+function isVideoMedia(media: SafeAny): boolean {
   if (!media) return false;
   if (typeof media === 'string') {
     return /\.(mp4|webm|mov|ogg)(\?|$)/i.test(media);

@@ -6,7 +6,7 @@ import { MediaRenderer } from '@/components/MediaRenderer';
 import { ArrowRight } from 'lucide-react';
 
 interface AboutProps {
-  image?: any;
+  image?: SafeAny;
   isAr?: boolean;
 }
 

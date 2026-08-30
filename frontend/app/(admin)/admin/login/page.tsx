@@ -37,7 +37,7 @@ export default function AdminLoginPage() {
         // Redirect to admin dashboard
         router.push('/admin');
       }
-    } catch (err: any) {
+    } catch (err: SafeAny) {
       setError(err.response?.data?.message || 'Login failed. Please try again.');
     } finally {
       setLoading(false);

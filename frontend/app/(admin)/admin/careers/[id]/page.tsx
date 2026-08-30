@@ -43,7 +43,7 @@ export default function EditJobPage({ params }: { params: Promise<{ id: string }
 
   const fetchJob = async (id: string) => {
     try {
-      const res: any = await api.get(`/jobs/${id}`);
+      const res: SafeAny = await api.get(`/jobs/${id}`);
       const job = res;
       setFormData({
         title: job.title || { en: '', ar: '' },
@@ -73,7 +73,7 @@ export default function EditJobPage({ params }: { params: Promise<{ id: string }
   const handleLocalizedChange = (field: string, lang: 'en' | 'ar', value: string) => {
     setFormData(prev => ({
       ...prev,
-      [field]: { ...(prev as any)[field], [lang]: value }
+      [field]: { ...(prev as SafeAny)[field], [lang]: value }
     }));
   };
 
@@ -97,7 +97,7 @@ export default function EditJobPage({ params }: { params: Promise<{ id: string }
         return acc;
       }, {} as Record<string, string>);
 
-      const res: any = await api.post('/admin/translate/batch', {
+      const res: SafeAny = await api.post('/admin/translate/batch', {
         fields: fieldsToTranslate
       });
 
@@ -128,7 +128,7 @@ export default function EditJobPage({ params }: { params: Promise<{ id: string }
     setSaving(true);
     
     try {
-      const payload: any = { ...formData };
+      const payload: SafeAny = { ...formData };
       if (payload.status === 'PUBLISHED' && !payload.publishedAt) {
         payload.publishedAt = new Date().toISOString();
       }
@@ -141,7 +141,7 @@ export default function EditJobPage({ params }: { params: Promise<{ id: string }
 
       await api.put(`/jobs/${jobId}`, payload);
       router.push('/admin/careers');
-    } catch (err: any) {
+    } catch (err: SafeAny) {
       setError(err.response?.data?.message || err.message || 'Failed to update job');
     } finally {
       setSaving(false);

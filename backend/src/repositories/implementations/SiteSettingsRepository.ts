@@ -2,18 +2,18 @@ import { ISiteSettingsRepository } from '../interfaces/ISiteSettingsRepository';
 import SiteSettings from '../../models/SiteSettings';
 
 export class SiteSettingsRepository implements ISiteSettingsRepository {
-  async findAll(): Promise<any[]> {
+  async findAll(): Promise<SafeAny[]> {
     return await SiteSettings.find();
   }
   async findById(id: string): Promise<any | null> {
     return await SiteSettings.findById(id);
   }
 
-  async create(data: any): Promise<any> {
+  async create(data: SafeAny): Promise<SafeAny> {
     const newItem = new SiteSettings(data);
     return await newItem.save();
   }
-  async update(id: string, data: any): Promise<any | null> {
+  async update(id: string, data: SafeAny): Promise<any | null> {
     return await SiteSettings.findByIdAndUpdate(id, data, { returnDocument: 'after' });
   }
   async delete(id: string): Promise<any | null> {

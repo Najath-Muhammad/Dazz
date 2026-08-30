@@ -1,8 +1,8 @@
 export interface IPageService {
-  getAllPages(): Promise<{ success: boolean; message: string; data?: any[] }>;
-  getPageById(id: string): Promise<{ success: boolean; message: string; data?: any }>;
+  getAllPages(): Promise<{ success: boolean; message: string; data?: SafeAny[] }>;
+  getPageById(id: string): Promise<{ success: boolean; message: string; data?: SafeAny }>;
 
-  createPage(data: any): Promise<{ success: boolean; message: string; data?: any }>;
-  updatePage(id: string, data: any): Promise<{ success: boolean; message: string; data?: any }>;
-  deletePage(id: string): Promise<{ success: boolean; message: string; data?: any }>;
+  createPage(data: SafeAny): Promise<{ success: boolean; message: string; data?: SafeAny }>;
+  updatePage(id: string, data: SafeAny): Promise<{ success: boolean; message: string; data?: SafeAny }>;
+  deletePage(id: string): Promise<{ success: boolean; message: string; data?: SafeAny }>;
 }

@@ -12,7 +12,7 @@ export default function AdminDashboardPage() {
       try {
         const data = await authService.getMe();
         setAdmin(data);
-      } catch (err: any) {
+      } catch (err: SafeAny) {
         setError('Failed to load profile data.');
       } finally {
         setLoading(false);

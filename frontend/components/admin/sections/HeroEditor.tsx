@@ -11,7 +11,7 @@ interface Props {
 
 export function HeroEditor({ form, setForm }: Props) {
   const set = (path: string, lang: 'en' | 'ar', val: string) =>
-    setForm(p => ({ ...p, hero: { ...p.hero, [path]: { ...(p.hero as any)[path], [lang]: val } } }));
+    setForm(p => ({ ...p, hero: { ...p.hero, [path]: { ...(p.hero as SafeAny)[path], [lang]: val } } }));
 
   return (
     <div className="space-y-6">

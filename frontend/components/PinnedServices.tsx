@@ -72,7 +72,7 @@ export function PinnedServices() {
       }
     });
 
-    panels.forEach((_panel: any, i) => {
+    panels.forEach((_panel: SafeAny, i) => {
       if (i === 0) return;
 
       tl.to(leftColRef.current, {

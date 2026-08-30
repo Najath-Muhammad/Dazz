@@ -8,13 +8,13 @@ import { DataTable, Column } from '@/components/admin/DataTable';
 import { Plus, Edit, Trash2, CheckCircle, XCircle, ArrowUp, ArrowDown } from 'lucide-react';
 
 export default function LocationsAdminPage() {
-  const [locations, setLocations] = useState<any[]>([]);
+  const [locations, setLocations] = useState<SafeAny[]>([]);
   const [loading, setLoading] = useState(true);
 
   const fetchLocations = async () => {
     try {
       const data = await api.get('/locations/all');
-      setLocations((data as any).data || []);
+      setLocations((data as SafeAny).data || []);
     } catch (error) {
       console.error('Failed to fetch locations:', error);
     } finally {
@@ -61,7 +61,7 @@ export default function LocationsAdminPage() {
     }
   };
 
-  const columns: Column<any>[] = [
+  const columns: Column<SafeAny>[] = [
     {
       key: 'order',
       header: 'Order',

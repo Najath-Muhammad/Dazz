@@ -6,7 +6,7 @@ import { MediaRenderer } from '@/components/MediaRenderer';
 import { LucideIcon, ArrowRight, Check, ChevronRight, Activity, Cpu, Hexagon } from 'lucide-react';
 
 interface Props {
-  service: any;
+  service: SafeAny;
   lang: string;
   isAr: boolean;
   dir: 'ltr' | 'rtl';
@@ -18,7 +18,7 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
     return str.replace(/[\u{1F300}-\u{1F64F}\u{1F680}-\u{1F6FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{1F900}-\u{1F9FF}\u{1FA70}-\u{1FAFF}\u{1F1E6}-\u{1F1FF}]/gu, '').trim();
   };
 
-  const t = (field: any) => stripEmojis(field?.[lang] || field?.en || '');
+  const t = (field: SafeAny) => stripEmojis(field?.[lang] || field?.en || '');
   const enabled = (section: string) => service.enabledSections?.includes(section);
 
   const { scrollYProgress } = useScroll();
@@ -135,7 +135,7 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
                 {t(intro?.mainDescription)}
               </p>
               
-              {intro?.paragraphs?.map((p: any, i: number) => (
+              {intro?.paragraphs?.map((p: SafeAny, i: number) => (
                 <p key={i} className={`text-slate-500 mb-6 leading-relaxed font-light ${isAr ? 'font-arabic text-right' : ''}`}>
                   {t(p)}
                 </p>
@@ -178,7 +178,7 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
             
             <div className="md:w-2/3">
               <div className="flex flex-col">
-                {service.capabilities.filter((c: any) => t(c.title)).map((cap: any, i: number) => (
+                {service.capabilities.filter((c: SafeAny) => t(c.title)).map((cap: SafeAny, i: number) => (
                   <motion.div 
                     key={i}
                     initial={{ opacity: 0, x: isAr ? 20 : -20 }}
@@ -224,7 +224,7 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {service.solutions.filter((s: any) => t(s.title)).map((sol: any, i: number) => (
+            {service.solutions.filter((s: SafeAny) => t(s.title)).map((sol: SafeAny, i: number) => (
               <motion.div 
                 key={i} 
                 initial={{ opacity: 0, y: 30 }}
@@ -272,7 +272,7 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
           </div>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {service.applications.filter((a: any) => t(a.title)).map((app: any, i: number) => (
+            {service.applications.filter((a: SafeAny) => t(a.title)).map((app: SafeAny, i: number) => (
               <motion.div 
                 key={i} 
                 initial={{ opacity: 0, y: 30 }}
@@ -322,7 +322,7 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
           </div>
           
           <div className="space-y-16 lg:space-y-0 relative">
-            {service.process.filter((p: any) => t(p.title)).map((step: any, i: number) => {
+            {service.process.filter((p: SafeAny) => t(p.title)).map((step: SafeAny, i: number) => {
               const isEven = i % 2 !== 0;
               return (
                 <div key={i} className={`flex flex-col lg:flex-row items-center justify-between ${isEven ? (isAr ? 'lg:flex-row-reverse' : 'lg:flex-row') : (isAr ? 'lg:flex-row' : 'lg:flex-row-reverse')} w-full lg:min-h-[300px]`}>
@@ -385,7 +385,7 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
           </div>
           
           <div className="space-y-4">
-            {service.equipment.filter((e: any) => t(e.title) || t(e.name)).map((eq: any, i: number) => (
+            {service.equipment.filter((e: SafeAny) => t(e.title) || t(e.name)).map((eq: SafeAny, i: number) => (
               <motion.div 
                 key={i} 
                 initial={{ opacity: 0, y: 20 }}
@@ -433,7 +433,7 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
             </div>
             <div className="md:w-2/3">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
-                {service.whyChooseUs.filter((w: any) => t(w.title)).map((item: any, i: number) => (
+                {service.whyChooseUs.filter((w: SafeAny) => t(w.title)).map((item: SafeAny, i: number) => (
                   <motion.div 
                     key={i} 
                     initial={{ opacity: 0, y: 20 }}
@@ -464,7 +464,7 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
       <section className="py-16 md:py-24 bg-slate-950 border-t border-white/5">
         <div className="max-w-7xl mx-auto px-6">
           <div className={`grid grid-cols-1 sm:grid-cols-2 ${colClass} gap-y-12 gap-x-8 divide-y sm:divide-y-0 sm:divide-x divide-white/10`}>
-            {items.filter((h: any) => t(h.title)).map((high: any, i: number) => (
+            {items.filter((h: SafeAny) => t(h.title)).map((high: SafeAny, i: number) => (
               <motion.div 
                 key={i} 
                 initial={{ opacity: 0 }}
@@ -495,7 +495,7 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
           </div>
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[250px]">
-            {service.gallery.map((img: any, i: number) => {
+            {service.gallery.map((img: SafeAny, i: number) => {
               const isLarge = i === 0 || i === 5;
               return (
                 <motion.div 
@@ -588,7 +588,7 @@ export function ServicePresentation({ service, lang, isAr, dir }: Props) {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {service.categories.filter((cat: any) => t(cat.title)).map((cat: any, i: number) => (
+            {service.categories.filter((cat: SafeAny) => t(cat.title)).map((cat: SafeAny, i: number) => (
               <motion.div 
                 key={i} 
                 initial={{ opacity: 0, y: 30 }}

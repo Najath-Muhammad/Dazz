@@ -64,7 +64,7 @@ export default function ApplicationForm({ lang, isAr, jobId }: ApplicationFormPr
     fd.append('folder', 'dazz/resumes');
     fd.append('resourceType', 'image');
     
-    const res: any = await api.post('/careers/upload-resume', fd);
+    const res: SafeAny = await api.post('/careers/upload-resume', fd);
     return res; // api.post unwraps the response data, so res is the media object
   };
 
@@ -85,7 +85,7 @@ export default function ApplicationForm({ lang, isAr, jobId }: ApplicationFormPr
       const uploadedResume = await uploadFileToCloudinary(file);
       setIsUploading(false);
 
-      const payload: any = {
+      const payload: SafeAny = {
         candidateName: formData.candidateName,
         email: formData.email,
         phone: formData.phone,
@@ -102,7 +102,7 @@ export default function ApplicationForm({ lang, isAr, jobId }: ApplicationFormPr
       setSuccess(true);
       setFormData({ candidateName: '', email: '', phone: '', location: '', coverLetter: '', linkedInProfile: '', portfolioUrl: '' });
       setFile(null);
-    } catch (err: any) {
+    } catch (err: SafeAny) {
       setError(err.response?.data?.message || err.message || (isAr ? 'حدث خطأ. يرجى المحاولة مرة أخرى.' : 'An error occurred. Please try again.'));
     } finally {
       setIsUploading(false);

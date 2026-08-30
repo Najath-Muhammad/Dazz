@@ -8,7 +8,7 @@ import Link from 'next/link';
 export default function ApplicationReviewPage({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter();
   const [appId, setAppId] = useState<string>('');
-  const [application, setApplication] = useState<any>(null);
+  const [application, setApplication] = useState<SafeAny>(null);
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState(false);
   const [error, setError] = useState('');
@@ -29,7 +29,7 @@ export default function ApplicationReviewPage({ params }: { params: Promise<{ id
 
   const fetchApplication = async (id: string) => {
     try {
-      const res: any = await api.get(`/careers/${id}`);
+      const res: SafeAny = await api.get(`/careers/${id}`);
       setApplication(res);
     } catch (err) {
       setError('Failed to load application details');

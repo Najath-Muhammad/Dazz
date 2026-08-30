@@ -27,14 +27,14 @@ const locationSchema = z.object({
     en: z.string().min(1, 'English address is required'),
     ar: z.string().min(1, 'Arabic address is required')
   }),
-  latitude: z.number({ invalid_type_error: 'Latitude is required' } as any),
-  longitude: z.number({ invalid_type_error: 'Longitude is required' } as any)
+  latitude: z.number({ invalid_type_error: 'Latitude is required' } as SafeAny),
+  longitude: z.number({ invalid_type_error: 'Longitude is required' } as SafeAny)
 });
 
 const MapPreview = dynamic(() => import('./MapPreview'), { ssr: false, loading: () => <div className="w-full h-[400px] bg-slate-200 animate-pulse flex items-center justify-center">Loading Map...</div> });
 
 interface LocationFormProps {
-  initialData?: any;
+  initialData?: SafeAny;
   isEdit?: boolean;
 }
 
@@ -60,17 +60,17 @@ export default function LocationForm({ initialData, isEdit = false }: LocationFo
     isActive: initialData?.isActive !== false,
   });
 
-  const handleChange = (field: string, value: any, isLocal = false) => {
+  const handleChange = (field: string, value: SafeAny, isLocal = false) => {
     if (isLocal) {
       setFormData(prev => ({
         ...prev,
-        [field]: { ...(prev as any)[field], [lang]: value }
+        [field]: { ...(prev as SafeAny)[field], [lang]: value }
       }));
       // Clear nested error if exists
-      if ((errors as any)[field]) clearErrors();
+      if ((errors as SafeAny)[field]) clearErrors();
     } else {
       setFormData(prev => ({ ...prev, [field]: value }));
-      if ((errors as any)[field]) clearErrors();
+      if ((errors as SafeAny)[field]) clearErrors();
     }
   };
 
@@ -94,7 +94,7 @@ export default function LocationForm({ initialData, isEdit = false }: LocationFo
         setMessage('Location created successfully!');
       }
       setTimeout(() => router.push('/admin/locations'), 1000);
-    } catch (err: any) {
+    } catch (err: SafeAny) {
       console.error(err);
       setMessage(err.message || 'Failed to save location');
       setLoading(false);

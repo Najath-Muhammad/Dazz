@@ -17,7 +17,7 @@ export default function AdminEditServicePage() {
   useEffect(() => {
     const fetchService = async () => {
       try {
-        const data = await api.get<any>(`/services/${id}`);
+        const data = await api.get<SafeAny>(`/services/${id}`);
         // Merge with default form to handle any missing fields from old records
         setForm({ ...makeDefaultForm(), ...data });
       } catch {
@@ -36,7 +36,7 @@ export default function AdminEditServicePage() {
     try {
       await api.put(`/services/${id}`, { ...form, status });
       router.push('/admin/services');
-    } catch (e: any) {
+    } catch (e: SafeAny) {
       setError(e?.message || 'Failed to update service.');
       setSaving(false);
     }

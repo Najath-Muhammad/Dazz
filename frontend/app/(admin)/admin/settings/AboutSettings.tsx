@@ -4,8 +4,8 @@ import { BilingualField } from '@/components/admin/BilingualField';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 
 interface AboutSettingsProps {
-  settings: any;
-  onChange: (newSettings: any) => void;
+  settings: SafeAny;
+  onChange: (newSettings: SafeAny) => void;
 }
 
 export default function AboutSettings({ settings, onChange }: AboutSettingsProps) {
@@ -20,7 +20,7 @@ export default function AboutSettings({ settings, onChange }: AboutSettingsProps
     }
   };
 
-  const updateSection = (fieldPath: string[], value: any) => {
+  const updateSection = (fieldPath: string[], value: SafeAny) => {
     // deep clone
     const newSettings = JSON.parse(JSON.stringify(settings));
     
@@ -45,14 +45,14 @@ export default function AboutSettings({ settings, onChange }: AboutSettingsProps
       if (currentVal) currentVal = currentVal[key];
     }
     
-    updateSection(fieldPath, { ...((currentVal as any) || { en: '', ar: '' }), [lang]: value });
+    updateSection(fieldPath, { ...((currentVal as SafeAny) || { en: '', ar: '' }), [lang]: value });
   };
 
   const toggleSection = (section: string) => {
     setExpandedSection(expandedSection === section ? null : section);
   };
 
-  const updateHero = (field: string, value: any) => {
+  const updateHero = (field: string, value: SafeAny) => {
     onChange({
       ...settings,
       pageHeaders: {

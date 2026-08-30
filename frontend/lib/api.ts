@@ -33,7 +33,7 @@ apiClient.interceptors.response.use(
 );
 
 // Define the standard ApiResponse shape
-export interface ApiResponse<T = any> {
+export interface ApiResponse<T = SafeAny> {
   success: boolean;
   message: string;
   data?: T;
@@ -41,12 +41,12 @@ export interface ApiResponse<T = any> {
 
 // Generic API Service wrapper that automatically unwraps the standard ApiResponse
 export const api = {
-  get: async <T>(url: string, params?: any): Promise<T> => {
+  get: async <T>(url: string, params?: SafeAny): Promise<T> => {
     const res = await apiClient.get<ApiResponse<T>>(url, { params });
     if (!res.data.success) throw new Error(res.data.message);
     return res.data.data as T;
   },
-  post: async <T>(url: string, data: any): Promise<T> => {
+  post: async <T>(url: string, data: SafeAny): Promise<T> => {
     const isFormData = data instanceof FormData;
     const res = await apiClient.post<ApiResponse<T>>(url, data, {
       headers: isFormData ? { 'Content-Type': 'multipart/form-data' } : undefined
@@ -54,7 +54,7 @@ export const api = {
     if (!res.data.success) throw new Error(res.data.message);
     return res.data.data as T;
   },
-  put: async <T>(url: string, data: any): Promise<T> => {
+  put: async <T>(url: string, data: SafeAny): Promise<T> => {
     const isFormData = data instanceof FormData;
     const res = await apiClient.put<ApiResponse<T>>(url, data, {
       headers: isFormData ? { 'Content-Type': 'multipart/form-data' } : undefined

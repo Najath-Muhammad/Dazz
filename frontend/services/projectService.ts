@@ -1,23 +1,23 @@
 import api from '@/lib/api';
 
 export const projectService = {
-  getProjects: async (params?: Record<string, any>) => {
+  getProjects: async (params?: Record<string, SafeAny>) => {
     const qs = params ? '?' + new URLSearchParams(params).toString() : '';
-    return await api.get<any>(`/projects${qs}`);
+    return await api.get<SafeAny>(`/projects${qs}`);
   },
   getProjectById: async (id: string) => {
-    return await api.get<any>(`/projects/${id}`);
+    return await api.get<SafeAny>(`/projects/${id}`);
   },
   getProjectBySlug: async (slug: string) => {
-    return await api.get<any>(`/projects/slug/${slug}`);
+    return await api.get<SafeAny>(`/projects/slug/${slug}`);
   },
-  createProject: async (data: any) => {
-    return await api.post<any>('/projects', data);
+  createProject: async (data: SafeAny) => {
+    return await api.post<SafeAny>('/projects', data);
   },
-  updateProject: async (id: string, data: any) => {
-    return await api.put<any>(`/projects/${id}`, data);
+  updateProject: async (id: string, data: SafeAny) => {
+    return await api.put<SafeAny>(`/projects/${id}`, data);
   },
   deleteProject: async (id: string) => {
-    return await api.delete<any>(`/projects/${id}`);
+    return await api.delete<SafeAny>(`/projects/${id}`);
   },
 };

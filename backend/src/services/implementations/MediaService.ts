@@ -3,10 +3,10 @@ import streamifier from 'streamifier';
 import { IMediaService } from '../interfaces/IMediaService';
 
 export class MediaService implements IMediaService {
-  async uploadMedia(buffer: Buffer, folder: string, resourceType: string): Promise<{ success: boolean; message: string; data?: any }> {
+  async uploadMedia(buffer: Buffer, folder: string, resourceType: string): Promise<{ success: boolean; message: string; data?: SafeAny }> {
     return new Promise((resolve) => {
       const uploadStream = cloudinary.uploader.upload_stream(
-        { folder, resource_type: resourceType as any },
+        { folder, resource_type: resourceType as SafeAny },
         (error, result) => {
           if (error) {
             console.error('Cloudinary upload error:', error);
@@ -31,7 +31,7 @@ export class MediaService implements IMediaService {
     });
   }
 
-  async validateUrl(url: string): Promise<{ success: boolean; message: string; data?: any }> {
+  async validateUrl(url: string): Promise<{ success: boolean; message: string; data?: SafeAny }> {
     if (!url.includes('cloudinary.com')) {
       return { success: false, message: 'Please enter a valid Cloudinary image or video URL.' };
     }

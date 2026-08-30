@@ -5,8 +5,8 @@ import { X, Plus, Image, Upload } from 'lucide-react';
 import { Media } from '@/components/admin/MediaUploader';
 
 interface GalleryUploaderProps {
-  value: any[];
-  onChange: (images: any[]) => void;
+  value: SafeAny[];
+  onChange: (images: SafeAny[]) => void;
   folder?: string;
 }
 
@@ -16,7 +16,7 @@ export function GalleryUploader({ value = [], onChange, folder = 'dazz/projects'
   const [urlInput, setUrlInput] = useState('');
   const [inputMode, setInputMode] = useState<'upload' | 'url'>('upload');
 
-  const normalizeUrl = (img: any): string => {
+  const normalizeUrl = (img: SafeAny): string => {
     if (!img) return '';
     if (typeof img === 'string') return img;
     return img.url || '';
