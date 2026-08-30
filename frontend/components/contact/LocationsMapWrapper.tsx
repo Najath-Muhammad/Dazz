@@ -15,114 +15,63 @@ interface LocationsMapWrapperProps {
 export default function LocationsMapWrapper({ isAr }: LocationsMapWrapperProps) {
   const hardcodedLocations = [
     {
-      _id: 'loc_riyadh',
-      name: { en: 'DAZZ RIYADH', ar: 'داز الرياض' },
-      city: { en: 'Riyadh', ar: 'الرياض' },
-      country: { en: 'Saudi Arabia', ar: 'المملكة العربية السعودية' },
-      address: { en: 'Riyadh Office', ar: 'مكتب الرياض' },
-      latitude: 24.7136,
-      longitude: 46.6753,
-    },
-    {
-      _id: 'loc_jeddah',
-      name: { en: 'DAZZ JEDDAH', ar: 'داز جدة' },
+      _id: 'loc_saudi',
+      name: { en: 'DAZZ SAUDI ARABIA (HQ)', ar: 'داز المملكة العربية السعودية (المقر الرئيسي)' },
       city: { en: 'Jeddah', ar: 'جدة' },
       country: { en: 'Saudi Arabia', ar: 'المملكة العربية السعودية' },
-      address: { en: '4764, King Khalid St, Ash Sharafiyah, Jeddah 22234', ar: '٤٧٦٤، شارع الملك خالد، الشرفية، جدة ٢٢٢٣٤' },
-      phone: '+966 59 222 8228',
+      address: { 
+        en: '306, Commercial Business Centre – 4746, King Khalid Street, Al Baghdadiyah, Jeddah, Saudi Arabia', 
+        ar: '٣٠٦، مركز الأعمال التجاري – ٤٧٤٦، شارع الملك خالد، البغدادية، جدة، المملكة العربية السعودية' 
+      },
+      phone: '+966 53 083 3855',
       email: 'info@dazztradlink.com',
       latitude: 21.5222,
       longitude: 39.1718,
-    },
-    {
-      _id: 'loc_makkah',
-      name: { en: 'DAZZ MAKKAH', ar: 'داز مكة المكرمة' },
-      city: { en: 'Makkah', ar: 'مكة المكرمة' },
-      country: { en: 'Saudi Arabia', ar: 'المملكة العربية السعودية' },
-      address: { en: 'Makkah Office', ar: 'مكتب مكة المكرمة' },
-      latitude: 21.3891,
-      longitude: 39.8579,
-    },
-    {
-      _id: 'loc_madinah',
-      name: { en: 'DAZZ MADINAH', ar: 'داز المدينة المنورة' },
-      city: { en: 'Madinah', ar: 'المدينة المنورة' },
-      country: { en: 'Saudi Arabia', ar: 'المملكة العربية السعودية' },
-      address: { en: 'Madinah Office', ar: 'مكتب المدينة المنورة' },
-      latitude: 24.5247,
-      longitude: 39.5692,
-    },
-    {
-      _id: 'loc_dammam',
-      name: { en: 'DAZZ DAMMAM', ar: 'داز الدمام' },
-      city: { en: 'Dammam', ar: 'الدمام' },
-      country: { en: 'Saudi Arabia', ar: 'المملكة العربية السعودية' },
-      address: { en: 'Dammam Office', ar: 'مكتب الدمام' },
-      latitude: 26.4207,
-      longitude: 50.0888,
-    },
-    {
-      _id: 'loc_alkhobar',
-      name: { en: 'DAZZ AL KHOBAR', ar: 'داز الخبر' },
-      city: { en: 'Al Khobar', ar: 'الخبر' },
-      country: { en: 'Saudi Arabia', ar: 'المملكة العربية السعودية' },
-      address: { en: 'Al Khobar Office', ar: 'مكتب الخبر' },
-      latitude: 26.2172,
-      longitude: 50.1971,
-    },
-    {
-      _id: 'loc_tabuk',
-      name: { en: 'DAZZ TABUK', ar: 'داز تبوك' },
-      city: { en: 'Tabuk', ar: 'تبوك' },
-      country: { en: 'Saudi Arabia', ar: 'المملكة العربية السعودية' },
-      address: { en: 'Tabuk Office', ar: 'مكتب تبوك' },
-      latitude: 28.3835,
-      longitude: 36.5662,
-    },
-    {
-      _id: 'loc_hail',
-      name: { en: 'DAZZ HA\'IL', ar: 'داز حائل' },
-      city: { en: 'Ha\'il', ar: 'حائل' },
-      country: { en: 'Saudi Arabia', ar: 'المملكة العربية السعودية' },
-      address: { en: 'Ha\'il Office', ar: 'مكتب حائل' },
-      latitude: 27.5219,
-      longitude: 41.6907,
-    },
-    {
-      _id: 'loc_abha',
-      name: { en: 'DAZZ ABHA', ar: 'داز أبها' },
-      city: { en: 'Abha', ar: 'أبها' },
-      country: { en: 'Saudi Arabia', ar: 'المملكة العربية السعودية' },
-      address: { en: 'Abha Office', ar: 'مكتب أبها' },
-      latitude: 18.2164,
-      longitude: 42.5053,
+      type: { en: 'Headquarters', ar: 'المقر الرئيسي' }
     },
     {
       _id: 'loc_uae',
-      name: { en: 'DAZZ UAE', ar: 'داز الإمارات العربية المتحدة' },
-      city: { en: 'Dubai', ar: 'دبي' },
+      name: { en: 'DAZZ UNITED ARAB EMIRATES', ar: 'داز الإمارات العربية المتحدة' },
+      city: { en: 'Sharjah', ar: 'الشارقة' },
       country: { en: 'United Arab Emirates', ar: 'الإمارات العربية المتحدة' },
-      address: { en: 'UAE Branch', ar: 'فرع الإمارات العربية المتحدة' },
-      latitude: 25.2048,
-      longitude: 55.2708,
+      address: { 
+        en: 'Business Centre, Sharjah Publishing City Free Zone, Sharjah, United Arab Emirates', 
+        ar: 'مركز الأعمال، مدينة الشارقة للنشر المنطقة الحرة، الشارقة، الإمارات العربية المتحدة' 
+      },
+      phone: '+971 56 578 6797',
+      email: 'info@dazztradlink.com',
+      latitude: 25.3216,
+      longitude: 55.4851,
+      type: { en: 'Regional Office', ar: 'مكتب إقليمي' }
     },
     {
       _id: 'loc_india',
       name: { en: 'DAZZ INDIA', ar: 'داز الهند' },
-      city: { en: 'Mumbai', ar: 'مومباي' },
+      city: { en: 'Kerala', ar: 'كيرالا' },
       country: { en: 'India', ar: 'الهند' },
-      address: { en: 'India Branch', ar: 'فرع الهند' },
-      latitude: 19.0760,
-      longitude: 72.8777,
+      address: { 
+        en: 'No. IX/344, Uppidiyan House, Palunda, Chungathara, Nilambur, Malappuram – 679334, Kerala, India', 
+        ar: 'رقم IX/344، منزل أوبيديان، بالوندا، تشونغاثارا، نيلامبور، مالابورام - ٦٧٩٣٣٤، كيرالا، الهند' 
+      },
+      phone: '+91 81118 84000',
+      email: 'info@dazztradlink.com',
+      latitude: 11.2721,
+      longitude: 76.2421,
+      type: { en: 'Regional Office', ar: 'مكتب إقليمي' }
     },
     {
       _id: 'loc_hk',
       name: { en: 'DAZZ HONG KONG', ar: 'داز هونج كونج' },
-      city: { en: 'Hong Kong', ar: 'هونج كونج' },
+      city: { en: 'Central', ar: 'سنترال' },
       country: { en: 'Hong Kong', ar: 'هونج كونج' },
-      address: { en: 'Hong Kong Branch', ar: 'فرع هونج كونج' },
-      latitude: 22.3193,
-      longitude: 114.1694,
+      address: { 
+        en: 'Unit 2904–05, 29/F, Universal Trade Centre, 3 Arbuthnot Road, Central, Hong Kong', 
+        ar: 'الوحدة ٢٩٠٤-٠٥، الطابق ٢٩، مركز التجارة العالمي، ٣ طريق أربوثنوت، سنترال، هونغ كونغ' 
+      },
+      email: 'info@dazztradlink.com',
+      latitude: 22.2800,
+      longitude: 114.1558,
+      type: { en: 'Regional Office', ar: 'مكتب إقليمي' }
     }
   ];
 
