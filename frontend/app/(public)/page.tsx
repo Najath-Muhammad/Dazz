@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 async function getSiteSettings() {
   try {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
-    const res = await fetch(`${apiUrl}/settings`, { next: { revalidate: 120 } });
+    const res = await fetch(`${apiUrl}/settings`, { next: { revalidate: 120 }, signal: AbortSignal.timeout(5000) });
     if (!res.ok) return null;
     const json = await res.json();
     if (json.success && Array.isArray(json.data) && json.data.length > 0) return json.data[0];
@@ -35,7 +35,7 @@ async function getSiteSettings() {
 async function getProjects() {
   try {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
-    const res = await fetch(`${apiUrl}/projects?status=published&limit=6`, { cache: 'no-store' });
+    const res = await fetch(`${apiUrl}/projects?status=published&limit=6`, { cache: 'no-store', signal: AbortSignal.timeout(5000) });
     if (!res.ok) return [];
     const json = await res.json();
     return json.data || [];
@@ -45,7 +45,7 @@ async function getProjects() {
 async function getBlogs() {
   try {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
-    const res = await fetch(`${apiUrl}/blogs?status=published&limit=3`, { cache: 'no-store' });
+    const res = await fetch(`${apiUrl}/blogs?status=published&limit=3`, { cache: 'no-store', signal: AbortSignal.timeout(5000) });
     if (!res.ok) return [];
     const json = await res.json();
     return json.data || [];
