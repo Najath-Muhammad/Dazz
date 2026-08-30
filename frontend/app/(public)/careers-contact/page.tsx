@@ -70,20 +70,20 @@ export default function CareersContactPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-1">First Name</label>
-                    <input suppressHydrationWarning type="text" className="w-full border border-slate-300 rounded-sm px-4 py-2 focus:ring-amber-500 focus:border-amber-500" placeholder="John" />
+                    <input suppressHydrationWarning type="text" className="w-full bg-white text-slate-900 border border-slate-300 rounded-sm px-4 py-2 focus:ring-amber-500 focus:border-amber-500" placeholder="John" />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-1">Last Name</label>
-                    <input suppressHydrationWarning type="text" className="w-full border border-slate-300 rounded-sm px-4 py-2 focus:ring-amber-500 focus:border-amber-500" placeholder="Doe" />
+                    <input suppressHydrationWarning type="text" className="w-full bg-white text-slate-900 border border-slate-300 rounded-sm px-4 py-2 focus:ring-amber-500 focus:border-amber-500" placeholder="Doe" />
                   </div>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">Email Address</label>
-                  <input suppressHydrationWarning type="email" className="w-full border border-slate-300 rounded-sm px-4 py-2 focus:ring-amber-500 focus:border-amber-500" placeholder="john@example.com" />
+                  <input suppressHydrationWarning type="email" className="w-full bg-white text-slate-900 border border-slate-300 rounded-sm px-4 py-2 focus:ring-amber-500 focus:border-amber-500" placeholder="john@example.com" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">Message</label>
-                  <textarea rows={4} className="w-full border border-slate-300 rounded-sm px-4 py-2 focus:ring-amber-500 focus:border-amber-500" placeholder="How can we help you?"></textarea>
+                  <textarea rows={4} className="w-full bg-white text-slate-900 border border-slate-300 rounded-sm px-4 py-2 focus:ring-amber-500 focus:border-amber-500" placeholder="How can we help you?"></textarea>
                 </div>
                 <Button suppressHydrationWarning variant="primary" type="button" className="w-full md:w-auto">Send Message</Button>
               </form>

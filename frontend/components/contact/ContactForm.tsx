@@ -119,7 +119,7 @@ export function ContactForm({ isAr = false }: ContactFormProps) {
               name="fullName"
               value={formData.fullName}
               onChange={handleChange}
-              className={`w-full border-b px-0 py-3 bg-transparent focus:outline-none transition-colors ${errors.fullName ? 'border-red-500 text-red-900 focus:border-red-500' : 'border-slate-300 focus:border-dazz-navy'}`}
+              className={`w-full bg-white text-slate-900 border rounded-md px-4 py-3 focus:outline-none transition-colors ${errors.fullName ? 'border-red-500 text-red-900 focus:ring-2 focus:ring-red-500' : 'border-slate-300 focus:ring-2 focus:ring-dazz-navy focus:border-transparent'}`}
               placeholder={isAr ? 'الاسم الكامل' : 'John Doe'}
             />
             <FormError message={errors.fullName} isAr={isAr} />
@@ -133,7 +133,7 @@ export function ContactForm({ isAr = false }: ContactFormProps) {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className={`w-full border-b px-0 py-3 bg-transparent focus:outline-none transition-colors ${errors.email ? 'border-red-500 text-red-900 focus:border-red-500' : 'border-slate-300 focus:border-dazz-navy'}`}
+              className={`w-full bg-white text-slate-900 border rounded-md px-4 py-3 focus:outline-none transition-colors ${errors.email ? 'border-red-500 text-red-900 focus:ring-2 focus:ring-red-500' : 'border-slate-300 focus:ring-2 focus:ring-dazz-navy focus:border-transparent'}`}
               placeholder="john@example.com"
             />
             <FormError message={errors.email} isAr={isAr} />
@@ -150,7 +150,7 @@ export function ContactForm({ isAr = false }: ContactFormProps) {
               name="phone"
               value={formData.phone}
               onChange={handleChange}
-              className={`w-full border-b px-0 py-3 bg-transparent focus:outline-none transition-colors text-left ${errors.phone ? 'border-red-500 text-red-900 focus:border-red-500' : 'border-slate-300 focus:border-dazz-navy'}`}
+              className={`w-full bg-white text-slate-900 border rounded-md px-4 py-3 focus:outline-none transition-colors text-left ${errors.phone ? 'border-red-500 text-red-900 focus:ring-2 focus:ring-red-500' : 'border-slate-300 focus:ring-2 focus:ring-dazz-navy focus:border-transparent'}`}
               dir="ltr"
               placeholder="+966 5X XXX XXXX"
             />
@@ -165,7 +165,7 @@ export function ContactForm({ isAr = false }: ContactFormProps) {
               name="company"
               value={formData.company}
               onChange={handleChange}
-              className={`w-full border-b px-0 py-3 bg-transparent focus:outline-none transition-colors ${errors.company ? 'border-red-500 text-red-900 focus:border-red-500' : 'border-slate-300 focus:border-dazz-navy'}`}
+              className={`w-full bg-white text-slate-900 border rounded-md px-4 py-3 focus:outline-none transition-colors ${errors.company ? 'border-red-500 text-red-900 focus:ring-2 focus:ring-red-500' : 'border-slate-300 focus:ring-2 focus:ring-dazz-navy focus:border-transparent'}`}
               placeholder={isAr ? 'اسم شركتك' : 'Your Company Name'}
             />
             <FormError message={errors.company} isAr={isAr} />
@@ -181,7 +181,7 @@ export function ContactForm({ isAr = false }: ContactFormProps) {
             name="subject"
             value={formData.subject}
             onChange={handleChange}
-            className={`w-full border-b px-0 py-3 bg-transparent focus:outline-none transition-colors ${errors.subject ? 'border-red-500 text-red-900 focus:border-red-500' : 'border-slate-300 focus:border-dazz-navy'}`}
+            className={`w-full bg-white text-slate-900 border rounded-md px-4 py-3 focus:outline-none transition-colors ${errors.subject ? 'border-red-500 text-red-900 focus:ring-2 focus:ring-red-500' : 'border-slate-300 focus:ring-2 focus:ring-dazz-navy focus:border-transparent'}`}
             placeholder={isAr ? 'موضوع رسالتك' : 'How can we help you?'}
           />
           <FormError message={errors.subject} isAr={isAr} />
@@ -196,7 +196,7 @@ export function ContactForm({ isAr = false }: ContactFormProps) {
             rows={4}
             value={formData.message}
             onChange={handleChange}
-            className={`w-full border-b px-0 py-3 bg-transparent focus:outline-none transition-colors resize-none ${errors.message ? 'border-red-500 text-red-900 focus:border-red-500' : 'border-slate-300 focus:border-dazz-navy'}`}
+            className={`w-full bg-white text-slate-900 border rounded-md px-4 py-3 focus:outline-none transition-colors resize-none ${errors.message ? 'border-red-500 text-red-900 focus:ring-2 focus:ring-red-500' : 'border-slate-300 focus:ring-2 focus:ring-dazz-navy focus:border-transparent'}`}
             placeholder={isAr ? 'اكتب رسالتك هنا...' : 'Write your message here...'}
           ></textarea>
           <FormError message={errors.message} isAr={isAr} />
