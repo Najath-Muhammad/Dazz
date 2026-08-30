@@ -1,12 +1,13 @@
-# Dazz Tradelink Architecture Document
+# Dazz Tradlink Architecture Document
 
 ## Frontend Structure
-The frontend is a Single Page Application (SPA) built with React and Vite. 
-- **Framework:** React + TypeScript
-- **Routing:** React Router
+The frontend is built with Next.js (App Router), utilizing Server Components by default and Client Components only where browser-side interactivity is required.
+- **Framework:** Next.js + TypeScript
+- **Routing:** Next.js App Router
 - **Styling:** Tailwind CSS
-- **State Management / Data Fetching:** React state/context + Axios for API communication
+- **State Management / Data Fetching:** Next.js server-side data fetching + Axios for client-side API communication where needed
 - **Form Handling:** React Hook Form + Zod for validation
+- **SEO & Optimization:** Next.js metadata APIs, `next/image` for image optimization, dynamic metadata, sitemap.ts, and robots.ts
 
 Pages include Homepage, About Us, Divisions & Services (Construction, Food Trading, Logistics, Hospitality), Project Gallery, News & Blog, Careers & Contact Us. 
 Layouts will be built with reusable React components, and data will be driven dynamically from the backend.
@@ -38,9 +39,9 @@ Using MongoDB with Mongoose, the following models are anticipated:
 - `GET /api/contact` - View contact messages (Admin)
 
 ## Admin Structure
-A custom React-based Admin Dashboard will be integrated into the frontend (under an `/admin` route or separate app), protected by JWT authentication.
+A custom React-based Admin Dashboard will be integrated into the frontend using Next.js route groups (under the `/admin` route), protected by JWT authentication. It will utilize Client Components for interactive functionalities.
 It will include content editors for all dynamic pages, as well as management interfaces for projects, blogs, jobs, and contact messages. 
-**Note:** The Admin CMS controls content only. Layouts are fixed React components.
+**Note:** The Admin CMS controls content only. Layouts are fixed React/Next.js components. The Page model remains database-driven via MongoDB.
 
 ## Cloudinary Structure
 Cloudinary will be used to store and serve all media assets (images, PDFs, etc.).
