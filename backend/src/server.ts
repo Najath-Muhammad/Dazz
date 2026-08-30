@@ -19,11 +19,16 @@ app.use(cors({
   credentials: true
 }));
 
+// Trust proxy (required for Render / Vercel reverse proxies to identify real user IPs)
+app.set('trust proxy', 1);
+
 // Security Middleware
 app.use(helmet());
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 100,
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 500, // 500 requests per 15 mins
+  standardHeaders: true,
+  legacyHeaders: false,
   message: { message: 'Too many requests, please try again later.' }
 });
 app.use('/api', limiter);
