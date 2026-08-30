@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { ProjectsHero } from '@/components/projects/ProjectsHero';
+import { PageHero } from '@/components/ui/PageHero';
 import { ProjectsClient } from '@/components/projects/ProjectsClient';
 
 export const metadata: Metadata = {
@@ -68,11 +68,13 @@ export default async function ProjectsPage({ params }: { params: Promise<{ lang:
 
   return (
     <main dir={dir} className="min-h-screen bg-slate-50 font-sans">
-      <ProjectsHero 
+      <PageHero 
+        variant="short" 
         title={heroTitle} 
         subtitle={heroSubtitle} 
         media={heroImage} 
         isAr={isAr} 
+        label={isAr ? 'معرض المشاريع' : 'PROJECT GALLERY'} 
       />
       <ProjectsClient 
         projects={projects}

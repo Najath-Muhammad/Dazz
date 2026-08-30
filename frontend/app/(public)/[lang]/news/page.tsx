@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { CinematicHero } from '@/components/home/CinematicHero';
+import { PageHero } from '@/components/ui/PageHero';
 import { NewsClient } from '@/components/news/NewsClient';
 
 export const metadata: Metadata = {
@@ -70,11 +70,13 @@ export default async function NewsPage({ params }: { params: Promise<{ lang: str
 
   return (
     <main dir={dir} className="min-h-screen bg-white">
-      <CinematicHero 
+      <PageHero 
+        variant="short"
         title={heroTitle}
         subtitle={heroSubtitle}
-        backgroundImage={heroImage}
+        media={heroImage}
         isAr={isAr}
+        label={isAr ? 'الأخبار' : 'NEWS & INSIGHTS'}
       />
       <NewsClient 
         blogs={blogs} 

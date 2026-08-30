@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { CinematicHero } from '@/components/home/CinematicHero';
+import { PageHero } from '@/components/ui/PageHero';
 import { ContactForm } from '@/components/contact/ContactForm';
 import { ArrowRight, MapPin, Phone, Mail, Globe } from 'lucide-react';
 import Link from 'next/link';
@@ -71,12 +71,13 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
 
   return (
     <main dir={dir} className="min-h-screen bg-slate-50">
-      <CinematicHero 
+      <PageHero 
+        variant="short"
         title={heroTitle}
         subtitle={heroSubtitle}
-        backgroundImage={heroImage}
-        hideExtras={true}
+        media={heroImage}
         isAr={isAr}
+        label={isAr ? 'اتصل بنا' : 'CONTACT US'}
       />
 
       <section id="contact-form" className="py-24 px-6 relative z-10 -mt-20">

@@ -1,11 +1,11 @@
 import { Metadata } from 'next';
-import { CinematicHero } from '@/components/home/CinematicHero';
+import { PageHero } from '@/components/ui/PageHero';
 import { ShortAboutSection } from '@/components/home/ShortAboutSection';
-import { DivisionsSection } from '@/components/home/DivisionsSection';
+import { DivisionsList } from '@/components/ui/DivisionsList';
 import { WhyDazzSection } from '@/components/home/WhyDazzSection';
 import { FeaturedProjectsSection } from '@/components/home/FeaturedProjectsSection';
 import { LatestBlogSection } from '@/components/home/LatestBlogSection';
-import { ContactCTASection } from '@/components/home/ContactCTASection';
+import { CallToAction } from '@/components/ui/CallToAction';
 
 export const dynamic = 'force-dynamic';
 
@@ -89,13 +89,32 @@ export default async function LocalizedHomePage({ params }: { params: Promise<{ 
   return (
     <div dir={isAr ? 'rtl' : 'ltr'}>
       {/* 1. Hero */}
-      <CinematicHero title={heroTitle || ''} subtitle={heroSubtitle || ''} backgroundImage={heroBg} isAr={isAr} />
+      <PageHero 
+        variant="home"
+        title={heroTitle || ''} 
+        subtitle={heroSubtitle || ''} 
+        media={heroBg} 
+        isAr={isAr} 
+      >
+        <div className="pt-8 border-t border-white/10 grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-16 max-w-2xl">
+          {[
+            { num: '500+', label: isAr ? 'متخصص' : 'Specialists' },
+            { num: '4', label: isAr ? 'قطاعات' : 'Divisions' },
+            { num: '15+', label: isAr ? 'سنوات من الخبرة' : 'Years Active' },
+          ].map((stat) => (
+            <div key={stat.label} className={`group ${isAr ? 'text-right' : ''}`}>
+              <p className={`text-4xl md:text-5xl font-extrabold text-white tracking-tighter group-hover:text-dazz-gold transition-colors ${isAr ? 'font-arabic' : ''}`}>{stat.num}</p>
+              <p className={`text-[10px] md:text-xs font-mono mt-2 tracking-[0.2em] text-white/50 ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>{stat.label}</p>
+            </div>
+          ))}
+        </div>
+      </PageHero>
 
       {/* 2. Short About Us */}
       <ShortAboutSection image={aboutImage} isAr={isAr} />
 
       {/* 3. Our Divisions */}
-      <DivisionsSection isAr={isAr} />
+      <DivisionsList isAr={isAr} variant="grid" />
 
       {/* 4. Why Dazz / Key Strengths */}
       <WhyDazzSection isAr={isAr} />
@@ -107,7 +126,18 @@ export default async function LocalizedHomePage({ params }: { params: Promise<{ 
       <LatestBlogSection posts={blogs} isAr={isAr} />
 
       {/* 7. Final Contact CTA */}
-      <ContactCTASection isAr={isAr} />
+      <CallToAction 
+        variant="dark"
+        titleLine1={isAr ? 'نبني اليوم.' : 'BUILD TODAY.'}
+        titleLine2={isAr ? 'نقود الغد.' : 'LEAD TOMORROW.'}
+        description={isAr ? 'تواصل مع فريق خبرائنا اليوم لمناقشة كيف يمكن لداز تريدلينك تقديم قيمة ملموسة لأعمالك.' : 'Contact our team of experts today to discuss how Dazz Tradlink can deliver measurable value to your business.'}
+        label={isAr ? 'جاهزون للشراكة' : 'Ready to Partner'}
+        primaryButtonText={isAr ? 'اتصل بنا' : 'CONTACT US'}
+        primaryButtonLink={isAr ? '/ar/contact' : '/contact'}
+        secondaryButtonText={isAr ? 'خدماتنا' : 'OUR SERVICES'}
+        secondaryButtonLink={isAr ? '/ar/services' : '/en/services'}
+        isAr={isAr}
+      />
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { CinematicHero } from '@/components/home/CinematicHero';
+import { PageHero } from '@/components/ui/PageHero';
 import Link from 'next/link';
 import { ArrowRight, Briefcase } from 'lucide-react';
 import { WhyWorkWithUsInteractive } from '@/components/careers/WhyWorkWithUsInteractive';
@@ -76,11 +76,13 @@ export default async function CareersPage({ params }: { params: Promise<{ lang: 
 
   return (
     <main dir={dir} className="min-h-screen bg-white">
-      <CinematicHero 
+      <PageHero 
+        variant="standard"
         title={heroTitle}
         subtitle={heroSubtitle}
-        backgroundImage={heroImage}
+        media={heroImage}
         isAr={isAr}
+        label={isAr ? 'الوظائف' : 'CAREERS'}
       />
 
       {/* Why Work With Us */}

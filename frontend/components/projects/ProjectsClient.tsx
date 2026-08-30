@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useMemo } from 'react';
 import { ProjectsFilter } from './ProjectsFilter';
-import { CinematicProjectCard } from './CinematicProjectCard';
+import { ProjectCard } from '@/components/ui/ProjectCard';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import { Button } from '@/components/Button';
@@ -71,7 +71,7 @@ export function ProjectsClient({ projects, lang, isAr, dir }: ProjectsClientProp
                 const isLarge = index % 4 === 0;
                 
                 return (
-                  <CinematicProjectCard 
+                  <ProjectCard 
                     key={p._id}
                     title={p.title?.[lang] || p.title?.en || ''}
                     category={p.category?.[lang] || p.category?.en || ''}
@@ -80,8 +80,10 @@ export function ProjectsClient({ projects, lang, isAr, dir }: ProjectsClientProp
                     year={p.year}
                     location={p.location?.[lang] || p.location?.en}
                     index={index}
-                    isLarge={isLarge}
+                    size={isLarge ? 'large' : 'normal'}
+                    variant="cinematic"
                     lang={lang}
+                    isAr={isAr}
                   />
                 );
               })

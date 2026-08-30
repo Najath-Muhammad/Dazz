@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { CinematicHero } from '@/components/home/CinematicHero';
+import { PageHero } from '@/components/ui/PageHero';
 import ApplicationForm from '@/components/careers/ApplicationForm';
 
 export const metadata: Metadata = {
@@ -17,10 +17,11 @@ export default async function GeneralApplicationPage({ params }: { params: Promi
 
   return (
     <main dir={dir} className="min-h-screen bg-slate-50 pb-24">
-      <CinematicHero 
+      <PageHero 
+        variant="short"
         title={title}
         subtitle={subtitle}
-        backgroundImage="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg"
+        media="https://res.cloudinary.com/demo/image/upload/v1652343206/docs/models.jpg"
         isAr={isAr}
       />
       

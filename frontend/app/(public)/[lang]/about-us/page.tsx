@@ -1,13 +1,13 @@
 import { Metadata } from 'next';
-import { AboutHero } from '@/components/about/AboutHero';
+import { PageHero } from '@/components/ui/PageHero';
 import { WhoWeAre } from '@/components/about/WhoWeAre';
 import { MissionVision } from '@/components/about/MissionVision';
 import { OurApproach } from '@/components/about/OurApproach';
-import { AboutDivisions } from '@/components/about/AboutDivisions';
+import { DivisionsList } from '@/components/ui/DivisionsList';
 import { WhyDazz } from '@/components/about/WhyDazz';
 import { CoreValues } from '@/components/about/CoreValues';
 import { IndustrialExcellence } from '@/components/about/IndustrialExcellence';
-import { AboutCTA } from '@/components/about/AboutCTA';
+import { CallToAction } from '@/components/ui/CallToAction';
 
 export const metadata: Metadata = {
   title: 'About Us | Dazz Tradlink',
@@ -61,17 +61,35 @@ export default async function AboutUsPage({ params }: { params: Promise<{ lang: 
 
   return (
     <div dir={dir} className="bg-slate-950 font-sans">
-      <AboutHero title={heroTitle} subtitle={heroSubtitle} media={heroImage} isAr={isAr} />
+      <PageHero 
+        variant="standard" 
+        title={heroTitle} 
+        subtitle={heroSubtitle} 
+        media={heroImage} 
+        isAr={isAr} 
+        label={isAr ? 'عن داز' : 'ABOUT DAZZ'} 
+      />
       <WhoWeAre isAr={isAr} />
       {showMissionVision && (
         <MissionVision isAr={isAr} mission={mvSettings?.mission} vision={mvSettings?.vision} />
       )}
       <OurApproach isAr={isAr} />
-      <AboutDivisions isAr={isAr} />
+      <DivisionsList isAr={isAr} variant="interactive" />
       <WhyDazz isAr={isAr} />
       <CoreValues isAr={isAr} />
       <IndustrialExcellence isAr={isAr} />
-      <AboutCTA isAr={isAr} />
+      <CallToAction 
+        variant="light"
+        titleLine1={isAr ? 'دعنا نبني' : "LET'S BUILD"}
+        titleLine2={isAr ? 'ما هو قادم.' : "WHAT'S NEXT."}
+        description={isAr ? 'اكتشف قطاعاتنا أو تواصل مع فريقنا لمناقشة مبادرتك الكبرى القادمة.' : 'Explore our divisions or contact the team to discuss your next major initiative.'}
+        label="07"
+        primaryButtonText={isAr ? 'تواصل معنا' : 'CONTACT US'}
+        primaryButtonLink={`/${isAr ? 'ar' : 'en'}/contact`}
+        secondaryButtonText={isAr ? 'استكشف القطاعات' : 'EXPLORE DIVISIONS'}
+        secondaryButtonLink={`/${isAr ? 'ar' : 'en'}/services`}
+        isAr={isAr}
+      />
     </div>
   );
 }

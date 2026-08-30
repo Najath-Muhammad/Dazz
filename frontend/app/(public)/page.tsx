@@ -1,11 +1,11 @@
 import { Metadata } from 'next';
-import { CinematicHero } from '@/components/home/CinematicHero';
+import { PageHero } from '@/components/ui/PageHero';
 import { ShortAboutSection } from '@/components/home/ShortAboutSection';
-import { DivisionsSection } from '@/components/home/DivisionsSection';
+import { DivisionsList } from '@/components/ui/DivisionsList';
 import { WhyDazzSection } from '@/components/home/WhyDazzSection';
 import { FeaturedProjectsSection } from '@/components/home/FeaturedProjectsSection';
 import { LatestBlogSection } from '@/components/home/LatestBlogSection';
-import { ContactCTASection } from '@/components/home/ContactCTASection';
+import { CallToAction } from '@/components/ui/CallToAction';
 
 export const dynamic = 'force-dynamic';
 
@@ -85,13 +85,32 @@ export default async function HomePage() {
   return (
     <>
       {/* 1. Hero */}
-      <CinematicHero title={heroTitle} subtitle={heroSubtitle} backgroundImage={heroBg} isAr={false} />
+      <PageHero 
+        variant="home"
+        title={heroTitle} 
+        subtitle={heroSubtitle} 
+        media={heroBg} 
+        isAr={false} 
+      >
+        <div className="pt-8 border-t border-white/10 grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-16 max-w-2xl">
+          {[
+            { num: '500+', label: 'Specialists' },
+            { num: '4', label: 'Divisions' },
+            { num: '15+', label: 'Years Active' },
+          ].map((stat) => (
+            <div key={stat.label} className="group">
+              <p className="text-4xl md:text-5xl font-extrabold text-white tracking-tighter group-hover:text-dazz-gold transition-colors">{stat.num}</p>
+              <p className="text-[10px] md:text-xs font-mono mt-2 tracking-[0.2em] text-white/50 uppercase">{stat.label}</p>
+            </div>
+          ))}
+        </div>
+      </PageHero>
 
       {/* 2. Short About Us */}
       <ShortAboutSection image={aboutImage} />
 
       {/* 3. Our Divisions */}
-      <DivisionsSection />
+      <DivisionsList variant="grid" />
 
       {/* 4. Why Dazz / Key Strengths */}
       <WhyDazzSection />
@@ -103,7 +122,18 @@ export default async function HomePage() {
       <LatestBlogSection posts={blogs} />
 
       {/* 7. Final Contact CTA */}
-      <ContactCTASection />
+      <CallToAction 
+        variant="dark"
+        titleLine1="BUILD TODAY."
+        titleLine2="LEAD TOMORROW."
+        description="Contact our team of experts today to discuss how Dazz Tradlink can deliver measurable value to your business."
+        label="Ready to Partner"
+        primaryButtonText="CONTACT US"
+        primaryButtonLink="/contact"
+        secondaryButtonText="OUR SERVICES"
+        secondaryButtonLink="/en/services"
+        isAr={false}
+      />
     </>
   );
 }
