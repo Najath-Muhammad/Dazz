@@ -15,7 +15,7 @@ interface BlogPost {
   author?: string;
 }
 
-export function LatestBlogSection({ posts }: { posts: BlogPost[] }) {
+export function LatestBlogSection({ posts, isAr }: { posts: BlogPost[]; isAr?: boolean }) {
   const displayed = posts.slice(0, 3);
 
   const getImageUrl = (post: BlogPost) => {
@@ -26,7 +26,10 @@ export function LatestBlogSection({ posts }: { posts: BlogPost[] }) {
 
   const formatDate = (dateStr?: string) => {
     if (!dateStr) return '';
-    return new Date(dateStr).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    const date = new Date(dateStr);
+    return isAr 
+      ? date.toLocaleDateString('ar-SA', { year: 'numeric', month: 'long', day: 'numeric' })
+      : date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
   };
 
   return (
@@ -43,10 +46,16 @@ export function LatestBlogSection({ posts }: { posts: BlogPost[] }) {
           >
             <div className="flex items-center gap-3 mb-4">
               <div className="w-8 h-[1px] bg-dazz-navy" />
-              <span className="text-dazz-navy font-mono text-[10px] tracking-[0.3em] uppercase">Insights</span>
+              <span className="text-dazz-navy font-mono text-[10px] tracking-[0.3em] uppercase">
+                {isAr ? 'رؤى' : 'Insights'}
+              </span>
             </div>
-            <h2 id="blog-heading" className="text-5xl md:text-6xl font-extrabold uppercase tracking-tighter text-slate-900">
-              LATEST<br />NEWS
+            <h2 id="blog-heading" className={`text-5xl md:text-6xl font-extrabold tracking-tighter text-slate-900 ${isAr ? 'font-arabic text-4xl md:text-5xl' : 'uppercase'}`}>
+              {isAr ? (
+                <>أحدث<br />الأخبار</>
+              ) : (
+                <>LATEST<br />NEWS</>
+              )}
             </h2>
           </motion.div>
 
@@ -57,11 +66,11 @@ export function LatestBlogSection({ posts }: { posts: BlogPost[] }) {
             transition={{ duration: 0.7, delay: 0.2 }}
           >
             <Link
-              href="/news"
-              className="group flex items-center gap-3 text-sm font-bold tracking-widest uppercase text-slate-400 hover:text-dazz-navy transition-colors"
+              href={isAr ? '/ar/news' : '/news'}
+              className={`group flex items-center gap-3 text-sm font-bold tracking-widest text-slate-400 hover:text-dazz-navy transition-colors ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}
             >
-              View All Articles
-              <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+              {isAr ? 'عرض جميع المقالات' : 'View All Articles'}
+              <ArrowRight size={16} className={`transition-transform ${isAr ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1'}`} />
             </Link>
           </motion.div>
         </div>
@@ -69,7 +78,7 @@ export function LatestBlogSection({ posts }: { posts: BlogPost[] }) {
         {/* Posts */}
         {displayed.length === 0 ? (
           <div className="text-center py-24 text-slate-400 border border-slate-200">
-            Articles coming soon.
+            {isAr ? 'المقالات قريباً.' : 'Articles coming soon.'}
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -103,16 +112,16 @@ export function LatestBlogSection({ posts }: { posts: BlogPost[] }) {
                         {formatDate(post.publishedAt)}
                       </p>
                     )}
-                    <h3 className="text-xl font-extrabold uppercase tracking-tight text-slate-900 group-hover:text-dazz-navy transition-colors leading-tight mb-4">
-                      {post.title?.en}
+                    <h3 className={`text-xl font-extrabold tracking-tight text-slate-900 group-hover:text-dazz-navy transition-colors leading-tight mb-4 ${isAr ? 'font-arabic' : 'uppercase'}`}>
+                      {isAr ? (post.title?.ar || post.title?.en) : post.title?.en}
                     </h3>
-                    {post.excerpt?.en && (
-                      <p className="text-sm text-slate-500 font-light leading-relaxed line-clamp-2 mb-6">
-                        {post.excerpt.en}
+                    {(isAr ? post.excerpt?.ar || post.excerpt?.en : post.excerpt?.en) && (
+                      <p className={`text-sm text-slate-500 font-light leading-relaxed line-clamp-2 mb-6 ${isAr ? 'font-arabic' : ''}`}>
+                        {isAr ? (post.excerpt?.ar || post.excerpt?.en) : post.excerpt?.en}
                       </p>
                     )}
-                    <div className="mt-auto flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-slate-400 group-hover:text-dazz-navy transition-colors">
-                      Read Article
+                    <div className={`mt-auto flex items-center gap-2 text-xs font-bold tracking-widest text-slate-400 group-hover:text-dazz-navy transition-colors ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>
+                      {isAr ? 'اقرأ المقال' : 'Read Article'}
                       <span className="w-6 h-px bg-current group-hover:w-10 transition-all duration-300" />
                     </div>
                   </div>

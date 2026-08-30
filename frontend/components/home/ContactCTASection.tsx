@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 
-export function ContactCTASection() {
+export function ContactCTASection({ isAr }: { isAr?: boolean }) {
   return (
     <section className="relative py-28 md:py-40 bg-dazz-navy overflow-hidden" aria-labelledby="cta-heading">
       {/* Background grid */}
@@ -31,7 +31,9 @@ export function ContactCTASection() {
         >
           <div className="flex items-center justify-center gap-4 mb-10">
             <div className="w-16 h-px bg-dazz-gold/50" />
-            <span className="text-dazz-gold font-mono text-[10px] tracking-[0.3em] uppercase">Ready to Partner</span>
+            <span className="text-dazz-gold font-mono text-[10px] tracking-[0.3em] uppercase">
+              {isAr ? 'جاهزون للشراكة' : 'Ready to Partner'}
+            </span>
             <div className="w-16 h-px bg-dazz-gold/50" />
           </div>
         </motion.div>
@@ -43,10 +45,13 @@ export function ContactCTASection() {
             whileInView={{ y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="text-6xl md:text-8xl lg:text-[100px] font-extrabold text-white uppercase tracking-tighter leading-[0.95]"
+            className={`text-6xl md:text-8xl lg:text-[100px] font-extrabold text-white tracking-tighter leading-[0.95] ${isAr ? 'font-arabic text-5xl md:text-7xl lg:text-[80px]' : 'uppercase'}`}
           >
-            BUILD TODAY.<br />
-            <span className="text-dazz-gold">LEAD TOMORROW.</span>
+            {isAr ? (
+              <>نبني اليوم.<br /><span className="text-dazz-gold">نقود الغد.</span></>
+            ) : (
+              <>BUILD TODAY.<br /><span className="text-dazz-gold">LEAD TOMORROW.</span></>
+            )}
           </motion.h2>
         </div>
 
@@ -55,9 +60,9 @@ export function ContactCTASection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, delay: 0.3 }}
-          className="text-lg md:text-xl text-white/50 max-w-2xl mx-auto font-light leading-relaxed mb-14"
+          className={`text-lg md:text-xl text-white/50 max-w-2xl mx-auto font-light leading-relaxed mb-14 ${isAr ? 'font-arabic' : ''}`}
         >
-          Contact our team of experts today to discuss how Dazz Tradlink can deliver measurable value to your business.
+          {isAr ? 'تواصل مع فريق خبرائنا اليوم لمناقشة كيف يمكن لداز تريدلينك تقديم قيمة ملموسة لأعمالك.' : 'Contact our team of experts today to discuss how Dazz Tradlink can deliver measurable value to your business.'}
         </motion.p>
 
         <motion.div
@@ -68,17 +73,17 @@ export function ContactCTASection() {
           className="flex flex-col sm:flex-row items-center justify-center gap-5"
         >
           <Link
-            href="/contact"
-            className="group flex items-center gap-3 px-10 py-5 bg-dazz-gold text-dazz-navy text-sm font-bold tracking-widest uppercase hover:bg-dazz-gold-light transition-all duration-300"
+            href={isAr ? '/ar/contact' : '/contact'}
+            className={`group flex items-center gap-3 px-10 py-5 bg-dazz-gold text-dazz-navy text-sm font-bold tracking-widest hover:bg-dazz-gold-light transition-all duration-300 ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}
           >
-            CONTACT US
-            <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+            {isAr ? 'اتصل بنا' : 'CONTACT US'}
+            <ArrowRight size={16} className={`transition-transform ${isAr ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1'}`} />
           </Link>
           <Link
-            href="/en/services"
-            className="group flex items-center gap-3 text-sm font-bold tracking-widest uppercase text-white/40 hover:text-white transition-colors"
+            href={isAr ? '/ar/services' : '/en/services'}
+            className={`group flex items-center gap-3 text-sm font-bold tracking-widest text-white/40 hover:text-white transition-colors ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}
           >
-            OUR SERVICES
+            {isAr ? 'خدماتنا' : 'OUR SERVICES'}
             <span className="w-10 h-px bg-current group-hover:w-16 transition-all duration-300" />
           </Link>
         </motion.div>

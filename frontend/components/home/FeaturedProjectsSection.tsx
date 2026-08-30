@@ -14,7 +14,7 @@ interface Project {
   description?: { en: string };
 }
 
-export function FeaturedProjectsSection({ projects }: { projects: Project[] }) {
+export function FeaturedProjectsSection({ projects, isAr }: { projects: Project[]; isAr?: boolean }) {
   const displayed = projects.slice(0, 5);
 
   const getImageUrl = (p: Project) => {
@@ -37,10 +37,16 @@ export function FeaturedProjectsSection({ projects }: { projects: Project[] }) {
           >
             <div className="flex items-center gap-3 mb-4">
               <div className="w-8 h-[1px] bg-dazz-navy" />
-              <span className="text-dazz-navy font-mono text-[10px] tracking-[0.3em] uppercase">Portfolio</span>
+              <span className="text-dazz-navy font-mono text-[10px] tracking-[0.3em] uppercase">
+                {isAr ? 'محفظة الأعمال' : 'Portfolio'}
+              </span>
             </div>
-            <h2 id="projects-heading" className="text-5xl md:text-6xl font-extrabold uppercase tracking-tighter text-slate-900">
-              FEATURED<br />PROJECTS
+            <h2 id="projects-heading" className={`text-5xl md:text-6xl font-extrabold tracking-tighter text-slate-900 ${isAr ? 'font-arabic text-4xl md:text-5xl' : 'uppercase'}`}>
+              {isAr ? (
+                <>مشاريع<br />متميزة</>
+              ) : (
+                <>FEATURED<br />PROJECTS</>
+              )}
             </h2>
           </motion.div>
 
@@ -51,11 +57,11 @@ export function FeaturedProjectsSection({ projects }: { projects: Project[] }) {
             transition={{ duration: 0.7, delay: 0.2 }}
           >
             <Link
-              href="/projects"
-              className="group flex items-center gap-3 text-sm font-bold tracking-widest uppercase text-slate-400 hover:text-dazz-navy transition-colors"
+              href={isAr ? '/ar/projects' : '/projects'}
+              className={`group flex items-center gap-3 text-sm font-bold tracking-widest text-slate-400 hover:text-dazz-navy transition-colors ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}
             >
-              View All Projects
-              <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+              {isAr ? 'عرض جميع المشاريع' : 'View All Projects'}
+              <ArrowRight size={16} className={`transition-transform ${isAr ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1'}`} />
             </Link>
           </motion.div>
         </div>
@@ -63,7 +69,7 @@ export function FeaturedProjectsSection({ projects }: { projects: Project[] }) {
         {/* Projects */}
         {displayed.length === 0 ? (
           <div className="text-center py-24 text-slate-400 border border-slate-100">
-            Projects coming soon.
+            {isAr ? 'المشاريع قريباً.' : 'Projects coming soon.'}
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
@@ -87,10 +93,10 @@ export function FeaturedProjectsSection({ projects }: { projects: Project[] }) {
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent" />
                   <div className="absolute bottom-0 left-0 p-8">
                     <p className="text-xs font-mono text-dazz-gold tracking-widest mb-2">
-                      {displayed[0].location?.en || 'Saudi Arabia'}
+                      {isAr ? (displayed[0].location?.ar || displayed[0].location?.en || 'المملكة العربية السعودية') : (displayed[0].location?.en || 'Saudi Arabia')}
                     </p>
-                    <h3 className="text-2xl md:text-3xl font-extrabold text-white uppercase tracking-tight group-hover:text-dazz-gold transition-colors">
-                      {displayed[0].title?.en}
+                    <h3 className={`text-2xl md:text-3xl font-extrabold text-white tracking-tight group-hover:text-dazz-gold transition-colors ${isAr ? 'font-arabic' : 'uppercase'}`}>
+                      {isAr ? (displayed[0].title?.ar || displayed[0].title?.en) : displayed[0].title?.en}
                     </h3>
                   </div>
                 </Link>
@@ -117,8 +123,8 @@ export function FeaturedProjectsSection({ projects }: { projects: Project[] }) {
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/10 to-transparent" />
                     <div className="absolute bottom-0 left-0 p-6">
-                      <h3 className="text-lg font-extrabold text-white uppercase tracking-tight group-hover:text-dazz-gold transition-colors">
-                        {project.title?.en}
+                      <h3 className={`text-lg font-extrabold text-white tracking-tight group-hover:text-dazz-gold transition-colors ${isAr ? 'font-arabic' : 'uppercase'}`}>
+                        {isAr ? (project.title?.ar || project.title?.en) : project.title?.en}
                       </h3>
                     </div>
                   </Link>
@@ -146,8 +152,8 @@ export function FeaturedProjectsSection({ projects }: { projects: Project[] }) {
                   )}
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/10 to-transparent" />
                   <div className="absolute bottom-0 left-0 p-6">
-                    <h3 className="text-base font-extrabold text-white uppercase tracking-tight group-hover:text-dazz-gold transition-colors">
-                      {project.title?.en}
+                    <h3 className={`text-base font-extrabold text-white tracking-tight group-hover:text-dazz-gold transition-colors ${isAr ? 'font-arabic' : 'uppercase'}`}>
+                      {isAr ? (project.title?.ar || project.title?.en) : project.title?.en}
                     </h3>
                   </div>
                 </Link>

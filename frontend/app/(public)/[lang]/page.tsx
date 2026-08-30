@@ -82,22 +82,22 @@ export default async function LocalizedHomePage({ params }: { params: { lang: st
       <CinematicHero title={heroTitle || ''} subtitle={heroSubtitle || ''} backgroundImage={heroBg} />
 
       {/* 2. Short About Us */}
-      <ShortAboutSection image={aboutImage} />
+      <ShortAboutSection image={aboutImage} isAr={isAr} />
 
       {/* 3. Our Divisions */}
-      <DivisionsSection />
+      <DivisionsSection isAr={isAr} />
 
       {/* 4. Why Dazz / Key Strengths */}
-      <WhyDazzSection />
+      <WhyDazzSection isAr={isAr} />
 
       {/* 5. Featured Projects */}
-      <FeaturedProjectsSection projects={projects} />
+      <FeaturedProjectsSection projects={projects} isAr={isAr} />
 
       {/* 6. Latest News / Blog */}
-      <LatestBlogSection posts={blogs} />
+      <LatestBlogSection posts={blogs} isAr={isAr} />
 
       {/* 7. Final Contact CTA */}
-      <ContactCTASection />
+      <ContactCTASection isAr={isAr} />
     </div>
   );
 }

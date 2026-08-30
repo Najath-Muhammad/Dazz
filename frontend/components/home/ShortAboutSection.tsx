@@ -7,9 +7,10 @@ import { ArrowRight } from 'lucide-react';
 
 interface AboutProps {
   image?: any;
+  isAr?: boolean;
 }
 
-export function ShortAboutSection({ image }: AboutProps) {
+export function ShortAboutSection({ image, isAr }: AboutProps) {
   return (
     <section className="py-24 md:py-32 bg-white overflow-hidden" aria-labelledby="about-heading">
       <div className="max-w-[1400px] mx-auto px-6">
@@ -25,20 +26,26 @@ export function ShortAboutSection({ image }: AboutProps) {
             >
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-8 h-[1px] bg-dazz-navy" />
-                <span className="text-dazz-navy font-mono text-[10px] tracking-[0.3em] uppercase">About Dazz</span>
+                <span className="text-dazz-navy font-mono text-[10px] tracking-[0.3em] uppercase">
+                  {isAr ? 'عن داز' : 'About Dazz'}
+                </span>
               </div>
-              <h2 id="about-heading" className="text-5xl md:text-6xl font-extrabold uppercase tracking-tighter text-slate-900 leading-[1] mb-8">
-                PROUDLY<br />OPERATING<br />ACROSS THE<br />KINGDOM
+              <h2 id="about-heading" className={`text-5xl md:text-6xl font-extrabold tracking-tighter text-slate-900 leading-[1.1] mb-8 ${isAr ? 'font-arabic text-4xl md:text-5xl' : 'uppercase'}`}>
+                {isAr ? (
+                  <>نعمل<br />بفخر<br />في جميع أنحاء<br />المملكة</>
+                ) : (
+                  <>PROUDLY<br />OPERATING<br />ACROSS THE<br />KINGDOM</>
+                )}
               </h2>
-              <p className="text-slate-600 leading-relaxed text-base md:text-lg mb-8">
-                Dazz Tradlink International is a Saudi-rooted conglomerate operating across four integrated divisions. With a nationwide presence and a deeply skilled workforce, we are committed to Saudi Vision 2030 and building long-term partnerships that endure.
+              <p className={`text-slate-600 leading-relaxed text-base md:text-lg mb-8 ${isAr ? 'font-arabic' : ''}`}>
+                {isAr ? 'داز تريدلينك العالمية هي مجموعة متأصلة في المملكة العربية السعودية تعمل عبر أربعة أقسام متكاملة. بفضل تواجدنا على مستوى المملكة والقوى العاملة ذات المهارات العالية، نحن ملتزمون برؤية السعودية 2030 وبناء شراكات طويلة الأمد.' : 'Dazz Tradlink International is a Saudi-rooted conglomerate operating across four integrated divisions. With a nationwide presence and a deeply skilled workforce, we are committed to Saudi Vision 2030 and building long-term partnerships that endure.'}
               </p>
               <Link
-                href="/about-us"
-                className="group inline-flex items-center gap-3 text-sm font-bold tracking-widest uppercase text-dazz-navy hover:text-dazz-gold transition-colors"
+                href={isAr ? '/ar/about-us' : '/about-us'}
+                className={`group inline-flex items-center gap-3 text-sm font-bold tracking-widest text-dazz-navy hover:text-dazz-gold transition-colors ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}
               >
-                Read More About Us
-                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                {isAr ? 'اقرأ المزيد عنا' : 'Read More About Us'}
+                <ArrowRight size={16} className={`transition-transform ${isAr ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1'}`} />
               </Link>
             </motion.div>
           </div>
