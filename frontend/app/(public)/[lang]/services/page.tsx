@@ -33,8 +33,9 @@ async function getHeroSettings() {
   }
 }
 
-export default async function ServicesListingPage({ params }: { params: { lang: string } }) {
-  const lang = params.lang || 'en';
+export default async function ServicesListingPage({ params }: { params: Promise<{ lang: string }> }) {
+  const resolvedParams = await params;
+  const lang = resolvedParams.lang || 'en';
   const isAr = lang === 'ar';
   const dir = isAr ? 'rtl' : 'ltr';
 
@@ -43,8 +44,21 @@ export default async function ServicesListingPage({ params }: { params: { lang: 
   
   const servicesHeader = settings?.pageHeaders?.services;
   
-  const heroTitle = servicesHeader?.title || (isAr ? 'خدماتنا' : 'OUR DIVISIONS & SERVICES');
-  const heroSubtitle = servicesHeader?.subtitle || (isAr ? 'استكشف مجموعتنا الشاملة من الخدمات المتخصصة.' : 'Explore our comprehensive range of specialized services.');
+  let heroTitle = servicesHeader?.title;
+  if (!heroTitle || (typeof heroTitle === 'string' && heroTitle.toUpperCase().includes('SERVICES'))) {
+    heroTitle = isAr ? 'خدماتنا' : 'OUR SERVICES';
+  } else if (typeof heroTitle === 'object') {
+    heroTitle = isAr ? (heroTitle.ar || heroTitle.en) : heroTitle.en;
+  }
+
+  let heroSubtitle = servicesHeader?.subtitle;
+  if (!heroSubtitle || (typeof heroSubtitle === 'string' && heroSubtitle.startsWith('Delivering Quality'))) {
+    heroSubtitle = isAr 
+      ? 'تقديم حلول عالية الجودة في البناء والصناعة.' 
+      : 'Delivering Quality Solutions Across Construction and Industry';
+  } else if (typeof heroSubtitle === 'object') {
+    heroSubtitle = isAr ? (heroSubtitle.ar || heroSubtitle.en) : heroSubtitle.en;
+  }
   
   const rawBg = servicesHeader?.media;
   const heroImage = rawBg?.url || (typeof rawBg === 'string' && rawBg !== '' ? rawBg : '/images/service-hero.png');
