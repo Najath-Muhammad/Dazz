@@ -43,7 +43,7 @@ git push origin main
    - **Branch**: `main`
    - **Root Directory**: `backend`
    - **Environment**: `Node`
-   - **Build Command**: `npm run build`
+   - **Build Command**: `npm install && npm run build`
    - **Start Command**: `npm start`
 5. Add Environment Variables under **Advanced**:
    - `NODE_ENV` = `production`
