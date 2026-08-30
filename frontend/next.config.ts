@@ -3,7 +3,9 @@ import type { NextConfig } from "next";
 import path from 'path';
 
 const nextConfig: NextConfig = {
-  outputFileTracingRoot: path.join(__dirname, '../../'),
+  turbopack: {
+    root: __dirname,
+  },
   allowedDevOrigins: ['172.23.224.1', 'localhost'],
   images: {
     remotePatterns: [
