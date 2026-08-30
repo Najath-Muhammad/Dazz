@@ -16,10 +16,10 @@ interface Props {
 }
 
 const CATEGORIES = [
-  { value: 'construction', label: 'Construction' },
-  { value: 'food-trading', label: 'Food Trading' },
-  { value: 'logistics', label: 'Logistics' },
-  { value: 'hospitality', label: 'Hospitality' },
+  { value: 'construction', label: 'Construction & Infrastructure' },
+  { value: 'hospitality', label: 'Real Estate & Hospitality' },
+  { value: 'food-trading', label: 'Trading & Distribution' },
+  { value: 'logistics', label: 'Logistics & Environmental Solutions' },
   { value: 'other', label: 'Other' },
 ];
 

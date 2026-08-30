@@ -499,7 +499,7 @@ const servicesData = [
       ar: 'خدمات إدارة النفايات'
     },
     slug: 'waste-management-services',
-    category: 'construction',
+    category: 'logistics',
     shortDescription: {
       en: 'Cleaner Worksites. A Better Future.',
       ar: 'موقع عمل أنظف. مستقبل أفضل.'
