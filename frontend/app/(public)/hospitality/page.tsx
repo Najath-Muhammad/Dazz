@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     canonical: '/hospitality',
   },
   openGraph: {
-    title: 'Hospitality | Dazz Tradelink',
+    title: 'Hospitality | Dazz Tradlink',
     description: 'Creating luxurious experiences and managing world-class facilities globally.',
     url: '/hospitality',
     images: [
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Hospitality | Dazz Tradelink',
+        alt: 'Hospitality | Dazz Tradlink',
       }
     ],
   },

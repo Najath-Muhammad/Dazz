@@ -1,6 +1,6 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import api from '@/lib/api';
+import { authService } from '@/services/authService';
 
 export default function AdminDashboardPage() {
   const [admin, setAdmin] = useState<{name: string, email: string} | null>(null);
@@ -10,9 +10,9 @@ export default function AdminDashboardPage() {
   useEffect(() => {
     const fetchAdminProfile = async () => {
       try {
-        const data: any = await api.get('/auth/me');
+        const data = await authService.getMe();
         setAdmin(data);
-      } catch (err: any) {
+      } catch (err: SafeAny) {
         setError('Failed to load profile data.');
       } finally {
         setLoading(false);

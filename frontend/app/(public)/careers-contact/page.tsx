@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     canonical: '/careers-contact',
   },
   openGraph: {
-    title: 'Careers & Contact | Dazz Tradelink',
+    title: 'Careers & Contact | Dazz Tradlink',
     description: 'Join our team of global professionals or get in touch with our corporate headquarters for business inquiries.',
     url: '/careers-contact',
     images: [
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Careers & Contact | Dazz Tradelink',
+        alt: 'Careers & Contact | Dazz Tradlink',
       }
     ],
   },
@@ -60,7 +60,7 @@ export default function CareersContactPage() {
                     <svg className="w-6 h-6 text-amber-500 mr-3 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
-                    <span>info@dazztradelink.com</span>
+                    <span>info@dazztradlink.com</span>
                   </li>
                 </ul>
               </div>
@@ -70,22 +70,22 @@ export default function CareersContactPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-1">First Name</label>
-                    <input type="text" className="w-full border border-slate-300 rounded-sm px-4 py-2 focus:ring-amber-500 focus:border-amber-500" placeholder="John" />
+                    <input suppressHydrationWarning type="text" className="w-full border border-slate-300 rounded-sm px-4 py-2 focus:ring-amber-500 focus:border-amber-500" placeholder="John" />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-1">Last Name</label>
-                    <input type="text" className="w-full border border-slate-300 rounded-sm px-4 py-2 focus:ring-amber-500 focus:border-amber-500" placeholder="Doe" />
+                    <input suppressHydrationWarning type="text" className="w-full border border-slate-300 rounded-sm px-4 py-2 focus:ring-amber-500 focus:border-amber-500" placeholder="Doe" />
                   </div>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">Email Address</label>
-                  <input type="email" className="w-full border border-slate-300 rounded-sm px-4 py-2 focus:ring-amber-500 focus:border-amber-500" placeholder="john@example.com" />
+                  <input suppressHydrationWarning type="email" className="w-full border border-slate-300 rounded-sm px-4 py-2 focus:ring-amber-500 focus:border-amber-500" placeholder="john@example.com" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">Message</label>
                   <textarea rows={4} className="w-full border border-slate-300 rounded-sm px-4 py-2 focus:ring-amber-500 focus:border-amber-500" placeholder="How can we help you?"></textarea>
                 </div>
-                <Button variant="primary" type="button" className="w-full md:w-auto">Send Message</Button>
+                <Button suppressHydrationWarning variant="primary" type="button" className="w-full md:w-auto">Send Message</Button>
               </form>
             </div>
 
@@ -104,7 +104,7 @@ export default function CareersContactPage() {
                     <span className="bg-slate-100 text-slate-600 text-xs px-2 py-1 rounded font-semibold uppercase tracking-wider">Construction</span>
                   </div>
                   <p className="text-slate-500 text-sm mb-4">Dubai, UAE • Full-time</p>
-                  <Button variant="outline" size="sm">Apply Now</Button>
+                  <Button suppressHydrationWarning variant="outline" size="sm">Apply Now</Button>
                 </div>
 
                 <div className="p-6 border border-slate-200 hover:border-amber-500 transition-colors bg-white rounded-sm">
@@ -113,7 +113,7 @@ export default function CareersContactPage() {
                     <span className="bg-slate-100 text-slate-600 text-xs px-2 py-1 rounded font-semibold uppercase tracking-wider">Logistics</span>
                   </div>
                   <p className="text-slate-500 text-sm mb-4">Singapore • Full-time</p>
-                  <Button variant="outline" size="sm">Apply Now</Button>
+                  <Button suppressHydrationWarning variant="outline" size="sm">Apply Now</Button>
                 </div>
 
                 <div className="p-6 border border-slate-200 hover:border-amber-500 transition-colors bg-white rounded-sm">
@@ -122,7 +122,7 @@ export default function CareersContactPage() {
                     <span className="bg-slate-100 text-slate-600 text-xs px-2 py-1 rounded font-semibold uppercase tracking-wider">Food Trading</span>
                   </div>
                   <p className="text-slate-500 text-sm mb-4">London, UK • Full-time</p>
-                  <Button variant="outline" size="sm">Apply Now</Button>
+                  <Button suppressHydrationWarning variant="outline" size="sm">Apply Now</Button>
                 </div>
               </div>
             </div>

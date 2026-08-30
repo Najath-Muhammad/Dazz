@@ -1,12 +1,21 @@
-import { Router } from 'express';
-import { getContactMessages, getContactMessageById, createContactMessage, updateContactMessage, deleteContactMessage } from '../controllers/contactMessageController';
+import express from 'express';
+import { protect } from '../middlewares/authMiddleware';
+import { ContactMessageRepository } from '../repositories/implementations/ContactMessageRepository';
+import { ContactMessageService } from '../services/implementations/ContactMessageService';
+import { ContactMessageController } from '../controllers/implementations/ContactMessageController';
 
-const router = Router();
+const router = express.Router();
 
-router.get('/', getContactMessages);
-router.get('/:id', getContactMessageById);
-router.post('/', createContactMessage);
-router.put('/:id', updateContactMessage);
-router.delete('/:id', deleteContactMessage);
+const repository = new ContactMessageRepository();
+const service = new ContactMessageService(repository);
+const controller = new ContactMessageController(service);
+
+router.get('/', protect, controller.getContactMessages);
+router.get('/:id', protect, controller.getContactMessageById);
+
+router.post('/', controller.createContactMessage);
+router.put('/:id', protect, controller.updateContactMessage);
+router.put('/:id/status', protect, controller.updateContactMessageStatus);
+router.delete('/:id', protect, controller.deleteContactMessage);
 
 export default router;

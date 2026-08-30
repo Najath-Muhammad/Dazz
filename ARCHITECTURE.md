@@ -1,4 +1,4 @@
-# Dazz Tradelink Architecture Document
+# Dazz Tradlink Architecture Document
 
 ## Frontend Structure
 The frontend is built with Next.js (App Router), utilizing Server Components by default and Client Components only where browser-side interactivity is required.

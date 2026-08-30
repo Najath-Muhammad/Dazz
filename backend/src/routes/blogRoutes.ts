@@ -1,13 +1,20 @@
-import { Router } from 'express';
-import { getBlogs, getBlogById, getBlogBySlug, createBlog, updateBlog, deleteBlog } from '../controllers/blogController';
+import express from 'express';
+import { protect } from '../middlewares/authMiddleware';
+import { BlogRepository } from '../repositories/implementations/BlogRepository';
+import { BlogService } from '../services/implementations/BlogService';
+import { BlogController } from '../controllers/implementations/BlogController';
 
-const router = Router();
+const router = express.Router();
 
-router.get('/', getBlogs);
-router.get('/slug/:slug', getBlogBySlug);
-router.get('/:id', getBlogById);
-router.post('/', createBlog);
-router.put('/:id', updateBlog);
-router.delete('/:id', deleteBlog);
+const repository = new BlogRepository();
+const service = new BlogService(repository);
+const controller = new BlogController(service);
+
+router.get('/', controller.getBlogs);
+router.get('/slug/:slug', controller.getBlogBySlug);
+router.get('/:id', controller.getBlogById);
+router.post('/', protect, controller.createBlog);
+router.put('/:id', protect, controller.updateBlog);
+router.delete('/:id', protect, controller.deleteBlog);
 
 export default router;

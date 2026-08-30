@@ -1,12 +1,20 @@
-import { Router } from 'express';
-import { getSiteSettingss, getSiteSettingsById, createSiteSettings, updateSiteSettings, deleteSiteSettings } from '../controllers/siteSettingsController';
+import express from 'express';
+import { protect } from '../middlewares/authMiddleware';
+import { SiteSettingsRepository } from '../repositories/implementations/SiteSettingsRepository';
+import { SiteSettingsService } from '../services/implementations/SiteSettingsService';
+import { SiteSettingsController } from '../controllers/implementations/SiteSettingsController';
 
-const router = Router();
+const router = express.Router();
 
-router.get('/', getSiteSettingss);
-router.get('/:id', getSiteSettingsById);
-router.post('/', createSiteSettings);
-router.put('/:id', updateSiteSettings);
-router.delete('/:id', deleteSiteSettings);
+const repository = new SiteSettingsRepository();
+const service = new SiteSettingsService(repository);
+const controller = new SiteSettingsController(service);
+
+router.get('/', controller.getSiteSettingss);
+router.get('/:id', controller.getSiteSettingsById);
+
+router.post('/', protect, controller.createSiteSettings);
+router.put('/:id', protect, controller.updateSiteSettings);
+router.delete('/:id', protect, controller.deleteSiteSettings);
 
 export default router;
