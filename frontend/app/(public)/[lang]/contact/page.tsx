@@ -148,28 +148,28 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
               
               <div className={`space-y-10 relative z-10 ${isAr ? 'text-right' : ''}`}>
                 <div className="group">
-                  <h4 className={`text-xs font-bold tracking-widest text-dazz-gold mb-2 flex items-center gap-2 ${isAr ? 'flex-row-reverse font-arabic uppercase-none' : 'uppercase'}`}>
+                  <h4 className={`text-xs font-bold tracking-widest text-dazz-gold mb-3 flex items-center gap-2 ${isAr ? 'flex-row-reverse font-arabic uppercase-none' : 'uppercase'}`}>
                     <MapPin size={16} /> {isAr ? 'المقر الرئيسي' : 'Headquarters'}
                   </h4>
-                  <p className={`text-base md:text-lg font-normal text-slate-200 group-hover:text-white transition-colors leading-relaxed whitespace-pre-wrap ${isAr ? 'font-arabic' : ''}`}>
+                  <p className={`text-lg md:text-xl font-light text-white leading-relaxed whitespace-pre-wrap ${isAr ? 'font-arabic' : ''}`}>
                     {address}
                   </p>
                 </div>
                 
                 <div className="group">
-                  <h4 className={`text-xs font-bold tracking-widest text-dazz-gold mb-2 flex items-center gap-2 ${isAr ? 'flex-row-reverse font-arabic uppercase-none' : 'uppercase'}`}>
+                  <h4 className={`text-xs font-bold tracking-widest text-dazz-gold mb-3 flex items-center gap-2 ${isAr ? 'flex-row-reverse font-arabic uppercase-none' : 'uppercase'}`}>
                     <Phone size={16} /> {isAr ? 'اتصل بنا' : 'Call Us'}
                   </h4>
-                  <a href={`tel:${phone.replace(/\s+/g, '')}`} dir="ltr" className={`inline-block text-base md:text-lg font-normal text-slate-200 group-hover:text-white hover:underline transition-colors ${isAr ? 'font-arabic' : ''}`}>
+                  <a href={`tel:${phone.replace(/\s+/g, '')}`} dir="ltr" className={`inline-block text-lg md:text-xl font-light text-white hover:underline transition-all ${isAr ? 'font-arabic' : ''}`}>
                     {phone}
                   </a>
                 </div>
                 
                 <div className="group">
-                  <h4 className={`text-xs font-bold tracking-widest text-dazz-gold mb-2 flex items-center gap-2 ${isAr ? 'flex-row-reverse font-arabic uppercase-none' : 'uppercase'}`}>
+                  <h4 className={`text-xs font-bold tracking-widest text-dazz-gold mb-3 flex items-center gap-2 ${isAr ? 'flex-row-reverse font-arabic uppercase-none' : 'uppercase'}`}>
                     <Mail size={16} /> {isAr ? 'راسلنا' : 'Email Us'}
                   </h4>
-                  <a href={`mailto:${email}`} className="inline-block text-base md:text-lg font-normal text-slate-200 group-hover:text-white hover:underline transition-colors break-all">
+                  <a href={`mailto:${email}`} className="inline-block text-lg md:text-xl font-light text-white hover:underline transition-all break-all">
                     {email}
                   </a>
                 </div>
