@@ -148,28 +148,28 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
               
               <div className={`space-y-10 relative z-10 ${isAr ? 'text-right' : ''}`}>
                 <div className="group">
-                  <h4 className={`text-sm font-bold tracking-widest text-dazz-gold mb-3 flex items-center gap-2 ${isAr ? 'flex-row-reverse font-arabic uppercase-none' : 'uppercase'}`}>
+                  <h4 className={`text-xs font-bold tracking-widest text-dazz-gold mb-2 flex items-center gap-2 ${isAr ? 'flex-row-reverse font-arabic uppercase-none' : 'uppercase'}`}>
                     <MapPin size={16} /> {isAr ? 'المقر الرئيسي' : 'Headquarters'}
                   </h4>
-                  <p className={`text-slate-300 whitespace-pre-wrap leading-relaxed group-hover:text-white transition-colors ${isAr ? 'font-arabic' : ''}`}>
+                  <p className={`text-base md:text-lg font-normal text-slate-200 group-hover:text-white transition-colors leading-relaxed whitespace-pre-wrap ${isAr ? 'font-arabic' : ''}`}>
                     {address}
                   </p>
                 </div>
                 
                 <div className="group">
-                  <h4 className={`text-sm font-bold tracking-widest text-dazz-gold mb-3 flex items-center gap-2 ${isAr ? 'flex-row-reverse font-arabic uppercase-none' : 'uppercase'}`}>
+                  <h4 className={`text-xs font-bold tracking-widest text-dazz-gold mb-2 flex items-center gap-2 ${isAr ? 'flex-row-reverse font-arabic uppercase-none' : 'uppercase'}`}>
                     <Phone size={16} /> {isAr ? 'اتصل بنا' : 'Call Us'}
                   </h4>
-                  <a href={`tel:${phone.replace(/\s+/g, '')}`} dir="ltr" className={`inline-block text-xl md:text-2xl font-light text-slate-300 group-hover:text-white hover:underline transition-all ${isAr ? 'font-arabic' : ''}`}>
+                  <a href={`tel:${phone.replace(/\s+/g, '')}`} dir="ltr" className={`inline-block text-base md:text-lg font-normal text-slate-200 group-hover:text-white hover:underline transition-colors ${isAr ? 'font-arabic' : ''}`}>
                     {phone}
                   </a>
                 </div>
                 
                 <div className="group">
-                  <h4 className={`text-sm font-bold tracking-widest text-dazz-gold mb-3 flex items-center gap-2 ${isAr ? 'flex-row-reverse font-arabic uppercase-none' : 'uppercase'}`}>
+                  <h4 className={`text-xs font-bold tracking-widest text-dazz-gold mb-2 flex items-center gap-2 ${isAr ? 'flex-row-reverse font-arabic uppercase-none' : 'uppercase'}`}>
                     <Mail size={16} /> {isAr ? 'راسلنا' : 'Email Us'}
                   </h4>
-                  <a href={`mailto:${email}`} className="inline-block text-lg md:text-xl font-light text-slate-300 group-hover:text-white hover:underline transition-all break-all">
+                  <a href={`mailto:${email}`} className="inline-block text-base md:text-lg font-normal text-slate-200 group-hover:text-white hover:underline transition-colors break-all">
                     {email}
                   </a>
                 </div>
@@ -224,7 +224,7 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
                   <div className={`space-y-4 mb-6 ${isAr ? 'text-right' : ''}`}>
                     <div className={`flex items-start gap-3 text-slate-600 ${isAr ? 'flex-row-reverse' : ''}`}>
                       <MapPin size={18} className="text-dazz-gold shrink-0 mt-1" />
-                      <p className={`text-sm leading-relaxed ${isAr ? 'font-arabic' : ''}`}>
+                      <p className={`text-base text-slate-600 leading-relaxed ${isAr ? 'font-arabic' : ''}`}>
                         {office.address}
                       </p>
                     </div>
@@ -239,7 +239,7 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
                     <a 
                       href={`tel:${office.phone.replace(/\s+/g, '')}`} 
                       dir="ltr"
-                      className="flex items-center gap-2 text-dazz-navy font-semibold hover:text-dazz-gold transition-colors text-base"
+                      className="flex items-center gap-2 text-dazz-navy font-medium hover:text-dazz-gold transition-colors text-base"
                     >
                       <Phone size={15} className="text-dazz-gold" />
                       {office.phone}
