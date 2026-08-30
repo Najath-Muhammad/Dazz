@@ -15,10 +15,10 @@ const quickLinks = [
 ];
 
 const divisionLinks = [
-  { name: 'Construction', href: '/en/services' },
-  { name: 'Food Trading', href: '/en/services' },
-  { name: 'Logistics', href: '/en/services' },
-  { name: 'Hospitality', href: '/en/services' },
+  { id: '01', name: 'Construction & Infrastructure', href: '/en/services?category=construction' },
+  { id: '02', name: 'Real Estate & Hospitality', href: '/en/services?category=hospitality' },
+  { id: '03', name: 'Trading & Distribution', href: '/en/services?category=food-trading' },
+  { id: '04', name: 'Logistics & Environmental Solutions', href: '/en/services?category=logistics' },
 ];
 
 export function Footer() {
@@ -56,9 +56,9 @@ export function Footer() {
     ...link,
     href: getLocalizedHref(link.href) || link.href,
     name: isArabic ? (
-      link.name === 'Construction' ? 'المقاولات' :
-      link.name === 'Food Trading' ? 'التجارة الغذائية' :
-      link.name === 'Logistics' ? 'الخدمات اللوجستية' : 'الضيافة'
+      link.id === '01' ? 'المقاولات والبنية التحتية' :
+      link.id === '02' ? 'العقارات والضيافة' :
+      link.id === '03' ? 'التجارة والتوزيع' : 'الخدمات اللوجستية والحلول البيئية'
     ) : link.name
   }));
 

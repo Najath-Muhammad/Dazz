@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { Suspense } from 'react';
 import { ServicesListingClient } from '@/components/public/ServicesListingClient';
 
 export const metadata: Metadata = {
@@ -64,14 +65,16 @@ export default async function ServicesListingPage({ params }: { params: Promise<
   const heroImage = rawBg?.url || (typeof rawBg === 'string' && rawBg !== '' ? rawBg : '/images/service-hero.png');
 
   return (
-    <ServicesListingClient 
-      services={services}
-      heroTitle={heroTitle}
-      heroSubtitle={heroSubtitle}
-      heroImage={heroImage}
-      lang={lang}
-      isAr={isAr}
-      dir={dir}
-    />
+    <Suspense fallback={<div className="min-h-screen bg-dazz-navy" />}>
+      <ServicesListingClient 
+        services={services}
+        heroTitle={heroTitle}
+        heroSubtitle={heroSubtitle}
+        heroImage={heroImage}
+        lang={lang}
+        isAr={isAr}
+        dir={dir}
+      />
+    </Suspense>
   );
 }

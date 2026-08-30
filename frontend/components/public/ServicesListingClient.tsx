@@ -1,7 +1,8 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { MediaRenderer } from '@/components/MediaRenderer';
 import { ArrowRight, Hexagon } from 'lucide-react';
 
@@ -20,7 +21,18 @@ export function ServicesListingClient({ services, heroTitle, heroSubtitle, heroI
   const y = useTransform(scrollY, [0, 1000], [0, 300]);
   const opacity = useTransform(scrollY, [0, 400], [1, 0]);
 
-  const [activeCategory, setActiveCategory] = useState<string>('all');
+  const searchParams = useSearchParams();
+  const initialCategory = searchParams ? (searchParams.get('category') || searchParams.get('cat')) : null;
+
+  const [activeCategory, setActiveCategory] = useState<string>(initialCategory || 'all');
+
+  useEffect(() => {
+    if (!searchParams) return;
+    const cat = searchParams.get('category') || searchParams.get('cat');
+    if (cat) {
+      setActiveCategory(cat);
+    }
+  }, [searchParams]);
 
   const knownCategories = [
     { id: 'construction', match: ['construction', 'construction-infrastructure'], label: isAr ? 'المقاولات والبنية التحتية' : 'Construction & Infrastructure' },
