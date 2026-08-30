@@ -38,9 +38,12 @@ export const metadata: Metadata = {
     description: 'Empowering Industrial Excellence globally.',
   },
   icons: {
-    icon: '/images/logo-transparent.png',
-    shortcut: '/images/logo-transparent.png',
-    apple: '/images/logo-transparent.png',
+    icon: [
+      { url: '/icon.png', sizes: '512x512', type: 'image/png' },
+      { url: '/favicon.ico', sizes: '32x32' },
+    ],
+    shortcut: '/icon.png',
+    apple: '/apple-icon.png',
   },
 };
 
