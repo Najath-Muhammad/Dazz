@@ -37,6 +37,11 @@ export const metadata: Metadata = {
     title: 'Dazz Tradlink',
     description: 'Empowering Industrial Excellence globally.',
   },
+  icons: {
+    icon: '/images/logo-transparent.png',
+    shortcut: '/images/logo-transparent.png',
+    apple: '/images/logo-transparent.png',
+  },
 };
 
 export default function RootLayout({
