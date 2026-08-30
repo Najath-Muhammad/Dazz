@@ -248,38 +248,38 @@ export function Navbar() {
                       role="menu"
                       onMouseEnter={openMega}
                       onMouseLeave={closeMegaDelayed}
-                      className="absolute top-full left-1/2 -translate-x-1/2 pt-3 w-[560px]"
+                      className="absolute top-full left-1/2 -translate-x-1/2 pt-3 w-[420px]"
                     >
                       <div className="bg-dazz-navy border border-white/10 shadow-2xl shadow-black/50">
                         {/* Gold top border */}
                         <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-dazz-gold to-transparent" />
-                        <div className="p-6 grid grid-cols-2 gap-1">
+                        <div className="p-4 flex flex-col gap-1">
                           {localizedDivisions.map((div) => (
                             <Link
                               key={div.id}
                               href={div.href}
                               role="menuitem"
                               onClick={() => setMegaOpen(false)}
-                              className="flex items-start gap-4 p-4 group hover:bg-white/5 transition-colors duration-200"
+                              className="flex items-center gap-4 p-3.5 group hover:bg-white/5 rounded transition-colors duration-200"
                             >
-                              <span className="text-xs font-mono text-dazz-gold/60 mt-1 flex-shrink-0">{div.id}</span>
+                              <span className="text-xs font-mono text-dazz-gold/70 flex-shrink-0 font-bold">{div.id}</span>
                               <div className="flex-1 min-w-0">
                                 <p className={`text-sm font-bold tracking-widest text-white group-hover:text-dazz-gold transition-colors ${isArabic ? 'uppercase-none text-base' : 'uppercase'}`}>
                                   {div.name}
                                 </p>
-                                <p className="text-xs text-white/40 mt-0.5 font-light">{div.desc}</p>
+                                <p className="text-xs text-white/50 mt-0.5 font-light truncate">{div.desc}</p>
                               </div>
-                              <ArrowUpRight size={14} className="text-white/20 group-hover:text-dazz-gold transition-colors flex-shrink-0 mt-0.5 opacity-0 group-hover:opacity-100 translate-x-[-4px] group-hover:translate-x-0 transition-all duration-200" />
+                              <ArrowUpRight size={14} className="text-white/20 group-hover:text-dazz-gold transition-colors flex-shrink-0 opacity-0 group-hover:opacity-100 translate-x-[-4px] group-hover:translate-x-0 transition-all duration-200" />
                             </Link>
                           ))}
                         </div>
-                        <div className="px-6 pb-5 pt-2 border-t border-white/5">
+                        <div className="px-6 pb-4 pt-3 border-t border-white/5">
                           <Link
                             href={getLocalizedHref('/en/services') || '/services'}
                             onClick={() => setMegaOpen(false)}
-                            className={`flex items-center gap-2 text-xs font-bold tracking-widest text-white/40 hover:text-dazz-gold transition-colors ${isArabic ? 'uppercase-none' : 'uppercase'}`}
+                            className={`flex items-center justify-between text-xs font-bold tracking-widest text-white/50 hover:text-dazz-gold transition-colors ${isArabic ? 'uppercase-none' : 'uppercase'}`}
                           >
-                            {isArabic ? 'عرض جميع الخدمات' : 'VIEW ALL SERVICES'}
+                            <span>{isArabic ? 'عرض جميع الخدمات' : 'VIEW ALL SERVICES'}</span>
                             <span className="w-8 h-px bg-current" />
                           </Link>
                         </div>
