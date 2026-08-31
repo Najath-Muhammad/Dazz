@@ -2,9 +2,6 @@ import dotenv from 'dotenv';
 import { ITranslationService } from '../interfaces/ITranslationService';
 dotenv.config();
 
-const TRANSLATION_API_KEY = process.env.TRANSLATION_API_KEY || '';
-const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${TRANSLATION_API_KEY}`;
-
 const SYSTEM_PROMPT = `You are a professional English-to-Arabic translator specializing in corporate websites, construction, infrastructure, logistics, food trading, hospitality and international business.
 
 Translate the provided English content into professional Modern Standard Arabic.
@@ -30,44 +27,79 @@ Rules:
 Context: This content belongs to Dazz Tradlink International's corporate website. The company operates across construction, ready mix concrete, food trading, logistics and hospitality in Saudi Arabia.`;
 
 export class TranslationService implements ITranslationService {
-  private async callGemini(prompt: string): Promise<string> {
-    if (!TRANSLATION_API_KEY) {
+  private async callGemini(prompt: string, isJson = false, retries = 3): Promise<string> {
+    const apiKey = process.env.TRANSLATION_API_KEY || '';
+    if (!apiKey) {
       throw new Error('Translation API key is not configured. Please set TRANSLATION_API_KEY in your .env file.');
     }
 
-    const response = await fetch(GEMINI_API_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        contents: [
-          {
-            parts: [
-              { text: `${SYSTEM_PROMPT}\\n\\nTranslate the following English content:\\n\\n${prompt}` }
-            ]
+    const models = ['gemini-3.5-flash-lite', 'gemini-3.5-flash', 'gemini-3.6-flash'];
+
+    const generationConfig: SafeAny = {
+      temperature: 0.1,
+      maxOutputTokens: 4096,
+    };
+    if (isJson) {
+      generationConfig.responseMimeType = 'application/json';
+    }
+
+    for (const modelName of models) {
+      const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`;
+
+      for (let attempt = 1; attempt <= retries; attempt++) {
+        try {
+          const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              contents: [
+                {
+                  parts: [
+                    { text: `${SYSTEM_PROMPT}\n\nTranslate the following English content:\n\n${prompt}` }
+                  ]
+                }
+              ],
+              generationConfig
+            }),
+            signal: AbortSignal.timeout(30000),
+          });
+
+          if (response.status === 429) {
+            console.warn(`[TranslationService] Rate limit 429 hit for ${modelName}. Retrying in 15s... (Attempt ${attempt}/${retries})`);
+            await new Promise(res => setTimeout(res, 15000));
+            continue;
           }
-        ],
-        generationConfig: {
-          temperature: 0.2,
-          maxOutputTokens: 2048,
+
+          if (response.status === 503) {
+            console.warn(`[TranslationService] 503 High Demand for ${modelName}. Trying next model...`);
+            break; // Try next model in list
+          }
+
+          if (!response.ok) {
+            const errBody = await response.text();
+            console.error(`Gemini API error (${modelName}):`, errBody);
+            throw new Error(`Translation service error: ${response.status}`);
+          }
+
+          const data = await response.json();
+          const translation = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+
+          if (!translation) {
+            throw new Error('Translation service returned an empty response.');
+          }
+
+          return translation.trim();
+        } catch (err: SafeAny) {
+          if (attempt === retries) {
+            console.warn(`[TranslationService] Model ${modelName} failed after ${retries} attempts. Trying next model...`);
+            break;
+          }
+          await new Promise(res => setTimeout(res, 3000));
         }
-      }),
-      signal: AbortSignal.timeout(30000),
-    });
-
-    if (!response.ok) {
-      const errBody = await response.text();
-      console.error('Gemini API error:', errBody);
-      throw new Error(`Translation service error: ${response.status}`);
+      }
     }
 
-    const data = await response.json();
-    const translation = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-
-    if (!translation) {
-      throw new Error('Translation service returned an empty response.');
-    }
-
-    return translation.trim();
+    throw new Error('Translation service failed: All available models were unavailable.');
   }
 
   async translate(text: string): Promise<{ success: boolean; message: string; data?: { translation: string } }> {
@@ -91,36 +123,45 @@ export class TranslationService implements ITranslationService {
 
   async translateBatch(fields: Record<string, string>): Promise<{ success: boolean; message: string; data?: { translations: Record<string, string> } }> {
     try {
-      const entries = Object.entries(fields).filter(([, v]) => v && v.trim());
+      const entries = Object.entries(fields).filter(([, v]) => typeof v === 'string' && v.trim());
 
       if (!entries.length) {
         return { success: false, message: 'No translatable content provided.' };
       }
 
-      const MAX_FIELDS = 30;
-      if (entries.length > MAX_FIELDS) {
-        return { success: false, message: `Batch translation exceeds maximum of ${MAX_FIELDS} fields.` };
+      const CHUNK_SIZE = 25;
+      const allTranslations: Record<string, string> = {};
+
+      for (let i = 0; i < entries.length; i += CHUNK_SIZE) {
+        const chunk = entries.slice(i, i + CHUNK_SIZE);
+        const fieldList = chunk
+          .map(([key, value]) => `"${key}": ${JSON.stringify(value)}`)
+          .join(',\n');
+
+        const prompt = `Translate the values in this JSON object from English to Arabic. Return ONLY valid JSON with the same keys and translated Arabic values. CRITICAL: Do not include literal unescaped newlines inside string values; escape them as \\n.\n\nInput:\n{\n${fieldList}\n}`;
+
+        const raw = await this.callGemini(prompt, true);
+        const cleaned = raw.replace(/^\s*```(?:json)?\n?/i, '').replace(/\n?```\s*$/i, '').trim();
+
+        let parsed: Record<string, string>;
+        try {
+          parsed = JSON.parse(cleaned);
+        } catch {
+          try {
+            const sanitized = cleaned.replace(/"([^"\\]*(?:\\.[^"\\]*)*)"/g, (_, p1) => {
+              return '"' + p1.replace(/\r?\n/g, '\\n').replace(/\t/g, '\\t') + '"';
+            });
+            parsed = JSON.parse(sanitized);
+          } catch (err2) {
+            console.error('Failed to parse batch translation response:', cleaned);
+            return { success: false, message: 'Translation service returned invalid JSON. Please try again.' };
+          }
+        }
+
+        Object.assign(allTranslations, parsed);
       }
 
-      const fieldList = entries
-        .map(([key, value]) => `"${key}": ${JSON.stringify(value)}`)
-        .join(',\\n');
-
-      const prompt = `Translate the values in this JSON object from English to Arabic. Return ONLY valid JSON with the same keys and translated Arabic values. Do not include any explanation or markdown.\\n\\nInput:\\n{\\n${fieldList}\\n}`;
-
-      const raw = await this.callGemini(prompt);
-
-      const cleaned = raw.replace(/^\\s*\`\`\`(?:json)?\\n?/i, '').replace(/\\n?\`\`\`\\s*$/i, '').trim();
-
-      let parsed: Record<string, string>;
-      try {
-        parsed = JSON.parse(cleaned);
-      } catch {
-        console.error('Failed to parse batch translation response:', cleaned);
-        return { success: false, message: 'Translation service returned invalid JSON. Please try again.' };
-      }
-
-      return { success: true, message: 'Translated', data: { translations: parsed } };
+      return { success: true, message: 'Translated', data: { translations: allTranslations } };
     } catch (error: SafeAny) {
       console.error(error);
       return { success: false, message: error.message || 'Translation failed' };

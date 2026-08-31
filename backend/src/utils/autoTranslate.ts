@@ -52,12 +52,16 @@ function parseArrayPath(fieldPath: string): { arrayPath: string; itemField: stri
 export async function autoTranslate(
   data: SafeAny,
   fieldPaths: string[],
-  existingMeta: Record<string, string> = {}
+  existingMeta: Record<string, string> = {},
+  existingDoc?: SafeAny
 ): Promise<{
   updatedData: SafeAny;
   translationMeta: Record<string, string>;
   status: TranslationStatusAr;
 }> {
+  // Deep clone data to avoid mutating caller's original object
+  const updatedData = JSON.parse(JSON.stringify(data));
+
   // 1. Build a flat map of { batchKey → englishText } for fields that NEED translation
   const toTranslate: Record<string, { path: string; index?: number; en: string; batchKey: string }> = {};
   const newMeta: Record<string, string> = { ...existingMeta };
@@ -67,8 +71,10 @@ export async function autoTranslate(
 
     if (arrayInfo) {
       // Array field: e.g. 'capabilities[].title'
-      const arr: SafeAny[] = getPath(data, arrayInfo.arrayPath);
+      const arr: SafeAny[] = getPath(updatedData, arrayInfo.arrayPath);
       if (!Array.isArray(arr)) continue;
+
+      const existingArr: SafeAny[] = existingDoc ? getPath(existingDoc, arrayInfo.arrayPath) : [];
 
       arr.forEach((item, index) => {
         if (!item) return;
@@ -77,7 +83,6 @@ export async function autoTranslate(
           const localized = getPath(item, arrayInfo.itemField);
           enText = localized?.en || '';
         } else {
-          // The array item IS the LocalizedString (e.g. 'responsibilities[]')
           enText = item?.en || '';
         }
 
@@ -85,12 +90,23 @@ export async function autoTranslate(
 
         const metaKey = `${fieldPath}[${index}]`;
         const enHash = hash(enText);
-        const existingArText = arrayInfo.itemField
-          ? getPath(item, arrayInfo.itemField)?.ar
-          : item?.ar;
 
-        // Skip if Arabic exists AND English unchanged
-        if (existingArText?.trim() && existingMeta[metaKey] === enHash) return;
+        // Check if existing document has Arabic text for this index
+        const existingItem = Array.isArray(existingArr) ? existingArr[index] : null;
+        let existingArText: string | undefined = arrayInfo.itemField
+          ? getPath(item, arrayInfo.itemField)?.ar || (existingItem ? getPath(existingItem, arrayInfo.itemField)?.ar : undefined)
+          : item?.ar || existingItem?.ar;
+
+        // If Arabic exists AND English hash matches, preserve existing Arabic text in updatedData
+        if (existingArText?.trim() && existingMeta[metaKey] === enHash) {
+          if (arrayInfo.itemField) {
+            const current = getPath(item, arrayInfo.itemField) || {};
+            setPath(item, arrayInfo.itemField, { ...current, ar: existingArText });
+          } else {
+            setPath(arr, `${index}`, { ...item, ar: existingArText });
+          }
+          return;
+        }
 
         const batchKey = `${fieldPath}__${index}`;
         toTranslate[batchKey] = { path: fieldPath, index, en: enText, batchKey };
@@ -98,15 +114,19 @@ export async function autoTranslate(
       });
     } else {
       // Simple nested field: e.g. 'title', 'hero.title'
-      const localized = getPath(data, fieldPath);
+      const localized = getPath(updatedData, fieldPath);
       const enText: string = localized?.en || '';
       if (!enText?.trim()) continue;
 
       const enHash = hash(enText);
-      const existingAr: string = localized?.ar || '';
 
-      // Skip if Arabic exists AND English unchanged
-      if (existingAr.trim() && existingMeta[fieldPath] === enHash) continue;
+      let existingAr: string | undefined = localized?.ar || (existingDoc ? getPath(existingDoc, fieldPath)?.ar : undefined);
+
+      // If Arabic exists AND English hash matches, preserve existing Arabic text in updatedData
+      if (existingAr?.trim() && existingMeta[fieldPath] === enHash) {
+        setPath(updatedData, fieldPath, { ...localized, ar: existingAr });
+        continue;
+      }
 
       toTranslate[fieldPath] = { path: fieldPath, en: enText, batchKey: fieldPath };
       newMeta[fieldPath] = enHash;
@@ -139,8 +159,6 @@ export async function autoTranslate(
   }
 
   // 5. Merge Arabic translations back into data
-  const updatedData = JSON.parse(JSON.stringify(data)); // deep clone
-
   for (const [batchKey, arabicText] of Object.entries(translations)) {
     if (!arabicText?.trim()) continue;
 

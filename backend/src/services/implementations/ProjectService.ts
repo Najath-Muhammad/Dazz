@@ -97,10 +97,17 @@ export class ProjectService implements IProjectService {
 
   async createProject(data: SafeAny) {
     try {
-      const newItem = await this._repository.create(data);
+      const { updatedData, translationMeta, status } = await autoTranslate(data, PROJECT_FIELDS, {});
+      const toSave = {
+        ...updatedData,
+        translationStatus: { ar: status },
+        translationMeta,
+      };
+
+      const newItem = await this._repository.create(toSave);
       if (!newItem) return { success: false, message: 'Failed to create project' };
-      this._translateAndUpdate(newItem._id.toString(), newItem.toObject ? newItem.toObject() : newItem, {});
-      return { success: true, message: 'Project created. Arabic translation in progress.', data: BaseMapper.toDTO(newItem) };
+
+      return { success: true, message: 'Project created and translated successfully.', data: BaseMapper.toDTO(newItem) };
     } catch (error: SafeAny) {
       console.error('Error in createProject:', error);
       if (error?.code === 11000) return { success: false, message: 'A project with this slug already exists.' };
@@ -116,12 +123,20 @@ export class ProjectService implements IProjectService {
       const existing = await this._repository.findById(id);
       if (!existing) return { success: false, message: 'Project not found' };
 
-      const updatedItem = await this._repository.update(id, data);
+      const existingMeta = (existing as SafeAny).translationMeta || {};
+      const existingDoc = (existing as SafeAny).toObject ? (existing as SafeAny).toObject() : existing;
+
+      const { updatedData, translationMeta, status } = await autoTranslate(data, PROJECT_FIELDS, existingMeta, existingDoc);
+      const toSave = {
+        ...updatedData,
+        translationStatus: { ar: status },
+        translationMeta,
+      };
+
+      const updatedItem = await this._repository.update(id, toSave);
       if (!updatedItem) return { success: false, message: 'Failed to update project' };
 
-      const existingMeta = (existing as SafeAny).translationMeta || {};
-      this._translateAndUpdate(id, updatedItem, existingMeta);
-      return { success: true, message: 'Project updated. Arabic translation in progress.', data: BaseMapper.toDTO(updatedItem) };
+      return { success: true, message: 'Project updated and translated successfully.', data: BaseMapper.toDTO(updatedItem) };
     } catch (error: SafeAny) {
       console.error('Error in updateProject:', error);
       if (error?.code === 11000) return { success: false, message: 'A project with this slug already exists.' };

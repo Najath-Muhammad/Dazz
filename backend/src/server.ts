@@ -92,11 +92,14 @@ const seedAdmin = async () => {
   }
 };
 
+import { startTranslationSyncWorker } from './jobs/translationSyncWorker';
+
 mongoose
   .connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/dazz')
   .then(async () => {
     console.log('Connected to MongoDB');
     await seedAdmin();
+    startTranslationSyncWorker();
     app.listen(port, () => {
       console.log(`Server running on port ${port}`);
     });

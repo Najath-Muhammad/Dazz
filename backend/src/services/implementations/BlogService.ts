@@ -100,11 +100,17 @@ export class BlogService implements IBlogService {
 
   async createBlog(data: SafeAny) {
     try {
-      const newItem = await this._repository.create(data);
+      const { updatedData, translationMeta, status } = await autoTranslate(data, BLOG_FIELDS, {});
+      const toSave = {
+        ...updatedData,
+        translationStatus: { ar: status },
+        translationMeta,
+      };
+
+      const newItem = await this._repository.create(toSave);
       if (!newItem) return { success: false, message: 'Failed to create blog' };
-      // Fire-and-forget background translation
-      this._translateAndUpdate(newItem._id.toString(), newItem.toObject ? newItem.toObject() : newItem, {});
-      return { success: true, message: 'Blog created. Arabic translation in progress.', data: BaseMapper.toDTO(newItem) };
+
+      return { success: true, message: 'Blog created and translated successfully.', data: BaseMapper.toDTO(newItem) };
     } catch (error: SafeAny) {
       console.error('Error in createBlog:', error);
       if (error?.code === 11000) return { success: false, message: 'A blog with this slug already exists.' };
@@ -120,13 +126,20 @@ export class BlogService implements IBlogService {
       const existing = await this._repository.findById(id);
       if (!existing) return { success: false, message: 'Blog not found' };
 
-      const updatedItem = await this._repository.update(id, data);
+      const existingMeta = (existing as SafeAny).translationMeta || {};
+      const existingDoc = (existing as SafeAny).toObject ? (existing as SafeAny).toObject() : existing;
+
+      const { updatedData, translationMeta, status } = await autoTranslate(data, BLOG_FIELDS, existingMeta, existingDoc);
+      const toSave = {
+        ...updatedData,
+        translationStatus: { ar: status },
+        translationMeta,
+      };
+
+      const updatedItem = await this._repository.update(id, toSave);
       if (!updatedItem) return { success: false, message: 'Failed to update blog' };
 
-      // Fire-and-forget background translation
-      const existingMeta = (existing as SafeAny).translationMeta || {};
-      this._translateAndUpdate(id, updatedItem, existingMeta);
-      return { success: true, message: 'Blog updated. Arabic translation in progress.', data: BaseMapper.toDTO(updatedItem) };
+      return { success: true, message: 'Blog updated and translated successfully.', data: BaseMapper.toDTO(updatedItem) };
     } catch (error: SafeAny) {
       console.error('Error in updateBlog:', error);
       if (error?.code === 11000) return { success: false, message: 'A blog with this slug already exists.' };
