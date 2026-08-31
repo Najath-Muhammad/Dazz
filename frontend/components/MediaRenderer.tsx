@@ -111,35 +111,27 @@ export function MediaRenderer({
   if (fill) {
     return (
       <Image
-        loader={isCloudinary ? cloudinaryLoader : undefined}
         src={url}
         alt={alt}
         fill
-        quality={quality}
-        sizes={sizes || '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'}
+        sizes={sizes || '100vw'}
         className={className}
         priority={priority}
-        placeholder={blurDataURL ? 'blur' : 'empty'}
-        blurDataURL={blurDataURL}
-        unoptimized={!isCloudinary} // Only optimize if Cloudinary to save Next.js server resources
+        unoptimized={true}
       />
     );
   }
 
   return (
     <Image
-      loader={isCloudinary ? cloudinaryLoader : undefined}
       src={url}
       alt={alt}
-      width={width || 800}
-      height={height || 600}
-      quality={quality}
-      sizes={sizes}
+      width={width || 1200}
+      height={height || 800}
+      sizes={sizes || '100vw'}
       className={className}
       priority={priority}
-      placeholder={blurDataURL ? 'blur' : 'empty'}
-      blurDataURL={blurDataURL}
-      unoptimized={!isCloudinary}
+      unoptimized={true}
     />
   );
 }
