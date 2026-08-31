@@ -26,7 +26,7 @@ export class ServiceRepository implements IServiceRepository {
     return await Service.create(data);
   }
   async update(id: string, data: SafeAny): Promise<any | null> {
-    return await Service.findByIdAndUpdate(id, data, { new: true, runValidators: false });
+    return await Service.findByIdAndUpdate(id, data, { returnDocument: 'after', runValidators: false });
   }
   async delete(id: string): Promise<any | null> {
     return await Service.findByIdAndDelete(id);

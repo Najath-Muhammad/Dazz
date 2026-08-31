@@ -24,7 +24,7 @@ export class ProjectRepository implements IProjectRepository {
     return await newItem.save();
   }
   async update(id: string, data: SafeAny): Promise<any | null> {
-    return await Project.findByIdAndUpdate(id, data, { new: true });
+    return await Project.findByIdAndUpdate(id, data, { returnDocument: 'after' });
   }
   async delete(id: string): Promise<any | null> {
     return await Project.findByIdAndDelete(id);

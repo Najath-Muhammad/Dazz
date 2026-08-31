@@ -24,7 +24,7 @@ export class BlogRepository implements IBlogRepository {
     return await newItem.save();
   }
   async update(id: string, data: SafeAny): Promise<any | null> {
-    return await Blog.findByIdAndUpdate(id, data, { new: true });
+    return await Blog.findByIdAndUpdate(id, data, { returnDocument: 'after' });
   }
   async delete(id: string): Promise<any | null> {
     return await Blog.findByIdAndDelete(id);
