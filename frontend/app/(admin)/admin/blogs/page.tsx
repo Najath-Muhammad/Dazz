@@ -68,14 +68,7 @@ export default function AdminBlogsPage() {
     }
   };
 
-  const filteredBlogs = blogs.filter((b) => {
-    if (search && !b.title?.en?.toLowerCase().includes(search.toLowerCase())) return false;
-    if (filterCategory !== 'ALL' && b.category?.en !== filterCategory) return false;
-    if (filterStatus === 'PUBLISHED' && !b.isPublished) return false;
-    if (filterStatus === 'DRAFT' && b.isPublished) return false;
-    if (filterStatus === 'FEATURED' && !b.featured) return false;
-    return true;
-  });
+
 
   const columns: Column<SafeAny>[] = [
     {

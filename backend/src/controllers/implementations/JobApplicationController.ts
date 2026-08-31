@@ -14,8 +14,9 @@ export class JobApplicationController implements IJobApplicationController {
   }
   getApplications = async (req: Request, res: Response): Promise<void> => {
     try {
+      const isQuerying = req.query.page || req.query.search || req.query.status;
       const page = parseInt(req.query.page as string) || 1;
-      const limit = parseInt(req.query.limit as string) || 100;
+      const limit = parseInt(req.query.limit as string) || (isQuerying ? 10 : 100);
       const search = req.query.search as string;
       const status = req.query.status as string;
 

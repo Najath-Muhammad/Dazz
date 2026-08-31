@@ -30,16 +30,27 @@ export class BlogService implements IBlogService {
   async getBlogsPaginated({ search, status, category, page, limit }: { search?: string; status?: string; category?: string; page: number; limit: number }) {
     try {
       const query: SafeAny = {};
-      if (search) {
-        query['title.en'] = { $regex: search, $options: 'i' };
+      if (search && search.trim()) {
+        const regex = new RegExp(search.trim(), 'i');
+        query.$or = [
+          { 'title.en': { $regex: regex } },
+          { 'title.ar': { $regex: regex } },
+          { 'category.en': { $regex: regex } },
+          { 'category.ar': { $regex: regex } },
+          { slug: { $regex: regex } }
+        ];
       }
-      if (status === 'published') {
-        query.isPublished = true;
-      } else if (status === 'draft') {
-        query.isPublished = false;
+      if (status) {
+        const s = status.toUpperCase();
+        if (s === 'PUBLISHED') query.isPublished = true;
+        else if (s === 'DRAFT') query.isPublished = false;
+        else if (s === 'FEATURED') query.featured = true;
       }
-      if (category && category !== 'ALL') {
-        query['category.en'] = { $regex: new RegExp(`^${category}$`, 'i') };
+      if (category && category !== 'ALL' && category !== 'all') {
+        query.$or = [
+          { 'category.en': { $regex: new RegExp(`^${category}$`, 'i') } },
+          { 'category.ar': { $regex: new RegExp(`^${category}$`, 'i') } }
+        ];
       }
 
       const { items, total } = await this._repository.findPaginated(query, page, limit);

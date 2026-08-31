@@ -34,8 +34,8 @@ export class JobApplicationService implements IJobApplicationService {
           { email: { $regex: search, $options: 'i' } }
         ];
       }
-      if (status && status !== 'ALL') {
-        query.status = status;
+      if (status && status !== 'ALL' && status !== 'all') {
+        query.status = { $regex: new RegExp(`^${status}$`, 'i') };
       }
 
       const { items, total } = await this._repository.findPaginated(query, page, limit);

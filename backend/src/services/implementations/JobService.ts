@@ -30,16 +30,21 @@ export class JobService implements IJobService {
   async getJobsPaginated({ search, status, page, limit }: { search?: string; status?: string; page: number; limit: number }) {
     try {
       const query: SafeAny = {};
-      if (search) {
-        query['$or'] = [
-          { 'title.en': { $regex: search, $options: 'i' } },
-          { department: { $regex: search, $options: 'i' } }
+      if (search && search.trim()) {
+        const regex = new RegExp(search.trim(), 'i');
+        query.$or = [
+          { 'title.en': { $regex: regex } },
+          { 'title.ar': { $regex: regex } },
+          { department: { $regex: regex } },
+          { location: { $regex: regex } },
+          { slug: { $regex: regex } }
         ];
       }
-      if (status === 'published') {
-        query.isActive = true;
-      } else if (status === 'draft') {
-        query.isActive = false;
+      if (status) {
+        const s = status.toUpperCase();
+        if (s === 'PUBLISHED') query.$or = [{ status: 'PUBLISHED' }, { isActive: true }];
+        else if (s === 'DRAFT') query.$or = [{ status: 'DRAFT' }, { isActive: false }];
+        else if (s === 'CLOSED') query.status = 'CLOSED';
       }
 
       const { items, total } = await this._repository.findPaginated(query, page, limit);

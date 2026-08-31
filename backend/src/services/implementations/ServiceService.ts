@@ -30,14 +30,19 @@ export class ServiceService implements IServiceService {
   async getServicesPaginated({ search, status, category, page, limit }: { search?: string; status?: string; category?: string; page: number; limit: number }) {
     try {
       const query: SafeAny = {};
-      if (search) {
-        query['name.en'] = { $regex: search, $options: 'i' };
+      if (search && search.trim()) {
+        const regex = new RegExp(search.trim(), 'i');
+        query.$or = [
+          { 'name.en': { $regex: regex } },
+          { 'name.ar': { $regex: regex } },
+          { slug: { $regex: regex } }
+        ];
       }
-      if (status && status !== 'ALL') {
-        query.status = status;
+      if (status && status !== 'ALL' && status !== 'all') {
+        query.status = status.toLowerCase();
       }
-      if (category && category !== 'ALL') {
-        query.category = category;
+      if (category && category !== 'ALL' && category !== 'all') {
+        query.category = { $regex: new RegExp(`^${category}$`, 'i') };
       }
 
       const { items, total } = await this._repository.findPaginated(query, page, limit);

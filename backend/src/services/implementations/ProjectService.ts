@@ -27,16 +27,29 @@ export class ProjectService implements IProjectService {
     }
   }
 
-  async getProjectsPaginated({ search, status, page, limit }: { search?: string; status?: string; page: number; limit: number }) {
+  async getProjectsPaginated({ search, status, category, page, limit }: { search?: string; status?: string; category?: string; page: number; limit: number }) {
     try {
       const query: SafeAny = {};
-      if (search) {
-        query['title.en'] = { $regex: search, $options: 'i' };
+      if (search && search.trim()) {
+        const regex = new RegExp(search.trim(), 'i');
+        query.$or = [
+          { 'title.en': { $regex: regex } },
+          { 'title.ar': { $regex: regex } },
+          { 'category.en': { $regex: regex } },
+          { 'category.ar': { $regex: regex } },
+          { slug: { $regex: regex } }
+        ];
       }
-      if (status === 'published') {
+      if (status === 'published' || status === 'PUBLISHED') {
         query.isPublished = true;
-      } else if (status === 'draft') {
+      } else if (status === 'draft' || status === 'DRAFT') {
         query.isPublished = false;
+      }
+      if (category && category !== 'ALL' && category !== 'all') {
+        query.$or = [
+          { 'category.en': { $regex: new RegExp(`^${category}$`, 'i') } },
+          { 'category.ar': { $regex: new RegExp(`^${category}$`, 'i') } }
+        ];
       }
 
       const { items, total } = await this._repository.findPaginated(query, page, limit);
