@@ -22,6 +22,7 @@ interface MediaRendererProps {
   sizes?: string;
   className?: string;
   priority?: boolean;
+  quality?: number;
   muted?: boolean;
   autoPlay?: boolean;
   loop?: boolean;
@@ -32,7 +33,9 @@ import type { ImageLoaderProps } from 'next/image';
 
 const cloudinaryLoader = ({ src, width, quality }: ImageLoaderProps) => {
   if (src.includes('res.cloudinary.com') && src.includes('/upload/')) {
-    const params = ['f_auto', 'c_limit', `w_${width}`, `q_${quality || 'auto'}`];
+    // Determine quality: default to q_auto:best or high numeric value for sharp visuals
+    const qParam = quality && quality > 75 ? `q_${quality}` : 'q_auto:best';
+    const params = ['f_auto', 'dpr_auto', 'c_limit', `w_${width}`, qParam];
     // prevent duplicate transformations if already present
     if (!src.includes('/upload/f_')) {
       return src.replace('/upload/', `/upload/${params.join(',')}/`);
@@ -50,6 +53,7 @@ export function MediaRenderer({
   sizes,
   className = '',
   priority = false,
+  quality = 90,
   muted = true,
   autoPlay = true,
   loop = true,
@@ -106,6 +110,7 @@ export function MediaRenderer({
         src={url}
         alt={alt}
         fill
+        quality={quality}
         sizes={sizes || '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'}
         className={className}
         priority={priority}
@@ -123,6 +128,7 @@ export function MediaRenderer({
       alt={alt}
       width={width || 800}
       height={height || 600}
+      quality={quality}
       sizes={sizes}
       className={className}
       priority={priority}
