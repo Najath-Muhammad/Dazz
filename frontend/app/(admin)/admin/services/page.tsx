@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { api } from '@/lib/api';
 import { ConfirmModal } from '@/components/admin/ConfirmModal';
-import { MediaUploader } from '@/components/admin/MediaUploader';
 import { DataTable, Column } from '@/components/admin/DataTable';
 import { Pagination } from '@/components/admin/Pagination';
 import { SearchBar } from '@/components/admin/SearchBar';
@@ -21,37 +20,6 @@ const CATEGORY_LABELS: Record<string, string> = {
   'other': 'Other',
 };
 
-const ActionDropdown = ({ svc, onDelete }: { svc: SafeAny; onDelete: () => void }) => {
-  const [open, setOpen] = useState(false);
-  const ref = React.useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleClick = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
-    };
-    document.addEventListener('mousedown', handleClick);
-    return () => document.removeEventListener('mousedown', handleClick);
-  }, []);
-
-  return (
-    <div className="relative inline-block text-left" ref={ref}>
-      <button onClick={() => setOpen(!open)} className="text-slate-400 hover:text-dazz-navy p-1.5 rounded hover:bg-slate-100 transition-colors">
-        <span className="text-xl leading-none">⋮</span>
-      </button>
-      {open && (
-        <div className="absolute right-0 bottom-full mb-1 w-36 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-[100] overflow-hidden text-left">
-          <div className="py-1">
-            <Link href={`/admin/services/${svc.id}`} className="block px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100">Details</Link>
-            <a href={`/en/services/${svc.slug}`} target="_blank" rel="noreferrer" className="block px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100">Preview</a>
-            <Link href={`/admin/services/${svc.id}/edit`} className="block px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100">Edit</Link>
-            <button onClick={() => { setOpen(false); onDelete(); }} className="block w-full text-left px-4 py-2 text-sm font-bold text-red-600 hover:bg-red-50">Delete</button>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-};
-
 export default function AdminServicesPage() {
   const [services, setServices] = useState<SafeAny[]>([]);
   const [loading, setLoading] = useState(true);
@@ -66,9 +34,6 @@ export default function AdminServicesPage() {
   const [filterStatus, setFilterStatus] = useState('ALL');
   const limit = 10;
   
-  const [pageData, setPageData] = useState<SafeAny>(null);
-  const [isPageModalOpen, setIsPageModalOpen] = useState(false);
-  const [savingPage, setSavingPage] = useState(false);
   const [confirmModal, setConfirmModal] = useState<{
     isOpen: boolean; title: string; message: string; onConfirm: () => void;
   }>({ isOpen: false, title: '', message: '', onConfirm: () => {} });
@@ -99,14 +64,6 @@ export default function AdminServicesPage() {
     }
   };
 
-  const fetchPageData = async () => {
-    try {
-      const data = await api.get<SafeAny>('/content/services');
-      setPageData(data);
-    } catch { /* will create on save */ }
-  };
-
-  useEffect(() => { fetchPageData(); }, []);
   useEffect(() => { fetchServices(); }, [page, search, filterCategory, filterStatus]);
 
   const handleDeleteClick = (id: string, name: string) => {
@@ -133,26 +90,6 @@ export default function AdminServicesPage() {
       setServices((prev) => prev.map((s) => (s.id === id ? { ...s, status: updated.status } : s)));
     } catch {
       alert('Failed to update status.');
-    }
-  };
-
-  const handleSavePageData = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setSavingPage(true);
-    try {
-      await api.put('/content/services', {
-        slug: 'services',
-        title: pageData?.title || { en: 'Our Services', ar: 'خدماتنا' },
-        content: {
-          heroSubtitle: pageData?.content?.heroSubtitle || { en: '', ar: '' },
-          heroImage: pageData?.content?.heroImage || '',
-        },
-      });
-      setIsPageModalOpen(false);
-    } catch {
-      alert('Failed to save page settings');
-    } finally {
-      setSavingPage(false);
     }
   };
 
@@ -254,12 +191,6 @@ export default function AdminServicesPage() {
           <p className="text-slate-500 text-sm mt-1">Manage all service pages. Published services appear on the public website automatically.</p>
         </div>
         <div className="flex items-center gap-3">
-          <button
-            onClick={() => setIsPageModalOpen(true)}
-            className="inline-flex items-center gap-2 px-4 py-2.5 bg-white border border-slate-300 text-slate-700 text-sm font-bold rounded-md hover:bg-slate-50 transition-all shadow-sm"
-          >
-            ⚙️ Edit Listing Page
-          </button>
           <Link
             href="/admin/services/new"
             className="inline-flex items-center gap-2 px-5 py-2.5 bg-dazz-navy text-white text-sm font-bold rounded-md hover:bg-dazz-navy/80 transition-all shadow-sm"
@@ -328,55 +259,6 @@ export default function AdminServicesPage() {
         isDestructive={true}
         confirmText="Delete"
       />
-
-      {isPageModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4">
-          <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-            <div className="p-6 border-b border-slate-100 flex justify-between items-center sticky top-0 bg-white z-10">
-              <h2 className="text-xl font-bold text-slate-900">Edit Services Listing Page</h2>
-              <button onClick={() => setIsPageModalOpen(false)} className="text-slate-400 hover:text-slate-600 font-bold text-xl">&times;</button>
-            </div>
-            <form onSubmit={handleSavePageData} className="p-6 space-y-8">
-              <div>
-                <h3 className="text-sm font-bold text-slate-900 uppercase tracking-widest mb-4">Hero Title</h3>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-500 mb-1">English</label>
-                    <input type="text" value={pageData?.title?.en || ''} onChange={(e) => setPageData({ ...pageData, title: { ...pageData?.title, en: e.target.value } })} className="w-full px-3 py-2 border border-slate-300 rounded text-sm focus:ring-2 focus:ring-dazz-navy focus:border-dazz-navy" />
-                  </div>
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-500 mb-1">Arabic</label>
-                    <input type="text" dir="rtl" value={pageData?.title?.ar || ''} onChange={(e) => setPageData({ ...pageData, title: { ...pageData?.title, ar: e.target.value } })} className="w-full px-3 py-2 border border-slate-300 rounded text-sm focus:ring-2 focus:ring-dazz-navy focus:border-dazz-navy" />
-                  </div>
-                </div>
-              </div>
-              <div>
-                <h3 className="text-sm font-bold text-slate-900 uppercase tracking-widest mb-4">Hero Subtitle</h3>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-500 mb-1">English</label>
-                    <textarea rows={3} value={pageData?.content?.heroSubtitle?.en || ''} onChange={(e) => setPageData({ ...pageData, content: { ...pageData?.content, heroSubtitle: { ...pageData?.content?.heroSubtitle, en: e.target.value } } })} className="w-full px-3 py-2 border border-slate-300 rounded text-sm focus:ring-2 focus:ring-dazz-navy focus:border-dazz-navy" />
-                  </div>
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-500 mb-1">Arabic</label>
-                    <textarea rows={3} dir="rtl" value={pageData?.content?.heroSubtitle?.ar || ''} onChange={(e) => setPageData({ ...pageData, content: { ...pageData?.content, heroSubtitle: { ...pageData?.content?.heroSubtitle, ar: e.target.value } } })} className="w-full px-3 py-2 border border-slate-300 rounded text-sm focus:ring-2 focus:ring-dazz-navy focus:border-dazz-navy" />
-                  </div>
-                </div>
-              </div>
-              <div>
-                <h3 className="text-sm font-bold text-slate-900 uppercase tracking-widest mb-4">Hero Background Image</h3>
-                <MediaUploader value={pageData?.content?.heroImage || ''} onChange={(media) => setPageData({ ...pageData, content: { ...pageData?.content, heroImage: media.url } })} />
-              </div>
-              <div className="pt-6 border-t border-slate-100 flex justify-end gap-3">
-                <button type="button" onClick={() => setIsPageModalOpen(false)} className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900">Cancel</button>
-                <button type="submit" disabled={savingPage} className="px-6 py-2 bg-dazz-navy text-white text-sm font-bold rounded-md hover:bg-dazz-navy/90 disabled:opacity-50">
-                  {savingPage ? 'Saving...' : 'Save Page'}
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
