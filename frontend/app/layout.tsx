@@ -10,7 +10,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://dazztradlink.com'),
   title: {
     template: '%s | Dazz Tradlink',
     default: 'Dazz Tradlink | Empowering Industrial Excellence',
