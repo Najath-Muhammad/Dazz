@@ -1,5 +1,5 @@
 import React from 'react';
-import { Plus, Trash2 } from 'lucide-react';
+import { Plus, Trash2, Sparkles } from 'lucide-react';
 
 interface LocalizedItem {
   en: string;
@@ -14,7 +14,7 @@ interface DynamicListInputProps {
   placeholderAr?: string;
 }
 
-export default function DynamicListInput({ label, items, onChange, placeholderEn, placeholderAr }: DynamicListInputProps) {
+export default function DynamicListInput({ label, items, onChange, placeholderEn }: DynamicListInputProps) {
   const handleAdd = () => {
     onChange([...items, { en: '', ar: '' }]);
   };
@@ -25,16 +25,21 @@ export default function DynamicListInput({ label, items, onChange, placeholderEn
     onChange(newItems);
   };
 
-  const handleChange = (index: number, lang: 'en' | 'ar', value: string) => {
+  const handleChange = (index: number, value: string) => {
     const newItems = [...items];
-    newItems[index][lang] = value;
+    newItems[index].en = value;
     onChange(newItems);
   };
 
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <label className="block text-sm font-semibold text-slate-700">{label}</label>
+        <div className="flex items-center gap-2">
+          <label className="block text-sm font-semibold text-slate-700">{label}</label>
+          <span className="text-xs text-slate-400 flex items-center gap-1">
+            <Sparkles size={11} className="text-dazz-gold" /> Auto-translates to Arabic on save
+          </span>
+        </div>
         <button
           type="button"
           onClick={handleAdd}
@@ -49,23 +54,15 @@ export default function DynamicListInput({ label, items, onChange, placeholderEn
       ) : (
         <div className="space-y-3">
           {items.map((item, index) => (
-            <div key={index} className="flex items-start gap-3 bg-slate-50 p-3 rounded-md border border-slate-200">
-              <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div key={index} className="flex items-center gap-3 bg-slate-50 p-3 rounded-md border border-slate-200">
+              <div className="flex-1">
                 <input
                   type="text"
                   value={item.en}
-                  onChange={(e) => handleChange(index, 'en', e.target.value)}
-                  placeholder={placeholderEn || "English value"}
-                  className="w-full px-3 py-2 border border-slate-300 rounded-md text-sm outline-none focus:border-dazz-navy"
+                  onChange={(e) => handleChange(index, e.target.value)}
+                  placeholder={placeholderEn || "Enter item text..."}
+                  className="w-full px-3 py-2 border border-slate-300 rounded-md text-sm outline-none focus:border-dazz-navy bg-white"
                   dir="ltr"
-                />
-                <input
-                  type="text"
-                  value={item.ar}
-                  onChange={(e) => handleChange(index, 'ar', e.target.value)}
-                  placeholder={placeholderAr || "Arabic value"}
-                  className="w-full px-3 py-2 border border-slate-300 rounded-md text-sm outline-none focus:border-dazz-navy"
-                  dir="rtl"
                 />
               </div>
               <button

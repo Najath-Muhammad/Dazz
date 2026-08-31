@@ -13,19 +13,19 @@ import { FormError } from '@/components/ui/FormError';
 const locationSchema = z.object({
   name: z.object({
     en: z.string().min(1, 'English name is required'),
-    ar: z.string().min(1, 'Arabic name is required')
+    ar: z.string().optional()
   }),
   country: z.object({
     en: z.string().min(1, 'English country is required'),
-    ar: z.string().min(1, 'Arabic country is required')
+    ar: z.string().optional()
   }),
   city: z.object({
     en: z.string().min(1, 'English city is required'),
-    ar: z.string().min(1, 'Arabic city is required')
+    ar: z.string().optional()
   }),
   address: z.object({
     en: z.string().min(1, 'English address is required'),
-    ar: z.string().min(1, 'Arabic address is required')
+    ar: z.string().optional()
   }),
   latitude: z.number({ invalid_type_error: 'Latitude is required' } as SafeAny),
   longitude: z.number({ invalid_type_error: 'Longitude is required' } as SafeAny)
@@ -40,7 +40,6 @@ interface LocationFormProps {
 
 export default function LocationForm({ initialData, isEdit = false }: LocationFormProps) {
   const router = useRouter();
-  const [lang, setLang] = useState<'en' | 'ar'>('en');
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
   const { errors, validate, clearErrors } = useZodValidation(locationSchema);
@@ -64,7 +63,7 @@ export default function LocationForm({ initialData, isEdit = false }: LocationFo
     if (isLocal) {
       setFormData(prev => ({
         ...prev,
-        [field]: { ...(prev as SafeAny)[field], [lang]: value }
+        [field]: { ...(prev as SafeAny)[field], en: value }
       }));
       // Clear nested error if exists
       if ((errors as SafeAny)[field]) clearErrors();
@@ -124,63 +123,48 @@ export default function LocationForm({ initialData, isEdit = false }: LocationFo
         {/* Main Content Column */}
         <div className="lg:col-span-8 space-y-6">
           
-          {/* Language Toggle */}
+          {/* Basic Information */}
           <div className="bg-white p-6 rounded-lg shadow-sm border border-slate-200">
-            <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center justify-between mb-6 border-b border-slate-200 pb-3">
               <h2 className="text-xl font-bold text-slate-900">Basic Information</h2>
-              <div className="flex bg-slate-100 p-1 rounded-md">
-                <button
-                  type="button"
-                  onClick={() => setLang('en')}
-                  className={`px-4 py-1.5 text-sm font-semibold rounded-sm transition-colors ${lang === 'en' ? 'bg-white text-dazz-navy shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
-                >
-                  English
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setLang('ar')}
-                  className={`px-4 py-1.5 text-sm font-semibold rounded-sm transition-colors ${lang === 'ar' ? 'bg-white text-dazz-navy shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
-                >
-                  العربية
-                </button>
-              </div>
+              <span className="text-xs text-dazz-gold font-medium">✨ Auto-translates to Arabic on save</span>
             </div>
 
-            <div className="space-y-4" dir={lang === 'ar' ? 'rtl' : 'ltr'}>
-              <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">Location Name *</label>
-                  <input type="text" value={formData.name[lang]} onChange={e => handleChange('name', e.target.value, true)} className={`w-full bg-white text-slate-900 border rounded-md px-4 py-2 focus:outline-none transition-colors ${errors.name ? 'border-red-500 focus:ring-2 focus:ring-red-500' : 'border-slate-300 focus:ring-2 focus:ring-dazz-gold'}`} placeholder="e.g. DAZZ JEDDAH OFFICE" />
+                  <input type="text" value={formData.name.en} onChange={e => handleChange('name', e.target.value, true)} className={`w-full bg-white text-slate-900 border rounded-md px-4 py-2 focus:outline-none transition-colors ${errors.name ? 'border-red-500 focus:ring-2 focus:ring-red-500' : 'border-slate-300 focus:ring-2 focus:ring-dazz-gold'}`} placeholder="e.g. DAZZ JEDDAH OFFICE" />
                   <FormError message={errors.name} />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">Location Type</label>
-                  <input type="text" value={formData.type[lang]} onChange={e => handleChange('type', e.target.value, true)} className="w-full bg-white text-slate-900 border border-slate-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-dazz-gold" placeholder="e.g. Headquarters" />
+                  <input type="text" value={formData.type.en} onChange={e => handleChange('type', e.target.value, true)} className="w-full bg-white text-slate-900 border border-slate-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-dazz-gold" placeholder="e.g. Headquarters" />
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">Country *</label>
-                  <input type="text" value={formData.country[lang]} onChange={e => handleChange('country', e.target.value, true)} className={`w-full bg-white text-slate-900 border rounded-md px-4 py-2 focus:outline-none transition-colors ${errors.country ? 'border-red-500 focus:ring-2 focus:ring-red-500' : 'border-slate-300 focus:ring-2 focus:ring-dazz-gold'}`} placeholder="e.g. Saudi Arabia" />
+                  <input type="text" value={formData.country.en} onChange={e => handleChange('country', e.target.value, true)} className={`w-full bg-white text-slate-900 border rounded-md px-4 py-2 focus:outline-none transition-colors ${errors.country ? 'border-red-500 focus:ring-2 focus:ring-red-500' : 'border-slate-300 focus:ring-2 focus:ring-dazz-gold'}`} placeholder="e.g. Saudi Arabia" />
                   <FormError message={errors.country} />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">City *</label>
-                  <input type="text" value={formData.city[lang]} onChange={e => handleChange('city', e.target.value, true)} className={`w-full bg-white text-slate-900 border rounded-md px-4 py-2 focus:outline-none transition-colors ${errors.city ? 'border-red-500 focus:ring-2 focus:ring-red-500' : 'border-slate-300 focus:ring-2 focus:ring-dazz-gold'}`} placeholder="e.g. Jeddah" />
+                  <input type="text" value={formData.city.en} onChange={e => handleChange('city', e.target.value, true)} className={`w-full bg-white text-slate-900 border rounded-md px-4 py-2 focus:outline-none transition-colors ${errors.city ? 'border-red-500 focus:ring-2 focus:ring-red-500' : 'border-slate-300 focus:ring-2 focus:ring-dazz-gold'}`} placeholder="e.g. Jeddah" />
                   <FormError message={errors.city} />
                 </div>
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">Full Address *</label>
-                <textarea rows={3} value={formData.address[lang]} onChange={e => handleChange('address', e.target.value, true)} className={`w-full bg-white text-slate-900 border rounded-md px-4 py-2 focus:outline-none transition-colors ${errors.address ? 'border-red-500 focus:ring-2 focus:ring-red-500' : 'border-slate-300 focus:ring-2 focus:ring-dazz-gold'}`} placeholder="Enter complete physical address..." />
+                <textarea rows={3} value={formData.address.en} onChange={e => handleChange('address', e.target.value, true)} className={`w-full bg-white text-slate-900 border rounded-md px-4 py-2 focus:outline-none transition-colors ${errors.address ? 'border-red-500 focus:ring-2 focus:ring-red-500' : 'border-slate-300 focus:ring-2 focus:ring-dazz-gold'}`} placeholder="Enter complete physical address..." />
                 <FormError message={errors.address} />
               </div>
               
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">Description (Optional)</label>
-                <textarea rows={2} value={formData.description[lang]} onChange={e => handleChange('description', e.target.value, true)} className="w-full bg-white text-slate-900 border border-slate-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-dazz-gold" placeholder="Any additional location details..." />
+                <textarea rows={2} value={formData.description.en} onChange={e => handleChange('description', e.target.value, true)} className="w-full bg-white text-slate-900 border border-slate-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-dazz-gold" placeholder="Any additional location details..." />
               </div>
             </div>
           </div>

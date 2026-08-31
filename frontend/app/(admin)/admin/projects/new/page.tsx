@@ -63,20 +63,13 @@ export default function AdminNewProjectPage() {
           
           {/* Title Section */}
           <div className="border border-slate-200 rounded-lg p-6 bg-slate-50">
-            <h3 className="text-lg font-bold text-slate-800 mb-4 border-b border-slate-200 pb-2">PROJECT TITLE</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-xs font-bold text-slate-500 mb-2 tracking-widest uppercase flex items-center gap-2">
-                  <span>🇬🇧</span> English
-                </label>
-                <input required type="text" value={formData.title.en} onChange={(e) => handleLocalizedChange('title', 'en', e.target.value)} className="w-full border border-slate-300 rounded-md px-4 py-2" />
-              </div>
-              <div dir="rtl">
-                <label className="block text-xs font-bold text-slate-500 mb-2 tracking-widest uppercase flex items-center gap-2 text-left" dir="ltr">
-                  <span>🇸🇦</span> Arabic <span className="text-[10px] text-dazz-gold font-normal">(Auto-translated if left blank)</span>
-                </label>
-                <input type="text" value={formData.title.ar} onChange={(e) => handleLocalizedChange('title', 'ar', e.target.value)} className="w-full border border-slate-300 rounded-md px-4 py-2 text-right" />
-              </div>
+            <div className="flex items-center justify-between border-b border-slate-200 pb-2 mb-4">
+              <h3 className="text-lg font-bold text-slate-800">PROJECT TITLE</h3>
+              <span className="text-xs text-dazz-gold font-medium">✨ Auto-translates to Arabic on save</span>
+            </div>
+            <div>
+              <label className="block text-xs font-bold text-slate-500 mb-2 tracking-widest uppercase">Title</label>
+              <input required type="text" value={formData.title.en} onChange={(e) => handleLocalizedChange('title', 'en', e.target.value)} placeholder="Enter project title..." className="w-full border border-slate-300 rounded-md px-4 py-2 bg-white" />
             </div>
             <div className="mt-4">
               <label className="block text-xs font-bold text-slate-500 mb-1 tracking-widest uppercase">URL Slug (Auto-generated)</label>
@@ -86,45 +79,33 @@ export default function AdminNewProjectPage() {
 
           {/* Description Section */}
           <div className="border border-slate-200 rounded-lg p-6 bg-slate-50">
-            <h3 className="text-lg font-bold text-slate-800 mb-4 border-b border-slate-200 pb-2">DESCRIPTION</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-xs font-bold text-slate-500 mb-2 tracking-widest uppercase flex items-center gap-2">
-                  <span>🇬🇧</span> English
-                </label>
-                <textarea required rows={5} value={formData.description.en} onChange={(e) => handleLocalizedChange('description', 'en', e.target.value)} className="w-full border border-slate-300 rounded-md px-4 py-2"></textarea>
-              </div>
-              <div dir="rtl">
-                <label className="block text-xs font-bold text-slate-500 mb-2 tracking-widest uppercase flex items-center gap-2 text-left" dir="ltr">
-                  <span>🇸🇦</span> Arabic <span className="text-[10px] text-dazz-gold font-normal">(Auto-translated if left blank)</span>
-                </label>
-                <textarea rows={5} value={formData.description.ar} onChange={(e) => handleLocalizedChange('description', 'ar', e.target.value)} className="w-full border border-slate-300 rounded-md px-4 py-2 text-right"></textarea>
-              </div>
+            <div className="flex items-center justify-between border-b border-slate-200 pb-2 mb-4">
+              <h3 className="text-lg font-bold text-slate-800">DESCRIPTION</h3>
+              <span className="text-xs text-dazz-gold font-medium">✨ Auto-translates to Arabic on save</span>
+            </div>
+            <div>
+              <label className="block text-xs font-bold text-slate-500 mb-2 tracking-widest uppercase">Project Description</label>
+              <textarea required rows={5} value={formData.description.en} onChange={(e) => handleLocalizedChange('description', 'en', e.target.value)} placeholder="Enter project description..." className="w-full border border-slate-300 rounded-md px-4 py-2 bg-white"></textarea>
             </div>
           </div>
 
           {/* Category & Location Section */}
           <div className="border border-slate-200 rounded-lg p-6 bg-slate-50">
-            <h3 className="text-lg font-bold text-slate-800 mb-4 border-b border-slate-200 pb-2">METADATA</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-6">
+            <div className="flex items-center justify-between border-b border-slate-200 pb-2 mb-4">
+              <h3 className="text-lg font-bold text-slate-800">METADATA</h3>
+              <span className="text-xs text-dazz-gold font-medium">✨ Auto-translates to Arabic on save</span>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Category */}
               <div>
-                <label className="block text-xs font-bold text-slate-500 mb-2 tracking-widest uppercase">Category 🇬🇧</label>
-                <input required type="text" value={formData.category.en} onChange={(e) => handleLocalizedChange('category', 'en', e.target.value)} placeholder="e.g. Construction" className="w-full border border-slate-300 rounded-md px-4 py-2" />
-              </div>
-              <div dir="rtl">
-                <label className="block text-xs font-bold text-slate-500 mb-2 tracking-widest uppercase text-left" dir="ltr">Category 🇸🇦 <span className="text-[10px] text-dazz-gold font-normal">(Auto-translated)</span></label>
-                <input type="text" value={formData.category.ar} onChange={(e) => handleLocalizedChange('category', 'ar', e.target.value)} className="w-full border border-slate-300 rounded-md px-4 py-2 text-right" />
+                <label className="block text-xs font-bold text-slate-500 mb-2 tracking-widest uppercase">Category</label>
+                <input required type="text" value={formData.category.en} onChange={(e) => handleLocalizedChange('category', 'en', e.target.value)} placeholder="e.g. Construction" className="w-full border border-slate-300 rounded-md px-4 py-2 bg-white" />
               </div>
               
               {/* Location */}
               <div>
-                <label className="block text-xs font-bold text-slate-500 mb-2 tracking-widest uppercase">Location 🇬🇧</label>
-                <input type="text" value={formData.location.en} onChange={(e) => handleLocalizedChange('location', 'en', e.target.value)} placeholder="e.g. Riyadh" className="w-full border border-slate-300 rounded-md px-4 py-2" />
-              </div>
-              <div dir="rtl">
-                <label className="block text-xs font-bold text-slate-500 mb-2 tracking-widest uppercase text-left" dir="ltr">Location 🇸🇦</label>
-                <input type="text" value={formData.location.ar} onChange={(e) => handleLocalizedChange('location', 'ar', e.target.value)} className="w-full border border-slate-300 rounded-md px-4 py-2 text-right" />
+                <label className="block text-xs font-bold text-slate-500 mb-2 tracking-widest uppercase">Location</label>
+                <input type="text" value={formData.location.en} onChange={(e) => handleLocalizedChange('location', 'en', e.target.value)} placeholder="e.g. Riyadh" className="w-full border border-slate-300 rounded-md px-4 py-2 bg-white" />
               </div>
             </div>
           </div>

@@ -190,9 +190,12 @@ export default function AdminSettingsPage() {
           ) : (
             /* Dynamic Hero Tab */
             <div className="space-y-6">
-              <h2 className="text-xl font-semibold text-slate-900 mb-6 border-b border-slate-100 pb-2">
-                {TABS.find(t => t.id === activeTab)?.label}
-              </h2>
+              <div className="flex items-center justify-between border-b border-slate-100 pb-2 mb-6">
+                <h2 className="text-xl font-semibold text-slate-900">
+                  {TABS.find(t => t.id === activeTab)?.label}
+                </h2>
+                <span className="text-xs text-dazz-gold font-medium">✨ Auto-translates to Arabic on save</span>
+              </div>
               
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">Headline (Title)</label>

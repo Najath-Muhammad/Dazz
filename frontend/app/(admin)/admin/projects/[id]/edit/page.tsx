@@ -114,61 +114,50 @@ export default function AdminEditProjectPage({ params }: { params: Promise<{ id:
 
         {/* Title */}
         <div className="border border-slate-200 rounded-lg p-6 bg-slate-50">
-          <h3 className="text-sm font-bold text-slate-800 mb-4 uppercase tracking-widest">Project Title</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest">🇬🇧 English</label>
-              <input required type="text" value={formData.title.en} onChange={(e) => handleLocalizedChange('title', 'en', e.target.value)} className="w-full border border-slate-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-dazz-navy" />
-            </div>
-            <div dir="rtl">
-              <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest text-left" dir="ltr">🇸🇦 Arabic</label>
-              <input type="text" value={formData.title.ar} onChange={(e) => handleLocalizedChange('title', 'ar', e.target.value)} className="w-full border border-slate-300 rounded-md px-4 py-2 text-right focus:outline-none focus:ring-2 focus:ring-dazz-navy" />
-            </div>
+          <div className="flex items-center justify-between border-b border-slate-200 pb-2 mb-4">
+            <h3 className="text-sm font-bold text-slate-800 uppercase tracking-widest">Project Title</h3>
+            <span className="text-xs text-dazz-gold font-medium">✨ Auto-translates to Arabic on save</span>
+          </div>
+          <div>
+            <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest">Title</label>
+            <input required type="text" value={formData.title.en} onChange={(e) => handleLocalizedChange('title', 'en', e.target.value)} className="w-full border border-slate-300 rounded-md px-4 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-dazz-navy" />
           </div>
           <div className="mt-4">
             <label className="block text-xs font-bold text-slate-500 mb-1 uppercase tracking-widest">URL Slug</label>
-            <input type="text" value={formData.slug} onChange={(e) => setFormData({ ...formData, slug: e.target.value })} className="w-full md:w-1/2 border border-slate-300 rounded-md px-4 py-2 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-dazz-navy" />
+            <input type="text" value={formData.slug} onChange={(e) => setFormData({ ...formData, slug: e.target.value })} className="w-full md:w-1/2 border border-slate-300 rounded-md px-4 py-2 bg-white font-mono text-sm focus:outline-none focus:ring-2 focus:ring-dazz-navy" />
           </div>
         </div>
 
         {/* Description */}
         <div className="border border-slate-200 rounded-lg p-6 bg-slate-50">
-          <h3 className="text-sm font-bold text-slate-800 mb-4 uppercase tracking-widest">Description</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest">🇬🇧 English</label>
-              <textarea required rows={5} value={formData.description.en} onChange={(e) => handleLocalizedChange('description', 'en', e.target.value)} className="w-full border border-slate-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-dazz-navy" />
-            </div>
-            <div dir="rtl">
-              <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest text-left" dir="ltr">🇸🇦 Arabic</label>
-              <textarea rows={5} value={formData.description.ar} onChange={(e) => handleLocalizedChange('description', 'ar', e.target.value)} className="w-full border border-slate-300 rounded-md px-4 py-2 text-right focus:outline-none focus:ring-2 focus:ring-dazz-navy" />
-            </div>
+          <div className="flex items-center justify-between border-b border-slate-200 pb-2 mb-4">
+            <h3 className="text-sm font-bold text-slate-800 uppercase tracking-widest">Description</h3>
+            <span className="text-xs text-dazz-gold font-medium">✨ Auto-translates to Arabic on save</span>
+          </div>
+          <div>
+            <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest">Description</label>
+            <textarea required rows={5} value={formData.description.en} onChange={(e) => handleLocalizedChange('description', 'en', e.target.value)} className="w-full border border-slate-300 rounded-md px-4 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-dazz-navy" />
           </div>
         </div>
 
         {/* Metadata */}
         <div className="border border-slate-200 rounded-lg p-6 bg-slate-50">
-          <h3 className="text-sm font-bold text-slate-800 mb-4 uppercase tracking-widest">Metadata</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+          <div className="flex items-center justify-between border-b border-slate-200 pb-2 mb-4">
+            <h3 className="text-sm font-bold text-slate-800 uppercase tracking-widest">Metadata</h3>
+            <span className="text-xs text-dazz-gold font-medium">✨ Auto-translates to Arabic on save</span>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest">Category 🇬🇧</label>
-              <input type="text" value={formData.category.en} onChange={(e) => handleLocalizedChange('category', 'en', e.target.value)} className="w-full border border-slate-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-dazz-navy" />
-            </div>
-            <div dir="rtl">
-              <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest text-left" dir="ltr">Category 🇸🇦</label>
-              <input type="text" value={formData.category.ar} onChange={(e) => handleLocalizedChange('category', 'ar', e.target.value)} className="w-full border border-slate-300 rounded-md px-4 py-2 text-right focus:outline-none focus:ring-2 focus:ring-dazz-navy" />
+              <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest">Category</label>
+              <input type="text" value={formData.category.en} onChange={(e) => handleLocalizedChange('category', 'en', e.target.value)} className="w-full border border-slate-300 rounded-md px-4 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-dazz-navy" />
             </div>
             <div>
-              <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest">Location 🇬🇧</label>
-              <input type="text" value={formData.location.en} onChange={(e) => handleLocalizedChange('location', 'en', e.target.value)} className="w-full border border-slate-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-dazz-navy" />
-            </div>
-            <div dir="rtl">
-              <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest text-left" dir="ltr">Location 🇸🇦</label>
-              <input type="text" value={formData.location.ar} onChange={(e) => handleLocalizedChange('location', 'ar', e.target.value)} className="w-full border border-slate-300 rounded-md px-4 py-2 text-right focus:outline-none focus:ring-2 focus:ring-dazz-navy" />
+              <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest">Location</label>
+              <input type="text" value={formData.location.en} onChange={(e) => handleLocalizedChange('location', 'en', e.target.value)} className="w-full border border-slate-300 rounded-md px-4 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-dazz-navy" />
             </div>
             <div>
               <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest">Completion Year</label>
-              <input type="text" value={formData.year} onChange={(e) => setFormData({ ...formData, year: e.target.value })} placeholder="e.g., 2025" className="w-full border border-slate-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-dazz-navy" />
+              <input type="text" value={formData.year} onChange={(e) => setFormData({ ...formData, year: e.target.value })} placeholder="e.g., 2025" className="w-full border border-slate-300 rounded-md px-4 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-dazz-navy" />
             </div>
             <div className="flex items-center gap-3 pt-6">
               <input
