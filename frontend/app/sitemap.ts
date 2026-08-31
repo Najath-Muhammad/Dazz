@@ -13,7 +13,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/hospitality',
     '/projects',
     '/news',
-    '/careers-contact',
+    '/careers',
+    '/contact',
   ];
 
   return staticPages.map((route) => ({
