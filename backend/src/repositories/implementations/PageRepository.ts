@@ -20,9 +20,9 @@ export class PageRepository implements IPageRepository {
   }
   async update(id: string, data: SafeAny): Promise<any | null> {
     if (mongoose.Types.ObjectId.isValid(id)) {
-      return await Page.findByIdAndUpdate(id, data, { new: true });
+      return await Page.findByIdAndUpdate(id, data, { returnDocument: 'after' });
     }
-    return await Page.findOneAndUpdate({ slug: id }, data, { new: true, upsert: true });
+    return await Page.findOneAndUpdate({ slug: id }, data, { returnDocument: 'after', upsert: true });
   }
   async delete(id: string): Promise<any | null> {
     if (mongoose.Types.ObjectId.isValid(id)) {

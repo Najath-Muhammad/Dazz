@@ -14,7 +14,7 @@ export class ContactMessageRepository implements IContactMessageRepository {
     return await newItem.save();
   }
   async update(id: string, data: SafeAny): Promise<any | null> {
-    return await ContactMessage.findByIdAndUpdate(id, data, { new: true });
+    return await ContactMessage.findByIdAndUpdate(id, data, { returnDocument: 'after' });
   }
   async delete(id: string): Promise<any | null> {
     return await ContactMessage.findByIdAndDelete(id);

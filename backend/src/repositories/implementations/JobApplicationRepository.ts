@@ -25,7 +25,7 @@ export class JobApplicationRepository implements IJobApplicationRepository {
     return await newItem.save();
   }
   async update(id: string, data: SafeAny): Promise<any | null> {
-    return await JobApplication.findByIdAndUpdate(id, data, { new: true });
+    return await JobApplication.findByIdAndUpdate(id, data, { returnDocument: 'after' });
   }
   async delete(id: string): Promise<any | null> {
     return await JobApplication.findByIdAndDelete(id);

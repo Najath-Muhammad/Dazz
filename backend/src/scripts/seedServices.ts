@@ -1346,7 +1346,7 @@ async function seedServices() {
       const result = await Service.findOneAndUpdate(
         { slug: serviceData.slug },
         payload,
-        { upsert: true, new: true, setDefaultsOnInsert: true }
+        { upsert: true, returnDocument: 'after', setDefaultsOnInsert: true }
       );
 
       console.log(`  ✓ Successfully seeded/updated: "${result.name.en}" (Category: ${result.category})`);
