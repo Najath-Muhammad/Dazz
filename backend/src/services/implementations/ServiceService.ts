@@ -98,6 +98,12 @@ export class ServiceService implements IServiceService {
 
   async createService(data: SafeAny) {
     try {
+      if (data && data.name?.en) {
+        if (!data.hero) data.hero = {};
+        if (!data.hero.title?.en?.trim()) {
+          data.hero.title = { en: data.name.en, ar: data.name.ar || '' };
+        }
+      }
       const newItem = await this._repository.create(data);
       if (!newItem) return { success: false, message: 'Failed to create service' };
       this._translateAndUpdate(newItem._id.toString(), newItem.toObject ? newItem.toObject() : newItem, {});

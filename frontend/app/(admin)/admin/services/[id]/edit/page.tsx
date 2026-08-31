@@ -33,8 +33,15 @@ export default function AdminEditServicePage() {
     if (!form.name.en?.trim()) { setError('Service name (English) is required.'); return; }
     setSaving(true);
     setError('');
+
+    const payload = { ...form, status };
+    if (!payload.hero) payload.hero = { eyebrow: { en: '', ar: '' }, title: { en: '', ar: '' }, subtitle: { en: '', ar: '' }, description: { en: '', ar: '' }, media: null, ctaPrimary: { text: { en: '', ar: '' }, url: '' }, ctaSecondary: { text: { en: '', ar: '' }, url: '' } };
+    if (!payload.hero.title?.en?.trim()) {
+      payload.hero.title = { en: payload.name.en, ar: payload.name.ar || '' };
+    }
+
     try {
-      await api.put(`/services/${id}`, { ...form, status });
+      await api.put(`/services/${id}`, payload);
       router.push('/admin/services');
     } catch (e: SafeAny) {
       setError(e?.message || 'Failed to update service.');

@@ -15,7 +15,7 @@ export const serviceSchema = z.object({
   sectionOrder: z.array(z.string()).optional(),
   
   hero: z.object({
-    title: requiredLocString,
+    title: locString,
     eyebrow: locString,
     subtitle: locString,
     description: locString,
