@@ -33,13 +33,18 @@ import type { ImageLoaderProps } from 'next/image';
 
 const cloudinaryLoader = ({ src, width, quality }: ImageLoaderProps) => {
   if (src.includes('res.cloudinary.com') && src.includes('/upload/')) {
-    // Determine quality: default to q_auto:best or high numeric value for sharp visuals
-    const qParam = quality && quality > 75 ? `q_${quality}` : 'q_auto:best';
-    const params = ['f_auto', 'dpr_auto', 'c_limit', `w_${width}`, qParam];
-    // prevent duplicate transformations if already present
-    if (!src.includes('/upload/f_')) {
-      return src.replace('/upload/', `/upload/${params.join(',')}/`);
+    // Strip existing transformation flags if present so we always apply pristine high quality settings
+    let cleanSrc = src;
+    if (cleanSrc.includes('/upload/')) {
+      cleanSrc = cleanSrc.replace(/\/upload\/(?:[^\/]+\/)*(v\d+)/, '/upload/$1');
     }
+    
+    // Always request at least 1920px (or double Next.js width) to guarantee 4K/Full-HD sharpness
+    const targetWidth = Math.min(Math.max((width || 800) * 2, 1920), 3840);
+    const qParam = quality && quality > 75 ? `q_${quality}` : 'q_100';
+    const params = ['f_auto', 'dpr_2.0', `w_${targetWidth}`, 'c_limit', qParam];
+    
+    return cleanSrc.replace('/upload/', `/upload/${params.join(',')}/`);
   }
   return src;
 };
