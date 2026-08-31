@@ -136,27 +136,38 @@ export function ServicesListingClient({ services, heroTitle, heroSubtitle, heroI
       <section className="py-24 md:py-32 bg-slate-50 relative z-20">
         <div className="max-w-7xl mx-auto px-6" dir={dir}>
           
-          <div className="flex items-center gap-3 mb-8">
-            <div className="w-1.5 h-8 bg-dazz-gold" />
-            <h2 className={`text-3xl font-bold tracking-tight text-slate-900 ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>
-              {isAr ? 'مجالات خبرتنا' : 'AREAS OF EXPERTISE'}
-            </h2>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+            <div className="flex items-center gap-3">
+              <div className="w-1.5 h-8 bg-dazz-gold rounded-full" />
+              <h2 className={`text-2xl md:text-3xl font-extrabold tracking-tight text-slate-900 ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}>
+                {isAr ? 'مجالات خبرتنا' : 'AREAS OF EXPERTISE'}
+              </h2>
+            </div>
+            <p className={`text-sm text-slate-500 font-medium ${isAr ? 'font-arabic' : ''}`}>
+              {isAr ? `إجمالي الخدمات: ${filteredServices.length}` : `Showing ${filteredServices.length} Service${filteredServices.length === 1 ? '' : 's'}`}
+            </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-4 mb-16 border-b border-slate-200 pb-4">
-            {activeTabs.map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveCategory(tab.id)}
-                className={`text-sm font-bold tracking-widest px-4 py-2 transition-all ${
-                  activeCategory === tab.id 
-                    ? 'text-dazz-gold border-b-2 border-dazz-gold -mb-[18px]' 
-                    : 'text-slate-500 hover:text-slate-900'
-                } ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}
-              >
-                {tab.label}
-              </button>
-            ))}
+          <div className="w-full overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden pb-4 mb-14 border-b border-slate-200/80">
+            <div className="flex items-center gap-2.5 sm:gap-3 min-w-max">
+              {activeTabs.map((tab) => {
+                const isActive = activeCategory === tab.id;
+                return (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveCategory(tab.id)}
+                    className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold tracking-wider transition-all duration-300 flex items-center gap-2 select-none ${
+                      isActive 
+                        ? 'bg-dazz-navy text-dazz-gold shadow-lg shadow-dazz-navy/20 ring-1 ring-dazz-gold/40 scale-[1.02]' 
+                        : 'bg-white text-slate-600 border border-slate-200/90 hover:border-slate-400 hover:text-slate-900 hover:bg-slate-50'
+                    } ${isAr ? 'font-arabic uppercase-none' : 'uppercase'}`}
+                  >
+                    <span className={`w-2 h-2 rounded-full transition-all duration-300 ${isActive ? 'bg-dazz-gold animate-pulse' : 'bg-slate-300'}`} />
+                    {tab.label}
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
           {filteredServices.length === 0 ? (
